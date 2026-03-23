@@ -120,7 +120,9 @@ id    <source scores...>    year    country
 
 Example:
 
-ERR001    0.85    0.01    0.02    2019    United States
+|run_acc| chicken|human|cattle|year|country|
+|-------|--------|-----|------|----|-------|
+|ERR001 |  0.85  |0.01 | 0.02 |2019|United States|
 
 - One column per source label
 - year as 4-digit string
