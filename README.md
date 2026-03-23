@@ -69,6 +69,8 @@ to standardized country names using:
 
 ### Metadata table (TSV)
 
+Get the metadata table from ENA or ATB, remove all non important columns. Put the source/host interpretable colums as 2nd, 3rd, etc columns for slightly improved performance, then save it as tab delimited file. The first column should start with "run_acc". See for an example benchmark.tsv. 
+
 Example:
 
 run_acc    host    isolation_source    collection_date    country
@@ -77,6 +79,8 @@ ERR001     Gallus gallus    neck skin    2019    USA
 ---
 
 ### Sources file (TSV)
+
+Put the main source first, the hints in parenthesis, good hints are necessary:  e.g. cat/cattle get mixed up. Stool (thing you sit on, or feces), guinea pig might get classified as pig. Try to catch these mistakes. See for an example sources.tsv.
 
 source
 chicken (poultry host)
@@ -107,10 +111,12 @@ Requirements:
 - Python ≥ 3.10
 - Conda environment recommended
 
-Install dependencies:
+Install from conda
+```conda env create -f environment.yml```
 
-conda install -c conda-forge pandas pycountry
-pip install transformers torch
+Install dependencies by hand
+```conda install -c conda-forge pandas pycountry```
+```pip install transformers torch```
 
 ---
 
@@ -118,7 +124,7 @@ pip install transformers torch
 
 export TOKENIZERS_PARALLELISM=true
 
-python classify_metadata.py \
+python metalyzer.py \
   --metadata metadata.tsv \
   --sources sources.tsv \
   --out classified.tsv \
@@ -133,9 +139,7 @@ python classify_metadata.py \
 - Source classification runs on GPU
 - Year and country parsing are CPU-light
 - Batch size can be increased for better GPU utilization
-
-Typical RTX 4090 performance:
-- ~100–500 rows/sec depending on batch size and label count
+- current implementation has a single CPU bottleneck. 
 
 ---
 
