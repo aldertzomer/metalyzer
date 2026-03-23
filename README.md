@@ -133,13 +133,16 @@ Example:
 ## Installation
 
 Requirements:
+
 - Python ≥ 3.10
 - Conda environment recommended
 
 Install from conda
+
 ```conda env create -f environment.yml```
 
 Install dependencies by hand
+
 ```conda install -c conda-forge pandas pycountry```
 ```pip install transformers torch```
 
