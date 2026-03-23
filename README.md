@@ -31,20 +31,31 @@ This is evaluated against candidate labels using NLI.
 Extracts a 4-digit year (1905–2026) from:
 
 - collection_date
+- 
 - collection_date_start
+- 
 - collection_date_end
+
 
 Supported formats:
 
 2019
+
 2016-04
+
 31-12-19
+
 15-06-18
+
 2007-11
 
+
 Handles both:
+
 - 19YY
+  
 - 20YY
+
 
 ---
 
@@ -53,15 +64,21 @@ Handles both:
 Normalizes messy country fields such as:
 
 USA:WY
+
 U.S.A;USA
+
 Canada: Calgary, Alberta
+
 United Kingdom: Oxford
 
 to standardized country names using:
 
 - alias mapping
+  
 - pycountry
+  
 - controlled fallback (no full-text fuzzy matching)
+  
 
 ---
 
@@ -83,9 +100,13 @@ ERR001     Gallus gallus    neck skin    2019    USA
 Put the main source first, the hints in parenthesis, good hints are necessary:  e.g. cat/cattle get mixed up. Stool (thing you sit on, or feces), guinea pig might get classified as pig. Try to catch these mistakes. See for an example sources.tsv.
 
 source
+
 chicken (poultry host)
+
 human (human host)
+
 cattle (bovine host)
+
 
 ---
 
