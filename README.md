@@ -90,9 +90,9 @@ Get the metadata table from ENA or ATB, remove all non important columns. Put th
 
 Example:
 
-run_acc    host    isolation_source    collection_date    country
+|run_acc |   host  |  isolation_source |   collection_date  |  country |
 
-ERR001     Gallus gallus    neck skin    2019    USA
+ERR001  |   Gallus gallus  |  neck skin  |  2019    USA |
 
 ---
 
