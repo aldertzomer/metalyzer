@@ -116,15 +116,18 @@ cattle (bovine host)
 
 A TSV file with:
 
-id    <source scores...>    year    country
+id    <source scores...>    best_hit    year    country
 
 Example:
 
-|run_acc| chicken|human|cattle|year|country|
-|-------|--------|-----|------|----|-------|
-|ERR001 |  0.85  |0.01 | 0.02 |2019|United States|
+|run_acc| chicken|human|cattle|best_hit|year|country|
+|-------|--------|-----|------|--------|----|-------|
+|ERR001 |  0.85  |0.01 | 0.02 |chicken|2019|United States|
 
-- One column per source label
+- One score column per source, named using the text before the first `(` in `sources.tsv`; multi-word names are preserved
+- `best_hit` is the name of the source with the highest score; ties use the first source in `sources.tsv`
+- Full source labels, including parenthetical hints, are still used for classification
+- Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `year`, and `country` column names
 - year as 4-digit string
 - country as normalized name
 

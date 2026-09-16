@@ -9,7 +9,7 @@ Input:
   --metadata  (TSV)
   --sources   (TSV with column 'source' or first column = labels)
 Output (TSV):
-  id <tab> <one column per source label> <tab> year <tab> country
+  id <tab> <one column per source name> <tab> best_hit <tab> year <tab> country
 
 Notes:
   - Set TOKENIZERS_PARALLELISM=true for speed.
@@ -279,6 +279,26 @@ def extract_country_from_row(row: pd.Series, record: str) -> str:
 
 
 # -------------------------
+# Output parsing
+# -------------------------
+def parse_source_scores(scores: pd.DataFrame, id_col: str) -> pd.DataFrame:
+    """Shorten score headers and select the highest-scoring source per row."""
+    names = [label.split("(", 1)[0].strip() for label in scores.columns]
+    if not names or any(not name for name in names):
+        raise ValueError("Each source must have a nonempty name before any parentheses")
+    if len(set(names)) != len(names):
+        raise ValueError("Source names before parentheses must be unique")
+    if set(names) & {id_col, "best_hit", "year", "country"}:
+        raise ValueError("Source names must not conflict with output metadata columns")
+
+    parsed = scores.copy()
+    parsed.columns = names
+    # idxmax resolves ties in column order, which follows sources.tsv.
+    parsed["best_hit"] = parsed.idxmax(axis=1) if len(parsed) else pd.Series(index=parsed.index, dtype=str)
+    return parsed
+
+
+# -------------------------
 # Main
 # -------------------------
 def main():
@@ -348,8 +368,8 @@ def main():
                 m[lab] = float(sc)
             score_rows.append(m)
 
-    scores_df = pd.DataFrame(score_rows)
-    scores_df = scores_df[source_labels]  # enforce order
+    scores_df = pd.DataFrame(score_rows, columns=source_labels)  # enforce sources.tsv order
+    scores_df = parse_source_scores(scores_df, args.id_col)
 
     out_df = pd.concat(
         [
