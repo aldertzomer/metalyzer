@@ -8,7 +8,7 @@ This repository contains a Python pipeline to classify biological metadata recor
 The pipeline is designed for large-scale datasets (e.g. ENA/SRA metadata) with heterogeneous formatting.
 
 ---
-## for the impatient
+## For the impatient
 
 If you build IKEA wardrobes without ever looking at the instructions, and you are more of a try first, read later person, here is the commandline:
 
