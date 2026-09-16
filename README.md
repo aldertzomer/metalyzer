@@ -257,10 +257,9 @@ Use `--min-score 0.17` to maximize overall benchmark accuracy (84.0%), or
 `--min-score 0.3` when higher precision for assigned sources (95.7%) matters
 more than coverage. These cutoffs are benchmark-specific and should be
 rechecked for a new source list or dataset.
+
 Use `--device 0` for the first GPU (the default), or another nonnegative GPU
 index. GPU execution requires a CUDA-enabled PyTorch installation.
-
----
 
 For CPU execution, use `--device -1`. For example, to run the benchmark:
 
