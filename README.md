@@ -134,6 +134,90 @@ Example:
 
 ---
 
+## Benchmark results
+
+The following results compare `benchmark_classified.tsv` (using `sources.tsv`)
+with `benchmark_classified_rich.tsv` (using `sources_rich.tsv`). Both were
+evaluated against `benchmark_true_labels.tsv` with `--min-score 0.2`.
+Accuracy is recall: correct calls divided by the number of true records for a
+source. Precision is correct calls divided by the number of calls made for a
+source. The benchmark contains no true `environment` or `laboratory` records,
+so their recall is not applicable and every call to either is a false positive.
+
+| Source | Standard accuracy | Standard precision | Rich accuracy | Rich precision |
+|---|---:|---:|---:|---:|
+| cat | 95.0% | 63.3% | 100.0% | 54.1% |
+| cattle | 98.0% | 77.8% | 97.0% | 99.0% |
+| chicken | 99.0% | 92.5% | 72.0% | 97.3% |
+| dog | 95.0% | 100.0% | 100.0% | 95.2% |
+| environment | — | 0.0% | — | 0.0% |
+| goat | 98.0% | 96.1% | 94.0% | 87.9% |
+| human | 75.0% | 100.0% | 72.0% | 100.0% |
+| laboratory | — | 0.0% | — | 0.0% |
+| other_animal | 35.0% | 100.0% | 37.0% | 100.0% |
+| pig | 100.0% | 82.0% | 100.0% | 94.3% |
+| sheep | 61.0% | 100.0% | 44.0% | 100.0% |
+| turkey | 99.0% | 100.0% | 75.0% | 100.0% |
+| unknown | 74.0% | 46.5% | 90.0% | 70.3% |
+| water | 84.0% | 100.0% | 87.0% | 88.8% |
+| waterbird | 82.0% | 86.3% | 63.0% | 100.0% |
+| wildbird | 79.0% | 79.0% | 98.0% | 65.8% |
+
+The standard source list yields 83.2% overall accuracy and assigns a
+non-unknown source to 88.0% of records. The rich source list yields 79.5%
+overall accuracy and assigns a non-unknown source to 90.3% of records.
+
+### Confusion matrices
+
+Rows are true labels and entries list `predicted_label: count`. Only nonzero
+entries are shown. The `unknown` column is created by the 0.2 score cutoff,
+not by a source candidate.
+
+#### Standard source list
+
+| True source | Predicted calls |
+|---|---|
+| cat | cat: 19; pig: 1 |
+| cattle | cattle: 98; pig: 2 |
+| chicken | chicken: 99; pig: 1 |
+| dog | cattle: 1; dog: 95; unknown: 4 |
+| goat | cat: 1; cattle: 1; goat: 98 |
+| human | cattle: 13; human: 75; unknown: 12 |
+| other_animal | cat: 5; environment: 8; other_animal: 35; pig: 10; unknown: 39; wildbird: 3 |
+| pig | pig: 100 |
+| sheep | cat: 1; cattle: 4; pig: 7; sheep: 61; unknown: 1; waterbird: 13; wildbird: 13 |
+| turkey | environment: 1; turkey: 99 |
+| unknown | cat: 1; cattle: 6; chicken: 5; environment: 2; laboratory: 9; pig: 1; unknown: 74; wildbird: 2 |
+| water | cattle: 3; chicken: 1; environment: 10; unknown: 2; water: 84 |
+| waterbird | cat: 3; goat: 4; unknown: 8; waterbird: 82; wildbird: 3 |
+| wildbird | chicken: 2; unknown: 19; wildbird: 79 |
+
+#### Rich source list
+
+| True source | Predicted calls |
+|---|---|
+| cat | cat: 20 |
+| cattle | cattle: 97; dog: 1; pig: 2 |
+| chicken | chicken: 72; environment: 26; pig: 1; wildbird: 1 |
+| dog | dog: 100 |
+| goat | cat: 4; cattle: 1; goat: 94; unknown: 1 |
+| human | environment: 3; human: 72; unknown: 14; water: 11 |
+| other_animal | cat: 11; environment: 42; other_animal: 37; unknown: 7; wildbird: 3 |
+| pig | pig: 100 |
+| sheep | dog: 4; goat: 12; pig: 1; sheep: 44; unknown: 1; wildbird: 38 |
+| turkey | environment: 25; turkey: 75 |
+| unknown | chicken: 2; environment: 2; laboratory: 2; pig: 2; unknown: 90; wildbird: 2 |
+| water | environment: 11; unknown: 2; water: 87 |
+| waterbird | cat: 2; environment: 16; goat: 1; unknown: 11; waterbird: 63; wildbird: 7 |
+| wildbird | unknown: 2; wildbird: 98 |
+
+The rich hints increase calls to `environment` from 21 to 125, despite the
+benchmark containing no true environment records. This accounts for much of
+the decline in rich-list accuracy, especially for chicken, turkey,
+other_animal, sheep, water, and waterbird.
+
+---
+
 ## Installation
 
 Requirements:
