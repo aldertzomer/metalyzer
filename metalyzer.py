@@ -332,6 +332,7 @@ def main():
             candidate_labels=source_labels,
             hypothesis_template="The biological host or environmental source of this sample is {}.",
             multi_label=False,  # nonindependent scores per label
+            batch_size=args.batch_size,
         )
 
         # print once per batch, per your preference

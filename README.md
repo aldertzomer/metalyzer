@@ -151,15 +151,15 @@ Install dependencies by hand
 ## Usage
 
 export TOKENIZERS_PARALLELISM=true
-
+```bash
 python metalyzer.py \
-  --metadata metadata.tsv \
+  --metadata benchmark.tsv \
   --sources sources.tsv \
   --out classified.tsv \
-  --id-col run_acc \
+  --id-col run_accession \
   --device 0 \
   --batch-size 64
-
+```
 ---
 
 Use `--device 0` for the first GPU (the default), or another nonnegative GPU
