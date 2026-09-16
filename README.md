@@ -126,6 +126,7 @@ Example:
 
 - One score column per source, named using the text before the first `(` in `sources.tsv`; multi-word names are preserved
 - `best_hit` is the name of the source with the highest score; ties use the first source in `sources.tsv`
+- `--min-score` sets the minimum top score required for `best_hit`; lower-scoring rows are labelled `unknown` while their score columns are retained. The default is `0.2`.
 - Full source labels, including parenthetical hints, are still used for classification
 - Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `year`, and `country` column names
 - year as 4-digit string
@@ -161,8 +162,17 @@ python metalyzer.py \
   --out classified.tsv \
   --id-col run_accession \
   --device 0 \
-  --batch-size 64
+  --batch-size 64 \
+  --min-score 0.2
 ```
+
+On the supplied benchmark, `--min-score 0.2` identifies 74 of 100 records
+labelled `unknown`, but labels 85 known-source records as `unknown`. It gives
+83.2% overall accuracy and 88.2% precision among records assigned a source.
+Use `--min-score 0.17` to maximize overall benchmark accuracy (84.0%), or
+`--min-score 0.3` when higher precision for assigned sources (95.7%) matters
+more than coverage. These cutoffs are benchmark-specific and should be
+rechecked for a new source list or dataset.
 ---
 
 Use `--device 0` for the first GPU (the default), or another nonnegative GPU

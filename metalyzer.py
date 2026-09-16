@@ -281,8 +281,14 @@ def extract_country_from_row(row: pd.Series, record: str) -> str:
 # -------------------------
 # Output parsing
 # -------------------------
-def parse_source_scores(scores: pd.DataFrame, id_col: str) -> pd.DataFrame:
+def parse_source_scores(
+    scores: pd.DataFrame,
+    id_col: str,
+    min_score: float = 0.0,
+) -> pd.DataFrame:
     """Shorten score headers and select the highest-scoring source per row."""
+    if not 0.0 <= min_score <= 1.0:
+        raise ValueError("min_score must be between 0 and 1")
     names = [label.split("(", 1)[0].strip() for label in scores.columns]
     if not names or any(not name for name in names):
         raise ValueError("Each source must have a nonempty name before any parentheses")
@@ -294,7 +300,11 @@ def parse_source_scores(scores: pd.DataFrame, id_col: str) -> pd.DataFrame:
     parsed = scores.copy()
     parsed.columns = names
     # idxmax resolves ties in column order, which follows sources.tsv.
-    parsed["best_hit"] = parsed.idxmax(axis=1) if len(parsed) else pd.Series(index=parsed.index, dtype=str)
+    if len(parsed):
+        best_hit = parsed.idxmax(axis=1)
+        parsed["best_hit"] = best_hit.where(parsed.max(axis=1) >= min_score, "unknown")
+    else:
+        parsed["best_hit"] = pd.Series(index=parsed.index, dtype=str)
     return parsed
 
 
@@ -310,10 +320,18 @@ def main():
 
     ap.add_argument("--device", type=int, default=0, help="GPU index (default: 0), or -1 for CPU")
     ap.add_argument("--batch-size", type=int, default=64)
+    ap.add_argument(
+        "--min-score",
+        type=float,
+        default=0.2,
+        help="Minimum top source score for best_hit; lower scores become unknown (default: 0.2)",
+    )
     ap.add_argument("--max-value-chars", type=int, default=300)
     ap.add_argument("--max-record-chars", type=int, default=2000)
 
     args = ap.parse_args()
+    if not 0.0 <= args.min_score <= 1.0:
+        ap.error("--min-score must be between 0 and 1")
 
     df = pd.read_csv(args.metadata, sep="\t", dtype=str, keep_default_na=False)
     src_df = pd.read_csv(args.sources, sep="\t", dtype=str, keep_default_na=False)
@@ -369,7 +387,7 @@ def main():
             score_rows.append(m)
 
     scores_df = pd.DataFrame(score_rows, columns=source_labels)  # enforce sources.tsv order
-    scores_df = parse_source_scores(scores_df, args.id_col)
+    scores_df = parse_source_scores(scores_df, args.id_col, args.min_score)
 
     out_df = pd.concat(
         [
