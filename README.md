@@ -8,6 +8,21 @@ This repository contains a Python pipeline to classify biological metadata recor
 The pipeline is designed for large-scale datasets (e.g. ENA/SRA metadata) with heterogeneous formatting.
 
 ---
+## for the impatient
+
+If you build IKEA wardrobes without ever looking at the instructions, and you are more of a try first, read later person, here is the commandline:
+
+```bash
+export TOKENIZERS_PARALLELISM=true
+python metalyzer.py \
+  --metadata benchmark.tsv \
+  --sources sources.tsv \
+  --out classified.tsv \
+  --id-col run_accession \
+  --device 0 \
+  --batch-size 64 \
+  --min-score 0.2
+```
 
 ## Overview
 
