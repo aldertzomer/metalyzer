@@ -216,6 +216,74 @@ benchmark containing no true environment records. This accounts for much of
 the decline in rich-list accuracy, especially for chicken, turkey,
 other_animal, sheep, water, and waterbird.
 
+### Experimental Mistral API classifier
+
+`metalyzer_mistral.py` is an experimental alternative that asks the Mistral
+API to choose one controlled source label. It performs well but of course it is not free. It requires the `mistralai` Python
+package and a text file containing a Mistral API key.
+
+```bash
+conda install mistralai # in the metalyzer environment
+
+python metalyzer_mistral.py \
+  --metadata benchmark.tsv \
+  --sources sources_mistral.tsv \
+  --out benchmark_mistral.tsv \
+  --id-col run_accession \
+  --api-key-file ~/mistral.key
+```
+
+The Mistral output contains a predicted `source` label rather than a score per
+candidate, so it does not support a score cutoff. `sources_mistral.tsv`
+includes `unknown` as a controlled label.
+
+#### Mistral benchmark results
+
+`benchmark_mistral.tsv` was evaluated against `benchmark_true_labels.tsv`
+using `sources_mistral.tsv`. It contains all 1,320 benchmark records and has
+1,260 correct calls: **95.5% overall accuracy**. Accuracy is recall: correct
+calls divided by the number of true records for a source. Precision is correct
+calls divided by the number of calls made for a source.
+
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 20 | 20 | 100.0% | 100.0% |
+| cattle | 100 | 99 | 99 | 99.0% | 100.0% |
+| chicken | 100 | 106 | 100 | 100.0% | 94.3% |
+| dog | 100 | 100 | 100 | 100.0% | 100.0% |
+| environment | 0 | 14 | 0 | — | 0.0% |
+| goat | 100 | 100 | 100 | 100.0% | 100.0% |
+| human | 100 | 127 | 100 | 100.0% | 78.7% |
+| laboratory | 0 | 2 | 0 | — | 0.0% |
+| other_animal | 100 | 86 | 86 | 86.0% | 100.0% |
+| pig | 100 | 102 | 100 | 100.0% | 98.0% |
+| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
+| turkey | 100 | 101 | 100 | 100.0% | 99.0% |
+| unknown | 100 | 69 | 69 | 69.0% | 100.0% |
+| water | 100 | 92 | 92 | 92.0% | 100.0% |
+| waterbird | 100 | 94 | 94 | 94.0% | 100.0% |
+| wildbird | 100 | 108 | 100 | 100.0% | 92.6% |
+
+The benchmark has no true `environment` or `laboratory` records, so every call
+to either is counted as a false positive.
+
+| True source | Mistral predicted calls |
+|---|---|
+| cat | cat: 20 |
+| cattle | cattle: 99; environment: 1 |
+| chicken | chicken: 100 |
+| dog | dog: 100 |
+| goat | goat: 100 |
+| human | human: 100 |
+| other_animal | human: 12; other_animal: 86; pig: 1; wildbird: 1 |
+| pig | pig: 100 |
+| sheep | sheep: 100 |
+| turkey | turkey: 100 |
+| unknown | chicken: 6; environment: 9; human: 11; laboratory: 2; pig: 1; unknown: 69; wildbird: 2 |
+| water | environment: 4; human: 4; water: 92 |
+| waterbird | turkey: 1; waterbird: 94; wildbird: 5 |
+| wildbird | wildbird: 100 |
+
 ---
 
 ## Installation
