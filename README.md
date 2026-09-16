@@ -162,9 +162,21 @@ python metalyzer.py \
 
 ---
 
+Use `--device 0` for the first GPU (the default), or another nonnegative GPU
+index. GPU execution requires a CUDA-enabled PyTorch installation.
+
+For CPU execution, use `--device -1`. For example, to run the benchmark:
+
+```bash
+python metalyzer.py --metadata benchmark.tsv --sources sources.tsv --out classified.tsv --id-col run_accession --device -1 --batch-size 10
+```
+
+CPU execution explicitly uses float32 to avoid slow float16 inference.
+GPU execution uses the model checkpoint's precision (`dtype="auto"`).
+
 ## Performance Notes
 
-- Source classification runs on GPU
+- Source classification runs on the selected CPU or GPU
 - Year and country parsing are CPU-light
 - Batch size can be increased for better GPU utilization
 - current implementation has a single CPU bottleneck. 

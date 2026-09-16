@@ -288,7 +288,7 @@ def main():
     ap.add_argument("--out", required=True, help="Output TSV")
     ap.add_argument("--id-col", required=True, help="ID column name in metadata")
 
-    ap.add_argument("--device", type=int, default=0, help="0 for GPU, -1 for CPU")
+    ap.add_argument("--device", type=int, default=0, help="GPU index (default: 0), or -1 for CPU")
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--max-value-chars", type=int, default=300)
     ap.add_argument("--max-record-chars", type=int, default=2000)
@@ -318,6 +318,8 @@ def main():
         "zero-shot-classification",
         model="MoritzLaurer/deberta-v3-large-zeroshot-v2.0",
         device=args.device,
+        # Avoid slow float16 CPU inference; retain checkpoint precision on GPU.
+        dtype="float32" if args.device < 0 else "auto",
     )
 
     # Source scores (wide)
