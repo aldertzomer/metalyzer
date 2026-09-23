@@ -312,6 +312,19 @@ Install from conda
 
 ```conda env create -f environment.yml```
 
+### CPU-only installation
+
+For a machine without CUDA, create the CPU environment instead:
+
+```bash
+conda env create -f environment-cpu.yml
+conda activate metalyzer-cpu
+```
+
+`environment-cpu.yml` explicitly selects conda-forge's `pytorch-cpu`
+metapackage and therefore does not install CUDA, FlashAttention, or Triton.
+Run the pipeline with `--device -1`.
+
 Install dependencies by hand
 
 ```conda install -c conda-forge pandas pycountry```
