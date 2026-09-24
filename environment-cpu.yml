@@ -6,7 +6,10 @@ dependencies:
   - python=3.11
   - pandas
   - pycountry
-  - transformers
+  - transformers>=5.3,<6
+  # DeBERTa tokenizer loading/conversion.
   - sentencepiece
+  - protobuf
   # This metapackage forces conda-forge to select a CPU PyTorch build.
-  - pytorch-cpu
+  - pytorch-cpu>=2.10,<3
+  # Local taxonomy lookup/download and unittest use the Python standard library.

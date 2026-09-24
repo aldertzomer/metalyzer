@@ -316,9 +316,17 @@ Requirements:
 - Python ≥ 3.10
 - Conda environment recommended
 
-Install from conda
+For an NVIDIA CUDA GPU, install from Conda:
 
-```conda env create -f environment.yml```
+```bash
+conda env create -f environment.yml
+conda activate metalyzer
+```
+
+`environment.yml` selects conda-forge's `pytorch-gpu`; Conda resolves the CUDA
+runtime dependencies for the target system. A compatible NVIDIA driver is
+required. The file lists application dependencies rather than fixing every
+platform-specific package build or a user-specific installation path.
 
 ### CPU-only installation
 
@@ -333,10 +341,22 @@ conda activate metalyzer-cpu
 metapackage and therefore does not install CUDA, FlashAttention, or Triton.
 Run the pipeline with `--device -1`.
 
-Install dependencies by hand
+Both specifications use Python 3.11, Transformers 5.x, PyTorch 2.x, and the
+SentencePiece/Protobuf tokenizer dependencies. They are environment specifications,
+not exact lockfiles. Taxonomy parsing, downloading, and the tests use the Python
+standard library, so the taxonomy feature requires no additional packages.
+The experimental Mistral classifier still requires the optional `mistralai` package.
 
-```conda install -c conda-forge pandas pycountry```
-```pip install transformers torch```
+To update an existing environment, use the matching command:
+
+```bash
+conda env update -n metalyzer -f environment.yml
+# Or, for the CPU environment:
+conda env update -n metalyzer-cpu -f environment-cpu.yml
+```
+
+An update may retain packages from an older environment. Create a fresh CPU
+environment when switching from a CUDA installation.
 
 ---
 
