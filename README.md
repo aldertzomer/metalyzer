@@ -161,34 +161,38 @@ Example:
 
 The following results compare `benchmark_classified.tsv` (using `sources.tsv`)
 with `benchmark_classified_rich.tsv` (using `sources_rich.tsv`). Both were
-evaluated against `benchmark_true_labels.tsv` with `--min-score 0.2`.
-Accuracy is recall: correct calls divided by the number of true records for a
-source. Precision is correct calls divided by the number of calls made for a
-source. The benchmark contains no true `environment` or `laboratory` records,
-so their recall is not applicable and every call to either is a false positive.
+evaluated against `benchmark_true_labels.tsv` with `--min-score 0.2` and local
+host taxonomy enabled. Each run contains 255 `host_tax_id` assignments and
+1,065 NLI assignments. Accuracy is recall: correct calls divided by the number
+of true records for a source. Precision is correct calls divided by the number
+of calls made for a source.
 
 | Source | Standard accuracy | Standard precision | Rich accuracy | Rich precision |
 |---|---:|---:|---:|---:|
-| cat | 95.0% | 63.3% | 100.0% | 54.1% |
-| cattle | 98.0% | 77.8% | 97.0% | 99.0% |
-| chicken | 99.0% | 92.5% | 72.0% | 97.3% |
-| dog | 95.0% | 100.0% | 100.0% | 95.2% |
-| environment | — | 0.0% | — | 0.0% |
-| goat | 98.0% | 96.1% | 94.0% | 87.9% |
-| human | 75.0% | 100.0% | 72.0% | 100.0% |
-| laboratory | — | 0.0% | — | 0.0% |
-| other_animal | 35.0% | 100.0% | 37.0% | 100.0% |
-| pig | 100.0% | 82.0% | 100.0% | 94.3% |
-| sheep | 61.0% | 100.0% | 44.0% | 100.0% |
-| turkey | 99.0% | 100.0% | 75.0% | 100.0% |
-| unknown | 74.0% | 46.5% | 90.0% | 70.3% |
-| water | 84.0% | 100.0% | 87.0% | 88.8% |
-| waterbird | 82.0% | 86.3% | 63.0% | 100.0% |
-| wildbird | 79.0% | 79.0% | 98.0% | 65.8% |
+| cat | 100.0% | 83.3% | 100.0% | 60.6% |
+| cattle | 99.0% | 89.1% | 100.0% | 79.8% |
+| chicken | 98.0% | 98.0% | 98.0% | 100.0% |
+| dog | 96.0% | 100.0% | 100.0% | 97.1% |
+| environment | 75.0% | 7.7% | 25.0% | 14.3% |
+| goat | 97.0% | 100.0% | 94.0% | 97.9% |
+| human | 76.0% | 100.0% | 72.0% | 100.0% |
+| laboratory | 0.0% | N/A | 100.0% | 50.0% |
+| other_animal | 57.0% | 98.3% | 51.0% | 98.1% |
+| pig | 99.0% | 87.6% | 98.0% | 98.0% |
+| sheep | 95.0% | 100.0% | 95.0% | 99.0% |
+| turkey | 93.1% | 100.0% | 99.0% | 100.0% |
+| unknown | 86.7% | 65.4% | 86.7% | 73.3% |
+| wastewater | 100.0% | 25.0% | 100.0% | 27.8% |
+| water | 73.9% | 59.6% | 83.7% | 56.6% |
+| waterbird | 67.7% | 100.0% | 63.6% | 100.0% |
+| wildbird | 81.0% | 94.2% | 98.0% | 95.1% |
 
-The standard source list yields 83.2% overall accuracy and assigns a
-non-unknown source to 88.0% of records. The rich source list yields 79.5%
-overall accuracy and assigns a non-unknown source to 90.3% of records.
+The standard source list yields 1,140 correct calls of 1,320 (**86.4% overall
+accuracy**) and assigns a non-unknown source to 1,190 records (90.2%). The rich
+source list yields 1,158 correct calls (**87.7% overall accuracy**) and assigns
+a non-unknown source to 1,204 records (91.2%). Their precision among assigned
+records is 88.7% and 89.1%, respectively. The standard run has 130 NLI calls
+below the cutoff; the rich run has 116.
 
 ### Confusion matrices
 
@@ -200,44 +204,50 @@ not by a source candidate.
 
 | True source | Predicted calls |
 |---|---|
-| cat | cat: 19; pig: 1 |
-| cattle | cattle: 98; pig: 2 |
-| chicken | chicken: 99; pig: 1 |
-| dog | cattle: 1; dog: 95; unknown: 4 |
-| goat | cat: 1; cattle: 1; goat: 98 |
-| human | cattle: 13; human: 75; unknown: 12 |
-| other_animal | cat: 5; environment: 8; other_animal: 35; pig: 10; unknown: 39; wildbird: 3 |
-| pig | pig: 100 |
-| sheep | cat: 1; cattle: 4; pig: 7; sheep: 61; unknown: 1; waterbird: 13; wildbird: 13 |
-| turkey | environment: 1; turkey: 99 |
-| unknown | cat: 1; cattle: 6; chicken: 5; environment: 2; laboratory: 9; pig: 1; unknown: 74; wildbird: 2 |
-| water | cattle: 3; chicken: 1; environment: 10; unknown: 2; water: 84 |
-| waterbird | cat: 3; goat: 4; unknown: 8; waterbird: 82; wildbird: 3 |
-| wildbird | chicken: 2; unknown: 19; wildbird: 79 |
+| cat | cat: 20 |
+| cattle | cattle: 98; pig: 1 |
+| chicken | chicken: 99; environment: 1; pig: 1 |
+| dog | dog: 96; water: 4 |
+| environment | cattle: 1; environment: 3 |
+| goat | cat: 1; cattle: 1; goat: 97; other_animal: 1 |
+| human | cattle: 1; human: 76; unknown: 10; water: 13 |
+| laboratory | unknown: 1 |
+| other_animal | environment: 4; other_animal: 57; pig: 10; unknown: 2; water: 27 |
+| pig | cattle: 1; pig: 99 |
+| sheep | cattle: 4; pig: 1; sheep: 95 |
+| turkey | environment: 7; turkey: 94 |
+| unknown | cat: 1; cattle: 4; chicken: 2; environment: 2; pig: 1; unknown: 85; water: 1; wildbird: 2 |
+| wastewater | wastewater: 5 |
+| water | environment: 7; unknown: 2; wastewater: 15; water: 68 |
+| waterbird | cat: 2; environment: 15; unknown: 12; waterbird: 67; wildbird: 3 |
+| wildbird | unknown: 18; water: 1; wildbird: 81 |
 
 #### Rich source list
 
 | True source | Predicted calls |
 |---|---|
 | cat | cat: 20 |
-| cattle | cattle: 97; dog: 1; pig: 2 |
-| chicken | chicken: 72; environment: 26; pig: 1; wildbird: 1 |
+| cattle | cattle: 99 |
+| chicken | chicken: 99; environment: 1; pig: 1 |
 | dog | dog: 100 |
-| goat | cat: 4; cattle: 1; goat: 94; unknown: 1 |
-| human | environment: 3; human: 72; unknown: 14; water: 11 |
-| other_animal | cat: 11; environment: 42; other_animal: 37; unknown: 7; wildbird: 3 |
-| pig | pig: 100 |
-| sheep | dog: 4; goat: 12; pig: 1; sheep: 44; unknown: 1; wildbird: 38 |
-| turkey | environment: 25; turkey: 75 |
-| unknown | chicken: 2; environment: 2; laboratory: 2; pig: 2; unknown: 90; wildbird: 2 |
-| water | environment: 11; unknown: 2; water: 87 |
-| waterbird | cat: 2; environment: 16; goat: 1; unknown: 11; waterbird: 63; wildbird: 7 |
+| environment | cattle: 1; environment: 1; water: 2 |
+| goat | cat: 2; cattle: 2; goat: 94; other_animal: 1; unknown: 1 |
+| human | cattle: 10; human: 72; unknown: 5; water: 13 |
+| laboratory | laboratory: 1 |
+| other_animal | cat: 8; cattle: 3; environment: 1; other_animal: 51; unknown: 7; water: 30 |
+| pig | cattle: 1; pig: 98; sheep: 1 |
+| sheep | dog: 3; goat: 1; pig: 1; sheep: 95 |
+| turkey | turkey: 100; unknown: 1 |
+| unknown | cattle: 8; environment: 2; laboratory: 1; unknown: 85; wildbird: 2 |
+| wastewater | wastewater: 5 |
+| water | unknown: 2; wastewater: 13; water: 77 |
+| waterbird | cat: 3; environment: 2; goat: 1; unknown: 13; water: 14; waterbird: 63; wildbird: 3 |
 | wildbird | unknown: 2; wildbird: 98 |
 
-The rich hints increase calls to `environment` from 21 to 125, despite the
-benchmark containing no true environment records. This accounts for much of
-the decline in rich-list accuracy, especially for chicken, turkey,
-other_animal, sheep, water, and waterbird.
+The new taxonomy stage resolves explicit hosts before NLI; those calls have
+`source_method=host_tax_id` and `NA` score columns. The remaining errors are
+concentrated in text-derived and ambiguous categories, especially environmental
+and water-associated records.
 
 ### Experimental Mistral API classifier
 
@@ -262,49 +272,51 @@ includes `unknown` as a controlled label.
 
 #### Mistral benchmark results
 
-`benchmark_mistral.tsv` was evaluated against `benchmark_true_labels.tsv`
-using `sources_mistral.tsv`. It contains all 1,320 benchmark records and has
-1,260 correct calls: **95.5% overall accuracy**. Accuracy is recall: correct
-calls divided by the number of true records for a source. Precision is correct
-calls divided by the number of calls made for a source.
+`benchmark_mistral.tsv` was re-evaluated against the current
+`benchmark_true_labels.tsv` using `sources_mistral.tsv`. It contains all 1,320
+benchmark records and has 1,267 correct calls: **96.0% overall accuracy**.
+Accuracy is recall: correct calls divided by the number of true records for a
+source. Precision is correct calls divided by the number of calls made for a
+source.
 
 | Source | True rows | Called rows | Correct | Accuracy | Precision |
 |---|---:|---:|---:|---:|---:|
 | cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 100 | 99 | 99 | 99.0% | 100.0% |
-| chicken | 100 | 106 | 100 | 100.0% | 94.3% |
+| cattle | 99 | 99 | 99 | 100.0% | 100.0% |
+| chicken | 101 | 106 | 101 | 100.0% | 95.3% |
 | dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 0 | 14 | 0 | — | 0.0% |
+| environment | 4 | 14 | 4 | 100.0% | 28.6% |
 | goat | 100 | 100 | 100 | 100.0% | 100.0% |
 | human | 100 | 127 | 100 | 100.0% | 78.7% |
-| laboratory | 0 | 2 | 0 | — | 0.0% |
+| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
 | other_animal | 100 | 86 | 86 | 86.0% | 100.0% |
 | pig | 100 | 102 | 100 | 100.0% | 98.0% |
 | sheep | 100 | 100 | 100 | 100.0% | 100.0% |
-| turkey | 100 | 101 | 100 | 100.0% | 99.0% |
-| unknown | 100 | 69 | 69 | 69.0% | 100.0% |
-| water | 100 | 92 | 92 | 92.0% | 100.0% |
-| waterbird | 100 | 94 | 94 | 94.0% | 100.0% |
+| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
+| unknown | 98 | 69 | 69 | 70.4% | 100.0% |
+| wastewater | 5 | 0 | 0 | 0.0% | N/A |
+| water | 92 | 92 | 92 | 100.0% | 100.0% |
+| waterbird | 99 | 94 | 94 | 94.9% | 100.0% |
 | wildbird | 100 | 108 | 100 | 100.0% | 92.6% |
-
-The benchmark has no true `environment` or `laboratory` records, so every call
-to either is counted as a false positive.
 
 | True source | Mistral predicted calls |
 |---|---|
 | cat | cat: 20 |
-| cattle | cattle: 99; environment: 1 |
-| chicken | chicken: 100 |
+| cattle | cattle: 99 |
+| chicken | chicken: 101 |
 | dog | dog: 100 |
+| environment | environment: 4 |
 | goat | goat: 100 |
 | human | human: 100 |
+| laboratory | laboratory: 1 |
 | other_animal | human: 12; other_animal: 86; pig: 1; wildbird: 1 |
 | pig | pig: 100 |
 | sheep | sheep: 100 |
-| turkey | turkey: 100 |
-| unknown | chicken: 6; environment: 9; human: 11; laboratory: 2; pig: 1; unknown: 69; wildbird: 2 |
-| water | environment: 4; human: 4; water: 92 |
-| waterbird | turkey: 1; waterbird: 94; wildbird: 5 |
+| turkey | turkey: 101 |
+| unknown | chicken: 5; environment: 9; human: 11; laboratory: 1; pig: 1; unknown: 69; wildbird: 2 |
+| wastewater | environment: 1; human: 4 |
+| water | water: 92 |
+| waterbird | waterbird: 94; wildbird: 5 |
 | wildbird | wildbird: 100 |
 
 ---
