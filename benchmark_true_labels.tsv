@@ -44,7 +44,7 @@ SRR12828244	cattle	USA	2020
 SRR12828245	cattle	USA	2020
 SRR6652913	cattle	USA	2017
 SRR17900481	cattle	New Zealand	2018
-SRR4022329	cattle	USA	2011
+SRR4022329	environment	USA	2011
 SRR11459624	cattle	USA	2020
 SRR5941988	cattle	USA	2017
 SRR5890889	cattle	USA	2017
@@ -926,7 +926,7 @@ SRR21995108	water	China	2016
 ERR1025588	water	Spain	2010
 ERR4224335	water	Netherlands	2018
 SRR7010530	water	USA	2010
-SRR9030813	water	Australia	2015
+SRR9030813	environment	Australia	2015
 ERR4224356	water	Netherlands	2018
 ERR4224476	water	Netherlands	2018
 SRR5209551	water	Canada	2006
@@ -982,28 +982,28 @@ ERR4224500	water	Netherlands	2018
 SRR7012236	water	USA	2010
 ERR4224395	water	Netherlands	2018
 SRR6261842	water	USA	2010
-SRR6314326	water	Brazil	1996
+SRR6314326	wastewater	Brazil	1996
 ERR4224438	water	Netherlands	2018
 ERR4224496	water	Netherlands	2018
 ERR4224690	water	Netherlands	2019
 SRR14190376	water	USA	2014
 ERR4224345	water	Netherlands	2018
 ERR4224671	water	Netherlands	2019
-SRR16091611	water	USA	unknown
+SRR16091611	wastewater	USA	unknown
 ERR321060	water	unknown	unknown
-SRR12686264	water	Brazil	1995
-ERR4224397	water	Netherlands	2018
+SRR12686264	wastewater	Brazil	1995
+ERR4224397	wastewater	Netherlands	2018
 ERR4224470	water	Netherlands	2018
-SRR1635285	water	United Kingdom	2011
+SRR1635285	environment	United Kingdom	2011
 SRR8434292	water	USA	2010
-SRR9030874	water	Australia	2014
+SRR9030874	environment	Australia	2014
 SRR8434366	water	USA	2010
 SRR9030829	water	Australia	2015
 SRR9879555	water	Canada	2015
 SRR9030879	water	Australia	2014
 SRR7345807	water	USA	2010
 SRR6367412	water	USA	2009
-SRR12686236	water	Brazil	1996
+SRR12686236	wastewater	Brazil	1996
 SRR6311922	water	USA	2009
 ERR4224391	water	Netherlands	2018
 SRR7904961	water	USA	2010
@@ -1058,7 +1058,7 @@ ERR1163759	waterbird	United Kingdom	2013
 SRR13367291	waterbird	United Kingdom	2007
 ERR12188769	waterbird	United Kingdom	2007
 SRR21995110	waterbird	China	2017
-SRR10239225	waterbird	USA	2005
+SRR10239225	turkey	USA	2005
 SRR21995113	waterbird	China	2017
 SRR29316445	waterbird	USA	2018
 SRR29316426	waterbird	USA	2018
@@ -1241,7 +1241,7 @@ ERR11003616	unknown	Luxembourg	unknown
 ERR137056	unknown	unknown	unknown
 SRR10019064	unknown	United Kingdom	2016
 SRR12972551	unknown	USA	unknown
-SRR1816221	unknown	unknown	unknown
+SRR1816221	laboratory	unknown	unknown
 SRR15123871	unknown	USA	unknown
 SRR14633216	unknown	USA	unknown
 SRR10990438	unknown	USA	unknown
@@ -1251,7 +1251,7 @@ ERR470695	unknown	United Kingdom	unknown
 ERR713723	unknown	unknown	unknown
 SRR12835194	unknown	USA	unknown
 ERR226238	unknown	unknown	unknown
-ERR946747	unknown	unknown	unknown
+ERR946747	chicken	unknown	unknown
 SRR29931273	unknown	USA	unknown
 SRR13923227	unknown	USA	unknown
 SRR18072425	unknown	USA	2022
