@@ -28,8 +28,14 @@ python metalyzer.py \
 
 For each metadata row, the pipeline performs:
 
-### 1. Source classification (NLI)
-Uses a zero-shot model:
+### 1. Source classification (host taxonomy, then NLI)
+
+1. If `--taxonomy-dir` is supplied, resolve explicit `host_tax_id` values using local NCBI taxonomy.
+2. Unambiguous taxonomy-derived host assignments take precedence over language-model inference.
+3. Only unresolved rows are classified in batches using DeBERTa zero-shot NLI.
+4. NLI predictions below `--min-score` become `unknown`.
+
+The zero-shot model is:
 
 MoritzLaurer/deberta-v3-large-zeroshot-v2.0
 
@@ -131,19 +137,21 @@ cattle (bovine host)
 
 A TSV file with:
 
-id    <source scores...>    best_hit    year    country
+id    <source scores...>    best_hit    source_method    source_evidence    year    country
 
 Example:
 
-|run_acc| chicken|human|cattle|best_hit|year|country|
-|-------|--------|-----|------|--------|----|-------|
-|ERR001 |  0.85  |0.01 | 0.02 |chicken|2019|United States|
+|run_acc| chicken|human|cattle|best_hit|source_method|source_evidence|year|country|
+|-------|--------|-----|------|--------|-------------|---------------|----|-------|
+|ERR001 |  0.85  |0.01 | 0.02 |chicken|nli||2019|United States|
 
 - One score column per source, named using the text before the first `(` in `sources.tsv`; multi-word names are preserved
 - `best_hit` is the name of the source with the highest score; ties use the first source in `sources.tsv`
 - `--min-score` sets the minimum top score required for `best_hit`; lower-scoring rows are labelled `unknown` while their score columns are retained. The default is `0.2`.
 - Full source labels, including parenthetical hints, are still used for classification
-- Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `year`, and `country` column names
+- Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `source_method`, `source_evidence`, `year`, and `country` column names
+- Taxonomy-derived rows use `source_method=host_tax_id` and **all source scores are `NA`**, because no NLI inference was performed. They are not artificial probabilities and are not subject to `--min-score`.
+- NLI rows use `source_method=nli`, including below-threshold `unknown` calls; their `source_evidence` is blank.
 - year as 4-digit string
 - country as normalized name
 
@@ -333,6 +341,69 @@ Install dependencies by hand
 ---
 
 ## Usage
+
+### Optional local NCBI host taxonomy
+
+Download the [official NCBI taxonomy dump](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/)
+once (network access occurs only when this command is explicitly requested):
+
+```bash
+python metalyzer.py --download-taxonomy taxonomy
+```
+
+This fetches `https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz` and
+installs `nodes.dmp`, `names.dmp`, and `merged.dmp` in `taxonomy/`. You can
+also download and unpack these three files manually. Run the download command
+again to refresh the local data; retain a copy of the dump for reproducible runs.
+
+```bash
+python metalyzer.py --metadata benchmark.tsv --sources sources.tsv \
+  --out classified.tsv --id-col run_accession \
+  --taxonomy-dir taxonomy --device -1 --batch-size 10
+```
+
+Use `--device 0` for GPU execution. Normal taxonomy lookup is entirely local:
+files load once and lineages are cached. Only `host_tax_id` triggers taxonomy
+classification; the sample/pathogen `tax_id` is never used as host taxonomy.
+Numeric strings, integral decimal values such as `9940.0`, quoted IDs, and
+obsolete IDs in `merged.dmp` are supported. Missing or invalid IDs fall back
+to NLI. Omitting `--taxonomy-dir`, or supplying unreadable/malformed files,
+produces a warning and retains NLI-only classification.
+
+Anchors are resolved by scientific name: chicken (`Gallus gallus`), turkey
+(`Meleagris gallopavo`), cattle (`Bos taurus`), sheep (`Ovis aries`), goat
+(`Capra hircus`), human (`Homo sapiens`), dog (`Canis lupus familiaris`), cat
+(`Felis catus`), and domestic pig (`Sus scrofa domesticus`). Descendants inherit
+the most specific matching class. A class must exist in the selected sources
+file before it can be emitted.
+
+Other clearly identified non-bird animals can become `other_animal`.
+Other birds fall back to NLI for the ecological `wildbird`/`waterbird` distinction.
+Generic `Sus scrofa` and non-domestic descendants also fall back: taxonomy alone
+may not distinguish wild boar from domestic pig. Broad ancestors such as
+Mammalia or Metazoa remain unresolved, as do unknown/deleted IDs, broken
+lineages, and non-animal hosts. If anchors are missing or ambiguous, generic
+`other_animal` mapping is disabled to prevent false assignments. Environmental
+classes (`water`, `wastewater`, `environment`, `laboratory`) remain text-derived.
+
+For a sheep host, the output looks like this (all other source scores are also `NA`):
+
+```text
+run_accession   chicken turkey  pig cattle  sheep   ... best_hit source_method   source_evidence
+SRR17929619     NA      NA      NA  NA      NA      ... sheep    host_tax_id     host_tax_id=9940; Ovis aries
+```
+
+Input order, year/country extraction, and NLI score column names are preserved.
+Each run reports taxonomy calls, NLI calls, and NLI calls below the cutoff.
+If all hosts resolve, the model is not loaded at all.
+
+Run the offline unit and integration tests with:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+### Standard NLI usage
 
 export TOKENIZERS_PARALLELISM=true
 ```bash

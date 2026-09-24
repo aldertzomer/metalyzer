@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Classify metadata rows with:
-  - Source: zero-shot classification (MoritzLaurer/deberta-v3-large-zeroshot-v2.0)
+  - Source: optional local host taxonomy, then zero-shot classification
   - Year: deterministic extraction -> 4-digit year (1905–2026)
   - Country: deterministic normalization (handles "USA:WY", "U.S.A;USA", "Canada: Calgary, Alberta", etc.)
 
@@ -9,7 +9,7 @@ Input:
   --metadata  (TSV)
   --sources   (TSV with column 'source' or first column = labels)
 Output (TSV):
-  id <tab> <one column per source name> <tab> best_hit <tab> year <tab> country
+  id <tab> <source scores> <tab> best_hit <tab> source_method <tab> source_evidence <tab> year <tab> country
 
 Notes:
   - Set TOKENIZERS_PARALLELISM=true for speed.
@@ -26,7 +26,13 @@ from typing import Optional
 
 import pandas as pd
 import pycountry
-from transformers import pipeline
+from taxonomy import download_taxonomy, load_taxonomy
+
+
+def pipeline(*args, **kwargs):
+    # Taxonomy-only runs and downloads do not need to load Transformers/PyTorch.
+    from transformers import pipeline as hf_pipeline
+    return hf_pipeline(*args, **kwargs)
 
 
 # -------------------------
@@ -294,7 +300,7 @@ def parse_source_scores(
         raise ValueError("Each source must have a nonempty name before any parentheses")
     if len(set(names)) != len(names):
         raise ValueError("Source names before parentheses must be unique")
-    if set(names) & {id_col, "best_hit", "year", "country"}:
+    if set(names) & {id_col, "best_hit", "year", "country", "source_method", "source_evidence"}:
         raise ValueError("Source names must not conflict with output metadata columns")
 
     parsed = scores.copy()
@@ -311,12 +317,65 @@ def parse_source_scores(
 # -------------------------
 # Main
 # -------------------------
-def main():
+def classify_sources(df, records, source_labels, args, taxonomy=None):
+    """Resolve hosts first, batch only unresolved records, preserve row positions."""
+    empty = parse_source_scores(pd.DataFrame(columns=source_labels), args.id_col, args.min_score)
+    source_names = list(empty.columns[:-1])
+    resolved, nli_indices = {}, []
+    for position, (_, row) in enumerate(df.iterrows()):
+        result = taxonomy.classify_host_taxid(row.get("host_tax_id")) if taxonomy else None
+        if result is not None and result.source in source_names:
+            resolved[position] = result
+        else:
+            nli_indices.append(position)
+
+    score_rows = []
+    if nli_indices:
+        classifier = pipeline(
+            "zero-shot-classification",
+            model="MoritzLaurer/deberta-v3-large-zeroshot-v2.0",
+            device=args.device,
+            dtype="float32" if args.device < 0 else "auto",
+        )
+        for i in range(0, len(nli_indices), args.batch_size):
+            batch = [records[pos] for pos in nli_indices[i:i + args.batch_size]]
+            results = classifier(
+                batch, candidate_labels=source_labels,
+                hypothesis_template="The biological host or environmental source of this sample is {}.",
+                multi_label=False, batch_size=args.batch_size,
+            )
+            if isinstance(results, dict):
+                results = [results]
+            for result in results:
+                scores = dict.fromkeys(source_labels, 0.0)
+                scores.update({label: float(score) for label, score in zip(result["labels"], result["scores"])})
+                score_rows.append(scores)
+            print(f"Batch {i // args.batch_size + 1}: source classification done", flush=True)
+
+    nli = parse_source_scores(pd.DataFrame(score_rows, columns=source_labels), args.id_col, args.min_score)
+    nli.index = nli_indices
+    output = nli.reindex(range(len(df)))
+    output["source_method"] = "nli"
+    output["source_evidence"] = ""
+    for position, result in resolved.items():
+        output.loc[position, "best_hit"] = result.source
+        output.loc[position, "source_method"] = "host_tax_id"
+        output.loc[position, "source_evidence"] = result.evidence
+    print("Source classification:\n"
+          f"  taxonomy host_tax_id: {len(resolved)}\n"
+          f"  NLI:                  {len(nli_indices)}\n"
+          f"  NLI -> unknown:        {(nli['best_hit'] == 'unknown').sum()}", flush=True)
+    return output
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--metadata", required=True, help="Input metadata TSV")
-    ap.add_argument("--sources", required=True, help="Sources TSV (labels)")
-    ap.add_argument("--out", required=True, help="Output TSV")
-    ap.add_argument("--id-col", required=True, help="ID column name in metadata")
+    ap.add_argument("--metadata", help="Input metadata TSV")
+    ap.add_argument("--sources", help="Sources TSV (labels)")
+    ap.add_argument("--out", help="Output TSV")
+    ap.add_argument("--id-col", help="ID column name in metadata")
+    ap.add_argument("--taxonomy-dir", help="Local NCBI nodes.dmp, names.dmp, merged.dmp directory")
+    ap.add_argument("--download-taxonomy", metavar="DIR", help="Download NCBI taxonomy into DIR and exit")
 
     ap.add_argument("--device", type=int, default=0, help="GPU index (default: 0), or -1 for CPU")
     ap.add_argument("--batch-size", type=int, default=64)
@@ -329,7 +388,16 @@ def main():
     ap.add_argument("--max-value-chars", type=int, default=300)
     ap.add_argument("--max-record-chars", type=int, default=2000)
 
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
+    if args.download_taxonomy:
+        download_taxonomy(args.download_taxonomy)
+        print(f"Downloaded taxonomy to {args.download_taxonomy}")
+        return
+    for option in ("metadata", "sources", "out", "id_col"):
+        if not getattr(args, option):
+            ap.error(f"--{option.replace('_', '-')} is required for analysis")
+    if args.batch_size < 1:
+        ap.error("--batch-size must be positive")
     if not 0.0 <= args.min_score <= 1.0:
         ap.error("--min-score must be between 0 and 1")
 
@@ -352,42 +420,7 @@ def main():
         years.append("" if y is None else str(y))
         countries.append(extract_country_from_row(row, rec))
 
-    classifier = pipeline(
-        "zero-shot-classification",
-        model="MoritzLaurer/deberta-v3-large-zeroshot-v2.0",
-        device=args.device,
-        # Avoid slow float16 CPU inference; retain checkpoint precision on GPU.
-        dtype="float32" if args.device < 0 else "auto",
-    )
-
-    # Source scores (wide)
-    score_rows = []
-    for i in range(0, len(records), args.batch_size):
-        batch = records[i:i + args.batch_size]
-
-        source_results = classifier(
-            batch,
-            candidate_labels=source_labels,
-            hypothesis_template="The biological host or environmental source of this sample is {}.",
-            multi_label=False,  # nonindependent scores per label
-            batch_size=args.batch_size,
-        )
-
-        # print once per batch, per your preference
-        print(f"Batch {i // args.batch_size + 1}: source classification done", flush=True)
-
-        if isinstance(source_results, dict):
-            source_results = [source_results]
-
-        for r in source_results:
-            # HF returns labels sorted; we want fixed column order
-            m = {lab: 0.0 for lab in source_labels}
-            for lab, sc in zip(r["labels"], r["scores"]):
-                m[lab] = float(sc)
-            score_rows.append(m)
-
-    scores_df = pd.DataFrame(score_rows, columns=source_labels)  # enforce sources.tsv order
-    scores_df = parse_source_scores(scores_df, args.id_col, args.min_score)
+    scores_df = classify_sources(df, records, source_labels, args, load_taxonomy(args.taxonomy_dir))
 
     out_df = pd.concat(
         [
@@ -399,7 +432,7 @@ def main():
         axis=1,
     )
 
-    out_df.to_csv(args.out, sep="\t", index=False)
+    out_df.to_csv(args.out, sep="\t", index=False, na_rep="NA")
     print(f"Wrote {args.out} (n={len(out_df)})", flush=True)
 
 
