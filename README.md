@@ -159,48 +159,42 @@ Example:
 
 ## Benchmark results
 
-The following results compare `benchmark_classified.tsv` (using `sources.tsv`)
-with `benchmark_classified_rich.tsv` (using `sources_rich.tsv`). Both were
-evaluated against `benchmark_true_labels.tsv` with `--min-score 0.2` and local
-host taxonomy enabled. Each run contains 255 `host_tax_id` assignments and
-1,065 NLI assignments. Accuracy is recall: correct calls divided by the number
-of true records for a source. Precision is correct calls divided by the number
-of calls made for a source.
+The following results evaluate `benchmark_classified.tsv` using `sources.tsv`
+against `benchmark_true_labels.tsv`, with `--min-score 0.2` and local host
+taxonomy enabled. The run contains 255 `host_tax_id` assignments and 1,065 NLI
+assignments. Accuracy is recall: correct calls divided by the number of true
+records for a source. Precision is correct calls divided by the number of calls
+made for a source.
 
-| Source | Standard accuracy | Standard precision | Rich accuracy | Rich precision |
-|---|---:|---:|---:|---:|
-| cat | 100.0% | 90.9% | 100.0% | 90.9% |
-| cattle | 100.0% | 93.4% | 100.0% | 76.7% |
-| chicken | 98.0% | 100.0% | 98.0% | 96.1% |
-| dog | 100.0% | 100.0% | 100.0% | 97.1% |
-| environment | 25.0% | 2.1% | 25.0% | 5.0% |
-| goat | 97.0% | 99.0% | 96.0% | 99.0% |
-| human | 87.0% | 100.0% | 72.0% | 100.0% |
-| laboratory | 100.0% | 100.0% | 100.0% | 5.9% |
-| other_animal | 71.0% | 98.6% | 58.0% | 98.3% |
-| pig | 100.0% | 89.3% | 100.0% | 98.0% |
-| sheep | 95.0% | 100.0% | 95.0% | 97.9% |
-| turkey | 82.2% | 100.0% | 99.0% | 100.0% |
-| unknown | 83.7% | 58.6% | 72.4% | 70.3% |
-| wastewater | 100.0% | 25.0% | 100.0% | 27.8% |
-| water | 79.3% | 96.1% | 85.9% | 71.8% |
-| waterbird | 46.5% | 100.0% | 67.7% | 100.0% |
-| wildbird | 100.0% | 86.2% | 98.0% | 95.1% |
+| Source | Accuracy | Precision |
+|---|---:|---:|
+| cat | 100.0% | 90.9% |
+| cattle | 100.0% | 93.4% |
+| chicken | 98.0% | 100.0% |
+| dog | 100.0% | 100.0% |
+| environment | 25.0% | 2.1% |
+| goat | 97.0% | 99.0% |
+| human | 87.0% | 100.0% |
+| laboratory | 100.0% | 100.0% |
+| other_animal | 71.0% | 98.6% |
+| pig | 100.0% | 89.3% |
+| sheep | 95.0% | 100.0% |
+| turkey | 82.2% | 100.0% |
+| unknown | 83.7% | 58.6% |
+| wastewater | 100.0% | 25.0% |
+| water | 79.3% | 96.1% |
+| waterbird | 46.5% | 100.0% |
+| wildbird | 100.0% | 86.2% |
 
-The standard source list yields 1,159 correct calls of 1,320 (**87.8% overall
-accuracy**) and assigns a non-unknown source to 1,180 records (89.4%). The rich
-source list yields 1,161 correct calls (**88.0% overall accuracy**) and assigns
-a non-unknown source to 1,219 records (92.3%). Their precision among assigned
-records is 91.3% and 89.4%, respectively. The standard run has 140 NLI calls
-below the cutoff; the rich run has 101.
+The source list yields 1,159 correct calls of 1,320 (**87.8% overall
+accuracy**) and assigns a non-unknown source to 1,180 records (89.4%). Precision
+among assigned records is 91.3%. The run has 140 NLI calls below the cutoff.
 
 ### Confusion matrices
 
 Rows are true labels and entries list `predicted_label: count`. Only nonzero
 entries are shown. The `unknown` column is created by the 0.2 score cutoff,
 not by a source candidate.
-
-#### Standard source list
 
 | True source | Predicted calls |
 |---|---|
@@ -221,28 +215,6 @@ not by a source candidate.
 | water | environment: 4; wastewater: 15; water: 73 |
 | waterbird | cat: 1; environment: 4; goat: 1; unknown: 33; waterbird: 46; wildbird: 14 |
 | wildbird | wildbird: 100 |
-
-#### Rich source list
-
-| True source | Predicted calls |
-|---|---|
-| cat | cat: 20 |
-| cattle | cattle: 99 |
-| chicken | chicken: 99; environment: 1; pig: 1 |
-| dog | dog: 100 |
-| environment | cattle: 1; environment: 1; water: 2 |
-| goat | cat: 2; goat: 96; laboratory: 1; other_animal: 1 |
-| human | cattle: 22; human: 72; laboratory: 1; unknown: 5 |
-| laboratory | laboratory: 1 |
-| other_animal | environment: 1; other_animal: 58; unknown: 12; water: 29 |
-| pig | pig: 100 |
-| sheep | dog: 3; goat: 1; pig: 1; sheep: 95 |
-| turkey | turkey: 100; unknown: 1 |
-| unknown | cattle: 7; chicken: 4; environment: 2; laboratory: 12; unknown: 71; wildbird: 2 |
-| wastewater | wastewater: 5 |
-| water | wastewater: 13; water: 79 |
-| waterbird | environment: 15; laboratory: 2; sheep: 2; unknown: 10; waterbird: 67; wildbird: 3 |
-| wildbird | unknown: 2; wildbird: 98 |
 
 The new taxonomy stage resolves explicit hosts before NLI; those calls have
 `source_method=host_tax_id` and `NA` score columns. The remaining errors are
