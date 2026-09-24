@@ -56,6 +56,22 @@ class TaxonomyTests(unittest.TestCase):
             with self.subTest(value=value):
                 self.assertIsNone(self.taxonomy.classify_host_taxid(value))
 
+    def test_build_record_uses_natural_field_and_value_boundaries(self):
+        row = pd.Series({
+            "host_scientific_name": "Ovis aries",
+            "isolation_source": "stool",
+            "geo_loc_name": "USA: WY",
+            "missing_value": "NA",
+        })
+        record = metalyzer.build_record(row)
+        self.assertEqual(
+            record,
+            "host scientific name: Ovis aries; isolation source: stool; geo loc name: USA: WY",
+        )
+        self.assertNotIn('="', record)
+        self.assertEqual(metalyzer.extract_country_from_row(row, record), "United States")
+        self.assertEqual(metalyzer.build_record(pd.Series(dtype=object)), "metadata: (empty)")
+
     def fake_pipeline(self, *args, **kwargs):
         self.assertEqual(kwargs["dtype"], "float32" if self.args.device < 0 else "auto")
         def classifier(batch, **options):

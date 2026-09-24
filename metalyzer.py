@@ -60,11 +60,12 @@ def build_record(row: pd.Series, max_value_chars: int = 300, max_record_chars: i
         v = str(val).strip().replace("\n", " ").replace("\r", " ")
         if len(v) > max_value_chars:
             v = v[:max_value_chars] + "…"
-        parts.append(f'{col}="{v}"')
+        field = str(col).replace("_", " ")
+        parts.append(f"{field}: {v}")
     rec = "; ".join(parts)
     if len(rec) > max_record_chars:
         rec = rec[:max_record_chars] + "…"
-    return rec if rec.strip() else 'metadata="(empty)"'
+    return rec if rec.strip() else "metadata: (empty)"
 
 
 # -------------------------
@@ -252,15 +253,18 @@ def normalize_country(raw: str) -> str:
 #            c = normalize_country(row[col])
 #            if c != "unknown":
 #                return c
-#    # fallback: scan record for "country=" or "location=" style fragments
+#    # fallback: scan record for "country: ..." or "location: ..." fragments
 #    # (cheap heuristic: try to normalize the whole record; normalize_country will split and fail fast)
 #    return normalize_country(record)
 #
 ## only accept explicit "country-like" fragments from the record
-# RE_KV_COUNTRY = re.compile(r'\b(country|location|geo_loc_name|geographic_location)\s*=\s*"([^"]+)"', re.IGNORECASE)
+# RE_KV_COUNTRY = re.compile(r'\b(country|location|geo loc name|geographic location)\s*:\s*([^;]+)', re.IGNORECASE)
 
 # only accept explicit "country-like" fragments from the record
-RE_KV_COUNTRY = re.compile(r'\b(country|location|geo_loc_name|geographic_location)\s*=\s*"([^"]+)"', re.IGNORECASE)
+RE_KV_COUNTRY = re.compile(
+    r"\b(?:country|location|geo loc name|geographic location)\s*:\s*([^;]+)",
+    re.IGNORECASE,
+)
 
 
 def extract_country_from_row(row: pd.Series, record: str) -> str:
@@ -272,10 +276,10 @@ def extract_country_from_row(row: pd.Series, record: str) -> str:
             if c != "unknown":
                 return c
 
-    # 2) fallback: only if record explicitly contains country/location="..."
+    # 2) fallback: only if record explicitly contains a country/location field.
     m = RE_KV_COUNTRY.search(record)
     if m:
-        c = normalize_country(m.group(2))
+        c = normalize_country(m.group(1))
         if c != "unknown":
             return c
 

@@ -41,7 +41,7 @@ MoritzLaurer/deberta-v3-large-zeroshot-v2.0
 
 The metadata row is converted into a structured string:
 
-host="Gallus gallus"; isolation_source="neck skin"; country="USA"
+host: Gallus gallus; isolation source: neck skin; country: USA
 
 This is evaluated against candidate labels using NLI.
 
