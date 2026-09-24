@@ -169,30 +169,30 @@ of calls made for a source.
 
 | Source | Standard accuracy | Standard precision | Rich accuracy | Rich precision |
 |---|---:|---:|---:|---:|
-| cat | 100.0% | 83.3% | 100.0% | 60.6% |
-| cattle | 99.0% | 89.1% | 100.0% | 79.8% |
-| chicken | 98.0% | 98.0% | 98.0% | 100.0% |
-| dog | 96.0% | 100.0% | 100.0% | 97.1% |
-| environment | 75.0% | 7.7% | 25.0% | 14.3% |
-| goat | 97.0% | 100.0% | 94.0% | 97.9% |
-| human | 76.0% | 100.0% | 72.0% | 100.0% |
-| laboratory | 0.0% | N/A | 100.0% | 50.0% |
-| other_animal | 57.0% | 98.3% | 51.0% | 98.1% |
-| pig | 99.0% | 87.6% | 98.0% | 98.0% |
-| sheep | 95.0% | 100.0% | 95.0% | 99.0% |
-| turkey | 93.1% | 100.0% | 99.0% | 100.0% |
-| unknown | 86.7% | 65.4% | 86.7% | 73.3% |
+| cat | 100.0% | 90.9% | 100.0% | 90.9% |
+| cattle | 100.0% | 93.4% | 100.0% | 76.7% |
+| chicken | 98.0% | 100.0% | 98.0% | 96.1% |
+| dog | 100.0% | 100.0% | 100.0% | 97.1% |
+| environment | 25.0% | 2.1% | 25.0% | 5.0% |
+| goat | 97.0% | 99.0% | 96.0% | 99.0% |
+| human | 87.0% | 100.0% | 72.0% | 100.0% |
+| laboratory | 100.0% | 100.0% | 100.0% | 5.9% |
+| other_animal | 71.0% | 98.6% | 58.0% | 98.3% |
+| pig | 100.0% | 89.3% | 100.0% | 98.0% |
+| sheep | 95.0% | 100.0% | 95.0% | 97.9% |
+| turkey | 82.2% | 100.0% | 99.0% | 100.0% |
+| unknown | 83.7% | 58.6% | 72.4% | 70.3% |
 | wastewater | 100.0% | 25.0% | 100.0% | 27.8% |
-| water | 73.9% | 59.6% | 83.7% | 56.6% |
-| waterbird | 67.7% | 100.0% | 63.6% | 100.0% |
-| wildbird | 81.0% | 94.2% | 98.0% | 95.1% |
+| water | 79.3% | 96.1% | 85.9% | 71.8% |
+| waterbird | 46.5% | 100.0% | 67.7% | 100.0% |
+| wildbird | 100.0% | 86.2% | 98.0% | 95.1% |
 
-The standard source list yields 1,140 correct calls of 1,320 (**86.4% overall
-accuracy**) and assigns a non-unknown source to 1,190 records (90.2%). The rich
-source list yields 1,158 correct calls (**87.7% overall accuracy**) and assigns
-a non-unknown source to 1,204 records (91.2%). Their precision among assigned
-records is 88.7% and 89.1%, respectively. The standard run has 130 NLI calls
-below the cutoff; the rich run has 116.
+The standard source list yields 1,159 correct calls of 1,320 (**87.8% overall
+accuracy**) and assigns a non-unknown source to 1,180 records (89.4%). The rich
+source list yields 1,161 correct calls (**88.0% overall accuracy**) and assigns
+a non-unknown source to 1,219 records (92.3%). Their precision among assigned
+records is 91.3% and 89.4%, respectively. The standard run has 140 NLI calls
+below the cutoff; the rich run has 101.
 
 ### Confusion matrices
 
@@ -205,22 +205,22 @@ not by a source candidate.
 | True source | Predicted calls |
 |---|---|
 | cat | cat: 20 |
-| cattle | cattle: 98; pig: 1 |
+| cattle | cattle: 99 |
 | chicken | chicken: 99; environment: 1; pig: 1 |
-| dog | dog: 96; water: 4 |
-| environment | cattle: 1; environment: 3 |
-| goat | cat: 1; cattle: 1; goat: 97; other_animal: 1 |
-| human | cattle: 1; human: 76; unknown: 10; water: 13 |
-| laboratory | unknown: 1 |
-| other_animal | environment: 4; other_animal: 57; pig: 10; unknown: 2; water: 27 |
-| pig | cattle: 1; pig: 99 |
-| sheep | cattle: 4; pig: 1; sheep: 95 |
-| turkey | environment: 7; turkey: 94 |
-| unknown | cat: 1; cattle: 4; chicken: 2; environment: 2; pig: 1; unknown: 85; water: 1; wildbird: 2 |
+| dog | dog: 100 |
+| environment | cattle: 1; environment: 1; water: 2 |
+| goat | cat: 1; goat: 97; other_animal: 1; unknown: 1 |
+| human | human: 87; unknown: 13 |
+| laboratory | laboratory: 1 |
+| other_animal | environment: 17; other_animal: 71; unknown: 11; water: 1 |
+| pig | pig: 100 |
+| sheep | pig: 5; sheep: 95 |
+| turkey | environment: 18; turkey: 83 |
+| unknown | cattle: 6; environment: 2; pig: 6; unknown: 82; wildbird: 2 |
 | wastewater | wastewater: 5 |
-| water | environment: 7; unknown: 2; wastewater: 15; water: 68 |
-| waterbird | cat: 2; environment: 15; unknown: 12; waterbird: 67; wildbird: 3 |
-| wildbird | unknown: 18; water: 1; wildbird: 81 |
+| water | environment: 4; wastewater: 15; water: 73 |
+| waterbird | cat: 1; environment: 4; goat: 1; unknown: 33; waterbird: 46; wildbird: 14 |
+| wildbird | wildbird: 100 |
 
 #### Rich source list
 
@@ -231,17 +231,17 @@ not by a source candidate.
 | chicken | chicken: 99; environment: 1; pig: 1 |
 | dog | dog: 100 |
 | environment | cattle: 1; environment: 1; water: 2 |
-| goat | cat: 2; cattle: 2; goat: 94; other_animal: 1; unknown: 1 |
-| human | cattle: 10; human: 72; unknown: 5; water: 13 |
+| goat | cat: 2; goat: 96; laboratory: 1; other_animal: 1 |
+| human | cattle: 22; human: 72; laboratory: 1; unknown: 5 |
 | laboratory | laboratory: 1 |
-| other_animal | cat: 8; cattle: 3; environment: 1; other_animal: 51; unknown: 7; water: 30 |
-| pig | cattle: 1; pig: 98; sheep: 1 |
+| other_animal | environment: 1; other_animal: 58; unknown: 12; water: 29 |
+| pig | pig: 100 |
 | sheep | dog: 3; goat: 1; pig: 1; sheep: 95 |
 | turkey | turkey: 100; unknown: 1 |
-| unknown | cattle: 8; environment: 2; laboratory: 1; unknown: 85; wildbird: 2 |
+| unknown | cattle: 7; chicken: 4; environment: 2; laboratory: 12; unknown: 71; wildbird: 2 |
 | wastewater | wastewater: 5 |
-| water | unknown: 2; wastewater: 13; water: 77 |
-| waterbird | cat: 3; environment: 2; goat: 1; unknown: 13; water: 14; waterbird: 63; wildbird: 3 |
+| water | wastewater: 13; water: 79 |
+| waterbird | environment: 15; laboratory: 2; sheep: 2; unknown: 10; waterbird: 67; wildbird: 3 |
 | wildbird | unknown: 2; wildbird: 98 |
 
 The new taxonomy stage resolves explicit hosts before NLI; those calls have
