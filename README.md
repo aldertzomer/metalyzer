@@ -498,6 +498,52 @@ A 12-GB host/device is a target, not a guaranteed fit. Measure peak memory on
 your actual hardware and input. CPU execution can be slow. If necessary, select
 `--llm-model Qwen/Qwen3-1.7B` explicitly and evaluate it separately.
 
+#### Local LLM benchmark results
+
+`benchmark_llm.tsv` was generated with `Qwen/Qwen3-4B-Instruct-2507` on GPU
+using local taxonomy, `--llm-batch-size 10`, and the command above. It contains
+all 1,320 benchmark records: 255 `host_tax_id` assignments and 1,065 local LLM
+assignments. The LLM returned 104 `unknown` labels, including 10 malformed
+responses safely recorded as `invalid_llm_output` evidence. Accuracy is recall:
+correct calls divided by the number of true records for a source. Precision is
+correct calls divided by the number of calls made for a source.
+
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 24 | 20 | 100.0% | 83.3% |
+| cattle | 99 | 100 | 98 | 99.0% | 98.0% |
+| chicken | 101 | 101 | 101 | 100.0% | 100.0% |
+| dog | 100 | 96 | 96 | 96.0% | 100.0% |
+| environment | 4 | 4 | 1 | 25.0% | 25.0% |
+| goat | 100 | 99 | 99 | 99.0% | 100.0% |
+| human | 100 | 101 | 100 | 100.0% | 99.0% |
+| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
+| other_animal | 100 | 60 | 59 | 59.0% | 98.3% |
+| pig | 100 | 101 | 100 | 100.0% | 99.0% |
+| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
+| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
+| unknown | 98 | 104 | 89 | 90.8% | 85.6% |
+| wastewater | 5 | 22 | 5 | 100.0% | 22.7% |
+| water | 92 | 65 | 65 | 70.7% | 100.0% |
+| waterbird | 99 | 108 | 92 | 92.9% | 85.2% |
+| wildbird | 100 | 132 | 96 | 96.0% | 72.7% |
+
+The local LLM yields 1,223 correct calls of 1,320 (**92.7% overall
+accuracy**) and assigns a non-unknown source to 1,216 records (92.1%). Precision
+among assigned records is 93.3%. The full run completed with 10 invalid LLM
+outputs, all visible in `source_evidence` rather than silently remapped.
+
+Rows are true sources and columns are predicted sources. Click either image to
+inspect the full matrix.
+
+##### Absolute counts
+
+[![Local Qwen3-4B LLM source confusion matrix: absolute counts](assets/benchmark-llm-confusion-absolute.svg)](assets/benchmark-llm-confusion-absolute.svg)
+
+##### Row percentages
+
+[![Local Qwen3-4B LLM source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
+
 ## Performance Notes
 
 - Source classification runs on the selected CPU or GPU

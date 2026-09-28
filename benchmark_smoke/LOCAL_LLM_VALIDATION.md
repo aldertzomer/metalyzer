@@ -1,10 +1,7 @@
 # Local LLM backend validation
 
-This report records validation of the implementation in `metalyzer.py` before
-testing on GPU machines.
-The default-model (4B) real run and full LLM benchmark remain pending hardware
-capacity. The successful real LLM run below explicitly selected the permitted
-smaller 1.7B model. Its figures must not be presented as 4B benchmark results.
+This report records validation of the implementation in `metalyzer.py`,
+including the completed default-model GPU benchmark.
 
 ## Environment
 
@@ -74,7 +71,43 @@ unchanged. Batch size 2 accommodated this host's limited memory.
 - The external process monitor observed the Windows venv launcher rather than
   the inference child, so its peak-memory reading is not used.
 
-## Real local LLM smoke test
+## Full default-model GPU validation
+
+The requested full GPU benchmark completed with the default
+`Qwen/Qwen3-4B-Instruct-2507` model and local taxonomy:
+
+```bash
+python metalyzer.py --metadata benchmark.tsv --sources sources.tsv \
+  --out benchmark_llm.tsv --id-col run_accession --taxonomy-dir taxonomy \
+  --method llm --llm-model Qwen/Qwen3-4B-Instruct-2507 \
+  --device 0 --llm-batch-size 10
+```
+
+`benchmark_llm.tsv` contains all 1,320 records and has a one-to-one accession
+match with `benchmark_true_labels.tsv`. Evaluation with
+`benchmark_smoke/evaluate_local_backends.py` produced:
+
+- 1,223 correct calls: **92.7% overall accuracy**.
+- 255 `host_tax_id` calls and 1,065 LLM calls.
+- 104 `unknown` predictions and 10 invalid LLM outputs.
+- 1,216 non-unknown assignments (92.1% coverage), with 93.3% precision among
+  assigned records.
+- All 16 source-score columns are `NA` for LLM and taxonomy rows, all output
+  labels are canonical labels or `unknown`, and year/country values are present.
+
+The invalid outputs are traceable rather than silently mapped: three
+`environmental`, two `duck`, two `environmental water`, and one each for
+`duck: duck (poultry host Anas spp. including duck meat or poultry`,
+`pheasant: chicken (poultry host Gallus gallus including chicken meat or`, and
+`food`. The full per-source metrics and count/row-percentage confusion matrices
+are saved under `benchmark_smoke/local_llm_evaluation/` and presented in the
+README.
+
+This resolves the pending default-model functional and full-benchmark hardware
+validation. Peak GPU memory was not recorded by the supplied run, so this report
+does not claim a measured GPU-memory requirement or guaranteed 12-GB fit.
+
+## Smaller CPU LLM smoke test
 
 The requested default-model command with `--device 0` exited before loading
 weights with:
@@ -120,7 +153,7 @@ Wrote benchmark_smoke/llm_1_7b_10.tsv (n=10)
   establish 12-GB compatibility for the default Qwen3-4B-Instruct-2507.
 - No prompt tuning was performed after observing the output.
 
-## Saved benchmark comparison
+## Benchmark comparison
 
 Accession joins were checked for uniqueness and coverage. The saved DeBERTa
 and Mistral predictions were re-evaluated, not regenerated.
@@ -129,29 +162,12 @@ and Mistral predictions were re-evaluated, not regenerated.
 |---|---:|---:|---:|---:|---:|---:|
 | benchmark_classified.tsv | 1320 | 1144 | 86.7% | 136 | 255 | 0 |
 | benchmark_mistral.tsv | 1320 | 1267 | 96.0% | 69 | Not recorded | API backend |
-| llm_1_7b_10.tsv (smoke subset only) | 10 | 9 | 90.0% | 1 | 0 | 10 |
+| benchmark_llm.tsv (Qwen3-4B GPU) | 1320 | 1223 | 92.7% | 104 | 255 | 1065 |
+| llm_1_7b_10.tsv (CPU smoke subset only) | 10 | 9 | 90.0% | 1 | 0 | 10 |
 
 Per-class recall/precision, counts, and row-percentage confusion matrices are
-saved in `benchmark_smoke/local_llm_evaluation/`. The 10-row local result is
-not directly comparable to the full 1320-row baselines.
-
-A full **default 4B** run could not be validated on the available hardware.
-The smaller CPU run averaged tens of seconds per sample, implying many hours
-for a full fallback benchmark; that additional full fallback run was not
-started. No full local-LLM benchmark accuracy is claimed.
-
-To run the intended full benchmark on a suitable host:
-
-```bash
-python metalyzer.py --metadata benchmark.tsv --sources sources.tsv \
-  --out benchmark_llm.tsv --id-col run_accession --taxonomy-dir taxonomy \
-  --method llm --llm-model Qwen/Qwen3-4B-Instruct-2507 \
-  --device 0 --llm-batch-size 1
-python benchmark_smoke/evaluate_local_backends.py --prediction benchmark_llm.tsv best_hit
-```
-
-Only supply `--taxonomy-dir taxonomy` when the real local dump exists. For
-comparison with the saved taxonomy-assisted DeBERTa run, use the same dump.
+saved in `benchmark_smoke/local_llm_evaluation/`. The 10-row CPU result is not
+directly comparable to the full 1320-row results.
 
 ## Files changed or created in this task
 
@@ -171,6 +187,7 @@ the two raw NLI log files below remain local and are not included in the commit)
 - `benchmark_smoke/nli_backend_20.log`
 - `benchmark_smoke/nli_backend_20.stderr.log`
 - `benchmark_smoke/llm_1_7b_10.tsv`
+- `benchmark_llm.tsv`
 - `benchmark_smoke/local_llm_evaluation/summary.json`
 - `benchmark_smoke/local_llm_evaluation/benchmark_classified_per_class.tsv`
 - `benchmark_smoke/local_llm_evaluation/benchmark_classified_confusion_counts.tsv`
@@ -181,5 +198,8 @@ the two raw NLI log files below remain local and are not included in the commit)
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_per_class.tsv`
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_confusion_counts.tsv`
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_confusion_percent.tsv`
+- `benchmark_smoke/local_llm_evaluation/benchmark_llm_per_class.tsv`
+- `benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_counts.tsv`
+- `benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_percent.tsv`
 
 The normal Hugging Face cache also now contains Qwen3-1.7B outside the repository.

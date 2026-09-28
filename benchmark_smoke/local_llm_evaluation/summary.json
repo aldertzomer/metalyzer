@@ -25,16 +25,17 @@
     "source_methods": null
   },
   {
-    "file": "benchmark_smoke\\llm_1_7b_10.tsv",
-    "records": 10,
-    "correct": 9,
-    "overall_accuracy": 0.9,
-    "unknown_predictions": 1,
-    "invalid_llm_outputs": 1,
-    "taxonomy_calls": 0,
-    "llm_calls": 10,
+    "file": "benchmark_llm.tsv",
+    "records": 1320,
+    "correct": 1223,
+    "overall_accuracy": 0.9265151515151515,
+    "unknown_predictions": 104,
+    "invalid_llm_outputs": 10,
+    "taxonomy_calls": 255,
+    "llm_calls": 1065,
     "source_methods": {
-      "llm": 10
+      "llm": 1065,
+      "host_tax_id": 255
     }
   }
 ]

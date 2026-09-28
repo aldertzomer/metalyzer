@@ -9,13 +9,13 @@ benchmark_true_labels.tsv:
 from __future__ import annotations
 
 import csv
+import argparse
 from html import escape
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
 TRUE_LABELS = ROOT / "benchmark_true_labels.tsv"
-CLASSIFIED = ROOT / "benchmark_classified.tsv"
 ASSET_DIR = ROOT / "assets"
 
 LABELS = [
@@ -56,9 +56,9 @@ def read_tsv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle, delimiter="\t"))
 
 
-def load_matrix() -> tuple[dict[str, int], dict[str, dict[str, int]]]:
+def load_matrix(classified: Path) -> tuple[dict[str, int], dict[str, dict[str, int]]]:
     true_rows = read_tsv(TRUE_LABELS)
-    classified_rows = read_tsv(CLASSIFIED)
+    classified_rows = read_tsv(classified)
     true_by_id = {row["run_accession"]: row["final_species"] for row in true_rows}
     predicted_by_id = {row["run_accession"]: row["best_hit"] for row in classified_rows}
 
@@ -168,18 +168,24 @@ def render_svg(
 
 
 def main() -> None:
-    row_totals, matrix = load_matrix()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--classified", type=Path, default=ROOT / "benchmark_classified.tsv")
+    parser.add_argument("--prefix", default="benchmark", help="Output filename prefix under assets/")
+    parser.add_argument("--title", default="Benchmark", help="Title prefix in the SVG")
+    args = parser.parse_args()
+    classified = args.classified if args.classified.is_absolute() else ROOT / args.classified
+    row_totals, matrix = load_matrix(classified)
     ASSET_DIR.mkdir(exist_ok=True)
     render_svg(
-        ASSET_DIR / "benchmark-confusion-absolute.svg",
-        "Benchmark source confusion matrix — absolute counts",
+        ASSET_DIR / f"{args.prefix}-confusion-absolute.svg",
+        f"{args.title} source confusion matrix — absolute counts",
         row_totals,
         matrix,
         percentages=False,
     )
     render_svg(
-        ASSET_DIR / "benchmark-confusion-percent.svg",
-        "Benchmark source confusion matrix — row percentages",
+        ASSET_DIR / f"{args.prefix}-confusion-percent.svg",
+        f"{args.title} source confusion matrix — row percentages",
         row_totals,
         matrix,
         percentages=True,
