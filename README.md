@@ -26,6 +26,22 @@ python metalyzer.py \
 
 ## Overview
 
+### Modular development
+
+The `modular` branch separates the pipeline into independent stages under
+[`modules/`](modules/README.md): date extraction, country normalization,
+deterministic source parsing (including taxonomy ID-to-scientific-name lookup),
+NLI, LLM, input preparation, and output combination. `metalyzer.py` contains
+command-line options and stage orchestration.
+
+Developers can start with the [module contracts and extension examples](modules/README.md)
+without reading the rest of the pipeline. Typed batch/result containers in
+[`modules/contracts.py`](modules/contracts.py) define row identity, source scores,
+provenance, missing values, and validation. Default commands and TSV columns are
+preserved. `--skip-date` and `--skip-country` disable those stages and omit their
+output columns. Taxonomy is enabled with `--taxonomy-dir`; `--method nli|llm`
+selects the fallback classifier, which runs only on unresolved rows.
+
 For each metadata row, the pipeline performs:
 
 ### 1. Source classification (host taxonomy, then NLI or LLM)
@@ -317,8 +333,9 @@ Run the pipeline with `--device -1`.
 
 Both specifications use Python 3.11, Transformers 5.x, PyTorch 2.x, and the
 SentencePiece/Protobuf tokenizer dependencies. They are environment specifications,
-not exact lockfiles. Taxonomy parsing, downloading, and the tests use the Python
-standard library, so the taxonomy feature requires no additional packages.
+not exact lockfiles. Taxonomy dump parsing and downloading use the Python
+standard library. The pipeline and tests use the dependencies listed in these
+environments; the taxonomy feature requires no additional packages.
 The experimental Mistral classifier still requires the optional `mistralai` package.
 
 To update an existing environment, use the matching command:

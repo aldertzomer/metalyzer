@@ -10,7 +10,9 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 
 import metalyzer
-from taxonomy import TaxonomySourceResult
+from modules import country, records as record_module, deterministic_source, llm as llm_module, nli as nli_module
+from helpers import classify, llm_config
+from modules.deterministic_source import TaxonomySourceResult
 
 
 CLI = ["--metadata", "input.tsv", "--sources", "sources.tsv", "--out", "out.tsv", "--id-col", "id"]
@@ -62,14 +64,14 @@ class LocalLLMTests(unittest.TestCase):
             AutoTokenizer=SimpleNamespace(from_pretrained=tok_factory),
             AutoModelForCausalLM=SimpleNamespace(from_pretrained=model_factory),
         )}))
-        nli = self.enterContext(patch.object(metalyzer, "pipeline", side_effect=AssertionError("NLI loaded in LLM mode")))
+        nli = self.enterContext(patch.object(nli_module, "pipeline", side_effect=AssertionError("NLI loaded in LLM mode")))
         return SimpleNamespace(tokenizer=tokenizer, model=model, tok_factory=tok_factory,
                                model_factory=model_factory, nli=nli)
 
     def classify(self, records, taxonomy=None, df=None):
         if df is None:
             df = pd.DataFrame({"id": range(len(records))})
-        return metalyzer.classify_sources(df, records, LABELS, self.args, taxonomy)
+        return classify(df, records, LABELS, self.args, taxonomy)
 
     def test_cli_defaults_and_validation(self):
         args = metalyzer.parse_args(CLI)
@@ -96,24 +98,24 @@ class LocalLLMTests(unittest.TestCase):
                  'other_animal': 'other_animal', 'unknown': 'unknown'}
         for response, expected in valid.items():
             with self.subTest(response=response):
-                self.assertEqual(metalyzer.parse_llm_response(response, NAMES), (expected, ""))
+                self.assertEqual(llm_module.parse_llm_response(response, NAMES), (expected, ""))
         for response in ['I think turkey is the likely source.', 'turkey or sheep', '', 'turkey.',
                          '{"source":12}', '{"source":"turkey","why":"food"}', '{broken',
                          '["turkey"]', '```turkey```', 'turkey\nexplanation', 'not_in_sources']:
             with self.subTest(response=response):
-                result, evidence = metalyzer.parse_llm_response(response, NAMES)
+                result, evidence = llm_module.parse_llm_response(response, NAMES)
                 self.assertEqual(result, 'unknown')
                 self.assertTrue(evidence.startswith('invalid_llm_output='))
 
     def test_ambiguous_normalization_and_exact_labels(self):
         labels = ['other-animal', 'other_animal', 'Turkey', 'turkey']
         for response in ['other animal', 'TURKEY']:
-            self.assertEqual(metalyzer.parse_llm_response(response, labels)[0], 'unknown')
+            self.assertEqual(llm_module.parse_llm_response(response, labels)[0], 'unknown')
         for response in labels:
-            self.assertEqual(metalyzer.parse_llm_response(response, labels), (response, ''))
+            self.assertEqual(llm_module.parse_llm_response(response, labels), (response, ''))
 
     def test_invalid_evidence_sanitized_and_truncated(self):
-        label, evidence = metalyzer.parse_llm_response('why\t\n\r\x00\u202e' + 'x' * 300, NAMES)
+        label, evidence = llm_module.parse_llm_response('why\t\n\r\x00\u202e' + 'x' * 300, NAMES)
         self.assertEqual(label, 'unknown')
         self.assertLessEqual(len(evidence), len('invalid_llm_output=') + 200)
         self.assertFalse(any(ch in evidence for ch in '\t\n\r\x00\u202e'))
@@ -156,7 +158,7 @@ class LocalLLMTests(unittest.TestCase):
         df = pd.DataFrame({'id': ['a', 'b', 'c'], 'host_tax_id': ['', '9940', '']}, index=[7, 8, 9])
         result = self.classify(['first', 'taxonomy-only record', 'third'], taxonomy, df)
         self.assertEqual(taxonomy.classify_host_taxid.call_count, 3)
-        self.assertEqual(result.index.tolist(), [0, 1, 2])
+        self.assertEqual(result.index.tolist(), [7, 8, 9])
         self.assertEqual(result.best_hit.tolist(), ['turkey', 'sheep', 'unknown'])
         self.assertEqual(result.source_method.tolist(), ['llm', 'host_tax_id', 'llm'])
         self.assertEqual(result.source_evidence.iloc[1], tax_result.evidence)
@@ -173,7 +175,7 @@ class LocalLLMTests(unittest.TestCase):
                     self.args.method = method
                     taxonomy = MagicMock()
                     taxonomy.classify_host_taxid.return_value = TaxonomySourceResult('sheep', 9940, 'Ovis aries')
-                    with patch.object(metalyzer, 'pipeline') as nli, patch.object(metalyzer, 'load_local_llm') as llm:
+                    with patch.object(nli_module, 'pipeline') as nli, patch.object(llm_module, 'load_local_llm') as llm:
                         result = self.classify(['sheep'] * count, taxonomy)
                     nli.assert_not_called()
                     llm.assert_not_called()
@@ -183,7 +185,7 @@ class LocalLLMTests(unittest.TestCase):
     def test_nli_regression_no_causal_model(self):
         self.args.method = 'nli'
         self.args.batch_size = 2
-        with patch.object(metalyzer, 'pipeline') as nli, patch.object(metalyzer, 'load_local_llm') as llm:
+        with patch.object(nli_module, 'pipeline') as nli, patch.object(llm_module, 'load_local_llm') as llm:
             nli.return_value.return_value = [
                 {'labels': LABELS[::-1], 'scores': [0.1, 0.2, 0.7]},
                 {'labels': LABELS, 'scores': [0.1, 0.1, 0.1]},
@@ -195,7 +197,7 @@ class LocalLLMTests(unittest.TestCase):
         nli.return_value.assert_called_once_with(['a', 'b'], candidate_labels=LABELS,
             hypothesis_template='The biological host or environmental source of this sample is {}.',
             multi_label=False, batch_size=2)
-        expected = metalyzer.parse_source_scores(pd.DataFrame([[0.7, 0.2, 0.1], [0.1, 0.1, 0.1]], columns=LABELS), 'id', 0.2)
+        expected = nli_module.parse_source_scores(pd.DataFrame([[0.7, 0.2, 0.1], [0.1, 0.1, 0.1]], columns=LABELS), 'id', 0.2)
         pd.testing.assert_frame_equal(result[expected.columns], expected)
         self.assertEqual(result.source_evidence.tolist(), ['', ''])
         self.assertEqual(result.source_method.tolist(), ['nli', 'nli'])
@@ -209,16 +211,16 @@ class LocalLLMTests(unittest.TestCase):
 
     def test_eos_padding_and_revision_omitted(self):
         hf = self.mocked_hf([], no_pad=True)
-        metalyzer.load_local_llm(self.args)
+        llm_module.load_local_llm(llm_config(self.args))
         self.assertEqual(hf.tokenizer.pad_token, hf.tokenizer.eos_token)
-        hf.tok_factory.assert_called_once_with(metalyzer.DEFAULT_LLM_MODEL)
-        hf.model_factory.assert_called_once_with(metalyzer.DEFAULT_LLM_MODEL, dtype='auto', low_cpu_mem_usage=True)
+        hf.tok_factory.assert_called_once_with(llm_module.DEFAULT_LLM_MODEL)
+        hf.model_factory.assert_called_once_with(llm_module.DEFAULT_LLM_MODEL, dtype='auto', low_cpu_mem_usage=True)
 
     def test_missing_padding_and_eos_rejected(self):
         hf = self.mocked_hf([], no_pad=True)
         hf.tokenizer.eos_token_id = None
         with self.assertRaisesRegex(ValueError, 'pad token or EOS'):
-            metalyzer.load_local_llm(self.args)
+            llm_module.load_local_llm(llm_config(self.args))
         hf.model_factory.assert_not_called()
 
     def test_cuda_validation_and_explicit_device(self):
@@ -226,32 +228,32 @@ class LocalLLMTests(unittest.TestCase):
         self.args.device = 2
         with patch('torch.cuda.is_available', return_value=False):
             with self.assertRaisesRegex(RuntimeError, 'CUDA was requested but is unavailable'):
-                metalyzer.load_local_llm(self.args)
+                llm_module.load_local_llm(llm_config(self.args))
         with patch('torch.cuda.is_available', return_value=True), patch('torch.cuda.device_count', return_value=2):
             with self.assertRaisesRegex(RuntimeError, 'device 2 does not exist'):
-                metalyzer.load_local_llm(self.args)
+                llm_module.load_local_llm(llm_config(self.args))
         hf.tok_factory.assert_not_called()
         hf.model_factory.assert_not_called()
         self.args.device = 1
         with patch('torch.cuda.is_available', return_value=True), patch('torch.cuda.device_count', return_value=2):
-            metalyzer.load_local_llm(self.args)
+            llm_module.load_local_llm(llm_config(self.args))
         self.assertEqual(str(hf.model.to.call_args.args[0]), 'cuda:1')
 
     def test_chat_template_keyword_fallback_only(self):
         tokenizer = MagicMock()
         tokenizer.apply_chat_template.side_effect = [TypeError("unexpected keyword argument 'enable_thinking'"), 'formatted']
-        self.assertEqual(metalyzer.llm_chat_prompt(tokenizer, 'system', 'data'), 'formatted')
+        self.assertEqual(llm_module.llm_chat_prompt(tokenizer, 'system', 'data'), 'formatted')
         self.assertNotIn('enable_thinking', tokenizer.apply_chat_template.call_args.kwargs)
         tokenizer.apply_chat_template.side_effect = TypeError('broken template')
         with self.assertRaisesRegex(TypeError, 'broken template'):
-            metalyzer.llm_chat_prompt(tokenizer, 'system', 'data')
+            llm_module.llm_chat_prompt(tokenizer, 'system', 'data')
 
     def test_prompt_preserves_natural_record_and_omits_na(self):
         hf = self.mocked_hf(['turkey'])
         row = pd.Series({'host_scientific_name': 'Ovis aries', 'isolation_source': 'stool',
                          'sample_title': 'Pathogen: Animal-Cattle-Steer', 'missing_field': 'NA',
                          'missing_other': 'not collected'})
-        self.classify([metalyzer.build_record(row)])
+        self.classify([record_module.build_record(row)])
         messages = hf.tokenizer.apply_chat_template.call_args.args[0]
         prompt = messages[1]['content']
         self.assertIn('host scientific name: Ovis aries; isolation source: stool', prompt)
@@ -266,14 +268,14 @@ class LocalLLMTests(unittest.TestCase):
 
     def test_shared_source_validation(self):
         for labels in [[], ['(hint)'], ['sheep (a)', 'sheep (b)'], ['source_method'], ['id'], ['country']]:
-            with self.subTest(labels=labels), patch.object(metalyzer, 'load_local_llm') as llm:
+            with self.subTest(labels=labels), patch.object(llm_module, 'load_local_llm') as llm:
                 with self.assertRaises(ValueError):
-                    metalyzer.classify_sources(pd.DataFrame(), [], labels, self.args)
+                    classify(pd.DataFrame(), [], labels, self.args)
                 llm.assert_not_called()
 
     def test_explicit_unknown_source_column(self):
         self.mocked_hf(['unknown'])
-        out = metalyzer.classify_sources(pd.DataFrame({'id': ['a']}), ['a'], LABELS + ['unknown'], self.args)
+        out = classify(pd.DataFrame({'id': ['a']}), ['a'], LABELS + ['unknown'], self.args)
         self.assertIn('unknown', out.columns)
         self.assertTrue(out[NAMES + ['unknown']].isna().all().all())
         self.assertEqual(out.best_hit.tolist(), ['unknown'])
@@ -285,7 +287,7 @@ class LocalLLMTests(unittest.TestCase):
             pd.DataFrame({'id': ['a', 'b'], 'host': ['turkey', 'sheep'],
                           'collection_date': ['2019-04', '2020'], 'country': ['USA:WY', 'Netherlands']}).to_csv(root / 'input.tsv', sep='\t', index=False)
             pd.DataFrame({'source': LABELS}).to_csv(root / 'sources.tsv', sep='\t', index=False)
-            with patch.object(metalyzer, 'load_taxonomy', return_value=None):
+            with patch.object(deterministic_source, 'load_taxonomy', return_value=None):
                 metalyzer.main(['--metadata', str(root / 'input.tsv'), '--sources', str(root / 'sources.tsv'),
                                 '--out', str(root / 'out.tsv'), '--id-col', 'id', '--method', 'llm',
                                 '--device', '-1', '--limit', '1'])
@@ -311,7 +313,7 @@ class LocalLLMTests(unittest.TestCase):
             pd.DataFrame(columns=['id', 'host']).to_csv(root / 'input.tsv', sep='\t', index=False)
             pd.DataFrame({'source': LABELS}).to_csv(root / 'sources.tsv', sep='\t', index=False)
             for method in ('nli', 'llm'):
-                with patch.object(metalyzer, 'pipeline') as nli, patch.object(metalyzer, 'load_local_llm') as llm:
+                with patch.object(nli_module, 'pipeline') as nli, patch.object(llm_module, 'load_local_llm') as llm:
                     with warnings.catch_warnings(record=True) as seen:
                         warnings.simplefilter('always')
                         metalyzer.main(['--metadata', str(root / 'input.tsv'), '--sources', str(root / 'sources.tsv'),

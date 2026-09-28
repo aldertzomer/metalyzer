@@ -9,7 +9,9 @@ from unittest.mock import patch
 import pandas as pd
 
 import metalyzer
-from taxonomy import ANCHORS, NCBITaxonomy, load_taxonomy, download_taxonomy
+from modules import country, records as record_module, deterministic_source, llm as llm_module, nli as nli_module
+from helpers import classify, llm_config
+from modules.deterministic_source import ANCHORS, NCBITaxonomy, load_taxonomy, download_taxonomy
 
 
 class TaxonomyTests(unittest.TestCase):
@@ -63,14 +65,14 @@ class TaxonomyTests(unittest.TestCase):
             "geo_loc_name": "USA: WY",
             "missing_value": "NA",
         })
-        record = metalyzer.build_record(row)
+        record = record_module.build_record(row)
         self.assertEqual(
             record,
             "host scientific name: Ovis aries; isolation source: stool; geo loc name: USA: WY",
         )
         self.assertNotIn('="', record)
-        self.assertEqual(metalyzer.extract_country_from_row(row, record), "United States")
-        self.assertEqual(metalyzer.build_record(pd.Series(dtype=object)), "metadata: (empty)")
+        self.assertEqual(country.extract_country_from_row(row, record), "United States")
+        self.assertEqual(record_module.build_record(pd.Series(dtype=object)), "metadata: (empty)")
 
     def fake_pipeline(self, *args, **kwargs):
         self.assertEqual(kwargs["dtype"], "float32" if self.args.device < 0 else "auto")
@@ -88,7 +90,7 @@ class TaxonomyTests(unittest.TestCase):
         df.to_csv(self.directory / "input.tsv", sep="\t", index=False)
         pd.DataFrame({"source": self.labels}).to_csv(self.directory / "sources.tsv", sep="\t", index=False)
         self.seen, self.batches = [], []
-        with patch.object(metalyzer, "pipeline", side_effect=self.fake_pipeline), contextlib.redirect_stdout(io.StringIO()) as log:
+        with patch.object(nli_module, "pipeline", side_effect=self.fake_pipeline), contextlib.redirect_stdout(io.StringIO()) as log:
             metalyzer.main(["--metadata", str(self.directory / "input.tsv"), "--sources", str(self.directory / "sources.tsv"),
                             "--out", str(self.directory / "out.tsv"), "--id-col", "run_accession", "--device", "-1",
                             "--batch-size", "2", "--taxonomy-dir", str(self.directory)])
@@ -108,28 +110,28 @@ class TaxonomyTests(unittest.TestCase):
 
     def test_all_taxonomy_never_loads_model(self):
         df = pd.DataFrame({"host_tax_id": [9940, 9031, 9606]})
-        with patch.object(metalyzer, "pipeline") as model:
-            out = metalyzer.classify_sources(df, ["Ovis aries"] * 3, self.labels, self.args, self.taxonomy)
+        with patch.object(nli_module, "pipeline") as model:
+            out = classify(df, ["Ovis aries"] * 3, self.labels, self.args, self.taxonomy)
         model.assert_not_called()
         self.assertTrue(out.iloc[:, :len(self.labels)].isna().all().all())
 
     def test_missing_host_column_and_unavailable_source_fall_back(self):
         for df, labels in [(pd.DataFrame({"tax_id": [9940]}), self.labels),
                            (pd.DataFrame({"host_tax_id": [9940]}), ["human", "other_animal"])]:
-            with patch.object(metalyzer, "pipeline") as model:
+            with patch.object(nli_module, "pipeline") as model:
                 model.return_value.return_value = [{"labels": labels, "scores": [0.7] * len(labels)}]
-                out = metalyzer.classify_sources(df, ["Ovis aries"], labels, self.args, self.taxonomy)
+                out = classify(df, ["Ovis aries"], labels, self.args, self.taxonomy)
                 self.assertEqual(out.source_method.tolist(), ["nli"])
                 model.return_value.assert_called_once()
 
     def test_disabled_matches_original_score_logic_on_benchmark(self):
         df = pd.read_csv(Path(__file__).resolve().parents[1] / "benchmark.tsv", sep="\t", dtype=str, keep_default_na=False)
-        records = [metalyzer.build_record(row) for _, row in df.iterrows()]
+        records = [record_module.build_record(row) for _, row in df.iterrows()]
         self.seen, self.batches = [], []
         self.args.device = 0
-        with patch.object(metalyzer, "pipeline", side_effect=self.fake_pipeline), contextlib.redirect_stdout(io.StringIO()):
-            out = metalyzer.classify_sources(df, records, self.labels, self.args)
-        expected = metalyzer.parse_source_scores(pd.DataFrame([[0.1] * len(self.labels)] * len(df), columns=self.labels), self.args.id_col, 0.2)
+        with patch.object(nli_module, "pipeline", side_effect=self.fake_pipeline), contextlib.redirect_stdout(io.StringIO()):
+            out = classify(df, records, self.labels, self.args)
+        expected = nli_module.parse_source_scores(pd.DataFrame([[0.1] * len(self.labels)] * len(df), columns=self.labels), self.args.id_col, 0.2)
         pd.testing.assert_frame_equal(out[expected.columns], expected)
         self.assertEqual(self.seen, records)
         self.assertTrue((out.source_method == "nli").all())
@@ -151,8 +153,8 @@ class TaxonomyTests(unittest.TestCase):
     def test_provenance_collisions_and_threshold(self):
         for label in ("source_method", "source_evidence"):
             with self.assertRaises(ValueError):
-                metalyzer.parse_source_scores(pd.DataFrame(columns=[label]), "id")
-        result = metalyzer.parse_source_scores(pd.DataFrame([[0.2, 0.2], [0.19, 0.1]], columns=["sheep", "cat"]), "id", 0.2)
+                nli_module.parse_source_scores(pd.DataFrame(columns=[label]), "id")
+        result = nli_module.parse_source_scores(pd.DataFrame([[0.2, 0.2], [0.19, 0.1]], columns=["sheep", "cat"]), "id", 0.2)
         self.assertEqual(result.best_hit.tolist(), ["sheep", "unknown"])
 
     def test_ambiguous_anchor_and_empty_input(self):
@@ -162,8 +164,8 @@ class TaxonomyTests(unittest.TestCase):
         with self.assertWarns(UserWarning):
             taxonomy = NCBITaxonomy(self.directory)
         self.assertIsNone(taxonomy.classify_host_taxid(9940))
-        with patch.object(metalyzer, "pipeline") as model:
-            result = metalyzer.classify_sources(pd.DataFrame(), [], self.labels, self.args, taxonomy)
+        with patch.object(nli_module, "pipeline") as model:
+            result = classify(pd.DataFrame(), [], self.labels, self.args, taxonomy)
         self.assertEqual(len(result), 0)
         model.assert_not_called()
 
@@ -177,11 +179,11 @@ class TaxonomyTests(unittest.TestCase):
             info.size = 3
             handle.addfile(info, io.BytesIO(b"bad"))
         archive.seek(0)
-        with patch("taxonomy.urllib.request.urlopen", return_value=archive):
+        with patch("modules.deterministic_source.urllib.request.urlopen", return_value=archive):
             download_taxonomy(self.directory / "download")
         self.assertFalse((self.directory / "unwanted.txt").exists())
         self.assertEqual(NCBITaxonomy(self.directory / "download").classify_host_taxid(9940).source, "sheep")
-        with patch.object(metalyzer, "download_taxonomy") as download, patch.object(metalyzer, "pipeline") as model:
+        with patch.object(deterministic_source, "download_taxonomy") as download, patch.object(nli_module, "pipeline") as model:
             metalyzer.main(["--download-taxonomy", "taxonomy"])
             download.assert_called_once_with("taxonomy")
             model.assert_not_called()
