@@ -1,0 +1,40 @@
+[
+  {
+    "file": "benchmark_classified.tsv",
+    "records": 1320,
+    "correct": 1144,
+    "overall_accuracy": 0.8666666666666667,
+    "unknown_predictions": 136,
+    "invalid_llm_outputs": 0,
+    "taxonomy_calls": 255,
+    "llm_calls": 0,
+    "source_methods": {
+      "nli": 1065,
+      "host_tax_id": 255
+    }
+  },
+  {
+    "file": "benchmark_mistral.tsv",
+    "records": 1320,
+    "correct": 1267,
+    "overall_accuracy": 0.9598484848484848,
+    "unknown_predictions": 69,
+    "invalid_llm_outputs": null,
+    "taxonomy_calls": null,
+    "llm_calls": null,
+    "source_methods": null
+  },
+  {
+    "file": "benchmark_smoke\\llm_1_7b_10.tsv",
+    "records": 10,
+    "correct": 9,
+    "overall_accuracy": 0.9,
+    "unknown_predictions": 1,
+    "invalid_llm_outputs": 1,
+    "taxonomy_calls": 0,
+    "llm_calls": 10,
+    "source_methods": {
+      "llm": 10
+    }
+  }
+]

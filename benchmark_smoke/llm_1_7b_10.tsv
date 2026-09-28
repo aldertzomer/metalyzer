@@ -1,0 +1,11 @@
+run_accession	chicken	turkey	pig	cattle	sheep	goat	human	dog	cat	wildbird	waterbird	environment	water	wastewater	laboratory	other_animal	best_hit	source_method	source_evidence	year	country
+ERR4224313	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2016	Netherlands
+ERR4224555	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2018	Netherlands
+SRR28564538	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2022	United States
+SRR6627731	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	unknown	llm	invalid_llm_output=kitten	2017	United States
+ERR4224319	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2016	Netherlands
+ERR4224530	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2017	Netherlands
+ERR4224584	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2018	Netherlands
+ERR4224321	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2016	Netherlands
+ERR4224598	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2018	Netherlands
+ERR4224544	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	cat	llm		2018	Netherlands

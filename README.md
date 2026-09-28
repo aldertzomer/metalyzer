@@ -2,7 +2,7 @@
 
 This repository contains a Python pipeline to classify biological metadata records using a combination of:
 
-- Zero-shot classification (for source/host)
+- Source/host classification with DeBERTa zero-shot NLI (default) or a local Hugging Face LLM
 - Deterministic parsing (for year and country)
 
 The pipeline is designed for large-scale datasets (e.g. ENA/SRA metadata) with heterogeneous formatting.
@@ -28,11 +28,11 @@ python metalyzer.py \
 
 For each metadata row, the pipeline performs:
 
-### 1. Source classification (host taxonomy, then NLI)
+### 1. Source classification (host taxonomy, then NLI or LLM)
 
 1. If `--taxonomy-dir` is supplied, resolve explicit `host_tax_id` values using local NCBI taxonomy.
 2. Unambiguous taxonomy-derived host assignments take precedence over language-model inference.
-3. Only unresolved rows are classified in batches using DeBERTa zero-shot NLI.
+3. Only unresolved rows are classified in batches using the selected backend: DeBERTa zero-shot NLI (`--method nli`, the default) or a local generative LLM (`--method llm`).
 4. NLI predictions below `--min-score` become `unknown`.
 
 The zero-shot model is:
@@ -146,12 +146,13 @@ Example:
 |ERR001 |  0.85  |0.01 | 0.02 |chicken|nli||2019|United States|
 
 - One score column per source, named using the text before the first `(` in `sources.tsv`; multi-word names are preserved
-- `best_hit` is the name of the source with the highest score; ties use the first source in `sources.tsv`
-- `--min-score` sets the minimum top score required for `best_hit`; lower-scoring rows are labelled `unknown` while their score columns are retained. The default is `0.2`.
+- For NLI rows, `best_hit` is the name of the source with the highest score; ties use the first source in `sources.tsv`
+- In NLI mode, `--min-score` sets the minimum top score required for `best_hit`; lower-scoring rows are labelled `unknown` while their score columns are retained. The default is `0.2`.
 - Full source labels, including parenthetical hints, are still used for classification
 - Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `source_method`, `source_evidence`, `year`, and `country` column names
 - Taxonomy-derived rows use `source_method=host_tax_id` and **all source scores are `NA`**, because no NLI inference was performed. They are not artificial probabilities and are not subject to `--min-score`.
 - NLI rows use `source_method=nli`, including below-threshold `unknown` calls; their `source_evidence` is blank.
+- Local LLM rows use `source_method=llm` and all source scores are `NA`: generated labels have no calibrated candidate probabilities. Valid answers have blank evidence; malformed answers become `unknown` with `source_evidence=invalid_llm_output=...` (sanitized and truncated to 200 characters).
 - year as 4-digit string
 - country as normalized name
 
@@ -360,8 +361,8 @@ files load once and lineages are cached. Only `host_tax_id` triggers taxonomy
 classification; the sample/pathogen `tax_id` is never used as host taxonomy.
 Numeric strings, integral decimal values such as `9940.0`, quoted IDs, and
 obsolete IDs in `merged.dmp` are supported. Missing or invalid IDs fall back
-to NLI. Omitting `--taxonomy-dir`, or supplying unreadable/malformed files,
-produces a warning and retains NLI-only classification.
+to the selected text classifier. Omitting `--taxonomy-dir`, or supplying unreadable/malformed files,
+produces a warning and uses the selected text classifier for every row.
 
 Anchors are resolved by scientific name: chicken (`Gallus gallus`), turkey
 (`Meleagris gallopavo`), cattle (`Bos taurus`), sheep (`Ovis aries`), goat
@@ -371,7 +372,7 @@ the most specific matching class. A class must exist in the selected sources
 file before it can be emitted.
 
 Other clearly identified non-bird animals can become `other_animal`.
-Other birds fall back to NLI for the ecological `wildbird`/`waterbird` distinction.
+Other birds fall back to the selected text classifier for the ecological `wildbird`/`waterbird` distinction.
 Generic `Sus scrofa` and non-domestic descendants also fall back: taxonomy alone
 may not distinguish wild boar from domestic pig. Broad ancestors such as
 Mammalia or Metazoa remain unresolved, as do unknown/deleted IDs, broken
@@ -387,7 +388,8 @@ SRR17929619     NA      NA      NA  NA      NA      ... sheep    host_tax_id    
 ```
 
 Input order, year/country extraction, and NLI score column names are preserved.
-Each run reports taxonomy calls, NLI calls, and NLI calls below the cutoff.
+Each run reports taxonomy calls, selected classifier calls, and its `unknown` calls.
+LLM runs also report the number of invalid model outputs.
 If all hosts resolve, the model is not loaded at all.
 
 Run the offline unit and integration tests with:
@@ -405,6 +407,7 @@ python metalyzer.py \
   --sources sources.tsv \
   --out classified.tsv \
   --id-col run_accession \
+  --method nli \
   --device 0 \
   --batch-size 64 \
   --min-score 0.2
@@ -427,8 +430,73 @@ For CPU execution, use `--device -1`. For example, to run the benchmark:
 python metalyzer.py --metadata benchmark.tsv --sources sources.tsv --out classified.tsv --id-col run_accession --device -1 --batch-size 10
 ```
 
-CPU execution explicitly uses float32 to avoid slow float16 inference.
+NLI CPU execution explicitly uses float32 to avoid slow float16 inference.
 GPU execution uses the model checkpoint's precision (`dtype="auto"`).
+
+### Local Hugging Face LLM classifier
+
+`--method llm` selects local generative classification with
+[`Qwen/Qwen3-4B-Instruct-2507`](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507)
+by default. Transformers downloads the tokenizer and weights on first use and
+reuses the standard Hugging Face cache on subsequent runs. Inference runs on
+your machine; no API or API key is required. The existing environments contain
+the required dependencies.
+
+Taxonomy still takes precedence: only unresolved `host_tax_id` rows reach the
+LLM. Neither model loads if taxonomy resolves every row, and a run never loads
+both DeBERTa and the LLM. The natural-language metadata representation and
+deterministic year/country processing are shared with NLI.
+
+The same `sources.tsv` supplies canonical labels and their full descriptions.
+The LLM may also answer `unknown` when source evidence is insufficient; this
+does not add an `unknown` score column unless that source is in your file.
+All LLM score columns are `NA`. `--min-score` applies only to NLI; in LLM mode
+it prints an informational message and does not affect predictions.
+
+```bash
+python metalyzer.py \
+  --metadata benchmark.tsv \
+  --sources sources.tsv \
+  --out benchmark_llm.tsv \
+  --id-col run_accession \
+  --taxonomy-dir taxonomy \
+  --method llm \
+  --llm-model Qwen/Qwen3-4B-Instruct-2507 \
+  --device 0 \
+  --llm-batch-size 1
+```
+
+Use `--device 0` for the first CUDA GPU, another nonnegative index for that
+specific GPU, or `--device -1` for CPU. An unavailable GPU causes a clear error
+instead of silently switching devices. Omit `--taxonomy-dir taxonomy` if you
+have not downloaded taxonomy.
+
+CPU example:
+
+```bash
+python metalyzer.py --metadata benchmark.tsv --sources sources.tsv \
+  --out benchmark_llm_cpu.tsv --id-col run_accession \
+  --method llm --llm-model Qwen/Qwen3-4B-Instruct-2507 \
+  --device -1 --llm-batch-size 1
+```
+
+For a quick test, add `--limit 10` to either command. `--limit` also works with
+NLI and selects the first N metadata rows before classification.
+
+`--llm-model` accepts another compatible instruct model with a tokenizer chat
+template; `--llm-revision` optionally pins both tokenizer and weights to a
+specific Hugging Face revision. Models are never substituted automatically.
+Generation is greedy, defaults to `--llm-max-new-tokens 16`, and uses
+`enable_thinking=False` through the chat template where supported.
+
+`--llm-batch-size` defaults to 1 independently of NLI's `--batch-size 64`.
+The LLM retains checkpoint precision (`dtype="auto"`) on both CPU and GPU and
+loads with `low_cpu_mem_usage=True`. Four billion parameters at 16-bit precision
+require roughly 8 GB for weights alone; activations, the generation cache,
+loading overhead, taxonomy, and other applications need additional memory.
+A 12-GB host/device is a target, not a guaranteed fit. Measure peak memory on
+your actual hardware and input. CPU execution can be slow. If necessary, select
+`--llm-model Qwen/Qwen3-1.7B` explicitly and evaluate it separately.
 
 ## Performance Notes
 
