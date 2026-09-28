@@ -15,7 +15,7 @@ input.load -> MetadataBatch + SourceVocabulary
                   |           |
                   |     combine.unresolved -> remaining MetadataBatch
                   |           |
-                  |     nli.run OR llm.run -> fallback SourceResult
+                  |     nli.run OR llm.run OR mistral.run -> fallback SourceResult
                   |           |
                   |     combine.sources -> complete SourceResult
                   |
@@ -35,11 +35,14 @@ input.load -> MetadataBatch + SourceVocabulary
 | `deterministic_source` | `run(batch, sources, taxonomy=None)` | Batch, vocabulary, loaded `NCBITaxonomy` or `None` | Partial `SourceResult`; lookup active with valid `--taxonomy-dir` |
 | `nli` | `run(batch, sources, config=NLIConfig())` | Batch, vocabulary; device, batch size, score cutoff | Complete result for the supplied batch; `--method nli` (default) |
 | `llm` | `run(batch, sources, config=LLMConfig())` | Batch, vocabulary; model, revision, device, batch size, generation limit | Complete result for the supplied batch; `--method llm` |
+| `mistral` | `run(batch, sources, config=MistralConfig())`, async `run_async(...)` | Batch, vocabulary; key-file path, model, concurrency, retries, timeout, seed, token/progress limits | Complete result for the supplied batch; `--method mistral` |
+| `generative` | `system_prompt`, `allowed_source_names`, `invalid_response_evidence` | Source descriptions/names or a response | Shared prompt, implicit unknown label and evidence formatting; no model/SDK imports |
 | `combine` | `unresolved`, `sources`, `run`, `write` | Batch, vocabulary, stage results; path for writing | Validated subsets, source result, assembled DataFrame, TSV |
 
 Taxonomy resolution always precedes text classification. Only unresolved rows
 reach the selected text stage. Empty batches and batches fully resolved by
-taxonomy never load either model. The two classifiers are mutually exclusive.
+taxonomy never load a model, read an API key, or create an API client. The three
+text classifiers are mutually exclusive.
 `--download-taxonomy DIR` explicitly downloads and validates the dump, then exits.
 Loading modules does not download files or load model weights.
 
@@ -80,12 +83,12 @@ Return `SourceResult(table: pandas.DataFrame)` with this column order:
 |---|---|
 | One column per `sources.names`, in order | Numeric score in `[0, 1]`, or float NaN for unavailable scores |
 | `best_hit` | Exact canonical label, or `unknown` |
-| `source_method` | Nonempty provenance string, e.g. `host_tax_id`, `nli`, `llm`, or your new method |
+| `source_method` | Nonempty provenance string, e.g. `host_tax_id`, `nli`, `llm`, `mistral`, or your new method |
 | `source_evidence` | String explaining the decision, or `""` |
 
 Each returned row must use a unique key from the input batch. A partial stage
 omits unresolved rows entirely. Returning `best_hit="unknown"` is a **completed
-prediction**, so it does not trigger fallback. NLI and LLM return one row per
+prediction**, so it does not trigger fallback. NLI, LLM and Mistral return one row per
 supplied input row, including unknown calls. For each row, provide all candidate
 scores or all NaN; do not mix missing and present scores. Scores need not sum to
 one (the combiner also supports future multilabel scoring methods).
@@ -113,6 +116,26 @@ Existing stage semantics:
 - LLM uses full descriptions in its prompt and returns canonical labels. Scores
   are NaN. Invalid responses become unknown with sanitized, truncated
   `invalid_llm_output=...` evidence. `LLMConfig` has no score threshold.
+- Mistral reuses the model-independent prompt and unknown policy from `generative`.
+  Its JSON schema always permits `unknown`; it does not mutate `SourceVocabulary`.
+  Valid replies must be exactly `{"source": "<canonical label or unknown>"}`.
+  Invalid responses become unknown with `invalid_mistral_output=...` evidence;
+  scores are NaN. API errors propagate and never become predictions. There is
+  no score threshold. Client creation and key loading occur inside `run_async`
+  only after the empty-batch check.
+
+For Mistral, `MistralConfig(api_key_file=None, model="mistral-small-latest",
+concurrency=8, retries=5, timeout=60.0, random_seed=12345, max_tokens=32,
+progress_every=10)` is independent of the CLI. The key path becomes required only
+if there are rows to classify. `run` owns an event loop; in a notebook or async
+application use `await mistral.run_async(batch, sources, config)` instead.
+The optional v2 SDK provides `mistralai.client.Mistral` and
+`client.chat.complete_async`; the module closes both HTTP clients on completion
+or error. At most `concurrency` workers share a row iterator, avoiding one task
+per input row. On failure all pending workers are cancelled before client closure.
+Retries apply to request timeouts and HTTP 408/429/500/502/503/504 only, with
+1/2/4/.../30-second capped backoff; `retries=0` disables them. SDK retries are
+disabled. Malformed responses are not retried. There is no checkpoint/resume.
 
 ## Field output and combination contracts
 
@@ -189,6 +212,9 @@ fields, unavailable vocabulary labels, and unknown/unresolved distinctions.
 Source implementations should test that each requested row gets the intended
 decision and that expensive resources are not loaded for empty input. Mock model
 boundaries for offline tests; tiny real tensors cover LLM generation mechanics.
+`tests/test_mistral.py` mocks the SDK boundary and needs neither `mistralai` nor
+an API key. It exercises implicit/explicit unknown, strict response parsing,
+concurrency, timeouts, retries, cancellation, and the full CLI output contract.
 Run the suite from the repository root:
 
 ```bash

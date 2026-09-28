@@ -31,7 +31,7 @@ python metalyzer.py \
 The `modular` branch separates the pipeline into independent stages under
 [`modules/`](modules/README.md): date extraction, country normalization,
 deterministic source parsing (including taxonomy ID-to-scientific-name lookup),
-NLI, LLM, input preparation, and output combination. `metalyzer.py` contains
+NLI, local LLM, Mistral API, input preparation, and output combination. `metalyzer.py` contains
 command-line options and stage orchestration.
 
 Developers can start with the [module contracts and extension examples](modules/README.md)
@@ -39,16 +39,16 @@ without reading the rest of the pipeline. Typed batch/result containers in
 [`modules/contracts.py`](modules/contracts.py) define row identity, source scores,
 provenance, missing values, and validation. Default commands and TSV columns are
 preserved. `--skip-date` and `--skip-country` disable those stages and omit their
-output columns. Taxonomy is enabled with `--taxonomy-dir`; `--method nli|llm`
+output columns. Taxonomy is enabled with `--taxonomy-dir`; `--method nli|llm|mistral`
 selects the fallback classifier, which runs only on unresolved rows.
 
 For each metadata row, the pipeline performs:
 
-### 1. Source classification (host taxonomy, then NLI or LLM)
+### 1. Source classification (host taxonomy, then NLI, local LLM or Mistral)
 
 1. If `--taxonomy-dir` is supplied, resolve explicit `host_tax_id` values using local NCBI taxonomy.
 2. Unambiguous taxonomy-derived host assignments take precedence over language-model inference.
-3. Only unresolved rows are classified in batches using the selected backend: DeBERTa zero-shot NLI (`--method nli`, the default) or a local generative LLM (`--method llm`).
+3. Only unresolved rows reach the selected backend: DeBERTa zero-shot NLI (`--method nli`, the default), a local generative LLM (`--method llm`), or the Mistral API (`--method mistral`).
 4. NLI predictions below `--min-score` become `unknown`.
 
 The zero-shot model is:
@@ -169,6 +169,7 @@ Example:
 - Taxonomy-derived rows use `source_method=host_tax_id` and **all source scores are `NA`**, because no NLI inference was performed. They are not artificial probabilities and are not subject to `--min-score`.
 - NLI rows use `source_method=nli`, including below-threshold `unknown` calls; their `source_evidence` is blank.
 - Local LLM rows use `source_method=llm` and all source scores are `NA`: generated labels have no calibrated candidate probabilities. Valid answers have blank evidence; malformed answers become `unknown` with `source_evidence=invalid_llm_output=...` (sanitized and truncated to 200 characters).
+- Mistral API rows use `source_method=mistral` with the same `NA` score convention. `unknown` is always allowed, even when absent from the sources file. Malformed answers have `source_evidence=invalid_mistral_output=...`; request/authentication/quota failures abort instead of producing unknown labels.
 - year as 4-digit string
 - country as normalized name
 
@@ -228,6 +229,10 @@ predicted source. The SVG tables are generated from the benchmark TSV files by
 `python render_benchmark_matrices.py`.
 
 ### Experimental Mistral API classifier
+
+The modular pipeline now supports `--method mistral`; see the
+[Mistral module usage](#mistral-api-module) below. The benchmark results in this
+section came from the original standalone script, not the new module.
 
 `metalyzer_mistral.py` is an experimental alternative that asks the Mistral
 API to choose one controlled source label. It performs well but of course it is not free. It requires the `mistralai` Python
@@ -336,7 +341,9 @@ SentencePiece/Protobuf tokenizer dependencies. They are environment specificatio
 not exact lockfiles. Taxonomy dump parsing and downloading use the Python
 standard library. The pipeline and tests use the dependencies listed in these
 environments; the taxonomy feature requires no additional packages.
-The experimental Mistral classifier still requires the optional `mistralai` package.
+The Mistral module requires the optional `mistralai` v2 SDK. It is loaded only
+when unresolved rows need API inference; NLI, local LLM and taxonomy-only runs
+do not require it.
 
 To update an existing environment, use the matching command:
 
@@ -560,6 +567,73 @@ inspect the full matrix.
 ##### Row percentages
 
 [![Local Qwen3-4B LLM source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
+
+### Mistral API module
+
+`--method mistral` uses [`modules/mistral.py`](modules/mistral.py) with the
+standard pipeline inputs and output columns. Taxonomy still takes precedence;
+only unresolved rows are sent to Mistral. Date and country extraction remain
+local. The module does not load PyTorch, Transformers, or local model weights.
+
+Install the optional SDK in your active environment:
+
+```bash
+conda install -c conda-forge 'mistralai>=2,<3'
+```
+
+When API access is available, start with a small run:
+
+```bash
+python metalyzer.py \
+  --metadata benchmark.tsv \
+  --sources sources.tsv \
+  --out benchmark_mistral_modular.tsv \
+  --id-col run_accession \
+  --method mistral \
+  --api-key-file ~/mistral.key \
+  --mistral-concurrency 1 \
+  --mistral-retries 0 \
+  --limit 10
+```
+
+Add `--taxonomy-dir taxonomy` if you have a local dump. The key file accepts
+either the raw key or `MISTRAL_API_KEY=...` (optionally quoted). It is read only
+when API requests are needed and is never included in metadata or output.
+
+As with the local LLM, **`unknown` is always an allowed answer**. It is added
+to both the prompt and the JSON schema when missing from your source list.
+There is no need to edit `sources.tsv`, and no extra `unknown` score column
+appears unless your file explicitly includes that source. An explicit unknown
+answer has blank evidence. Invalid JSON, unexpected labels or missing responses
+become unknown with sanitized `invalid_mistral_output=...` evidence (at most
+200 characters after the prefix), without another paid request.
+
+The schema follows the [official Mistral structured-output SDK example](https://github.com/mistralai/client-python/blob/main/examples/mistral/chat/structured_outputs_with_json_schema.py).
+Output includes `best_hit`, `source_method=mistral`, `source_evidence`, `year`
+and `country`, with all candidate scores `NA`. `--min-score` has no effect.
+`--device`, `--batch-size`, and `--llm-*` configure the local backends only.
+
+| Option | Default | Meaning |
+|---|---|---|
+| `--mistral-model` | `mistral-small-latest` | Model sent to the API; choose a fixed model ID for reproducibility |
+| `--mistral-concurrency` | `8` | Maximum concurrent requests/worker tasks |
+| `--mistral-retries` | `5` | Additional attempts for timeouts or HTTP 408/429/500/502/503/504 |
+| `--mistral-timeout` | `60` | Seconds per request attempt |
+| `--mistral-random-seed` | `12345` | Seed sent to Mistral |
+| `--mistral-max-tokens` | `32` | Maximum generated tokens per response |
+| `--mistral-progress-every` | `10` | Print progress after this many completed rows |
+
+Retries use capped exponential backoff; SDK retries are disabled to keep the
+attempt limit predictable. Authentication errors and other permanent failures
+stop immediately. Exhausted retries, including quota/rate-limit errors, stop
+the run and cancel remaining workers; they never become classification labels.
+The output file is written only after the full run succeeds, so API failures
+leave an existing output file untouched. Completed API calls may still be billed;
+this module does not checkpoint/resume partial runs.
+
+Validation uses mocked API responses, including concurrency, timeouts, retries,
+taxonomy precedence and output serialization. No live Mistral call was made for
+this implementation; the module's classification accuracy has not been benchmarked.
 
 ## Performance Notes
 

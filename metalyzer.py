@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 
-from modules import combine, country, date, deterministic_source, input, llm, nli
+from modules import combine, country, date, deterministic_source, input, llm, mistral, nli
 from modules.contracts import MetadataBatch, SourceResult, SourceVocabulary
 
 
@@ -19,11 +19,19 @@ def parse_args(argv=None):
 
     ap.add_argument("--device", type=int, default=0, help="GPU index (default: 0), or -1 for CPU")
     ap.add_argument("--batch-size", type=int, default=64)
-    ap.add_argument("--method", choices=("nli", "llm"), default="nli")
+    ap.add_argument("--method", choices=("nli", "llm", "mistral"), default="nli")
     ap.add_argument("--llm-model", default=llm.DEFAULT_LLM_MODEL)
     ap.add_argument("--llm-revision", default=None, help="Optional HF model/tokenizer revision")
     ap.add_argument("--llm-batch-size", type=int, default=1)
     ap.add_argument("--llm-max-new-tokens", type=int, default=16)
+    ap.add_argument("--api-key-file", help="Mistral API key file (only read for unresolved Mistral rows)")
+    ap.add_argument("--mistral-model", default=mistral.DEFAULT_MISTRAL_MODEL)
+    ap.add_argument("--mistral-concurrency", type=int, default=8)
+    ap.add_argument("--mistral-retries", type=int, default=5)
+    ap.add_argument("--mistral-timeout", type=float, default=60.0, help="Timeout per API attempt in seconds")
+    ap.add_argument("--mistral-random-seed", type=int, default=12345)
+    ap.add_argument("--mistral-max-tokens", type=int, default=32)
+    ap.add_argument("--mistral-progress-every", type=int, default=10)
     ap.add_argument("--limit", type=int, default=None, help="Classify only the first N metadata rows")
     ap.add_argument(
         "--min-score",
@@ -53,25 +61,39 @@ def parse_args(argv=None):
             ap.error(f"--{option.replace('_', '-')} must be >= 1")
     if not 0.0 <= args.min_score <= 1.0:
         ap.error("--min-score must be between 0 and 1")
+    try:
+        args.mistral_config = mistral.MistralConfig(
+            api_key_file=args.api_key_file, model=args.mistral_model,
+            concurrency=args.mistral_concurrency, retries=args.mistral_retries,
+            timeout=args.mistral_timeout, random_seed=args.mistral_random_seed,
+            max_tokens=args.mistral_max_tokens, progress_every=args.mistral_progress_every,
+        )
+    except ValueError as exc:
+        ap.error(str(exc))
     return args
 
 
 def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
                      method: str = "nli", taxonomy=None,
                      nli_config: nli.NLIConfig = nli.NLIConfig(),
-                     llm_config: llm.LLMConfig = llm.LLMConfig()) -> SourceResult:
+                     llm_config: llm.LLMConfig = llm.LLMConfig(),
+                     mistral_config: mistral.MistralConfig = mistral.MistralConfig()) -> SourceResult:
     """Run deterministic source resolution, then the selected fallback stage."""
-    if method not in {"nli", "llm"}:
-        raise ValueError("method must be nli or llm")
+    if method not in {"nli", "llm", "mistral"}:
+        raise ValueError("method must be nli, llm or mistral")
     deterministic = deterministic_source.run(batch, sources, taxonomy)
     pending = combine.unresolved(batch, sources, deterministic)
     if method == "llm":
         print(f"LLM model: {llm_config.model}", flush=True)
         print("--min-score is not applicable to LLM mode: the LLM does not produce calibrated candidate scores.", flush=True)
+    elif method == "mistral":
+        print(f"Mistral model: {mistral_config.model}", flush=True)
+        print("--min-score is not applicable to Mistral mode: the API does not produce calibrated candidate scores.", flush=True)
     results = [deterministic]
     if len(pending):
-        results.append(nli.run(pending, sources, nli_config) if method == "nli"
-                       else llm.run(pending, sources, llm_config))
+        stage, config = {"nli": (nli.run, nli_config), "llm": (llm.run, llm_config),
+                         "mistral": (mistral.run, mistral_config)}[method]
+        results.append(stage(pending, sources, config))
     result = combine.sources(batch, sources, *results)
     combine.report(result, method)
     return result
@@ -95,6 +117,7 @@ def main(argv=None):
         llm_config=llm.LLMConfig(model=args.llm_model, revision=args.llm_revision,
                                  device=args.device, batch_size=args.llm_batch_size,
                                  max_new_tokens=args.llm_max_new_tokens),
+        mistral_config=args.mistral_config,
     )
     fields = []
     if not args.skip_date:

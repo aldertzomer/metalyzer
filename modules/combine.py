@@ -67,3 +67,5 @@ def report(result: SourceResult, method: str) -> None:
           f"  {method.upper()} -> unknown:        {(classified.best_hit == 'unknown').sum()}", flush=True)
     if method == "llm":
         print(f"  invalid LLM outputs:  {classified.source_evidence.str.startswith('invalid_llm_output=').sum()}", flush=True)
+    elif method == "mistral":
+        print(f"  invalid Mistral outputs:  {classified.source_evidence.str.startswith('invalid_mistral_output=').sum()}", flush=True)

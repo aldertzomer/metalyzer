@@ -152,8 +152,9 @@ class ModuleTests(unittest.TestCase):
         country.run(batch).validate(batch)
 
     def test_imports_do_not_load_model_libraries(self):
-        code = ("import metalyzer; from modules import date, country, deterministic_source, nli, llm, combine; "
-                "import sys; assert 'torch' not in sys.modules; assert 'transformers' not in sys.modules")
+        code = ("import metalyzer; from modules import date, country, deterministic_source, nli, llm, mistral, combine; "
+                "import sys; assert 'torch' not in sys.modules; assert 'transformers' not in sys.modules; "
+                "assert 'mistralai' not in sys.modules")
         subprocess.run([sys.executable, "-c", code], check=True,
                        cwd=Path(__file__).resolve().parents[1], timeout=30)
 
