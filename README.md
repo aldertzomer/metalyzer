@@ -196,9 +196,15 @@ Rows are true sources, columns are predicted sources, and `n` is the number of
 true records in the row. The `unknown` prediction is created by the 0.2 score
 cutoff, not by a source candidate.
 
+Column labels are abbreviated to keep the matrices readable on GitHub:
+`Chk` = chicken, `Env` = environment, `Lab` = laboratory, `Other` =
+other_animal, `Turk` = turkey, `Unk` = unknown, `WW` = wastewater, `Wbird` =
+waterbird, and `Wildbird` = wildbird. The remaining column labels are their
+full source names.
+
 #### Absolute counts
 
-| True source | n | cat | cattle | chicken | dog | environment | goat | human | laboratory | other_animal | pig | sheep | turkey | unknown | wastewater | water | waterbird | wildbird |
+| True source | n | cat | cattle | Chk | dog | Env | goat | human | Lab | Other | pig | sheep | Turk | Unk | WW | water | Wbird | Wildbird |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | cat | 20 | 20 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | cattle | 99 | 0 | 99 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -223,7 +229,7 @@ cutoff, not by a source candidate.
 Each row sums to 100% before rounding; values show the share of true records
 for that source assigned to each predicted source.
 
-| True source | n | cat | cattle | chicken | dog | environment | goat | human | laboratory | other_animal | pig | sheep | turkey | unknown | wastewater | water | waterbird | wildbird |
+| True source | n | cat | cattle | Chk | dog | Env | goat | human | Lab | Other | pig | sheep | Turk | Unk | WW | water | Wbird | Wildbird |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | cat | 20 | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 | cattle | 99 | 0.0% | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
