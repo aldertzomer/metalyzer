@@ -196,63 +196,19 @@ Rows are true sources, columns are predicted sources, and `n` is the number of
 true records in the row. The `unknown` prediction is created by the 0.2 score
 cutoff, not by a source candidate.
 
-Column labels are abbreviated to keep the matrices readable on GitHub:
-`Chk` = chicken, `Env` = environment, `Lab` = laboratory, `Other` =
-other_animal, `Turk` = turkey, `Unk` = unknown, `WW` = wastewater, `Wbird` =
-waterbird, and `Wildbird` = wildbird. The remaining column labels are their
-full source names.
-
 #### Absolute counts
 
-| True source | n | cat | cattle | Chk | dog | Env | goat | human | Lab | Other | pig | sheep | Turk | Unk | WW | water | Wbird | Wildbird |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| cat | 20 | 20 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| cattle | 99 | 0 | 99 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| chicken | 101 | 0 | 0 | 99 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| dog | 100 | 0 | 0 | 0 | 100 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| environment | 4 | 0 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 | 0 | 0 |
-| goat | 100 | 1 | 0 | 0 | 0 | 0 | 97 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
-| human | 100 | 0 | 0 | 0 | 0 | 0 | 0 | 87 | 0 | 0 | 0 | 0 | 0 | 13 | 0 | 0 | 0 | 0 |
-| laboratory | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| other_animal | 100 | 0 | 0 | 0 | 0 | 40 | 0 | 0 | 0 | 48 | 0 | 0 | 0 | 11 | 0 | 1 | 0 | 0 |
-| pig | 100 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 100 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| sheep | 100 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 95 | 0 | 0 | 0 | 0 | 0 | 0 |
-| turkey | 101 | 0 | 0 | 0 | 0 | 14 | 0 | 0 | 0 | 0 | 0 | 0 | 87 | 0 | 0 | 0 | 0 | 0 |
-| unknown | 98 | 0 | 9 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 6 | 0 | 0 | 79 | 0 | 0 | 0 | 2 |
-| wastewater | 5 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 0 |
-| water | 92 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 14 | 78 | 0 | 0 |
-| waterbird | 99 | 1 | 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 32 | 0 | 0 | 50 | 14 |
-| wildbird | 100 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 98 |
+[![Benchmark source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
+
+The image is a full source-by-source table. Click it to inspect at full resolution.
 
 #### Row percentages
 
-Each row sums to 100% before rounding; values show the share of true records
-for that source assigned to each predicted source.
+[![Benchmark source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
 
-| True source | n | cat | cattle | Chk | dog | Env | goat | human | Lab | Other | pig | sheep | Turk | Unk | WW | water | Wbird | Wildbird |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| cat | 20 | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| cattle | 99 | 0.0% | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| chicken | 101 | 0.0% | 0.0% | 98.0% | 0.0% | 1.0% | 0.0% | 0.0% | 0.0% | 0.0% | 1.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| dog | 100 | 0.0% | 0.0% | 0.0% | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| environment | 4 | 0.0% | 25.0% | 0.0% | 0.0% | 25.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 50.0% | 0.0% | 0.0% |
-| goat | 100 | 1.0% | 0.0% | 0.0% | 0.0% | 0.0% | 97.0% | 0.0% | 0.0% | 1.0% | 0.0% | 0.0% | 0.0% | 1.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| human | 100 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 87.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 13.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| laboratory | 1 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| other_animal | 100 | 0.0% | 0.0% | 0.0% | 0.0% | 40.0% | 0.0% | 0.0% | 0.0% | 48.0% | 0.0% | 0.0% | 0.0% | 11.0% | 0.0% | 1.0% | 0.0% | 0.0% |
-| pig | 100 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 100.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| sheep | 100 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 5.0% | 95.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| turkey | 101 | 0.0% | 0.0% | 0.0% | 0.0% | 13.9% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 86.1% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
-| unknown | 98 | 0.0% | 9.2% | 0.0% | 0.0% | 2.0% | 0.0% | 0.0% | 0.0% | 0.0% | 6.1% | 0.0% | 0.0% | 80.6% | 0.0% | 0.0% | 0.0% | 2.0% |
-| wastewater | 5 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 100.0% | 0.0% | 0.0% | 0.0% |
-| water | 92 | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 15.2% | 84.8% | 0.0% | 0.0% |
-| waterbird | 99 | 1.0% | 0.0% | 0.0% | 0.0% | 1.0% | 1.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 32.3% | 0.0% | 0.0% | 50.5% | 14.1% |
-| wildbird | 100 | 0.0% | 0.0% | 0.0% | 0.0% | 2.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% | 98.0% |
-
-The taxonomy stage resolves explicit hosts before NLI; those calls have
-`source_method=host_tax_id` and `NA` score columns. The remaining errors are
-concentrated in text-derived and ambiguous categories, especially
-`other_animal`, environmental, and water-associated records.
+Each row shows the share of records with that true source assigned to every
+predicted source. The SVG tables are generated from the benchmark TSV files by
+`python render_benchmark_matrices.py`.
 
 ### Experimental Mistral API classifier
 
