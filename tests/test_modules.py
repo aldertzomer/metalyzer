@@ -191,6 +191,15 @@ class ModuleTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             SourceVocabulary(("cat",), "year")
 
+    def test_input_ignores_invalid_utf8_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "input.tsv").write_bytes(b"id\thost\nrow-1\twestern\x96european\n")
+            (root / "sources.tsv").write_bytes(b"source\nother\x96animal\n")
+            batch, sources = input.load(root / "input.tsv", root / "sources.tsv", "id")
+        self.assertEqual(batch.metadata.host.tolist(), ["westerneuropean"])
+        self.assertEqual(sources.labels, ("otheranimal",))
+
 
 if __name__ == "__main__":
     unittest.main()
