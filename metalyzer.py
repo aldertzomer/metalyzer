@@ -40,6 +40,12 @@ def pipeline(*args, **kwargs):
     return hf_pipeline(*args, **kwargs)
 
 
+def read_tsv(path: str, **kwargs) -> pd.DataFrame:
+    """Read a TSV while discarding invalid UTF-8 bytes from legacy exports."""
+    with open(path, encoding="utf-8", errors="ignore", newline="") as handle:
+        return pd.read_csv(handle, sep="\t", dtype=str, keep_default_na=False, **kwargs)
+
+
 # -------------------------
 # Generic NA-like handling
 # -------------------------
@@ -584,10 +590,10 @@ def main(argv=None):
         print(f"Downloaded taxonomy to {args.download_taxonomy}")
         return
 
-    df = pd.read_csv(args.metadata, sep="\t", dtype=str, keep_default_na=False)
+    df = read_tsv(args.metadata)
     if args.limit is not None:
         df = df.head(args.limit).copy()
-    src_df = pd.read_csv(args.sources, sep="\t", dtype=str, keep_default_na=False)
+    src_df = read_tsv(args.sources)
 
     # label column: 'source' if present else first column
     label_col = "source" if "source" in src_df.columns else src_df.columns[0]

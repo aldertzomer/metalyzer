@@ -89,6 +89,13 @@ class LocalLLMTests(unittest.TestCase):
                     metalyzer.parse_args(CLI + [option, value])
                 self.assertEqual(error.exception.code, 2)
 
+    def test_read_tsv_ignores_invalid_utf8_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "legacy.tsv"
+            path.write_bytes(b"id\tvalue\nrow-1\twestern\x96european\n")
+            frame = metalyzer.read_tsv(path)
+        self.assertEqual(frame.to_dict("records"), [{"id": "row-1", "value": "westerneuropean"}])
+
     def test_response_parser(self):
         valid = {'turkey': 'turkey', '"turkey"': 'turkey', "'turkey'": 'turkey',
                  '`turkey`': 'turkey', ' TURKEY ': 'turkey', '{"source":"turkey"}': 'turkey',
