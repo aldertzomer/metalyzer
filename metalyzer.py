@@ -3,13 +3,16 @@
 from __future__ import annotations
 
 import argparse
+import sys
 
-from modules import combine, country, date, deterministic_source, input, llm, mistral, nli, verification
+from modules import combine, country, date, deterministic_source, input, llm, mistral, nli, runlog, verification
 from modules.contracts import MetadataBatch, SourceResult, SourceVocabulary
+from modules.version import __version__
 
 
 def parse_args(argv=None):
     ap = argparse.ArgumentParser()
+    ap.add_argument("--version", action="version", version=f"metalyzer {__version__}")
     ap.add_argument("--metadata", help="Input metadata TSV")
     ap.add_argument("--sources", help="Sources TSV (labels)")
     ap.add_argument("--out", help="Output TSV")
@@ -77,6 +80,7 @@ def parse_args(argv=None):
 
 def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
                      method: str = "nli", taxonomy=None,
+                     anchor_sources=None,
                      nli_config: nli.NLIConfig = nli.NLIConfig(),
                      llm_config: llm.LLMConfig = llm.LLMConfig(),
                      mistral_config: mistral.MistralConfig = mistral.MistralConfig(),
@@ -84,14 +88,14 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
     """Run deterministic source resolution, then the selected fallback stage."""
     if method not in {"nli", "llm", "mistral"}:
         raise ValueError("method must be nli, llm or mistral")
-    deterministic = deterministic_source.run(batch, sources, taxonomy)
+    deterministic = deterministic_source.run(batch, sources, taxonomy, anchor_sources=anchor_sources)
     pending = combine.unresolved(batch, sources, deterministic)
     if method == "llm":
-        print(f"LLM model: {llm_config.model}", flush=True)
-        print("--min-score is not applicable to LLM mode: the LLM does not produce calibrated candidate scores.", flush=True)
+        runlog.emit(f"LLM model: {llm_config.model}")
+        runlog.emit("--min-score is not applicable to LLM mode: the LLM does not produce calibrated candidate scores.")
     elif method == "mistral":
-        print(f"Mistral model: {mistral_config.model}", flush=True)
-        print("--min-score is not applicable to Mistral mode: the API does not produce calibrated candidate scores.", flush=True)
+        runlog.emit(f"Mistral model: {mistral_config.model}")
+        runlog.emit("--min-score is not applicable to Mistral mode: the API does not produce calibrated candidate scores.")
     results = [deterministic]
     if len(pending):
         stage, config = {"nli": (nli.run, nli_config), "llm": (llm.run, llm_config),
@@ -109,35 +113,59 @@ def main(argv=None):
         deterministic_source.download_taxonomy(args.download_taxonomy)
         print(f"Downloaded taxonomy to {args.download_taxonomy}")
         return
-
-    batch, sources = input.load(
-        args.metadata, args.sources, args.id_col, limit=args.limit,
-        max_value_chars=args.max_value_chars, max_record_chars=args.max_record_chars,
-    )
-    taxonomy = deterministic_source.load_taxonomy(args.taxonomy_dir, fallback_method=args.method)
-    nli_config = nli.NLIConfig(device=args.device, batch_size=args.batch_size, min_score=args.min_score)
-    nli_model = nli.NLIModel(nli_config)
-    source_result = classify_sources(
-        batch, sources, method=args.method, taxonomy=taxonomy,
-        nli_config=nli_config, nli_model=nli_model,
-        llm_config=llm.LLMConfig(model=args.llm_model, revision=args.llm_revision,
-                                 device=args.device, batch_size=args.llm_batch_size,
-                                 max_new_tokens=args.llm_max_new_tokens),
-        mistral_config=args.mistral_config,
-    )
-    verification_result = verification.run(
-        batch, sources, source_result, nli_config,
-        disabled=args.disable_verify_source, model=nli_model,
-    )
-    fields = []
-    if not args.skip_date:
-        fields.append(date.run(batch))
-    if not args.skip_country:
-        fields.append(country.run(batch))
-    output = combine.run(batch, sources, source_result, *fields, verification=verification_result)
-    combine.write(output, args.out)
-    print(f"Wrote {args.out} (n={len(output)})", flush=True)
+    command = list(sys.argv[1:] if argv is None else argv)
+    with runlog.analysis_log(args.out) as log_path:
+        try:
+            runlog.emit(f"Metalyzer {__version__} started")
+            batch, sources = input.load(
+                args.metadata, args.sources, args.id_col, limit=args.limit,
+                max_value_chars=args.max_value_chars, max_record_chars=args.max_record_chars,
+            )
+            runlog.provenance(args, command, batch)
+            taxonomy = deterministic_source.load_taxonomy(args.taxonomy_dir, fallback_method=args.method)
+            anchors = (deterministic_source.configured_anchors(sources, taxonomy, report=True)
+                       if taxonomy is not None else None)
+            nli_config = nli.NLIConfig(device=args.device, batch_size=args.batch_size, min_score=args.min_score)
+            nli_model = nli.NLIModel(nli_config)
+            source_result = classify_sources(
+                batch, sources, method=args.method, taxonomy=taxonomy, anchor_sources=anchors,
+                nli_config=nli_config, nli_model=nli_model,
+                llm_config=llm.LLMConfig(model=args.llm_model, revision=args.llm_revision,
+                                         device=args.device, batch_size=args.llm_batch_size,
+                                         max_new_tokens=args.llm_max_new_tokens),
+                mistral_config=args.mistral_config,
+            )
+            verification_result = verification.run(
+                batch, sources, source_result, nli_config,
+                disabled=args.disable_verify_source, model=nli_model,
+            )
+            fields = []
+            if not args.skip_date:
+                fields.append(date.run(batch))
+            if not args.skip_country:
+                fields.append(country.run(batch))
+            output = combine.run(batch, sources, source_result, *fields, verification=verification_result)
+            combine.write(output, args.out)
+            table = source_result.table
+            selected = table[table.source_method == args.method]
+            invalid_prefix = {"llm": "invalid_llm_output=", "mistral": "invalid_mistral_output="}.get(args.method)
+            runlog.emit("Run totals:\n"
+                        f"  total rows: {len(output)}\n"
+                        f"  deterministic taxonomy assignments: {(table.source_method == 'host_tax_id').sum()}\n"
+                        f"  {args.method.upper()} assignments: {len(selected)}\n"
+                        f"  unknown calls: {(table.best_hit == 'unknown').sum()}\n"
+                        f"  invalid model outputs: {selected.source_evidence.str.startswith(invalid_prefix).sum() if invalid_prefix else 0}\n"
+                        f"  source verification scores: {verification_result.values.notna().sum()}\n"
+                        f"  output path: {args.out}\n"
+                        f"  log path: {log_path}")
+            runlog.emit(f"Wrote {args.out} (n={len(output)})")
+        except Exception:
+            runlog.LOGGER.exception("Metalyzer analysis failed")
+            raise
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception:
+        raise SystemExit(1) from None

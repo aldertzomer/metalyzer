@@ -28,7 +28,7 @@ python metalyzer.py \
 
 ### Modular development
 
-The `modular` branch separates the pipeline into independent stages under
+Metalyzer separates the pipeline into independent stages under
 [`modules/`](modules/README.md): date extraction, country normalization,
 deterministic source parsing (including taxonomy ID-to-scientific-name lookup),
 NLI, local LLM, Mistral API, input preparation, and output combination. `metalyzer.py` contains
@@ -65,7 +65,7 @@ This is evaluated against candidate labels using NLI.
 
 ### 2. Year extraction (deterministic)
 
-Extracts a 4-digit year (1905–2026) from:
+Extracts a 4-digit year (1905–2030) from:
 
 - collection_date
 - 
@@ -131,6 +131,17 @@ Example:
 ---------|------------------|-------------------|--------------------|----------|
 |ERR001  |   Gallus gallus  |  neck skin        |  2019              |  USA     |
 
+For the text sent to NLI, the local LLM, and the Mistral API, Metalyzer omits
+the configured ID column, `host_tax_id`, and generic `tax_id`. The first is an
+identifier; deterministic taxonomy already handles `host_tax_id`; generic
+`tax_id` often names the sequenced organism rather than the sample source.
+The original metadata table remains available unchanged to taxonomy, date,
+country, and output processing. Other metadata fields remain in the rendered
+record. Values are trimmed, CR/LF and repeated whitespace become one space,
+and standard HTML entities are decoded (`&amp;` becomes `&`). Punctuation,
+capitalization, and field order are preserved. The usual value and record
+length limits still apply.
+
 
 ---
 
@@ -178,6 +189,18 @@ Example:
 - `source_verification_score` is a binary NLI entailment/support score for the assigned `best_hit`, not a calibrated probability that the classification is correct. It is `NA` for `unknown` and when `--disable-verify-source` is set.
 - year as 4-digit string
 - country as normalized name
+
+Each analysis also writes a human-readable log beside its TSV: `classified.tsv`
+produces `classified.tsv.log`. Version 0.2 prints the same progress and summary
+messages to the terminal and records provenance in that log: command line,
+local Git commit when available, Python/OS, method and model settings, input
+paths, a SHA256 of `sources.tsv`, local taxonomy file paths/sizes/timestamps,
+and input dimensions. The log also records classification totals and source
+verification counts. Warnings appear on screen and in the log; failures exit
+nonzero and leave a full Python traceback in the log. API key contents are
+never logged. Logging and provenance add no columns to the classification TSV.
+Check the installed release with `python metalyzer.py --version`; it exits
+without analysis arguments and prints `metalyzer 0.2`.
 
 ---
 
@@ -297,10 +320,13 @@ of taxonomic rank. For each valid `host_tax_id`, Metalyzer normalizes merged IDs
 and walks its lineage from the most specific taxon toward the root; the first
 configured anchor wins. Thus a species anchor such as chicken (`9031`) can
 override a broader Aves (`8782`) anchor, and a cat (`9685`) anchor can override
-Carnivora (`33554`) in a custom vocabulary. If the first matching anchor is
-assigned to multiple sources, the row remains unresolved and goes to the
-selected fallback classifier. Blank anchors or no matching lineage also fall
-back. The generic sample/pathogen `tax_id` is intentionally never source
+Carnivora (`33554`) in a custom vocabulary. At startup, configured anchors are
+checked against the loaded taxonomy dump. Obsolete IDs are normalized and
+logged; nonexistent IDs, broken lineages, or a normalized anchor assigned to
+multiple sources stop the run with a configuration error. The log reports the
+configured, valid, merged, invalid, and conflicting anchor counts. Blank
+anchors or no matching lineage for a valid host fall back to the selected
+classifier. The generic sample/pathogen `tax_id` is intentionally never source
 evidence, since it often identifies the sequenced organism instead of its host.
 
 The repository file configures domestic pig (`9825`), chicken (`9031`), turkey

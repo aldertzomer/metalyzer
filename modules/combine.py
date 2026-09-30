@@ -7,6 +7,7 @@ from .contracts import (
     FieldResult, MetadataBatch, SourceResult, SourceVocabulary, VerificationResult,
     VERIFICATION_COLUMN, empty_source_table,
 )
+from .runlog import emit
 
 
 def unresolved(batch: MetadataBatch, sources: SourceVocabulary,
@@ -68,11 +69,11 @@ def report(result: SourceResult, method: str) -> None:
     """Print source provenance and unknown counts from completed results."""
     table = result.table
     classified = table[table.source_method == method]
-    print("Source classification:\n"
+    emit("Source classification:\n"
           f"  taxonomy host_tax_id: {(table.source_method == 'host_tax_id').sum()}\n"
           f"  {method.upper()}:                  {len(classified)}\n"
-          f"  {method.upper()} -> unknown:        {(classified.best_hit == 'unknown').sum()}", flush=True)
+          f"  {method.upper()} -> unknown:        {(classified.best_hit == 'unknown').sum()}")
     if method == "llm":
-        print(f"  invalid LLM outputs:  {classified.source_evidence.str.startswith('invalid_llm_output=').sum()}", flush=True)
+        emit(f"  invalid LLM outputs:  {classified.source_evidence.str.startswith('invalid_llm_output=').sum()}")
     elif method == "mistral":
-        print(f"  invalid Mistral outputs:  {classified.source_evidence.str.startswith('invalid_mistral_output=').sum()}", flush=True)
+        emit(f"  invalid Mistral outputs:  {classified.source_evidence.str.startswith('invalid_mistral_output=').sum()}")

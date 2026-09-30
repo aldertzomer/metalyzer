@@ -22,13 +22,13 @@ DATE_COL_ORDER = (
 )
 
 
-def yy_to_yyyy(yy: int, max_year: int = 2026) -> int:
-    # Pivot derived from max_year: 00..27 => 20xx; 28..99 => 19xx
-    pivot = (max_year % 100) + 1  # 27 for 2026
+def yy_to_yyyy(yy: int, max_year: int = 2030) -> int:
+    # Pivot derived from max_year: 00..31 => 20xx; 32..99 => 19xx
+    pivot = (max_year % 100) + 1  # 31 for 2030
     return 2000 + yy if yy <= pivot else 1900 + yy
 
 
-def year_from_value(v: str, min_year: int = 1905, max_year: int = 2026) -> Optional[int]:
+def year_from_value(v: str, min_year: int = 1905, max_year: int = 2030) -> Optional[int]:
     if v is None:
         return None
     s = str(v).strip()
@@ -60,7 +60,7 @@ def year_from_value(v: str, min_year: int = 1905, max_year: int = 2026) -> Optio
     return None
 
 
-def extract_year_from_row(row, min_year: int = 1905, max_year: int = 2026) -> Optional[int]:
+def extract_year_from_row(row, min_year: int = 1905, max_year: int = 2030) -> Optional[int]:
     # Prefer the known columns in order
     for col in DATE_COL_ORDER:
         if col in row.index:
@@ -82,7 +82,7 @@ def extract_year_from_row(row, min_year: int = 1905, max_year: int = 2026) -> Op
 @dataclass(frozen=True)
 class DateConfig:
     min_year: int = 1905
-    max_year: int = 2026
+    max_year: int = 2030
 
     def __post_init__(self):
         if self.min_year > self.max_year:

@@ -14,6 +14,7 @@ from pathlib import Path
 
 from .contracts import MetadataBatch, SourceResult, SourceVocabulary, empty_source_table
 from .generative import allowed_source_names, invalid_response_evidence, system_prompt
+from .runlog import emit
 
 DEFAULT_MISTRAL_MODEL = "mistral-small-latest"
 
@@ -149,7 +150,7 @@ async def run_async(batch: MetadataBatch, sources: SourceVocabulary,
                     output.loc[key, ["best_hit", "source_evidence"]] = [label, evidence]
                     completed += 1
                     if completed % config.progress_every == 0 or completed == len(batch):
-                        print(f"Mistral classified {completed}/{len(batch)}", flush=True)
+                        emit(f"Mistral classified {completed}/{len(batch)}")
 
             tasks = [asyncio.create_task(worker()) for _ in range(min(config.concurrency, len(batch)))]
             try:

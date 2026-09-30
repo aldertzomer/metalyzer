@@ -102,14 +102,48 @@ class NCBITaxonomy:
         return None
 
 
-def configured_anchors(sources: SourceVocabulary, taxonomy: NCBITaxonomy) -> dict[int, set[str]]:
-    """Normalize configured IDs, retaining collisions as ambiguous matches."""
-    anchors = {}
+def configured_anchors(sources: SourceVocabulary, taxonomy: NCBITaxonomy,
+                       *, report: bool = False) -> dict[int, set[str]]:
+    """Validate and normalize every configured anchor before classifying rows."""
+    anchors: dict[int, set[str]] = {}
+    invalid = []
+    merged = []
+    configured = 0
+    valid = 0
     for source, taxids in zip(sources.names, sources.taxonomy_anchors):
         for taxid in taxids:
+            configured += 1
             normalized = taxonomy.normalize_taxid(taxid)
-            if normalized is not None and taxonomy.lineage(normalized):
-                anchors.setdefault(normalized, set()).add(source)
+            if normalized is None or not taxonomy.lineage(normalized) or not taxonomy.scientific_name(normalized):
+                invalid.append(f"{taxid} ({source})")
+                continue
+            valid += 1
+            if normalized != taxid:
+                merged.append((taxid, normalized))
+            anchors.setdefault(normalized, set()).add(source)
+    conflicts = {taxid: names for taxid, names in anchors.items() if len(names) > 1}
+    if report:
+        from .runlog import emit
+        emit("Taxonomy configuration:\n"
+             f"  configured anchors: {configured}\n"
+             f"  valid anchors:      {valid}\n"
+             f"  merged IDs:         {len(merged)}\n"
+             f"  invalid anchors:    {len(invalid)}\n"
+             f"  conflicts:          {len(conflicts)}")
+        for original, current in merged:
+            emit(f"taxonomy anchor {original} -> {current} (merged)")
+        for item in invalid:
+            emit(f"invalid taxonomy anchor {item}")
+        for taxid, names in conflicts.items():
+            emit(f"conflicting taxonomy anchor {taxid}: {', '.join(sorted(names))}")
+    if invalid or conflicts:
+        details = []
+        if invalid:
+            details.append("unresolvable taxonomy anchors: " + ", ".join(invalid))
+        if conflicts:
+            details.append("conflicting taxonomy anchors: " + "; ".join(
+                f"{taxid} ({', '.join(sorted(names))})" for taxid, names in conflicts.items()))
+        raise ValueError("Invalid taxonomy_anchors configuration: " + "; ".join(details))
     return anchors
 
 
@@ -146,13 +180,14 @@ def download_taxonomy(directory):
             (staging / name).replace(destination / name)
 
 
-def run(batch: MetadataBatch, sources: SourceVocabulary, taxonomy: NCBITaxonomy | None = None) -> SourceResult:
+def run(batch: MetadataBatch, sources: SourceVocabulary, taxonomy: NCBITaxonomy | None = None,
+        *, anchor_sources: dict[int, set[str]] | None = None) -> SourceResult:
     """Return only resolved host rows; absent rows must be handled by a fallback."""
     from .contracts import SourceResult, empty_source_table
 
     resolved = {}
     if taxonomy is not None:
-        anchors = configured_anchors(sources, taxonomy)
+        anchors = anchor_sources if anchor_sources is not None else configured_anchors(sources, taxonomy)
         for key, row in batch.metadata.iterrows():
             result = taxonomy.classify_host_taxid(row.get("host_tax_id"), anchors)
             if result is not None and result.source in sources.names:

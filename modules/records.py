@@ -1,5 +1,6 @@
 """Render metadata into the shared natural-language representation."""
 import math
+from html import unescape
 
 import pandas as pd
 
@@ -18,12 +19,13 @@ def is_empty_like(x) -> bool:
     return s.lower() in NA_LIKE
 
 
-def build_record(row: pd.Series, max_value_chars: int = 300, max_record_chars: int = 2000) -> str:
+def build_record(row: pd.Series, max_value_chars: int = 300, max_record_chars: int = 2000,
+                 excluded_fields=()) -> str:
     parts = []
     for col, val in row.items():
-        if is_empty_like(val):
+        if col in excluded_fields or is_empty_like(val):
             continue
-        v = str(val).strip().replace("\n", " ").replace("\r", " ")
+        v = " ".join(unescape(str(val)).split())
         if len(v) > max_value_chars:
             v = v[:max_value_chars] + "…"
         field = str(col).replace("_", " ")

@@ -14,14 +14,17 @@ def read_tsv(path: str | Path, **kwargs) -> pd.DataFrame:
         return pd.read_csv(handle, sep="\t", dtype=str, keep_default_na=False, **kwargs)
 
 
-def prepare_batch(metadata: pd.DataFrame, *, max_value_chars: int = 300,
+def prepare_batch(metadata: pd.DataFrame, *, id_col: str | None = None, max_value_chars: int = 300,
                   max_record_chars: int = 2000) -> MetadataBatch:
     """Assign positional keys once, preserving external IDs and input order."""
     if max_value_chars < 1 or max_record_chars < 1:
         raise ValueError("Record truncation limits must be positive")
     frame = metadata.reset_index(drop=True)
+    excluded = {"host_tax_id", "tax_id"}
+    if id_col is not None:
+        excluded.add(id_col)
     records = pd.Series(
-        [build_record(row, max_value_chars, max_record_chars) for _, row in frame.iterrows()],
+        [build_record(row, max_value_chars, max_record_chars, excluded) for _, row in frame.iterrows()],
         index=frame.index, name="record", dtype=object,
     )
     return MetadataBatch(frame, records)
@@ -53,5 +56,5 @@ def load(metadata_path: str | Path, sources_path: str | Path, id_col: str, *,
              if has_anchors else ()) for _, row in labels.iterrows() if str(row[column]).strip()]
     sources = SourceVocabulary(tuple(label for label, _ in rows), id_col,
                                tuple(anchors for _, anchors in rows))
-    return prepare_batch(metadata, max_value_chars=max_value_chars,
+    return prepare_batch(metadata, id_col=id_col, max_value_chars=max_value_chars,
                          max_record_chars=max_record_chars), sources

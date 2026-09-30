@@ -82,15 +82,47 @@ class TaxonomyTests(unittest.TestCase):
             self.assertEqual(self.match(taxid).source, "laboratory")
         self.assertIsNone(self.match(562))
 
-    def test_duplicate_anchor_is_ambiguous_even_below_broad_ancestor(self):
+    def test_duplicate_anchor_fails_before_classification(self):
         sources = SourceVocabulary(("broad", "first", "second"), "run_accession",
                                    ((33208,), (9940,), (9940,)))
-        self.assertIsNone(self.match(9940, sources))
-        self.assertIsNone(self.match(11, sources))
-        self.assertEqual(self.match(9031, sources).source, "broad")
+        with self.assertRaisesRegex(ValueError, "conflicting taxonomy anchors: 9940"):
+            configured_anchors(sources, self.taxonomy)
         # Merged IDs in the configuration normalize to the same anchor too.
         merged = SourceVocabulary(("first", "second"), "run_accession", ((9000,), (9940,)))
-        self.assertIsNone(self.match(9940, merged))
+        with self.assertRaisesRegex(ValueError, "conflicting taxonomy anchors: 9940"):
+            configured_anchors(merged, self.taxonomy)
+
+    def test_invalid_and_merged_anchor_configuration_is_reported(self):
+        invalid = SourceVocabulary(("missing", "broken"), "run_accession", ((999999,), (13,)))
+        with contextlib.redirect_stdout(io.StringIO()) as log:
+            with self.assertRaisesRegex(ValueError, "unresolvable taxonomy anchors"):
+                configured_anchors(invalid, self.taxonomy, report=True)
+        self.assertIn("invalid anchors:    2", log.getvalue())
+        merged = SourceVocabulary(("sheep",), "run_accession", ((9000,),))
+        with contextlib.redirect_stdout(io.StringIO()) as log:
+            anchors = configured_anchors(merged, self.taxonomy, report=True)
+        self.assertEqual(anchors, {9940: {"sheep"}})
+        self.assertIn("taxonomy anchor 9000 -> 9940 (merged)", log.getvalue())
+        self.assertIn("merged IDs:         1", log.getvalue())
+
+    def test_cli_rejects_conflicting_anchors_before_model_loading(self):
+        pd.DataFrame({"run_accession": ["a"], "host_tax_id": ["9940"]}).to_csv(
+            self.directory / "input.tsv", sep="\t", index=False)
+        pd.DataFrame({"source": ["first", "second"],
+                      "taxonomy_anchors": ["9000", "9940"]}).to_csv(
+            self.directory / "sources.tsv", sep="\t", index=False)
+        with patch.object(nli, "pipeline") as model, contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaisesRegex(ValueError, "conflicting taxonomy anchors"):
+                metalyzer.main(["--metadata", str(self.directory / "input.tsv"),
+                                "--sources", str(self.directory / "sources.tsv"),
+                                "--out", str(self.directory / "out.tsv"),
+                                "--id-col", "run_accession", "--taxonomy-dir", str(self.directory)])
+        model.assert_not_called()
+        self.assertFalse((self.directory / "out.tsv").exists())
+        log = (self.directory / "out.tsv.log").read_text(encoding="utf-8")
+        self.assertIn("taxonomy anchor 9000 -> 9940 (merged)", log)
+        self.assertIn("conflicts:          1", log)
+        self.assertIn("Traceback (most recent call last)", log)
 
     def test_blank_missing_anchors_and_invalid_taxids(self):
         empty = SourceVocabulary(("sheep",), "run_accession")

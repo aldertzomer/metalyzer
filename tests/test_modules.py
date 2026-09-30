@@ -11,7 +11,7 @@ from unittest.mock import patch
 import pandas as pd
 
 import metalyzer
-from modules import combine, country, date, deterministic_source, input, llm, nli
+from modules import combine, country, date, deterministic_source, input, llm, nli, records
 from modules.contracts import (
     FieldResult, MetadataBatch, SourceResult, SourceVocabulary, empty_source_table,
 )
@@ -45,13 +45,33 @@ class ModuleTests(unittest.TestCase):
         pd.testing.assert_frame_equal(self.batch.metadata, input.prepare_batch(self.batch.metadata).metadata)
 
     def test_date_boundaries_and_fallback(self):
-        for raw, expected in [("1905", 1905), ("2026", 2026), ("2027", None),
+        for raw, expected in [("1905", 1905), ("2026", 2026), ("2027", 2027),
+                              ("2030", 2030), ("2031", None),
                               ("15-06-18", 2018), ("15-06-99", 1999), ("NA", None)]:
             with self.subTest(raw=raw):
                 self.assertEqual(date.year_from_value(raw), expected)
         batch = input.prepare_batch(pd.DataFrame({"sampling_year": ["collected in 2020"]}))
         self.assertEqual(date.run(batch).values.tolist(), ["2020"])
         self.assertEqual(date.run(batch, date.DateConfig(max_year=2019)).values.tolist(), [""])
+
+    def test_model_record_excludes_identifiers_and_normalizes_values_only(self):
+        raw = pd.DataFrame({
+            "run_accession": [" SRR001 "], "host_tax_id": ["9940"], "tax_id": ["562"],
+            "host_scientific_name": ["  Ovis  \r\n aries  "],
+            "sample_title": ["  R&amp;D\t&gt;  field  "],
+            "collection_date": ["2030"], "missing": ["NA"],
+        })
+        batch = input.prepare_batch(raw, id_col="run_accession")
+        pd.testing.assert_frame_equal(batch.metadata, raw)
+        self.assertEqual(batch.metadata.loc[0, "host_tax_id"], "9940")
+        self.assertEqual(batch.metadata.loc[0, "tax_id"], "562")
+        self.assertEqual(batch.records.iloc[0],
+                         "host scientific name: Ovis aries; sample title: R&D > field; collection date: 2030")
+        self.assertEqual(date.run(batch).values.iloc[0], "2030")
+        self.assertEqual(records.build_record(pd.Series({"host": "  abcde  "}), max_value_chars=3),
+                         "host: abc…")
+        self.assertEqual(records.build_record(pd.Series({"host": "abcde"}), max_record_chars=7),
+                         "host: a…")
 
     def test_country_does_not_fuzzy_match_unrelated_text(self):
         batch = input.prepare_batch(pd.DataFrame({"host": ["turkey"], "title": ["USA"]}))

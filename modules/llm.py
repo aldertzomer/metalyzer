@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 from .contracts import MetadataBatch, SourceResult, SourceVocabulary, empty_source_table
 from .generative import allowed_source_names, invalid_response_evidence, system_prompt as llm_system_prompt
+from .runlog import emit
 
 DEFAULT_LLM_MODEL = "mistralai/Ministral-3-8B-Instruct-2512"
 
@@ -124,7 +125,7 @@ def run(batch: MetadataBatch, sources: SourceVocabulary, config: LLMConfig = LLM
             label, evidence = parse_llm_response(response, source_names)
             output.loc[batch.metadata.index[start + offset], ["best_hit", "source_evidence"]] = [label, evidence]
         del encoded, inputs, generated, generated_only, responses, conversations
-        print(f"Batch {start // config.batch_size + 1}: local Ministral source classification done", flush=True)
+        emit(f"Batch {start // config.batch_size + 1}: local Ministral source classification done")
     result = SourceResult(output)
     result.validate(batch, sources)
     return result

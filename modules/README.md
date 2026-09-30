@@ -32,7 +32,7 @@ input.load -> MetadataBatch + SourceVocabulary
 |---|---|---|---|
 | `input` | `load(...)`, `prepare_batch(...)` | TSV paths, ID column, optional row/truncation limits; or a DataFrame | Batch and vocabulary; always used by CLI |
 | `records` | `build_record(row, ...)` | One metadata Series, character limits | String used by both text classifiers and country fallback; called by input preparation |
-| `date` | `run(batch, config=DateConfig())` | Batch; year bounds default to 1905–2026 | `FieldResult` named `year`; enabled unless `--skip-date` |
+| `date` | `run(batch, config=DateConfig())` | Batch; year bounds default to 1905–2030 | `FieldResult` named `year`; enabled unless `--skip-date` |
 | `country` | `run(batch)` | Batch | `FieldResult` named `country`; enabled unless `--skip-country` |
 | `deterministic_source` | `run(batch, sources, taxonomy=None)` | Batch, vocabulary, loaded `NCBITaxonomy` or `None` | Partial `SourceResult`; lookup active with valid `--taxonomy-dir` |
 | `nli` | `run(batch, sources, config=NLIConfig())` | Batch, vocabulary; device, batch size, score cutoff | Complete result for the supplied batch; `--method nli` (default) |
@@ -44,8 +44,9 @@ input.load -> MetadataBatch + SourceVocabulary
 
 Taxonomy resolution uses the optional `SourceVocabulary.taxonomy_anchors`,
 parsed from comma-separated NCBI IDs in `sources.tsv`. The first configured
-ancestor of `host_tax_id` wins, while a duplicated matching anchor leaves the
-row unresolved. `tax_id` is ignored for source matching. Only `labels` reach
+ancestor of `host_tax_id` wins. Invalid IDs and duplicate normalized anchors
+across sources fail validation before classification. `tax_id` is ignored for
+source matching. Only `labels` reach
 NLI and generative prompts; taxonomy IDs are never added to their vocabulary.
 Taxonomy resolution always precedes text classification. Only unresolved rows
 reach the selected text stage. Empty batches never load a model, read an API
@@ -63,8 +64,9 @@ Loading modules does not download files or load model weights.
   empty strings and literal `NA` remain unchanged. Parsers also tolerate common
   missing/numeric values in programmatically constructed batches.
 - `records`: one natural-language string per row. Input preparation renders
-  fields as `host: Ovis aries; country: USA`, skips missing values, replaces
-  underscores in column names, and truncates values/records at 300/2000 characters
+  fields as `host: Ovis aries; country: USA`, skips missing values and the
+  configured ID, `host_tax_id`, and `tax_id` columns, replaces underscores in
+  column names, normalizes whitespace and HTML entities in values, and truncates values/records at 300/2000 characters
   by default. The truncation marker `…` is appended after the character limit.
   An empty row becomes `metadata: (empty)`.
 - Both objects have the same ordered, unique, nonnegative integer index. These

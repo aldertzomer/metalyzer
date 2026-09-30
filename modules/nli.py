@@ -4,6 +4,7 @@ from dataclasses import dataclass
 import pandas as pd
 
 from .contracts import MetadataBatch, SourceResult, SourceVocabulary, canonical_source_names
+from .runlog import emit
 
 DEFAULT_NLI_MODEL = "MoritzLaurer/deberta-v3-large-zeroshot-v2.0"
 HYPOTHESIS_TEMPLATE = "The biological host or environmental source of this sample is {}."
@@ -89,7 +90,7 @@ def run(batch: MetadataBatch, sources: SourceVocabulary, config: NLIConfig = NLI
                 scores = dict.fromkeys(source_labels, 0.0)
                 scores.update({label: float(score) for label, score in zip(result["labels"], result["scores"])})
                 score_rows.append(scores)
-            print(f"Batch {i // config.batch_size + 1}: source classification done", flush=True)
+            emit(f"Batch {i // config.batch_size + 1}: source classification done")
 
     output = parse_source_scores(pd.DataFrame(score_rows, columns=source_labels, dtype=float), sources.id_col, config.min_score)
     if len(output) != len(batch):
