@@ -83,6 +83,10 @@ def load_local_llm(config: LLMConfig):
         # Keep the FP8 checkpoint on the specifically requested GPU.
         model_kwargs["device_map"] = config.device
     model = Mistral3ForConditionalGeneration.from_pretrained(config.model, **model_kwargs)
+    # The checkpoint specifies a long max_length for open-ended generation.
+    # This classifier controls only continuation length with max_new_tokens;
+    # clearing the unused limit avoids a Transformers conflict warning.
+    model.generation_config.max_length = None
     if config.device == -1:
         model.to(device)
     model.eval()

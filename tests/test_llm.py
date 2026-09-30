@@ -43,6 +43,7 @@ class LocalLLMTests(unittest.TestCase):
             "attention_mask": torch.tensor([[0, 0, 1, 1], [1, 1, 1, 1]][:len(conversations)]),
         })
         model = MagicMock()
+        model.generation_config.max_length = 262144
         def generate(**kw):
             self.assertTrue(torch.is_inference_mode_enabled())
             count = kw["input_ids"].shape[0]
@@ -136,6 +137,7 @@ class LocalLLMTests(unittest.TestCase):
                                                  dtype='auto', low_cpu_mem_usage=True)
         self.assertEqual(str(hf.model.to.call_args.args[0]), 'cpu')
         hf.model.eval.assert_called_once()
+        self.assertIsNone(hf.model.generation_config.max_length)
         self.assertEqual(hf.tokenizer.padding_side, 'left')
         self.assertEqual(hf.model.generate.call_count, 2)
         for call in hf.model.generate.call_args_list:
