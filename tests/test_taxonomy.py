@@ -93,7 +93,8 @@ class TaxonomyTests(unittest.TestCase):
         with patch.object(nli_module, "pipeline", side_effect=self.fake_pipeline), contextlib.redirect_stdout(io.StringIO()) as log:
             metalyzer.main(["--metadata", str(self.directory / "input.tsv"), "--sources", str(self.directory / "sources.tsv"),
                             "--out", str(self.directory / "out.tsv"), "--id-col", "run_accession", "--device", "-1",
-                            "--batch-size", "2", "--taxonomy-dir", str(self.directory)])
+                            "--batch-size", "2", "--taxonomy-dir", str(self.directory),
+                            "--disable-verify-source"])
         out = pd.read_csv(self.directory / "out.tsv", sep="\t", keep_default_na=False)
         self.assertEqual(out.run_accession.tolist(), list("abcdefg"))
         self.assertEqual(out.best_hit.tolist(), ["sheep", "unknown", "chicken", "unknown", "human", "other_animal", "unknown"])

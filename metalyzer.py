@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 
-from modules import combine, country, date, deterministic_source, input, llm, mistral, nli
+from modules import combine, country, date, deterministic_source, input, llm, mistral, nli, verification
 from modules.contracts import MetadataBatch, SourceResult, SourceVocabulary
 
 
@@ -44,6 +44,8 @@ def parse_args(argv=None):
 
     ap.add_argument("--skip-date", action="store_true", help="Disable year extraction (omit year column)")
     ap.add_argument("--skip-country", action="store_true", help="Disable country normalization (omit country column)")
+    ap.add_argument("--disable-verify-source", action="store_true",
+                    help="Skip binary NLI verification; write NA verification scores")
 
     args = ap.parse_args(argv)
     if args.download_taxonomy:
@@ -77,7 +79,8 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
                      method: str = "nli", taxonomy=None,
                      nli_config: nli.NLIConfig = nli.NLIConfig(),
                      llm_config: llm.LLMConfig = llm.LLMConfig(),
-                     mistral_config: mistral.MistralConfig = mistral.MistralConfig()) -> SourceResult:
+                     mistral_config: mistral.MistralConfig = mistral.MistralConfig(),
+                     nli_model: nli.NLIModel | None = None) -> SourceResult:
     """Run deterministic source resolution, then the selected fallback stage."""
     if method not in {"nli", "llm", "mistral"}:
         raise ValueError("method must be nli, llm or mistral")
@@ -93,7 +96,8 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
     if len(pending):
         stage, config = {"nli": (nli.run, nli_config), "llm": (llm.run, llm_config),
                          "mistral": (mistral.run, mistral_config)}[method]
-        results.append(stage(pending, sources, config))
+        results.append(stage(pending, sources, config, model=nli_model)
+                       if method == "nli" else stage(pending, sources, config))
     result = combine.sources(batch, sources, *results)
     combine.report(result, method)
     return result
@@ -111,20 +115,26 @@ def main(argv=None):
         max_value_chars=args.max_value_chars, max_record_chars=args.max_record_chars,
     )
     taxonomy = deterministic_source.load_taxonomy(args.taxonomy_dir, fallback_method=args.method)
+    nli_config = nli.NLIConfig(device=args.device, batch_size=args.batch_size, min_score=args.min_score)
+    nli_model = nli.NLIModel(nli_config)
     source_result = classify_sources(
         batch, sources, method=args.method, taxonomy=taxonomy,
-        nli_config=nli.NLIConfig(device=args.device, batch_size=args.batch_size, min_score=args.min_score),
+        nli_config=nli_config, nli_model=nli_model,
         llm_config=llm.LLMConfig(model=args.llm_model, revision=args.llm_revision,
                                  device=args.device, batch_size=args.llm_batch_size,
                                  max_new_tokens=args.llm_max_new_tokens),
         mistral_config=args.mistral_config,
+    )
+    verification_result = verification.run(
+        batch, sources, source_result, nli_config,
+        disabled=args.disable_verify_source, model=nli_model,
     )
     fields = []
     if not args.skip_date:
         fields.append(date.run(batch))
     if not args.skip_country:
         fields.append(country.run(batch))
-    output = combine.run(batch, sources, source_result, *fields)
+    output = combine.run(batch, sources, source_result, *fields, verification=verification_result)
     combine.write(output, args.out)
     print(f"Wrote {args.out} (n={len(output)})", flush=True)
 

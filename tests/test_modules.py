@@ -70,7 +70,8 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(output.id.tolist(), ["duplicate", "duplicate", "third"])
         self.assertEqual(output.source_method.tolist(), ["fallback", "example", "fallback"])
         self.assertEqual(output.year.tolist(), ["2019", "2018", ""])
-        self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns, "year", "country"])
+        self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns,
+                                                   "source_verification_score", "year", "country"])
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "result.tsv"
             combine.write(output, path)
@@ -172,11 +173,14 @@ class ModuleTests(unittest.TestCase):
                      patch.object(country, "run", wraps=country.run) as country_stage, \
                      contextlib.redirect_stdout(io.StringIO()):
                     metalyzer.main(["--metadata", str(root / "input.tsv"), "--sources", str(root / "sources.tsv"),
-                                    "--out", str(root / "out.tsv"), "--id-col", "id", "--limit", "1", *flags])
+                                    "--out", str(root / "out.tsv"), "--id-col", "id", "--limit", "1",
+                                    "--disable-verify-source", *flags])
                     self.assertEqual(date_stage.call_count, int("year" in expected))
                     self.assertEqual(country_stage.call_count, int("country" in expected))
                     output = pd.read_csv(root / "out.tsv", sep="\t")
-                    self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns, *expected])
+                    self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns,
+                                                               "source_verification_score", *expected])
+                    self.assertTrue(output.source_verification_score.isna().all())
 
     def test_input_vocabulary_and_id_validation(self):
         with tempfile.TemporaryDirectory() as directory:

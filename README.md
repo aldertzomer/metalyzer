@@ -153,25 +153,45 @@ cattle (bovine host)
 
 A TSV file with:
 
-id    <source scores...>    best_hit    source_method    source_evidence    year    country
+id    <source scores...>    best_hit    source_method    source_evidence    source_verification_score    year    country
 
 Example:
 
-|run_acc| chicken|human|cattle|best_hit|source_method|source_evidence|year|country|
-|-------|--------|-----|------|--------|-------------|---------------|----|-------|
-|ERR001 |  0.85  |0.01 | 0.02 |chicken|nli||2019|United States|
+|run_acc| chicken|human|cattle|best_hit|source_method|source_evidence|source_verification_score|year|country|
+|-------|--------|-----|------|--------|-------------|---------------|-------------------------|----|-------|
+|ERR001 |  0.85  |0.01 | 0.02 |chicken|nli||0.93|2019|United States|
 
 - One score column per source, named using the text before the first `(` in `sources.tsv`; multi-word names are preserved
 - For NLI rows, `best_hit` is the name of the source with the highest score; ties use the first source in `sources.tsv`
 - In NLI mode, `--min-score` sets the minimum top score required for `best_hit`; lower-scoring rows are labelled `unknown` while their score columns are retained. The default is `0.2`.
 - Full source labels, including parenthetical hints, are still used for classification
-- Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `source_method`, `source_evidence`, `year`, and `country` column names
+- Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `source_method`, `source_evidence`, `source_verification_score`, `year`, and `country` column names
 - Taxonomy-derived rows use `source_method=host_tax_id` and **all source scores are `NA`**, because no NLI inference was performed. They are not artificial probabilities and are not subject to `--min-score`.
 - NLI rows use `source_method=nli`, including below-threshold `unknown` calls; their `source_evidence` is blank.
 - Local LLM rows use `source_method=llm` and all source scores are `NA`: generated labels have no calibrated candidate probabilities. Valid answers have blank evidence; malformed answers become `unknown` with `source_evidence=invalid_llm_output=...` (sanitized and truncated to 200 characters).
 - Mistral API rows use `source_method=mistral` with the same `NA` score convention. `unknown` is always allowed, even when absent from the sources file. Malformed answers have `source_evidence=invalid_mistral_output=...`; request/authentication/quota failures abort instead of producing unknown labels.
+- `source_verification_score` is a binary NLI entailment/support score for the assigned `best_hit`, not a calibrated probability that the classification is correct. It is `NA` for `unknown` and when `--disable-verify-source` is set.
 - year as 4-digit string
 - country as normalized name
+
+---
+
+### Source verification
+
+After source classification, Metalyzer uses the same DeBERTa NLI model and
+hypothesis wording as `--method nli` to test each assigned source against the
+original rendered metadata. It evaluates **only one hypothesis per non-unknown
+row**, using the selected source's full description from `sources.tsv`, including
+its hints. The score is equivalent to zero-shot `multi_label=True` for that one
+candidate. This does not rerun the full NLI classification or compare the
+assigned source with alternatives. It applies to `host_tax_id`, `nli`, `llm`,
+and `mistral` assignments alike.
+
+Verification runs by default. Pass `--disable-verify-source` to skip it and
+write `NA` in `source_verification_score` for every row. An `unknown` assignment
+is never scored. On NLI runs, the classifier and verifier share the loaded NLI
+pipeline. On LLM and Mistral API runs, verification loads the NLI model for
+non-unknown assignments, adding model memory and inference time.
 
 ---
 
@@ -292,7 +312,8 @@ SRR17929619     NA      NA      NA  NA      NA      ... sheep    host_tax_id    
 Input order, year/country extraction, and NLI score column names are preserved.
 Each run reports taxonomy calls, selected classifier calls, and its `unknown` calls.
 LLM runs also report the number of invalid model outputs.
-If all hosts resolve, the model is not loaded at all.
+If all hosts resolve, the fallback classifier is not loaded. The NLI verifier
+still loads for those assignments unless `--disable-verify-source` is set.
 
 Run the offline unit and integration tests with:
 
@@ -336,6 +357,9 @@ NLI CPU execution explicitly uses float32 to avoid slow float16 inference.
 GPU execution uses the model checkpoint's precision (`dtype="auto"`).
 
 ## Benchmark results
+
+The saved benchmark TSVs below were generated before source verification was
+added, so they do not contain `source_verification_score`.
 
 The following results evaluate the current `benchmark_classified.tsv` using
 `sources.tsv` against `benchmark_true_labels.tsv`, with `--min-score 0.2` and
@@ -398,8 +422,9 @@ your machine; no API or API key is required. The existing environments contain
 the required dependencies.
 
 Taxonomy still takes precedence: only unresolved `host_tax_id` rows reach the
-LLM. Neither model loads if taxonomy resolves every row, and a run never loads
-both DeBERTa and the LLM. The natural-language metadata representation and
+LLM. The LLM does not load if taxonomy resolves every row. With verification
+enabled, DeBERTa also loads to score the final non-unknown assignments. The
+natural-language metadata representation and
 deterministic year/country processing are shared with NLI.
 
 The same `sources.tsv` supplies canonical labels and their full descriptions.
@@ -598,7 +623,9 @@ source.
 `--method mistral` uses [`modules/mistral.py`](modules/mistral.py) with the
 standard pipeline inputs and output columns. Taxonomy still takes precedence;
 only unresolved rows are sent to Mistral. Date and country extraction remain
-local. The module does not load PyTorch, Transformers, or local model weights.
+local. The API module itself does not load PyTorch, Transformers, or local model
+weights; the default source verification step does load DeBERTa for non-unknown
+assignments. Use `--disable-verify-source` when running without local NLI weights.
 
 Install the optional SDK in your active environment:
 

@@ -5,6 +5,9 @@ import pandas as pd
 
 from .contracts import MetadataBatch, SourceResult, SourceVocabulary, canonical_source_names
 
+DEFAULT_NLI_MODEL = "MoritzLaurer/deberta-v3-large-zeroshot-v2.0"
+HYPOTHESIS_TEMPLATE = "The biological host or environmental source of this sample is {}."
+
 
 @dataclass(frozen=True)
 class NLIConfig:
@@ -23,6 +26,23 @@ def pipeline(*args, **kwargs):
     # Taxonomy-only runs and downloads do not need to load Transformers/PyTorch.
     from transformers import pipeline as hf_pipeline
     return hf_pipeline(*args, **kwargs)
+
+
+class NLIModel:
+    """Lazily load one zero-shot pipeline and share it between source stages."""
+
+    def __init__(self, config: NLIConfig):
+        self.config = config
+        self._classifier = None
+
+    def get(self):
+        if self._classifier is None:
+            self._classifier = pipeline(
+                "zero-shot-classification", model=DEFAULT_NLI_MODEL,
+                device=self.config.device,
+                dtype="float32" if self.config.device < 0 else "auto",
+            )
+        return self._classifier
 
 
 def parse_source_scores(
@@ -46,23 +66,19 @@ def parse_source_scores(
     return parsed
 
 
-def run(batch: MetadataBatch, sources: SourceVocabulary, config: NLIConfig = NLIConfig()) -> SourceResult:
+def run(batch: MetadataBatch, sources: SourceVocabulary, config: NLIConfig = NLIConfig(),
+        *, model: NLIModel | None = None) -> SourceResult:
     """Original zero-shot inference, including its dtype and threshold logic."""
     records = batch.records.tolist()
     source_labels = list(sources.labels)
     score_rows = []
     if records:
-        classifier = pipeline(
-            "zero-shot-classification",
-            model="MoritzLaurer/deberta-v3-large-zeroshot-v2.0",
-            device=config.device,
-            dtype="float32" if config.device < 0 else "auto",
-        )
+        classifier = (model if model is not None else NLIModel(config)).get()
         for i in range(0, len(records), config.batch_size):
             record_batch = records[i:i + config.batch_size]
             results = classifier(
                 record_batch, candidate_labels=source_labels,
-                hypothesis_template="The biological host or environmental source of this sample is {}.",
+                hypothesis_template=HYPOTHESIS_TEMPLATE,
                 multi_label=False, batch_size=config.batch_size,
             )
             if isinstance(results, dict):

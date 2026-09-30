@@ -4,7 +4,8 @@ from pathlib import Path
 import pandas as pd
 
 from .contracts import (
-    FieldResult, MetadataBatch, SourceResult, SourceVocabulary, empty_source_table,
+    FieldResult, MetadataBatch, SourceResult, SourceVocabulary, VerificationResult,
+    VERIFICATION_COLUMN, empty_source_table,
 )
 
 
@@ -35,12 +36,17 @@ def sources(batch: MetadataBatch, vocabulary: SourceVocabulary,
 
 
 def run(batch: MetadataBatch, vocabulary: SourceVocabulary,
-        source_result: SourceResult, *fields: FieldResult) -> pd.DataFrame:
-    """Return ID, source columns, then fields in argument order, in input order."""
+        source_result: SourceResult, *fields: FieldResult,
+        verification: VerificationResult | None = None) -> pd.DataFrame:
+    """Return ID, source columns, verification, then fields in input order."""
     source_result = sources(batch, vocabulary, source_result)
     if vocabulary.id_col not in batch.metadata:
         raise ValueError(f"ID column {vocabulary.id_col!r} is missing from metadata")
-    columns = {vocabulary.id_col, *vocabulary.columns}
+    if verification is None:
+        verification = VerificationResult(pd.Series(float("nan"), index=batch.metadata.index,
+                                                    name=VERIFICATION_COLUMN, dtype=float))
+    verification.validate(batch)
+    columns = {vocabulary.id_col, *vocabulary.columns, VERIFICATION_COLUMN}
     for field in fields:
         field.validate(batch)
         if field.values.name in columns:
@@ -48,6 +54,7 @@ def run(batch: MetadataBatch, vocabulary: SourceVocabulary,
         columns.add(field.values.name)
     return pd.concat([
         batch.metadata[[vocabulary.id_col]].astype(str), source_result.table,
+        verification.values,
         *(field.values.reindex(batch.metadata.index) for field in fields),
     ], axis=1)
 

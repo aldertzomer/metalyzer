@@ -6,7 +6,8 @@ import pandas as pd
 
 
 SOURCE_COLUMNS = ("best_hit", "source_method", "source_evidence")
-RESERVED_COLUMNS = (*SOURCE_COLUMNS, "year", "country")
+VERIFICATION_COLUMN = "source_verification_score"
+RESERVED_COLUMNS = (*SOURCE_COLUMNS, VERIFICATION_COLUMN, "year", "country")
 
 
 def canonical_source_names(source_labels, id_col):
@@ -117,6 +118,22 @@ class FieldResult:
             raise ValueError("Field results must cover every input row exactly once")
         if not all(isinstance(value, str) for value in self.values):
             raise ValueError("Field values must be strings; use the documented missing value")
+
+
+@dataclass(frozen=True)
+class VerificationResult:
+    """Binary entailment scores for assigned sources; NaN means unscored."""
+    values: pd.Series
+
+    def validate(self, batch: MetadataBatch) -> None:
+        values = self.values
+        if (values.name != VERIFICATION_COLUMN or not values.index.is_unique
+                or not values.index.equals(batch.metadata.index)):
+            raise ValueError("Verification scores must cover the ordered input rows")
+        if not pd.api.types.is_numeric_dtype(values.dtype):
+            raise ValueError("Verification scores must be numeric or NaN")
+        if not (values.isna() | ((values >= 0) & (values <= 1))).all():
+            raise ValueError("Verification scores must be between 0 and 1 or NaN")
 
 
 class SourceModule(Protocol):

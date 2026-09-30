@@ -303,7 +303,9 @@ class MistralTests(unittest.TestCase):
             with patch.object(deterministic_source, "load_taxonomy", return_value=None):
                 metalyzer.main(argv)
             output = pd.read_csv(root / "out.tsv", sep="\t", dtype=str, keep_default_na=False)
-            self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns, "year", "country"])
+            self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns,
+                                                       "source_verification_score", "year", "country"])
+            self.assertEqual(output.source_verification_score.tolist(), ["NA"])
             self.assertEqual(output.best_hit.tolist(), ["unknown"])
             self.assertEqual(output.source_method.tolist(), ["mistral"])
             self.assertEqual(output.year.tolist(), ["2019"])

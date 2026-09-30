@@ -293,7 +293,7 @@ class LocalLLMTests(unittest.TestCase):
             with patch.object(deterministic_source, 'load_taxonomy', return_value=None):
                 metalyzer.main(['--metadata', str(root / 'input.tsv'), '--sources', str(root / 'sources.tsv'),
                                 '--out', str(root / 'out.tsv'), '--id-col', 'id', '--method', 'llm',
-                                '--device', '-1', '--limit', '1'])
+                                '--device', '-1', '--limit', '1', '--disable-verify-source'])
             out = pd.read_csv(root / 'out.tsv', sep='\t', keep_default_na=False, dtype=str)
         self.assertEqual(len(out), 1)
         self.assertEqual(out.id.tolist(), ['a'])
@@ -301,6 +301,7 @@ class LocalLLMTests(unittest.TestCase):
         self.assertEqual(out.year.tolist(), ['2019'])
         self.assertEqual(out.country.tolist(), ['United States'])
         self.assertEqual(out.source_method.tolist(), ['llm'])
+        self.assertEqual(out.source_verification_score.tolist(), ['NA'])
 
     def test_taxonomy_unavailable_label_falls_back_to_llm(self):
         self.mocked_hf(['unknown'])
@@ -326,7 +327,8 @@ class LocalLLMTests(unittest.TestCase):
                     llm.assert_not_called()
                 out = pd.read_csv(root / 'out.tsv', sep='\t')
                 self.assertEqual(len(out), 0)
-                self.assertEqual(out.columns.tolist(), ['id', *NAMES, 'best_hit', 'source_method', 'source_evidence', 'year', 'country'])
+                self.assertEqual(out.columns.tolist(), ['id', *NAMES, 'best_hit', 'source_method',
+                                                        'source_evidence', 'source_verification_score', 'year', 'country'])
 
 
 if __name__ == '__main__':

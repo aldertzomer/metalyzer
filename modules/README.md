@@ -18,6 +18,8 @@ input.load -> MetadataBatch + SourceVocabulary
                   |     nli.run OR llm.run OR mistral.run -> fallback SourceResult
                   |           |
                   |     combine.sources -> complete SourceResult
+                  |           |
+                  |     verification.run -> VerificationResult (final best_hit only)
                   |
                   +-> date.run -> FieldResult("year")
                   +-> country.run -> FieldResult("country")
@@ -34,15 +36,17 @@ input.load -> MetadataBatch + SourceVocabulary
 | `country` | `run(batch)` | Batch | `FieldResult` named `country`; enabled unless `--skip-country` |
 | `deterministic_source` | `run(batch, sources, taxonomy=None)` | Batch, vocabulary, loaded `NCBITaxonomy` or `None` | Partial `SourceResult`; lookup active with valid `--taxonomy-dir` |
 | `nli` | `run(batch, sources, config=NLIConfig())` | Batch, vocabulary; device, batch size, score cutoff | Complete result for the supplied batch; `--method nli` (default) |
+| `verification` | `run(batch, sources, result, config, disabled=False, model=None)` | Final source result, shared lazy NLI model | One binary support score per assigned source; `NA` for unknown or disabled rows |
 | `llm` | `run(batch, sources, config=LLMConfig())` | Batch, vocabulary; model, revision, device, batch size, generation limit | Complete result for the supplied batch; `--method llm` |
 | `mistral` | `run(batch, sources, config=MistralConfig())`, async `run_async(...)` | Batch, vocabulary; key-file path, model, concurrency, retries, timeout, seed, token/progress limits | Complete result for the supplied batch; `--method mistral` |
 | `generative` | `system_prompt`, `allowed_source_names`, `invalid_response_evidence` | Source descriptions/names or a response | Shared prompt, implicit unknown label and evidence formatting; no model/SDK imports |
 | `combine` | `unresolved`, `sources`, `run`, `write` | Batch, vocabulary, stage results; path for writing | Validated subsets, source result, assembled DataFrame, TSV |
 
 Taxonomy resolution always precedes text classification. Only unresolved rows
-reach the selected text stage. Empty batches and batches fully resolved by
-taxonomy never load a model, read an API key, or create an API client. The three
-text classifiers are mutually exclusive.
+reach the selected text stage. Empty batches never load a model, read an API
+key, or create an API client. A batch fully resolved by taxonomy skips the
+fallback classifier, but default source verification still loads NLI for its
+non-unknown assignments. The three text classifiers are mutually exclusive.
 `--download-taxonomy DIR` explicitly downloads and validates the dump, then exits.
 Loading modules does not download files or load model weights.
 
@@ -113,6 +117,10 @@ Existing stage semantics:
 - NLI uses full descriptions as candidate labels. Ties use source-file order;
   a top score below `NLIConfig.min_score` becomes unknown with scores retained.
   `source_evidence` is empty. CPU uses float32; GPU uses checkpoint precision.
+- Verification uses `NLIModel` and the same model constant and hypothesis
+  template as the normal NLI stage. It tests only the final source's full label
+  with binary `multi_label=True`; unknown predictions are not scored. A normal
+  NLI run shares one lazy pipeline instance with verification.
 - LLM uses full descriptions in its prompt and returns canonical labels. Scores
   are NaN. Invalid responses become unknown with sanitized, truncated
   `invalid_llm_output=...` evidence. `LLMConfig` has no score threshold.
@@ -153,12 +161,13 @@ must implement precedence by receiving only the unresolved subset. Foreign keys,
 duplicate keys, invalid labels, missing decisions, and malformed schemas raise
 `ValueError` instead of silently joining incorrect rows.
 
-`combine.run(batch, sources, source_result, *fields)` returns a DataFrame ordered
-as ID, source columns, then fields in argument order. It rejects incomplete
-fields and duplicate output column names. `combine.write(table, path)` writes
-tab-separated output without the internal index, using literal `NA` for NaN
-scores. Disabled field stages contribute no column. With default activation,
-the output schema and classification behavior match the original CLI.
+`combine.run(batch, sources, source_result, *fields, verification=...)` returns
+a DataFrame ordered as ID, source columns, `source_verification_score`, then
+fields in argument order. `VerificationResult` requires ordered numeric scores
+in `[0, 1]` or NaN. It rejects incomplete fields and duplicate output column
+names. `combine.write(table, path)` writes tab-separated output without the
+internal index, using literal `NA` for NaN scores. Disabled verification still
+produces its column filled with `NA`; disabled date/country stages omit theirs.
 
 ## Develop and test a field module in isolation
 
