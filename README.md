@@ -175,135 +175,6 @@ Example:
 
 ---
 
-## Benchmark results
-
-The following results evaluate the current `benchmark_classified.tsv` using
-`sources.tsv` against `benchmark_true_labels.tsv`, with `--min-score 0.2` and
-local host taxonomy enabled. The run contains 255 `host_tax_id` assignments and
-1,065 NLI assignments. Accuracy is recall: correct calls divided by the number
-of true records for a source. Precision is correct calls divided by the number
-of calls made for a source.
-
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 22 | 20 | 100.0% | 90.9% |
-| cattle | 99 | 109 | 99 | 100.0% | 90.8% |
-| chicken | 101 | 99 | 99 | 98.0% | 100.0% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 61 | 1 | 25.0% | 1.6% |
-| goat | 100 | 98 | 97 | 97.0% | 99.0% |
-| human | 100 | 87 | 87 | 87.0% | 100.0% |
-| laboratory | 1 | 1 | 1 | 100.0% | 100.0% |
-| other_animal | 100 | 49 | 48 | 48.0% | 98.0% |
-| pig | 100 | 112 | 100 | 100.0% | 89.3% |
-| sheep | 100 | 95 | 95 | 95.0% | 100.0% |
-| turkey | 101 | 87 | 87 | 86.1% | 100.0% |
-| unknown | 98 | 136 | 79 | 80.6% | 58.1% |
-| wastewater | 5 | 19 | 5 | 100.0% | 26.3% |
-| water | 92 | 81 | 78 | 84.8% | 96.3% |
-| waterbird | 99 | 50 | 50 | 50.5% | 100.0% |
-| wildbird | 100 | 114 | 98 | 98.0% | 86.0% |
-
-The source list yields 1,144 correct calls of 1,320 (**86.7% overall
-accuracy**) and assigns a non-unknown source to 1,184 records (89.7%). Precision
-among assigned records is 89.9%. The run has 136 NLI calls below the cutoff.
-
-### Confusion matrices
-
-Rows are true sources, columns are predicted sources, and `n` is the number of
-true records in the row. The `unknown` prediction is created by the 0.2 score
-cutoff, not by a source candidate.
-
-#### Absolute counts
-
-[![Benchmark source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
-
-The image is a full source-by-source table. Click it to inspect at full resolution.
-
-#### Row percentages
-
-[![Benchmark source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
-
-Each row shows the share of records with that true source assigned to every
-predicted source. The SVG tables are generated from the benchmark TSV files by
-`python render_benchmark_matrices.py`.
-
-### Experimental Mistral API classifier
-
-The modular pipeline now supports `--method mistral`; see the
-[Mistral module usage](#mistral-api-module) below. The benchmark results in this
-section came from the original standalone script, not the new module.
-
-`metalyzer_mistral.py` is an experimental alternative that asks the Mistral
-API to choose one controlled source label. It performs well but of course it is not free. It requires the `mistralai` Python
-package and a text file containing a Mistral API key.
-
-```bash
-conda install mistralai # in the metalyzer environment
-
-python metalyzer_mistral.py \
-  --metadata benchmark.tsv \
-  --sources sources_mistral.tsv \
-  --out benchmark_mistral.tsv \
-  --id-col run_accession \
-  --api-key-file ~/mistral.key
-```
-
-The Mistral output contains a predicted `source` label rather than a score per
-candidate, so it does not support a score cutoff. `sources_mistral.tsv`
-includes `unknown` as a controlled label.
-
-#### Mistral benchmark results
-
-`benchmark_mistral.tsv` was re-evaluated against the current
-`benchmark_true_labels.tsv` using `sources_mistral.tsv`. It contains all 1,320
-benchmark records and has 1,267 correct calls: **96.0% overall accuracy**.
-Accuracy is recall: correct calls divided by the number of true records for a
-source. Precision is correct calls divided by the number of calls made for a
-source.
-
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 99 | 99 | 99 | 100.0% | 100.0% |
-| chicken | 101 | 106 | 101 | 100.0% | 95.3% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 14 | 4 | 100.0% | 28.6% |
-| goat | 100 | 100 | 100 | 100.0% | 100.0% |
-| human | 100 | 127 | 100 | 100.0% | 78.7% |
-| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
-| other_animal | 100 | 86 | 86 | 86.0% | 100.0% |
-| pig | 100 | 102 | 100 | 100.0% | 98.0% |
-| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
-| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
-| unknown | 98 | 69 | 69 | 70.4% | 100.0% |
-| wastewater | 5 | 0 | 0 | 0.0% | N/A |
-| water | 92 | 92 | 92 | 100.0% | 100.0% |
-| waterbird | 99 | 94 | 94 | 94.9% | 100.0% |
-| wildbird | 100 | 108 | 100 | 100.0% | 92.6% |
-
-| True source | Mistral predicted calls |
-|---|---|
-| cat | cat: 20 |
-| cattle | cattle: 99 |
-| chicken | chicken: 101 |
-| dog | dog: 100 |
-| environment | environment: 4 |
-| goat | goat: 100 |
-| human | human: 100 |
-| laboratory | laboratory: 1 |
-| other_animal | human: 12; other_animal: 86; pig: 1; wildbird: 1 |
-| pig | pig: 100 |
-| sheep | sheep: 100 |
-| turkey | turkey: 101 |
-| unknown | chicken: 5; environment: 9; human: 11; laboratory: 1; pig: 1; unknown: 69; wildbird: 2 |
-| wastewater | environment: 1; human: 4 |
-| water | water: 92 |
-| waterbird | waterbird: 94; wildbird: 5 |
-| wildbird | wildbird: 100 |
-
----
-
 ## Installation
 
 Requirements:
@@ -457,6 +328,59 @@ python metalyzer.py --metadata benchmark.tsv --sources sources.tsv --out classif
 NLI CPU execution explicitly uses float32 to avoid slow float16 inference.
 GPU execution uses the model checkpoint's precision (`dtype="auto"`).
 
+## Benchmark results
+
+The following results evaluate the current `benchmark_classified.tsv` using
+`sources.tsv` against `benchmark_true_labels.tsv`, with `--min-score 0.2` and
+local host taxonomy enabled. The run contains 255 `host_tax_id` assignments and
+1,065 NLI assignments. Accuracy is recall: correct calls divided by the number
+of true records for a source. Precision is correct calls divided by the number
+of calls made for a source.
+
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 22 | 20 | 100.0% | 90.9% |
+| cattle | 99 | 109 | 99 | 100.0% | 90.8% |
+| chicken | 101 | 99 | 99 | 98.0% | 100.0% |
+| dog | 100 | 100 | 100 | 100.0% | 100.0% |
+| environment | 4 | 61 | 1 | 25.0% | 1.6% |
+| goat | 100 | 98 | 97 | 97.0% | 99.0% |
+| human | 100 | 87 | 87 | 87.0% | 100.0% |
+| laboratory | 1 | 1 | 1 | 100.0% | 100.0% |
+| other_animal | 100 | 49 | 48 | 48.0% | 98.0% |
+| pig | 100 | 112 | 100 | 100.0% | 89.3% |
+| sheep | 100 | 95 | 95 | 95.0% | 100.0% |
+| turkey | 101 | 87 | 87 | 86.1% | 100.0% |
+| unknown | 98 | 136 | 79 | 80.6% | 58.1% |
+| wastewater | 5 | 19 | 5 | 100.0% | 26.3% |
+| water | 92 | 81 | 78 | 84.8% | 96.3% |
+| waterbird | 99 | 50 | 50 | 50.5% | 100.0% |
+| wildbird | 100 | 114 | 98 | 98.0% | 86.0% |
+
+The source list yields 1,144 correct calls of 1,320 (**86.7% overall
+accuracy**) and assigns a non-unknown source to 1,184 records (89.7%). Precision
+among assigned records is 89.9%. The run has 136 NLI calls below the cutoff.
+
+### Confusion matrices
+
+Rows are true sources, columns are predicted sources, and `n` is the number of
+true records in the row. The `unknown` prediction is created by the 0.2 score
+cutoff, not by a source candidate.
+
+#### Absolute counts
+
+[![Benchmark source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
+
+The image is a full source-by-source table. Click it to inspect at full resolution.
+
+#### Row percentages
+
+[![Benchmark source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
+
+Each row shows the share of records with that true source assigned to every
+predicted source. The SVG tables are generated from the benchmark TSV files by
+`python render_benchmark_matrices.py`.
+
 ### Local Hugging Face LLM classifier
 
 `--method llm` selects local generative classification with
@@ -567,6 +491,82 @@ inspect the full matrix.
 ##### Row percentages
 
 [![Local Qwen3-4B LLM source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
+
+### Experimental Mistral API classifier
+
+The modular pipeline now supports `--method mistral`; see the
+[Mistral module usage](#mistral-api-module) below. The benchmark results in this
+section came from the original standalone script, not the new module.
+
+`metalyzer_mistral.py` is an experimental alternative that asks the Mistral
+API to choose one controlled source label. It performs well but of course it is not free. It requires the `mistralai` Python
+package and a text file containing a Mistral API key.
+
+```bash
+conda install mistralai # in the metalyzer environment
+
+python metalyzer_mistral.py \
+  --metadata benchmark.tsv \
+  --sources sources_mistral.tsv \
+  --out benchmark_mistral.tsv \
+  --id-col run_accession \
+  --api-key-file ~/mistral.key
+```
+
+The Mistral output contains a predicted `source` label rather than a score per
+candidate, so it does not support a score cutoff. `sources_mistral.tsv`
+includes `unknown` as a controlled label.
+
+#### Mistral benchmark results
+
+`benchmark_mistral.tsv` was re-evaluated against the current
+`benchmark_true_labels.tsv` using `sources_mistral.tsv`. It contains all 1,320
+benchmark records and has 1,267 correct calls: **96.0% overall accuracy**.
+Accuracy is recall: correct calls divided by the number of true records for a
+source. Precision is correct calls divided by the number of calls made for a
+source.
+
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 20 | 20 | 100.0% | 100.0% |
+| cattle | 99 | 99 | 99 | 100.0% | 100.0% |
+| chicken | 101 | 106 | 101 | 100.0% | 95.3% |
+| dog | 100 | 100 | 100 | 100.0% | 100.0% |
+| environment | 4 | 14 | 4 | 100.0% | 28.6% |
+| goat | 100 | 100 | 100 | 100.0% | 100.0% |
+| human | 100 | 127 | 100 | 100.0% | 78.7% |
+| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
+| other_animal | 100 | 86 | 86 | 86.0% | 100.0% |
+| pig | 100 | 102 | 100 | 100.0% | 98.0% |
+| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
+| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
+| unknown | 98 | 69 | 69 | 70.4% | 100.0% |
+| wastewater | 5 | 0 | 0 | 0.0% | N/A |
+| water | 92 | 92 | 92 | 100.0% | 100.0% |
+| waterbird | 99 | 94 | 94 | 94.9% | 100.0% |
+| wildbird | 100 | 108 | 100 | 100.0% | 92.6% |
+
+| True source | Mistral predicted calls |
+|---|---|
+| cat | cat: 20 |
+| cattle | cattle: 99 |
+| chicken | chicken: 101 |
+| dog | dog: 100 |
+| environment | environment: 4 |
+| goat | goat: 100 |
+| human | human: 100 |
+| laboratory | laboratory: 1 |
+| other_animal | human: 12; other_animal: 86; pig: 1; wildbird: 1 |
+| pig | pig: 100 |
+| sheep | sheep: 100 |
+| turkey | turkey: 101 |
+| unknown | chicken: 5; environment: 9; human: 11; laboratory: 1; pig: 1; unknown: 69; wildbird: 2 |
+| wastewater | environment: 1; human: 4 |
+| water | water: 92 |
+| waterbird | waterbird: 94; wildbird: 5 |
+| wildbird | wildbird: 100 |
+
+---
 
 ### Mistral API module
 
