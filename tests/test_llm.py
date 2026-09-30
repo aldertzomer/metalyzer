@@ -10,7 +10,6 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 
 import metalyzer
-import metalyzer_local_mistral
 from modules import country, records as record_module, deterministic_source, llm as llm_module, nli as nli_module
 from helpers import classify, llm_config
 from modules.deterministic_source import TaxonomySourceResult
@@ -89,11 +88,6 @@ class LocalLLMTests(unittest.TestCase):
                 with self.assertRaises(SystemExit) as error:
                     metalyzer.parse_args(CLI + [option, value])
                 self.assertEqual(error.exception.code, 2)
-
-    def test_compatibility_entry_point_selects_local_llm(self):
-        with patch.object(metalyzer_local_mistral.metalyzer, 'main') as run:
-            metalyzer_local_mistral.main(CLI)
-        run.assert_called_once_with([*CLI, '--method', 'llm'])
 
     def test_response_parser(self):
         valid = {'turkey': 'turkey', '"turkey"': 'turkey', "'turkey'": 'turkey',

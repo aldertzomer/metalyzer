@@ -534,9 +534,8 @@ among assigned records is 92.0%. Of the 98 truly `unknown` records, 24 were
 called `laboratory`; the new prompt rules should be judged against this observed
 limitation. These are results from the supplied test file; the integrated
 modular backend has not been rerun with the full model on this machine, and the
-TSV does not record the exact prompt revision used on the server. The
-uploaded standalone `metalyzer_local_mistral.py` is retained as a compatibility
-entry point and now calls the modular `--method llm` implementation.
+TSV does not record the exact prompt revision used on the server. Use
+`python metalyzer.py --method llm` for the integrated local Ministral backend.
 
 For comparison, the earlier Qwen3-4B local run in `benchmark_llm.tsv` achieved
 1,223/1,320 (**92.7%**) with 104 `unknown` predictions and 10 invalid outputs.
