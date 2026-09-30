@@ -26,13 +26,22 @@ def canonical_source_names(source_labels, id_col):
 
 @dataclass(frozen=True)
 class SourceVocabulary:
-    """Ordered full label descriptions and ID column; names strip parenthetical hints."""
+    """Ordered descriptions and optional taxids; only labels reach text models."""
     labels: tuple[str, ...]
     id_col: str
+    taxonomy_anchors: tuple[tuple[int, ...], ...] = ()
 
     def __post_init__(self):
         object.__setattr__(self, "labels", tuple(self.labels))
         canonical_source_names(self.labels, self.id_col)
+        anchors = self.taxonomy_anchors or ((),) * len(self.labels)
+        anchors = tuple(tuple(row) for row in anchors)
+        if len(anchors) != len(self.labels) or any(
+            not isinstance(taxid, int) or isinstance(taxid, bool) or taxid < 1
+            for row in anchors for taxid in row
+        ):
+            raise ValueError("Taxonomy anchors must be positive integer IDs aligned with source labels")
+        object.__setattr__(self, "taxonomy_anchors", anchors)
 
     @property
     def names(self) -> tuple[str, ...]:

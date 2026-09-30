@@ -42,6 +42,11 @@ input.load -> MetadataBatch + SourceVocabulary
 | `generative` | `system_prompt`, `allowed_source_names`, `invalid_response_evidence` | Source descriptions/names or a response | Shared prompt, implicit unknown label and evidence formatting; no model/SDK imports |
 | `combine` | `unresolved`, `sources`, `run`, `write` | Batch, vocabulary, stage results; path for writing | Validated subsets, source result, assembled DataFrame, TSV |
 
+Taxonomy resolution uses the optional `SourceVocabulary.taxonomy_anchors`,
+parsed from comma-separated NCBI IDs in `sources.tsv`. The first configured
+ancestor of `host_tax_id` wins, while a duplicated matching anchor leaves the
+row unresolved. `tax_id` is ignored for source matching. Only `labels` reach
+NLI and generative prompts; taxonomy IDs are never added to their vocabulary.
 Taxonomy resolution always precedes text classification. Only unresolved rows
 reach the selected text stage. Empty batches never load a model, read an API
 key, or create an API client. A batch fully resolved by taxonomy skips the

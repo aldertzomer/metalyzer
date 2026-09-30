@@ -1,18 +1,17 @@
-source
-chicken (poultry host Gallus gallus including chicken meat or poultry products)
-turkey (poultry host Meleagris gallopavo including turkey meat)
-pig (domestic pig or swine host Sus scrofa domesticus including pork products, not wild boar, not guinea pig)
-cattle (bovine host Bos taurus including beef or dairy products, not cat, not sheep, not goat)
-sheep (ovine host Ovis aries, not bovine)
-goat (caprine host Capra hircus, not bovine)
-human (human host including clinical, stool, fecal, or other directly human-associated samples, not sewage, not wastewater)
-dog (companion animal host Canis lupus familiaris, not cat)
-cat (companion animal host Felis catus, not dog)
+source	taxonomy_anchors
+chicken (poultry host Gallus gallus including chicken meat or poultry products)	9031
+turkey (poultry host Meleagris gallopavo including turkey meat)	9103
+pig (domestic pig or swine host Sus scrofa domesticus including pork products, not wild boar, not guinea pig)	9825
+cattle (bovine host Bos taurus including beef or dairy products, not cat, not sheep, not goat)	9913
+sheep (ovine host Ovis aries, not bovine)	9940
+goat (caprine host Capra hircus, not bovine)	9925
+human (human host including clinical, stool, fecal, or other directly human-associated samples, not sewage, not wastewater)	9606
+dog (companion animal host Canis lupus familiaris, not cat)	9615
+cat (companion animal host Felis catus, not dog)	9685
 wildbird (wild bird host not associated with poultry production, not aquatic, not wetland-associated birds)
 waterbird (aquatic or wetland-associated wild birds such as ducks, geese, swans, gulls, cranes)
-environment (soil, sediment, surfaces, farm environment, not food, not meat, not animal products, not water, not wastewater, not sewage, not stool)
+environment (soil, sediment, surfaces, farm environment, not food, not meat, not animal products, not water, not wastewater, not sewage, not stool)	1936016
 water (environmental water sample such as river, lake, stream, agricultural water, recreational water, stormwater, sea, not sewage, not wastewater, not sediment)
 wastewater (sewage or wastewater sample such as sewage, wastewater, sewer, sewage drain, wastewater treatment plant influent or effluent)
-laboratory (culture collection, laboratory strain, experimental sample)
+laboratory (culture collection, laboratory strain, experimental sample)	81077,32630
 other_animal (animal host not listed above including non-human primates, wild boar, and guinea pig)
-

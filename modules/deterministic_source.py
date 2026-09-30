@@ -1,4 +1,4 @@
-"""Local NCBI taxonomy lookup and conservative host-source classification."""
+"""Local NCBI taxonomy lookup using source-configured host anchors."""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -17,12 +17,6 @@ if TYPE_CHECKING:
 
 TAXDUMP_URL = "https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz"
 FILES = ("nodes.dmp", "names.dmp", "merged.dmp")
-ANCHORS = {
-    "chicken": "Gallus gallus", "turkey": "Meleagris gallopavo",
-    "cattle": "Bos taurus", "sheep": "Ovis aries", "goat": "Capra hircus",
-    "human": "Homo sapiens", "dog": "Canis lupus familiaris",
-    "cat": "Felis catus", "pig": "Sus scrofa domesticus",
-}
 
 
 @dataclass(frozen=True)
@@ -48,30 +42,13 @@ class NCBITaxonomy:
         directory = Path(taxonomy_dir)
         self.parent_by_taxid = {int(r[0]): int(r[1]) for r in _rows(directory / "nodes.dmp")}
         self.scientific_name_by_taxid = {}
-        self.taxid_by_scientific_name = {}
         for r in _rows(directory / "names.dmp"):
             if r[3] == "scientific name":
                 taxid, name = int(r[0]), r[1]
                 self.scientific_name_by_taxid[taxid] = name
-                # Ambiguous scientific names must never choose an arbitrary anchor.
-                if name in self.taxid_by_scientific_name:
-                    self.taxid_by_scientific_name[name] = None
-                else:
-                    self.taxid_by_scientific_name[name] = taxid
         self.merged_taxid_map = {int(r[0]): int(r[1]) for r in _rows(directory / "merged.dmp")}
         if self.parent_by_taxid.get(1) != 1 or not self.scientific_name_by_taxid:
             raise ValueError("Taxonomy dump is empty or lacks the NCBI root")
-        def anchor(name):
-            taxid = self.taxid_by_scientific_name.get(name)
-            return taxid if self.lineage(taxid) else None
-
-        self.anchors = {source: anchor(name) for source, name in ANCHORS.items()}
-        self.animal = anchor("Metazoa") or anchor("Animalia")
-        self.bird = anchor("Aves")
-        self.boar = anchor("Sus scrofa")
-        self.generic_safe = all(self.anchors.values()) and bool(self.animal and self.bird and self.boar)
-        if not self.generic_safe:
-            warnings.warn("Some taxonomy anchors are missing/ambiguous; generic other_animal assignments disabled.")
 
     def normalize_taxid(self, taxid):
         text = str(taxid).strip().strip('\"\'').strip()
@@ -110,27 +87,30 @@ class NCBITaxonomy:
     def scientific_name(self, taxid):
         return self.scientific_name_by_taxid.get(self.normalize_taxid(taxid), "")
 
-    def classify_host_taxid(self, taxid):
+    def classify_host_taxid(self, taxid, anchor_sources):
         taxid = self.normalize_taxid(taxid)
         lineage = self.lineage(taxid)
         if not lineage or not self.scientific_name(taxid):
             return None
-        # Lineage runs from most specific to least specific.
+        # The first configured ancestor wins; an ambiguous first match stays unresolved.
         for ancestor in lineage:
-            matches = [source for source, anchor in self.anchors.items() if anchor == ancestor]
+            matches = anchor_sources.get(ancestor, ())
             if len(matches) == 1:
-                return TaxonomySourceResult(matches[0], taxid, self.scientific_name(taxid))
+                return TaxonomySourceResult(next(iter(matches)), taxid, self.scientific_name(taxid))
             if matches:
                 return None
-        if not self.generic_safe or self.animal not in lineage or self.bird in lineage:
-            return None
-        # Sus scrofa and its non-domestic descendants cannot reliably distinguish
-        # wild boar from domestic pigs. Broad ancestors also remain ambiguous.
-        if self.boar in lineage or any(taxid in self.lineage(anchor) for anchor in self.anchors.values()):
-            return None
-        if taxid in self.lineage(self.bird):
-            return None
-        return TaxonomySourceResult("other_animal", taxid, self.scientific_name(taxid))
+        return None
+
+
+def configured_anchors(sources: SourceVocabulary, taxonomy: NCBITaxonomy) -> dict[int, set[str]]:
+    """Normalize configured IDs, retaining collisions as ambiguous matches."""
+    anchors = {}
+    for source, taxids in zip(sources.names, sources.taxonomy_anchors):
+        for taxid in taxids:
+            normalized = taxonomy.normalize_taxid(taxid)
+            if normalized is not None and taxonomy.lineage(normalized):
+                anchors.setdefault(normalized, set()).add(source)
+    return anchors
 
 
 def load_taxonomy(directory, fallback_method="nli"):
@@ -171,11 +151,11 @@ def run(batch: MetadataBatch, sources: SourceVocabulary, taxonomy: NCBITaxonomy 
     from .contracts import SourceResult, empty_source_table
 
     resolved = {}
-    source_names = set(sources.names)
     if taxonomy is not None:
+        anchors = configured_anchors(sources, taxonomy)
         for key, row in batch.metadata.iterrows():
-            result = taxonomy.classify_host_taxid(row.get("host_tax_id"))
-            if result is not None and result.source in source_names:
+            result = taxonomy.classify_host_taxid(row.get("host_tax_id"), anchors)
+            if result is not None and result.source in sources.names:
                 resolved[key] = result
     table = empty_source_table(sources, resolved)
     for key, result in resolved.items():

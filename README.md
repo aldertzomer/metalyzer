@@ -136,15 +136,20 @@ Example:
 
 ### Sources file (TSV)
 
-Put the main source first, the hints in parenthesis, good hints are necessary:  e.g. cat/cattle get mixed up. Stool (thing you sit on, or feces), guinea pig might get classified as pig. Try to catch these mistakes. See for an example sources.tsv.
+Put the canonical source name first, followed by human-readable hints in parentheses.
+The optional `taxonomy_anchors` column holds comma-separated NCBI Taxonomy IDs
+for deterministic `host_tax_id` matching. Leave it blank when no taxon safely
+identifies that source; a file containing only `source` is also supported.
 
-source
+| source | taxonomy_anchors |
+| --- | --- |
+| chicken (poultry host Gallus gallus) | 9031 |
+| human (human host Homo sapiens) | 9606 |
+| laboratory (artificial or synthetic sequences) | 81077,32630 |
 
-chicken (poultry host)
-
-human (human host)
-
-cattle (bovine host)
+Hints help the text classifiers distinguish similar sources. Taxonomy IDs are
+configuration for the deterministic matcher only; NLI, the local LLM and the
+Mistral API receive only the `source` descriptions.
 
 
 ---
@@ -286,21 +291,32 @@ obsolete IDs in `merged.dmp` are supported. Missing or invalid IDs fall back
 to the selected text classifier. Omitting `--taxonomy-dir`, or supplying unreadable/malformed files,
 produces a warning and uses the selected text classifier for every row.
 
-Anchors are resolved by scientific name: chicken (`Gallus gallus`), turkey
-(`Meleagris gallopavo`), cattle (`Bos taurus`), sheep (`Ovis aries`), goat
-(`Capra hircus`), human (`Homo sapiens`), dog (`Canis lupus familiaris`), cat
-(`Felis catus`), and domestic pig (`Sus scrofa domesticus`). Descendants inherit
-the most specific matching class. A class must exist in the selected sources
-file before it can be emitted.
+The `taxonomy_anchors` column in `sources.tsv` controls these assignments.
+Each ID maps that taxon and all its descendants to the row's source, regardless
+of taxonomic rank. For each valid `host_tax_id`, Metalyzer normalizes merged IDs
+and walks its lineage from the most specific taxon toward the root; the first
+configured anchor wins. Thus a species anchor such as chicken (`9031`) can
+override a broader Aves (`8782`) anchor, and a cat (`9685`) anchor can override
+Carnivora (`33554`) in a custom vocabulary. If the first matching anchor is
+assigned to multiple sources, the row remains unresolved and goes to the
+selected fallback classifier. Blank anchors or no matching lineage also fall
+back. The generic sample/pathogen `tax_id` is intentionally never source
+evidence, since it often identifies the sequenced organism instead of its host.
 
-Other clearly identified non-bird animals can become `other_animal`.
-Other birds fall back to the selected text classifier for the ecological `wildbird`/`waterbird` distinction.
-Generic `Sus scrofa` and non-domestic descendants also fall back: taxonomy alone
-may not distinguish wild boar from domestic pig. Broad ancestors such as
-Mammalia or Metazoa remain unresolved, as do unknown/deleted IDs, broken
-lineages, and non-animal hosts. If anchors are missing or ambiguous, generic
-`other_animal` mapping is disabled to prevent false assignments. Environmental
-classes (`water`, `wastewater`, `environment`, `laboratory`) remain text-derived.
+The repository file configures domestic pig (`9825`), chicken (`9031`), turkey
+(`9103`), cattle (`9913`), sheep (`9940`), goat (`9925`), human (`9606`), dog
+(`9615`), and cat (`9685`). It also configures the environmental-samples node
+`1936016` and artificial/synthetic sequence nodes `81077,32630`. Descendants
+of a configured environmental node inherit its source; this applies to soil,
+marine or air metagenome nodes only when they actually fall below that anchor
+in the supplied NCBI dump. Ordinary organism taxids, such as *E. coli* `562`,
+do not imply `laboratory`: a laboratory strain may have come from any source.
+The broad Metazoa anchor is left blank for `other_animal` in the repository file
+because it would also absorb birds and animal sources whose ecological or food
+context taxonomy alone cannot establish. Custom source files can use higher-level
+anchors when their classes make that inheritance appropriate. These IDs are
+never passed to NLI or generative models; their source descriptions remain
+unchanged.
 
 For a sheep host, the output looks like this (all other source scores are also `NA`):
 

@@ -1,5 +1,6 @@
 """TSV loading and conversion to the standard in-memory batch contract."""
 from pathlib import Path
+import re
 
 import pandas as pd
 
@@ -26,6 +27,16 @@ def prepare_batch(metadata: pd.DataFrame, *, max_value_chars: int = 300,
     return MetadataBatch(frame, records)
 
 
+def parse_taxonomy_anchors(value: str) -> tuple[int, ...]:
+    """Parse optional comma-separated NCBI IDs without changing source text."""
+    if not value.strip():
+        return ()
+    parts = [part.strip() for part in value.split(",")]
+    if any(not re.fullmatch(r"[0-9]+", part) or int(part) < 1 for part in parts):
+        raise ValueError(f"Invalid taxonomy_anchors value: {value!r}")
+    return tuple(int(part) for part in parts)
+
+
 def load(metadata_path: str | Path, sources_path: str | Path, id_col: str, *,
          limit: int | None = None, max_value_chars: int = 300,
          max_record_chars: int = 2000) -> tuple[MetadataBatch, SourceVocabulary]:
@@ -37,6 +48,10 @@ def load(metadata_path: str | Path, sources_path: str | Path, id_col: str, *,
         raise ValueError(f"ID column {id_col!r} is missing from metadata")
     labels = read_tsv(sources_path)
     column = "source" if "source" in labels else labels.columns[0]
-    sources = SourceVocabulary(tuple(s.strip() for s in labels[column] if s.strip()), id_col)
+    has_anchors = "taxonomy_anchors" in labels
+    rows = [(str(row[column]).strip(), parse_taxonomy_anchors(str(row["taxonomy_anchors"]))
+             if has_anchors else ()) for _, row in labels.iterrows() if str(row[column]).strip()]
+    sources = SourceVocabulary(tuple(label for label, _ in rows), id_col,
+                               tuple(anchors for _, anchors in rows))
     return prepare_batch(metadata, max_value_chars=max_value_chars,
                          max_record_chars=max_record_chars), sources

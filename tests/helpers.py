@@ -14,10 +14,10 @@ def llm_config(args):
                      max_new_tokens=getattr(args, "llm_max_new_tokens", 16))
 
 
-def classify(df, records, labels, args, taxonomy=None):
+def classify(df, records, labels, args, taxonomy=None, anchors=None):
     batch = MetadataBatch(df, pd.Series(records, index=df.index, dtype=object))
     return metalyzer.classify_sources(
-        batch, SourceVocabulary(tuple(labels), args.id_col),
+        batch, SourceVocabulary(tuple(labels), args.id_col, tuple(anchors or ())),
         method=getattr(args, "method", "nli"), taxonomy=taxonomy,
         nli_config=NLIConfig(args.device, args.batch_size, args.min_score),
         llm_config=llm_config(args),
