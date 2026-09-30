@@ -207,14 +207,21 @@ conda activate metalyzer-cpu
 metapackage and therefore does not install CUDA, FlashAttention, or Triton.
 Run the pipeline with `--device -1`.
 
-Both specifications use Python 3.11, Transformers 5.x, PyTorch 2.x, and the
-SentencePiece/Protobuf tokenizer dependencies. They are environment specifications,
+Both specifications use Python 3.11, Transformers 5.x, PyTorch 2.x,
+`mistral-common>=1.8.6`, `accelerate`, and the SentencePiece/Protobuf tokenizer
+dependencies. They are environment specifications,
 not exact lockfiles. Taxonomy dump parsing and downloading use the Python
 standard library. The pipeline and tests use the dependencies listed in these
 environments; the taxonomy feature requires no additional packages.
 The Mistral module requires the optional `mistralai` v2 SDK. It is loaded only
 when unresolved rows need API inference; NLI, local LLM and taxonomy-only runs
 do not require it.
+
+On the Linux GPU server used for the local Ministral test, the CUDA build also
+required `cuda-driver-dev=12.9` from conda-forge. Install it there with
+`conda install -c conda-forge cuda-driver-dev=12.9` if needed; it is omitted
+from the cross-platform environment files because CPU and Windows installations
+do not use it.
 
 To update an existing environment, use the matching command:
 
@@ -384,7 +391,7 @@ predicted source. The SVG tables are generated from the benchmark TSV files by
 ### Local Hugging Face LLM classifier
 
 `--method llm` selects local generative classification with
-[`Qwen/Qwen3-4B-Instruct-2507`](https://huggingface.co/Qwen/Qwen3-4B-Instruct-2507)
+[`mistralai/Ministral-3-8B-Instruct-2512`](https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512)
 by default. Transformers downloads the tokenizer and weights on first use and
 reuses the standard Hugging Face cache on subsequent runs. Inference runs on
 your machine; no API or API key is required. The existing environments contain
@@ -398,6 +405,9 @@ deterministic year/country processing are shared with NLI.
 The same `sources.tsv` supplies canonical labels and their full descriptions.
 The LLM may also answer `unknown` when source evidence is insufficient; this
 does not add an `unknown` score column unless that source is in your file.
+The prompt tells the model that field names alone are not source evidence and
+that ambiguous or absent source values should map to `unknown`. These rules
+also apply to the separate Mistral API method.
 All LLM score columns are `NA`. `--min-score` applies only to NLI; in LLM mode
 it prints an informational message and does not affect predictions.
 
@@ -405,11 +415,11 @@ it prints an informational message and does not affect predictions.
 python metalyzer.py \
   --metadata benchmark.tsv \
   --sources sources.tsv \
-  --out benchmark_llm.tsv \
+  --out classified_ministral.tsv \
   --id-col run_accession \
   --taxonomy-dir taxonomy \
   --method llm \
-  --llm-model Qwen/Qwen3-4B-Instruct-2507 \
+  --llm-model mistralai/Ministral-3-8B-Instruct-2512 \
   --device 0 \
   --llm-batch-size 1
 ```
@@ -423,74 +433,89 @@ CPU example:
 
 ```bash
 python metalyzer.py --metadata benchmark.tsv --sources sources.tsv \
-  --out benchmark_llm_cpu.tsv --id-col run_accession \
-  --method llm --llm-model Qwen/Qwen3-4B-Instruct-2507 \
+  --out ministral_cpu.tsv --id-col run_accession \
+  --method llm --llm-model mistralai/Ministral-3-8B-Instruct-2512 \
   --device -1 --llm-batch-size 1
 ```
 
 For a quick test, add `--limit 10` to either command. `--limit` also works with
 NLI and selects the first N metadata rows before classification.
 
-`--llm-model` accepts another compatible instruct model with a tokenizer chat
-template; `--llm-revision` optionally pins both tokenizer and weights to a
-specific Hugging Face revision. Models are never substituted automatically.
-Generation is greedy, defaults to `--llm-max-new-tokens 16`, and uses
-`enable_thinking=False` through the chat template where supported.
+`--llm-model` accepts another compatible Ministral 3 checkpoint;
+`--llm-revision` optionally pins both tokenizer and weights to a specific
+Hugging Face revision. Models are never substituted automatically. Generation
+is greedy and defaults to `--llm-max-new-tokens 16`. The Mistral tokenizer
+formats and pads batches of chat conversations directly.
 
 `--llm-batch-size` defaults to 1 independently of NLI's `--batch-size 64`.
 The LLM retains checkpoint precision (`dtype="auto"`) on both CPU and GPU and
-loads with `low_cpu_mem_usage=True`. Four billion parameters at 16-bit precision
-require roughly 8 GB for weights alone; activations, the generation cache,
-loading overhead, taxonomy, and other applications need additional memory.
-A 12-GB host/device is a target, not a guaranteed fit. Measure peak memory on
-your actual hardware and input. CPU execution can be slow. If necessary, select
-`--llm-model Qwen/Qwen3-1.7B` explicitly and evaluate it separately.
+loads with `low_cpu_mem_usage=True`. GPU loading uses `device_map` for the
+requested GPU and requires `accelerate`; the model's Mistral tokenizer requires
+`mistral-common`. The checkpoint uses FP8 weights, but actual memory includes
+other weights, activations, generation cache, loading overhead and other
+processes. The supplied test was run on a larger GPU server; peak memory was
+not recorded. A 12-GB fit is not established. CPU execution may be slow and
+may need substantially more memory.
 
-#### Local LLM benchmark results
+#### Local Ministral benchmark results
 
-`benchmark_llm.tsv` was generated with `Qwen/Qwen3-4B-Instruct-2507` on GPU
-using local taxonomy, `--llm-batch-size 10`, and the command above. It contains
-all 1,320 benchmark records: 255 `host_tax_id` assignments and 1,065 local LLM
-assignments. The LLM returned 104 `unknown` labels, including 10 malformed
-responses safely recorded as `invalid_llm_output` evidence. Accuracy is recall:
-correct calls divided by the number of true records for a source. Precision is
-correct calls divided by the number of calls made for a source.
+The supplied `ministral_test.tsv` was generated on a GPU test server with
+`mistralai/Ministral-3-8B-Instruct-2512` and local taxonomy. Against
+`benchmark_true_labels.tsv`, it contains all 1,320 records: 255 `host_tax_id`
+assignments and 1,065 local LLM assignments. It has 58 `unknown` predictions,
+including 2 malformed responses recorded as `invalid_llm_output` evidence.
+Accuracy below is recall: correct calls divided by true rows. Precision is
+correct calls divided by called rows.
 
 | Source | True rows | Called rows | Correct | Accuracy | Precision |
 |---|---:|---:|---:|---:|---:|
-| cat | 20 | 24 | 20 | 100.0% | 83.3% |
-| cattle | 99 | 100 | 98 | 99.0% | 98.0% |
-| chicken | 101 | 101 | 101 | 100.0% | 100.0% |
-| dog | 100 | 96 | 96 | 96.0% | 100.0% |
-| environment | 4 | 4 | 1 | 25.0% | 25.0% |
-| goat | 100 | 99 | 99 | 99.0% | 100.0% |
-| human | 100 | 101 | 100 | 100.0% | 99.0% |
-| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
-| other_animal | 100 | 60 | 59 | 59.0% | 98.3% |
-| pig | 100 | 101 | 100 | 100.0% | 99.0% |
+| cat | 20 | 20 | 20 | 100.0% | 100.0% |
+| cattle | 99 | 97 | 97 | 98.0% | 100.0% |
+| chicken | 101 | 107 | 101 | 100.0% | 94.4% |
+| dog | 100 | 99 | 99 | 99.0% | 100.0% |
+| environment | 4 | 9 | 2 | 50.0% | 22.2% |
+| goat | 100 | 98 | 98 | 98.0% | 100.0% |
+| human | 100 | 118 | 99 | 99.0% | 83.9% |
+| laboratory | 1 | 24 | 0 | 0.0% | 0.0% |
+| other_animal | 100 | 90 | 89 | 89.0% | 98.9% |
+| pig | 100 | 99 | 99 | 99.0% | 100.0% |
 | sheep | 100 | 100 | 100 | 100.0% | 100.0% |
 | turkey | 101 | 101 | 101 | 100.0% | 100.0% |
-| unknown | 98 | 104 | 89 | 90.8% | 85.6% |
-| wastewater | 5 | 22 | 5 | 100.0% | 22.7% |
-| water | 92 | 65 | 65 | 70.7% | 100.0% |
-| waterbird | 99 | 108 | 92 | 92.9% | 85.2% |
-| wildbird | 100 | 132 | 96 | 96.0% | 72.7% |
+| unknown | 98 | 58 | 47 | 48.0% | 81.0% |
+| wastewater | 5 | 20 | 5 | 100.0% | 25.0% |
+| water | 92 | 68 | 68 | 73.9% | 100.0% |
+| waterbird | 99 | 122 | 97 | 98.0% | 79.5% |
+| wildbird | 100 | 90 | 86 | 86.0% | 95.6% |
 
-The local LLM yields 1,223 correct calls of 1,320 (**92.7% overall
-accuracy**) and assigns a non-unknown source to 1,216 records (92.1%). Precision
-among assigned records is 93.3%. The full run completed with 10 invalid LLM
-outputs, all visible in `source_evidence` rather than silently remapped.
+The local Ministral run yields 1,208 correct calls of 1,320 (**91.5% overall
+accuracy**) and assigns a non-unknown source to 1,262 records (95.6%). Precision
+among assigned records is 92.0%. Of the 98 truly `unknown` records, 24 were
+called `laboratory`; the new prompt rules should be judged against this observed
+limitation. These are results from the supplied test file; the integrated
+modular backend has not been rerun with the full model on this machine, and the
+TSV does not record the exact prompt revision used on the server. The
+uploaded standalone `metalyzer_local_mistral.py` is retained as a compatibility
+entry point and now calls the modular `--method llm` implementation.
+
+For comparison, the earlier Qwen3-4B local run in `benchmark_llm.tsv` achieved
+1,223/1,320 (**92.7%**) with 104 `unknown` predictions and 10 invalid outputs.
+That file and its [absolute](assets/benchmark-llm-confusion-absolute.svg) and
+[percentage](assets/benchmark-llm-confusion-percent.svg) matrices remain as
+historical results; Qwen is no longer the `--method llm` backend.
 
 Rows are true sources and columns are predicted sources. Click either image to
-inspect the full matrix.
+inspect the full matrix. The underlying [per-class metrics](benchmark_smoke/local_ministral_evaluation/ministral_test_per_class.tsv),
+[counts](benchmark_smoke/local_ministral_evaluation/ministral_test_confusion_counts.tsv),
+and [row percentages](benchmark_smoke/local_ministral_evaluation/ministral_test_confusion_percent.tsv)
+are also available as TSV files.
 
 ##### Absolute counts
 
-[![Local Qwen3-4B LLM source confusion matrix: absolute counts](assets/benchmark-llm-confusion-absolute.svg)](assets/benchmark-llm-confusion-absolute.svg)
+[![Local Ministral source confusion matrix: absolute counts](assets/benchmark-ministral-confusion-absolute.svg)](assets/benchmark-ministral-confusion-absolute.svg)
 
 ##### Row percentages
 
-[![Local Qwen3-4B LLM source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
+[![Local Ministral source confusion matrix: row percentages](assets/benchmark-ministral-confusion-percent.svg)](assets/benchmark-ministral-confusion-percent.svg)
 
 ### Experimental Mistral API classifier
 

@@ -7,6 +7,9 @@ dependencies:
   - pandas
   - pycountry
   - transformers>=5.3,<6
+  # Local Ministral 3 tokenizer and model loading.
+  - mistral-common>=1.8.6
+  - accelerate
   # DeBERTa tokenizer loading/conversion.
   - sentencepiece
   - protobuf

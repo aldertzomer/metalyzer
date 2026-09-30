@@ -1,5 +1,9 @@
 # Local LLM backend validation
 
+This is the historical Qwen validation report. The default `--method llm`
+backend is now Ministral 3; its supplied test-server results are in the main
+README and `benchmark_smoke/local_ministral_evaluation/`.
+
 This report records validation of the implementation in `metalyzer.py`,
 including the completed default-model GPU benchmark.
 

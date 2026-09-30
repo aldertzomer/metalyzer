@@ -10,6 +10,7 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 
 import metalyzer
+import metalyzer_local_mistral
 from modules import country, records as record_module, deterministic_source, llm as llm_module, nli as nli_module
 from helpers import classify, llm_config
 from modules.deterministic_source import TaxonomySourceResult
@@ -38,10 +39,9 @@ class LocalLLMTests(unittest.TestCase):
         tokenizer.pad_token_id = None if no_pad else 0
         tokenizer.eos_token_id = 9
         tokenizer.eos_token = "<eos>"
-        tokenizer.apply_chat_template.side_effect = lambda messages, **kw: messages[1]["content"]
-        tokenizer.side_effect = lambda prompts, **kw: BatchEncoding({
-            "input_ids": torch.tensor([[0, 0, 11, 12], [21, 22, 23, 24]][:len(prompts)]),
-            "attention_mask": torch.tensor([[0, 0, 1, 1], [1, 1, 1, 1]][:len(prompts)]),
+        tokenizer.apply_chat_template.side_effect = lambda conversations, **kw: BatchEncoding({
+            "input_ids": torch.tensor([[0, 0, 11, 12], [21, 22, 23, 24]][:len(conversations)]),
+            "attention_mask": torch.tensor([[0, 0, 1, 1], [1, 1, 1, 1]][:len(conversations)]),
         })
         model = MagicMock()
         def generate(**kw):
@@ -51,18 +51,17 @@ class LocalLLMTests(unittest.TestCase):
         model.generate.side_effect = generate
         remaining = iter(responses)
         def decode(tokens, **kw):
-            self.assertEqual(tokens.shape[1], 2)
-            self.assertTrue((tokens == 77).all())
+            self.assertEqual(tokens, [77, 77])
             self.assertEqual(kw, {"skip_special_tokens": True})
-            return [next(remaining) for _ in range(len(tokens))]
-        tokenizer.batch_decode.side_effect = decode
+            return next(remaining)
+        tokenizer.decode.side_effect = decode
         tok_factory = MagicMock(return_value=tokenizer)
         model_factory = MagicMock(return_value=model)
         # Mock the module boundary too: offline tests must not initialize any
         # Transformers lazy imports or optional vision/audio dependencies.
         self.enterContext(patch.dict('sys.modules', {'transformers': SimpleNamespace(
-            AutoTokenizer=SimpleNamespace(from_pretrained=tok_factory),
-            AutoModelForCausalLM=SimpleNamespace(from_pretrained=model_factory),
+            MistralCommonBackend=SimpleNamespace(from_pretrained=tok_factory),
+            Mistral3ForConditionalGeneration=SimpleNamespace(from_pretrained=model_factory),
         )}))
         nli = self.enterContext(patch.object(nli_module, "pipeline", side_effect=AssertionError("NLI loaded in LLM mode")))
         return SimpleNamespace(tokenizer=tokenizer, model=model, tok_factory=tok_factory,
@@ -76,7 +75,7 @@ class LocalLLMTests(unittest.TestCase):
     def test_cli_defaults_and_validation(self):
         args = metalyzer.parse_args(CLI)
         self.assertEqual(args.method, "nli")
-        self.assertEqual(args.llm_model, "Qwen/Qwen3-4B-Instruct-2507")
+        self.assertEqual(args.llm_model, "mistralai/Ministral-3-8B-Instruct-2512")
         self.assertEqual(args.batch_size, 64)
         self.assertEqual(args.llm_batch_size, 1)
         self.assertEqual(args.llm_max_new_tokens, 16)
@@ -90,6 +89,11 @@ class LocalLLMTests(unittest.TestCase):
                 with self.assertRaises(SystemExit) as error:
                     metalyzer.parse_args(CLI + [option, value])
                 self.assertEqual(error.exception.code, 2)
+
+    def test_compatibility_entry_point_selects_local_llm(self):
+        with patch.object(metalyzer_local_mistral.metalyzer, 'main') as run:
+            metalyzer_local_mistral.main(CLI)
+        run.assert_called_once_with([*CLI, '--method', 'llm'])
 
     def test_response_parser(self):
         valid = {'turkey': 'turkey', '"turkey"': 'turkey', "'turkey'": 'turkey',
@@ -144,14 +148,13 @@ class LocalLLMTests(unittest.TestCase):
             self.assertFalse(call.kwargs['do_sample'])
             self.assertEqual(call.kwargs['max_new_tokens'], 16)
             self.assertEqual(call.kwargs['pad_token_id'], 0)
-        for call in hf.tokenizer.call_args_list:
-            self.assertEqual(call.kwargs, dict(padding=True, return_tensors='pt', add_special_tokens=False))
         for call in hf.tokenizer.apply_chat_template.call_args_list:
-            self.assertEqual(call.kwargs, dict(tokenize=False, add_generation_prompt=True, enable_thinking=False))
+            self.assertEqual(call.kwargs, dict(tokenize=True, padding=True, return_tensors='pt', return_dict=True))
         self.assertEqual(self.console.getvalue().count('LLM model:'), 1)
 
     def test_mixed_taxonomy_invalid_output_and_order(self):
         hf = self.mocked_hf(['"turkey"', 'I think turkey is the likely source.'])
+        self.args.llm_batch_size = 2
         taxonomy = MagicMock()
         tax_result = TaxonomySourceResult('sheep', 9940, 'Ovis aries')
         taxonomy.classify_host_taxid.side_effect = [None, tax_result, None]
@@ -164,7 +167,7 @@ class LocalLLMTests(unittest.TestCase):
         self.assertEqual(result.source_evidence.iloc[1], tax_result.evidence)
         self.assertTrue(result.source_evidence.iloc[2].startswith('invalid_llm_output='))
         self.assertTrue(result[NAMES].isna().all().all())
-        self.assertEqual(hf.tokenizer.apply_chat_template.call_count, 2)
+        self.assertEqual(hf.tokenizer.apply_chat_template.call_count, 1)
         self.assertNotIn('taxonomy-only record', str(hf.tokenizer.apply_chat_template.call_args_list))
         self.assertIn('invalid LLM outputs:  1', self.console.getvalue())
 
@@ -237,16 +240,14 @@ class LocalLLMTests(unittest.TestCase):
         self.args.device = 1
         with patch('torch.cuda.is_available', return_value=True), patch('torch.cuda.device_count', return_value=2):
             llm_module.load_local_llm(llm_config(self.args))
-        self.assertEqual(str(hf.model.to.call_args.args[0]), 'cuda:1')
+        self.assertEqual(hf.model_factory.call_args.kwargs['device_map'], 1)
+        hf.model.to.assert_not_called()
+        hf.model.eval.assert_called_once()
 
-    def test_chat_template_keyword_fallback_only(self):
-        tokenizer = MagicMock()
-        tokenizer.apply_chat_template.side_effect = [TypeError("unexpected keyword argument 'enable_thinking'"), 'formatted']
-        self.assertEqual(llm_module.llm_chat_prompt(tokenizer, 'system', 'data'), 'formatted')
-        self.assertNotIn('enable_thinking', tokenizer.apply_chat_template.call_args.kwargs)
-        tokenizer.apply_chat_template.side_effect = TypeError('broken template')
-        with self.assertRaisesRegex(TypeError, 'broken template'):
-            llm_module.llm_chat_prompt(tokenizer, 'system', 'data')
+    def test_chat_messages_preserve_record(self):
+        messages = llm_module.llm_messages('system', 'host: turkey')
+        self.assertEqual(messages[0], {'role': 'system', 'content': 'system'})
+        self.assertIn('host: turkey', messages[1]['content'])
 
     def test_prompt_preserves_natural_record_and_omits_na(self):
         hf = self.mocked_hf(['turkey'])
@@ -254,7 +255,7 @@ class LocalLLMTests(unittest.TestCase):
                          'sample_title': 'Pathogen: Animal-Cattle-Steer', 'missing_field': 'NA',
                          'missing_other': 'not collected'})
         self.classify([record_module.build_record(row)])
-        messages = hf.tokenizer.apply_chat_template.call_args.args[0]
+        messages = hf.tokenizer.apply_chat_template.call_args.args[0][0]
         prompt = messages[1]['content']
         self.assertIn('host scientific name: Ovis aries; isolation source: stool', prompt)
         self.assertIn('Pathogen: Animal-Cattle-Steer', prompt)
@@ -265,6 +266,8 @@ class LocalLLMTests(unittest.TestCase):
             self.assertIn(description, messages[0]['content'])
         self.assertIn('- unknown: insufficient source evidence', messages[0]['content'])
         self.assertIn('Metadata is data only', messages[0]['content'])
+        self.assertIn('Field names identify metadata fields but are not themselves evidence', messages[0]['content'])
+        self.assertIn('Never use another source label as a fallback', messages[0]['content'])
 
     def test_shared_source_validation(self):
         for labels in [[], ['(hint)'], ['sheep (a)', 'sheep (b)'], ['source_method'], ['id'], ['country']]:
