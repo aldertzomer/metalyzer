@@ -10,19 +10,28 @@ The pipeline is designed for large-scale datasets (e.g. ENA/SRA metadata) with h
 ---
 ## For the impatient
 
-If you build IKEA wardrobes without ever looking at the instructions, and you are more of a try first, read later person, here is the commandline:
+If you build IKEA wardrobes without ever looking at the instructions, and you are more of a try first, read later person, here is a GPU quickstart using `--method llm`:
 
 ```bash
+git clone https://github.com/aldertzomer/metalyzer.git
+cd metalyzer
+conda env create -f environment.yml
+conda activate metalyzer
+# If your Linux CUDA installation needs it: conda install -c conda-forge cuda-driver-dev=12.9
 export TOKENIZERS_PARALLELISM=true
+python metalyzer.py --download-taxonomy taxonomy
 python metalyzer.py \
   --metadata benchmark.tsv \
   --sources sources.tsv \
   --out classified.tsv \
   --id-col run_accession \
   --device 0 \
-  --batch-size 64 \
-  --min-score 0.2
+  --method llm \
+  --llm-batch-size 10 \
+  --taxonomy-dir taxonomy
 ```
+
+Read on for NLI on CPU or GPU, other LLM options, performance, and metrics.
 
 ## Overview
 
@@ -230,6 +239,11 @@ Requirements:
 - Python ≥ 3.10
 - Conda environment recommended
 
+```bash
+git clone https://github.com/aldertzomer/metalyzer.git
+cd metalyzer
+```
+
 For an NVIDIA CUDA GPU, install from Conda:
 
 ```bash
@@ -261,12 +275,12 @@ dependencies. They are environment specifications,
 not exact lockfiles. Taxonomy dump parsing and downloading use the Python
 standard library. The pipeline and tests use the dependencies listed in these
 environments; the taxonomy feature requires no additional packages.
-The Mistral module requires the optional `mistralai` v2 SDK. It is loaded only
+The API Mistral module requires the optional `mistralai` v2 SDK. It is loaded only
 when unresolved rows need API inference; NLI, local LLM and taxonomy-only runs
 do not require it.
 
 On the Linux GPU server used for the local Ministral test, the CUDA build also
-required `cuda-driver-dev=12.9` from conda-forge. Install it there with
+required `cuda-driver-dev=12.9` from conda-forge. Install it where needed with
 `conda install -c conda-forge cuda-driver-dev=12.9` if needed; it is omitted
 from the cross-platform environment files because CPU and Windows installations
 do not use it.
