@@ -96,6 +96,7 @@ Return `SourceResult(table: pandas.DataFrame)` with this column order:
 | `best_hit` | Exact canonical label, or `unknown` |
 | `source_method` | Nonempty provenance string, e.g. `host_tax_id`, `nli`, `llm`, `mistral`, or your new method |
 | `source_evidence` | String explaining the decision, or `""` |
+| `source_llm_score` | Geometric mean probability of generated label tokens for valid local LLM calls, or float NaN |
 
 Each returned row must use a unique key from the input batch. A partial stage
 omits unresolved rows entirely. Returning `best_hit="unknown"` is a **completed
@@ -128,8 +129,10 @@ Existing stage semantics:
   template as the normal NLI stage. It tests only the final source's full label
   with binary `multi_label=True`; unknown predictions are not scored. A normal
   NLI run shares one lazy pipeline instance with verification.
-- LLM uses full descriptions in its prompt and returns canonical labels. Scores
-  are NaN. Invalid responses become unknown with sanitized, truncated
+- LLM uses full descriptions in its prompt and returns canonical labels.
+  Candidate score columns are NaN. Its generated-label score comes from the
+  same generation call, including valid `unknown` decisions. Invalid responses
+  become unknown with a NaN generated-label score and sanitized, truncated
   `invalid_llm_output=...` evidence. `LLMConfig` has no score threshold.
 - Mistral reuses the model-independent prompt and unknown policy from `generative`.
   Its JSON schema always permits `unknown`; it does not mutate `SourceVocabulary`.
@@ -169,7 +172,8 @@ duplicate keys, invalid labels, missing decisions, and malformed schemas raise
 `ValueError` instead of silently joining incorrect rows.
 
 `combine.run(batch, sources, source_result, *fields, verification=...)` returns
-a DataFrame ordered as ID, source columns, `source_verification_score`, then
+a DataFrame ordered as ID, source columns (including `source_llm_score`),
+`nli_verification_score`, then
 fields in argument order. `VerificationResult` requires ordered numeric scores
 in `[0, 1]` or NaN. It rejects incomplete fields and duplicate output column
 names. `combine.write(table, path)` writes tab-separated output without the

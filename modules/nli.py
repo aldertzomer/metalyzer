@@ -3,7 +3,8 @@ from dataclasses import dataclass
 
 import pandas as pd
 
-from .contracts import MetadataBatch, SourceResult, SourceVocabulary, canonical_source_names
+from .contracts import (MetadataBatch, SourceResult, SourceVocabulary,
+                        SOURCE_LLM_SCORE_COLUMN, canonical_source_names)
 from .runlog import emit
 
 DEFAULT_NLI_MODEL = "MoritzLaurer/deberta-v3-large-zeroshot-v2.0"
@@ -98,6 +99,7 @@ def run(batch: MetadataBatch, sources: SourceVocabulary, config: NLIConfig = NLI
     output.index = batch.metadata.index
     output["source_method"] = "nli"
     output["source_evidence"] = ""
+    output[SOURCE_LLM_SCORE_COLUMN] = float("nan")
     result = SourceResult(output[sources.columns])
     result.validate(batch, sources)
     return result

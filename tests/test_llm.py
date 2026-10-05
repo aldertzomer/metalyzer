@@ -1,5 +1,6 @@
 import contextlib
 import io
+import math
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -27,8 +28,43 @@ class LocalLLMTests(unittest.TestCase):
         self.enterContext(contextlib.redirect_stdout(self.console))
 
     def mocked_hf(self, responses, *, no_pad=False):
-        # Real tiny tensors exercise prompt slicing and left-padding without weights.
-        import torch
+        # Tiny in-memory tensors exercise prompt slicing without model packages.
+        import numpy as np
+
+        class Tensor:
+            def __init__(self, values):
+                self.values = np.asarray(values)
+
+            @property
+            def shape(self):
+                return self.values.shape
+
+            def to(self, device):
+                return self
+
+            def __getitem__(self, key):
+                return Tensor(self.values[key])
+
+            def tolist(self):
+                return self.values.tolist()
+
+        inference = [False]
+        class InferenceMode:
+            def __enter__(self):
+                inference[0] = True
+
+            def __exit__(self, *args):
+                inference[0] = False
+
+        torch = SimpleNamespace(
+            tensor=Tensor, full=lambda shape, value: Tensor(np.full(shape, value)),
+            cat=lambda tensors, dim: Tensor(np.concatenate([x.values for x in tensors], axis=dim)),
+            is_tensor=lambda value: isinstance(value, Tensor),
+            inference_mode=InferenceMode, is_inference_mode_enabled=lambda: inference[0],
+            device=lambda value: value,
+            cuda=SimpleNamespace(is_available=lambda: False, device_count=lambda: 0),
+        )
+        self.enterContext(patch.dict('sys.modules', {'torch': torch}))
 
         class BatchEncoding(dict):
             def to(self, device):
@@ -37,6 +73,7 @@ class LocalLLMTests(unittest.TestCase):
         tokenizer = MagicMock()
         tokenizer.pad_token_id = None if no_pad else 0
         tokenizer.eos_token_id = 9
+        tokenizer.all_special_ids = [0, 9]
         tokenizer.eos_token = "<eos>"
         tokenizer.apply_chat_template.side_effect = lambda conversations, **kw: BatchEncoding({
             "input_ids": torch.tensor([[0, 0, 11, 12], [21, 22, 23, 24]][:len(conversations)]),
@@ -44,16 +81,28 @@ class LocalLLMTests(unittest.TestCase):
         })
         model = MagicMock()
         model.generation_config.max_length = 262144
+        remaining = iter(responses)
+        response_by_token = {}
         def generate(**kw):
             self.assertTrue(torch.is_inference_mode_enabled())
             count = kw["input_ids"].shape[0]
-            return torch.cat([kw["input_ids"], torch.full((count, 2), 77)], dim=1)
+            tokens = []
+            for _ in range(count):
+                token = 77 + len(response_by_token)
+                response_by_token[token] = next(remaining)
+                tokens.append([token, token])
+            return SimpleNamespace(
+                sequences=torch.cat([kw["input_ids"], torch.tensor(tokens)], dim=1),
+                scores=(object(), object()),
+            )
         model.generate.side_effect = generate
-        remaining = iter(responses)
+        model.compute_transition_scores.side_effect = lambda sequences, scores, normalize_logits: torch.full(
+            (sequences.shape[0], 2), math.log(0.8),
+        )
         def decode(tokens, **kw):
-            self.assertEqual(tokens, [77, 77])
             self.assertEqual(kw, {"skip_special_tokens": True})
-            return next(remaining)
+            self.assertEqual(tokens, [tokens[0]] * len(tokens))
+            return response_by_token[tokens[0]] if len(tokens) == 2 else ""
         tokenizer.decode.side_effect = decode
         tok_factory = MagicMock(return_value=tokenizer)
         model_factory = MagicMock(return_value=model)
@@ -130,7 +179,13 @@ class LocalLLMTests(unittest.TestCase):
         self.assertNotIn('unknown', result.columns)
         self.assertEqual(result.source_method.tolist(), ['llm'] * 3)
         self.assertEqual(result.source_evidence.tolist(), [''] * 3)
-        self.assertEqual(result.columns.tolist(), [*NAMES, 'best_hit', 'source_method', 'source_evidence'])
+        self.assertEqual(result.columns.tolist(), [*NAMES, 'best_hit', 'source_method',
+                                                  'source_evidence', 'source_llm_score'])
+        self.assertEqual(result.source_llm_score.tolist(), [0.8] * 3)
+        self.assertTrue(result.source_llm_score.between(0, 1).all())
+        self.assertEqual(hf.model.compute_transition_scores.call_count, 2)
+        for call in hf.model.compute_transition_scores.call_args_list:
+            self.assertTrue(call.kwargs['normalize_logits'])
         hf.nli.assert_not_called()
         hf.tok_factory.assert_called_once_with(self.args.llm_model, revision='pinned-revision')
         hf.model_factory.assert_called_once_with(self.args.llm_model, revision='pinned-revision',
@@ -142,6 +197,8 @@ class LocalLLMTests(unittest.TestCase):
         self.assertEqual(hf.model.generate.call_count, 2)
         for call in hf.model.generate.call_args_list:
             self.assertFalse(call.kwargs['do_sample'])
+            self.assertTrue(call.kwargs['return_dict_in_generate'])
+            self.assertTrue(call.kwargs['output_scores'])
             self.assertEqual(call.kwargs['max_new_tokens'], 16)
             self.assertEqual(call.kwargs['pad_token_id'], 0)
         for call in hf.tokenizer.apply_chat_template.call_args_list:
@@ -162,6 +219,9 @@ class LocalLLMTests(unittest.TestCase):
         self.assertEqual(result.source_method.tolist(), ['llm', 'host_tax_id', 'llm'])
         self.assertEqual(result.source_evidence.iloc[1], tax_result.evidence)
         self.assertTrue(result.source_evidence.iloc[2].startswith('invalid_llm_output='))
+        self.assertTrue(pd.isna(result.source_llm_score.iloc[0]))
+        self.assertTrue(pd.isna(result.source_llm_score.iloc[1]))
+        self.assertTrue(pd.isna(result.source_llm_score.iloc[2]))
         self.assertTrue(result[NAMES].isna().all().all())
         self.assertEqual(hf.tokenizer.apply_chat_template.call_count, 1)
         self.assertNotIn('taxonomy-only record', str(hf.tokenizer.apply_chat_template.call_args_list))
@@ -200,6 +260,31 @@ class LocalLLMTests(unittest.TestCase):
         pd.testing.assert_frame_equal(result[expected.columns], expected)
         self.assertEqual(result.source_evidence.tolist(), ['', ''])
         self.assertEqual(result.source_method.tolist(), ['nli', 'nli'])
+        self.assertTrue(result.source_llm_score.isna().all())
+
+    def test_generated_label_score_uses_only_label_tokens(self):
+        tokenizer = SimpleNamespace(pad_token_id=0, eos_token_id=9, all_special_ids=[0, 9])
+        fragments = {1: '{"source":"', 2: 'other', 3: '_', 4: 'animal', 5: '"}', 9: ''}
+        tokenizer.decode = lambda ids, **kw: ''.join(fragments[part] for part in ids)
+        ids = [1, 2, 3, 4, 5, 9]
+        response = tokenizer.decode(ids, skip_special_tokens=True)
+        score = llm_module.generated_label_score(tokenizer, ids,
+                    [math.log(p) for p in (0.01, 0.91, 0.87, 0.95, 0.02, 0.001)],
+                    response, 'other_animal')
+        self.assertAlmostEqual(score, (0.91 * 0.87 * 0.95) ** (1 / 3))
+        self.assertTrue(math.isnan(llm_module.generated_label_score(
+            tokenizer, [1, 9], [math.log(0.8), math.log(0.8)],
+            '{"source":"other_animal"}', 'other_animal')))
+
+    def test_quoted_label_score_excludes_quotes_and_eos(self):
+        tokenizer = SimpleNamespace(pad_token_id=0, eos_token_id=9, all_special_ids=[0, 9])
+        fragments = {1: '"', 2: 'tur', 3: 'key', 4: '"', 9: ''}
+        tokenizer.decode = lambda ids, **kw: ''.join(fragments[part] for part in ids)
+        ids = [1, 2, 3, 4, 9]
+        score = llm_module.generated_label_score(tokenizer, ids,
+                    [math.log(p) for p in (0.01, 0.91, 0.87, 0.02, 0.001)],
+                    tokenizer.decode(ids, skip_special_tokens=True), 'turkey')
+        self.assertAlmostEqual(score, (0.91 * 0.87) ** 0.5)
 
     def test_min_score_does_not_change_llm_calls(self):
         self.mocked_hf(['turkey', 'turkey'])
@@ -297,7 +382,9 @@ class LocalLLMTests(unittest.TestCase):
         self.assertEqual(out.year.tolist(), ['2019'])
         self.assertEqual(out.country.tolist(), ['United States'])
         self.assertEqual(out.source_method.tolist(), ['llm'])
-        self.assertEqual(out.source_verification_score.tolist(), ['NA'])
+        self.assertEqual(out.source_llm_score.tolist(), ['0.8'])
+        self.assertEqual(out.nli_verification_score.tolist(), ['NA'])
+        self.assertNotIn('source_verification_score', out.columns)
 
     def test_taxonomy_unavailable_label_falls_back_to_llm(self):
         self.mocked_hf(['unknown'])
@@ -324,7 +411,8 @@ class LocalLLMTests(unittest.TestCase):
                 out = pd.read_csv(root / 'out.tsv', sep='\t')
                 self.assertEqual(len(out), 0)
                 self.assertEqual(out.columns.tolist(), ['id', *NAMES, 'best_hit', 'source_method',
-                                                        'source_evidence', 'source_verification_score', 'year', 'country'])
+                                            'source_evidence', 'source_llm_score',
+                                            'nli_verification_score', 'year', 'country'])
 
 
 if __name__ == '__main__':

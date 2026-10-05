@@ -169,24 +169,24 @@ Mistral API receive only the `source` descriptions.
 
 A TSV file with:
 
-id    <source scores...>    best_hit    source_method    source_evidence    source_verification_score    year    country
+id    <source scores...>    best_hit    source_method    source_evidence    source_llm_score    nli_verification_score    year    country
 
 Example:
 
-|run_acc| chicken|human|cattle|best_hit|source_method|source_evidence|source_verification_score|year|country|
-|-------|--------|-----|------|--------|-------------|---------------|-------------------------|----|-------|
-|ERR001 |  0.85  |0.01 | 0.02 |chicken|nli||0.93|2019|United States|
+|run_acc|chicken|human|cattle|best_hit|source_method|source_evidence|source_llm_score|nli_verification_score|year|country|
+|-------|-------|-----|------|--------|-------------|---------------|----------------|----------------------|----|-------|
+|ERR001|0.85|0.01|0.02|chicken|nli||NA|0.93|2019|United States|
 
 - One score column per source, named using the text before the first `(` in `sources.tsv`; multi-word names are preserved
 - For NLI rows, `best_hit` is the name of the source with the highest score; ties use the first source in `sources.tsv`
 - In NLI mode, `--min-score` sets the minimum top score required for `best_hit`; lower-scoring rows are labelled `unknown` while their score columns are retained. The default is `0.2`.
 - Full source labels, including parenthetical hints, are still used for classification
-- Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `source_method`, `source_evidence`, `source_verification_score`, `year`, and `country` column names
+- Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `source_method`, `source_evidence`, `source_llm_score`, `nli_verification_score`, `year`, and `country` column names
 - Taxonomy-derived rows use `source_method=host_tax_id` and **all source scores are `NA`**, because no NLI inference was performed. They are not artificial probabilities and are not subject to `--min-score`.
 - NLI rows use `source_method=nli`, including below-threshold `unknown` calls; their `source_evidence` is blank.
-- Local LLM rows use `source_method=llm` and all source scores are `NA`: generated labels have no calibrated candidate probabilities. Valid answers have blank evidence; malformed answers become `unknown` with `source_evidence=invalid_llm_output=...` (sanitized and truncated to 200 characters).
+- Local LLM rows use `source_method=llm` and all per-source candidate score columns are `NA`. For valid answers, `source_llm_score` is the geometric mean probability of the generated tokens forming the label the local LLM actually produced, including `unknown`. It comes from the existing generation call, with no additional model inference or comparison against other labels. It is **not a calibrated probability that the classification is correct**. If a quoted or JSON response does not allow exact label-token isolation, its score is `NA`. Valid answers have blank evidence; malformed answers become `unknown` with `source_evidence=invalid_llm_output=...` and `source_llm_score=NA` (evidence is sanitized and truncated to 200 characters).
 - Mistral API rows use `source_method=mistral` with the same `NA` score convention. `unknown` is always allowed, even when absent from the sources file. Malformed answers have `source_evidence=invalid_mistral_output=...`; request/authentication/quota failures abort instead of producing unknown labels.
-- `source_verification_score` is a binary NLI entailment/support score for the assigned `best_hit`, not a calibrated probability that the classification is correct. It is `NA` for `unknown` and when `--disable-verify-source` is set.
+- `nli_verification_score` is a separate binary NLI entailment/support score for the final assigned non-unknown source. It is `NA` for `unknown` and when `--disable-verify-source` is set.
 - year as 4-digit string
 - country as normalized name
 
@@ -216,7 +216,7 @@ assigned source with alternatives. It applies to `host_tax_id`, `nli`, `llm`,
 and `mistral` assignments alike.
 
 Verification runs by default. Pass `--disable-verify-source` to skip it and
-write `NA` in `source_verification_score` for every row. An `unknown` assignment
+write `NA` in `nli_verification_score` for every row. An `unknown` assignment
 is never scored. On NLI runs, the classifier and verifier share the loaded NLI
 pipeline. On LLM and Mistral API runs, verification loads the NLI model for
 non-unknown assignments, adding model memory and inference time.
@@ -400,8 +400,9 @@ GPU execution uses the model checkpoint's precision (`dtype="auto"`).
 
 ## Benchmark results
 
-The saved benchmark TSVs below were generated before source verification was
-added, so they do not contain `source_verification_score`.
+The saved benchmark TSVs below were generated before the two confidence
+columns were added, so they contain neither `source_llm_score` nor
+`nli_verification_score`.
 
 The following results evaluate the current `benchmark_classified.tsv` using
 `sources.tsv` against `benchmark_true_labels.tsv`, with `--min-score 0.2` and

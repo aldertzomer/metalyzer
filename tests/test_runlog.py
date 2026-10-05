@@ -51,7 +51,7 @@ class RunLoggingTests(unittest.TestCase):
             self.assertIn("Metadata rows: 0", log)
             self.assertIn("Metadata columns: 3", log)
             self.assertIn("NLI-only source classification", log)
-            self.assertIn("source verification scores: 0", log)
+            self.assertIn("NLI verification scores: 0", log)
             self.assertIn("log path: " + str(root / "out.tsv.log"), log)
             self.assertEqual(screen.getvalue().count("Wrote " + str(root / "out.tsv")), 1)
             self.assertEqual((root / "out.tsv").read_text(encoding="utf-8").count("Run provenance"), 0)
@@ -73,7 +73,7 @@ class RunLoggingTests(unittest.TestCase):
             self.assertIn("Batch 1: source classification done", log)
             self.assertIn("Source classification:", log)
             self.assertIn("NLI assignments: 1", log)
-            self.assertIn("source verification scores: 0", log)
+            self.assertIn("NLI verification scores: 0", log)
             self.assertEqual(screen.getvalue().count("Batch 1: source classification done"), 1)
 
             pd.DataFrame(columns=["id", "host"]).to_csv(root / "input.tsv", sep="\t", index=False)

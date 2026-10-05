@@ -1,9 +1,10 @@
 """Local generative source classification; weights load only for nonempty batches."""
 import json
+import math
 import re
 from dataclasses import dataclass
 
-from .contracts import MetadataBatch, SourceResult, SourceVocabulary, empty_source_table
+from .contracts import MetadataBatch, SourceResult, SourceVocabulary, SOURCE_LLM_SCORE_COLUMN, empty_source_table
 from .generative import allowed_source_names, invalid_response_evidence, system_prompt as llm_system_prompt
 from .runlog import emit
 
@@ -55,6 +56,56 @@ def parse_llm_response(response, source_names):
         if len(matches) == 1:
             return matches[0], ""
     return "unknown", invalid_response_evidence(response, "invalid_llm_output")
+
+
+def generated_label_span(response: str, label: str) -> tuple[int, int] | None:
+    """Locate the complete label text in a plain, quoted, or simple JSON reply."""
+    start = len(response) - len(response.lstrip())
+    end = len(response.rstrip())
+    candidate = response[start:end]
+    if candidate.startswith("{"):
+        match = re.fullmatch(r'\{\s*"source"\s*:\s*"(?P<label>[^"\\]*)"\s*\}', candidate)
+        if match is None:
+            return None
+        start += match.start("label")
+        end = len(response) - len(response.lstrip()) + match.end("label")
+    elif len(candidate) >= 2 and candidate[0] in "\"'`" and candidate[-1] == candidate[0]:
+        start += 1
+        end -= 1
+        while start < end and response[start].isspace():
+            start += 1
+        while end > start and response[end - 1].isspace():
+            end -= 1
+    return (start, end) if start < end else None
+
+
+def generated_label_score(tokenizer, token_ids, token_log_scores, response: str, label: str) -> float:
+    """Geometric mean of transition probabilities for complete label tokens only."""
+    span = generated_label_span(response, label)
+    if span is None:
+        return float("nan")
+    start, end = span
+    normalized = lambda value: re.sub(r"[\s-]+", "_", value.strip().casefold())
+    if normalized(response[start:end]) != normalized(label):
+        return float("nan")
+    previous = 0
+    selected = []
+    covered = start
+    special_ids = set(getattr(tokenizer, "all_special_ids", ()) or ())
+    special_ids.update(value for value in (tokenizer.pad_token_id, tokenizer.eos_token_id) if value is not None)
+    for position, token_id in enumerate(token_ids):
+        prefix = tokenizer.decode(token_ids[:position + 1], skip_special_tokens=True)
+        current = len(prefix)
+        if current > start and previous < end:
+            if (token_id in special_ids or previous < start or current > end
+                    or previous != covered):
+                return float("nan")
+            selected.append(float(token_log_scores[position]))
+            covered = current
+        previous = current
+    if not selected or covered != end or any(not math.isfinite(score) for score in selected):
+        return float("nan")
+    return math.exp(sum(selected) / len(selected))
 
 
 def load_local_llm(config: LLMConfig):
@@ -114,21 +165,31 @@ def run(batch: MetadataBatch, sources: SourceVocabulary, config: LLMConfig = LLM
         inputs = {key: value.to(device) for key, value in encoded.items() if torch.is_tensor(value)}
         if "input_ids" not in inputs:
             raise RuntimeError("Mistral tokenizer did not return input_ids.")
-        generation_kwargs = {"do_sample": False, "max_new_tokens": config.max_new_tokens}
+        generation_kwargs = {"do_sample": False, "max_new_tokens": config.max_new_tokens,
+                             "return_dict_in_generate": True, "output_scores": True}
         if tokenizer.pad_token_id is not None:
             generation_kwargs["pad_token_id"] = tokenizer.pad_token_id
         with torch.inference_mode():
             generated = model.generate(**inputs, **generation_kwargs)
+            transition_scores = model.compute_transition_scores(
+                generated.sequences, generated.scores, normalize_logits=True,
+            )
         # Every left-padded row has the same encoded prompt width.
-        generated_only = generated[:, inputs["input_ids"].shape[1]:]
-        responses = [tokenizer.decode(row.tolist(), skip_special_tokens=True).strip()
+        generated_only = generated.sequences[:, inputs["input_ids"].shape[1]:]
+        responses = [tokenizer.decode(row.tolist(), skip_special_tokens=True)
                      for row in generated_only]
         if len(responses) != len(conversations):
             raise RuntimeError("LLM returned an unexpected number of responses.")
         for offset, response in enumerate(responses):
             label, evidence = parse_llm_response(response, source_names)
-            output.loc[batch.metadata.index[start + offset], ["best_hit", "source_evidence"]] = [label, evidence]
-        del encoded, inputs, generated, generated_only, responses, conversations
+            key = batch.metadata.index[start + offset]
+            output.loc[key, ["best_hit", "source_evidence"]] = [label, evidence]
+            if not evidence:
+                output.loc[key, SOURCE_LLM_SCORE_COLUMN] = generated_label_score(
+                    tokenizer, generated_only[offset].tolist(), transition_scores[offset].tolist(),
+                    response, label,
+                )
+        del encoded, inputs, generated, generated_only, transition_scores, responses, conversations
         emit(f"Batch {start // config.batch_size + 1}: local Ministral source classification done")
     result = SourceResult(output)
     result.validate(batch, sources)

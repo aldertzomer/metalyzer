@@ -62,7 +62,7 @@ class SourceVerificationTests(unittest.TestCase):
             path = Path(directory) / "out.tsv"
             combine.write(output, path)
             saved = pd.read_csv(path, sep="\t", dtype=str, keep_default_na=False)
-        self.assertEqual(saved.source_verification_score.tolist(), ["NA"] * 5)
+        self.assertEqual(saved.nli_verification_score.tolist(), ["NA"] * 5)
 
     def test_all_unknown_never_loads_verifier(self):
         table = self.result.table.copy()
@@ -98,7 +98,7 @@ class SourceVerificationTests(unittest.TestCase):
                                      "--disable-verify-source"])
         self.assertTrue(args.disable_verify_source)
         with self.assertRaises(ValueError):
-            SourceVocabulary(("source_verification_score",), "id")
+            SourceVocabulary(("nli_verification_score",), "id")
 
     def test_cli_verifies_after_final_nli_decision_with_one_model(self):
         def classify(records, **kwargs):
@@ -123,7 +123,7 @@ class SourceVerificationTests(unittest.TestCase):
             output = pd.read_csv(root / "out.tsv", sep="\t", keep_default_na=False)
         factory.assert_called_once()
         self.assertEqual(output.best_hit.tolist(), ["sheep"])
-        self.assertEqual(output.source_verification_score.tolist(), [0.81])
+        self.assertEqual(output.nli_verification_score.tolist(), [0.81])
 
 
 if __name__ == "__main__":

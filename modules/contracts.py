@@ -5,8 +5,9 @@ from typing import Protocol
 import pandas as pd
 
 
-SOURCE_COLUMNS = ("best_hit", "source_method", "source_evidence")
-VERIFICATION_COLUMN = "source_verification_score"
+SOURCE_LLM_SCORE_COLUMN = "source_llm_score"
+SOURCE_COLUMNS = ("best_hit", "source_method", "source_evidence", SOURCE_LLM_SCORE_COLUMN)
+VERIFICATION_COLUMN = "nli_verification_score"
 RESERVED_COLUMNS = (*SOURCE_COLUMNS, VERIFICATION_COLUMN, "year", "country")
 
 
@@ -87,7 +88,8 @@ class SourceResult:
     """Source table, indexed by input row keys; omitted rows mean unresolved.
 
     Columns: vocabulary names (float scores or NaN), best_hit (canonical label
-    or 'unknown'), source_method (nonempty string), source_evidence (string).
+    or 'unknown'), source_method (nonempty string), source_evidence (string),
+    source_llm_score (generated-label probability or NaN).
     An explicit 'unknown' is a completed prediction, not an unresolved row.
     """
     table: pd.DataFrame
@@ -104,6 +106,13 @@ class SourceResult:
             raise ValueError("Every source result needs a nonempty source_method")
         if not all(isinstance(v, str) for v in table.source_evidence):
             raise ValueError("Source evidence must be a string (empty is allowed)")
+        llm_scores = table[SOURCE_LLM_SCORE_COLUMN]
+        if not pd.api.types.is_numeric_dtype(llm_scores.dtype):
+            raise ValueError("LLM source scores must be numeric or NaN")
+        if not (llm_scores.isna() | ((llm_scores >= 0) & (llm_scores <= 1))).all():
+            raise ValueError("LLM source scores must be between 0 and 1 or NaN")
+        if (llm_scores.notna() & (table.source_method != "llm")).any():
+            raise ValueError("Only local LLM decisions may have source_llm_score")
         scores = table[list(sources.names)]
         if not all(pd.api.types.is_numeric_dtype(dtype) for dtype in scores.dtypes):
             raise ValueError("Source scores must be numeric or NaN")
@@ -158,5 +167,7 @@ def empty_source_table(sources: SourceVocabulary, row_keys=()) -> pd.DataFrame:
     """Create an output table with stable dtypes, including for an empty batch."""
     table = pd.DataFrame(float("nan"), index=pd.Index(list(row_keys), dtype="int64"), columns=sources.names)
     for column in SOURCE_COLUMNS:
-        table[column] = pd.Series("", index=table.index, dtype=object)
+        table[column] = (pd.Series(float("nan"), index=table.index, dtype=float)
+                         if column == SOURCE_LLM_SCORE_COLUMN else
+                         pd.Series("", index=table.index, dtype=object))
     return table

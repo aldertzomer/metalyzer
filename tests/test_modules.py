@@ -89,9 +89,10 @@ class ModuleTests(unittest.TestCase):
         output = combine.run(self.batch, self.sources, source, years, country.run(self.batch))
         self.assertEqual(output.id.tolist(), ["duplicate", "duplicate", "third"])
         self.assertEqual(output.source_method.tolist(), ["fallback", "example", "fallback"])
+        self.assertTrue(output.source_llm_score.isna().all())
         self.assertEqual(output.year.tolist(), ["2019", "2018", ""])
         self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns,
-                                                   "source_verification_score", "year", "country"])
+                                                   "nli_verification_score", "year", "country"])
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "result.tsv"
             combine.write(output, path)
@@ -125,6 +126,10 @@ class ModuleTests(unittest.TestCase):
                     SourceResult(table).validate(self.batch, self.sources)
         with self.assertRaises(ValueError):
             SourceResult(self.result([0]).table.drop(columns="cat")).validate(self.batch, self.sources)
+        table = self.result([0], "host_tax_id").table
+        table.loc[0, "source_llm_score"] = 0.7
+        with self.assertRaises(ValueError):
+            SourceResult(table).validate(self.batch, self.sources)
 
     def test_field_contract_rejects_gaps_duplicates_and_column_collisions(self):
         source = self.result([0, 1, 2])
@@ -199,8 +204,8 @@ class ModuleTests(unittest.TestCase):
                     self.assertEqual(country_stage.call_count, int("country" in expected))
                     output = pd.read_csv(root / "out.tsv", sep="\t")
                     self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns,
-                                                               "source_verification_score", *expected])
-                    self.assertTrue(output.source_verification_score.isna().all())
+                                                               "nli_verification_score", *expected])
+                    self.assertTrue(output.nli_verification_score.isna().all())
 
     def test_input_vocabulary_and_id_validation(self):
         with tempfile.TemporaryDirectory() as directory:

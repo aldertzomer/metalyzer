@@ -155,7 +155,7 @@ def main(argv=None):
                         f"  {args.method.upper()} assignments: {len(selected)}\n"
                         f"  unknown calls: {(table.best_hit == 'unknown').sum()}\n"
                         f"  invalid model outputs: {selected.source_evidence.str.startswith(invalid_prefix).sum() if invalid_prefix else 0}\n"
-                        f"  source verification scores: {verification_result.values.notna().sum()}\n"
+                        f"  NLI verification scores: {verification_result.values.notna().sum()}\n"
                         f"  output path: {args.out}\n"
                         f"  log path: {log_path}")
             runlog.emit(f"Wrote {args.out} (n={len(output)})")
