@@ -1,0 +1,17 @@
+true_source	cat	cattle	chicken	dog	environment	goat	human	laboratory	other_animal	pig	sheep	turkey	unknown	wastewater	water	wildbird
+cat	20	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+cattle	0	99	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+chicken	0	0	99	0	1	0	0	0	0	1	0	0	0	0	0	0
+dog	0	0	0	100	0	0	0	0	0	0	0	0	0	0	0	0
+environment	0	1	0	0	3	0	0	0	0	0	0	0	0	0	0	0
+goat	1	0	0	0	0	98	0	0	0	0	0	0	1	0	0	0
+human	0	0	0	0	0	0	89	0	0	0	0	0	11	0	0	0
+laboratory	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0
+other_animal	0	0	0	0	40	0	0	0	54	0	0	0	6	0	0	0
+pig	0	0	0	0	0	0	0	0	0	100	0	0	0	0	0	0
+sheep	0	0	0	0	0	2	0	0	0	3	95	0	0	0	0	0
+turkey	0	0	0	0	16	0	0	0	0	0	0	85	0	0	0	0
+unknown	0	18	5	0	0	0	0	1	0	2	0	0	68	0	0	1
+wastewater	0	0	0	0	0	0	0	0	0	0	0	0	0	18	2	0
+water	0	0	0	0	9	0	0	0	0	0	0	0	0	0	70	0
+wildbird	1	0	0	0	41	1	0	0	2	0	0	0	20	0	1	134

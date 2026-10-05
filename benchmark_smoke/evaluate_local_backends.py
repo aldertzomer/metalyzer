@@ -1,9 +1,10 @@
 """Evaluate saved predictions by accession without changing any classifier.
 
-Example (run after a complete LLM benchmark):
-  python benchmark_smoke/evaluate_local_backends.py --prediction benchmark_llm.tsv best_hit
+Example (run after a complete NLI and LLM benchmark):
+  python benchmark_smoke/evaluate_local_backends.py
 
-Existing DeBERTa and Mistral benchmark files are always evaluated as baselines.
+Current NLI and local LLM benchmark files are evaluated by default. Pass an
+explicit --prediction after rerunning another backend under the current labels.
 """
 import argparse
 import json
@@ -56,7 +57,7 @@ def main():
     directory = Path(args.out_dir)
     directory.mkdir(parents=True, exist_ok=True)
     truth = pd.read_csv(args.truth, sep="\t", dtype=str, keep_default_na=False)
-    sources = [("benchmark_classified.tsv", "best_hit"), ("benchmark_mistral.tsv", "source"), *args.prediction]
+    sources = [("benchmark_nli.tsv", "best_hit"), ("benchmark_llm.tsv", "best_hit"), *args.prediction]
     results = [evaluate(truth, Path(path), col, directory, args.allow_subset) for path, col in sources]
     report = json.dumps(results, indent=2)
     (directory / "summary.json").write_text(report + "\n", encoding="utf-8")

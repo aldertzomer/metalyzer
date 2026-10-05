@@ -1,41 +1,30 @@
 [
   {
-    "file": "benchmark_classified.tsv",
+    "file": "benchmark_nli.tsv",
     "records": 1320,
-    "correct": 1144,
-    "overall_accuracy": 0.8666666666666667,
-    "unknown_predictions": 136,
+    "correct": 1133,
+    "overall_accuracy": 0.8583333333333333,
+    "unknown_predictions": 106,
     "invalid_llm_outputs": 0,
-    "taxonomy_calls": 255,
+    "taxonomy_calls": 215,
     "llm_calls": 0,
     "source_methods": {
-      "nli": 1065,
-      "host_tax_id": 255
+      "nli": 1105,
+      "host_tax_id": 215
     }
-  },
-  {
-    "file": "benchmark_mistral.tsv",
-    "records": 1320,
-    "correct": 1267,
-    "overall_accuracy": 0.9598484848484848,
-    "unknown_predictions": 69,
-    "invalid_llm_outputs": null,
-    "taxonomy_calls": null,
-    "llm_calls": null,
-    "source_methods": null
   },
   {
     "file": "benchmark_llm.tsv",
     "records": 1320,
-    "correct": 1223,
-    "overall_accuracy": 0.9265151515151515,
-    "unknown_predictions": 104,
-    "invalid_llm_outputs": 10,
-    "taxonomy_calls": 255,
-    "llm_calls": 1065,
+    "correct": 1251,
+    "overall_accuracy": 0.9477272727272728,
+    "unknown_predictions": 92,
+    "invalid_llm_outputs": 1,
+    "taxonomy_calls": 215,
+    "llm_calls": 1105,
     "source_methods": {
-      "llm": 1065,
-      "host_tax_id": 255
+      "llm": 1105,
+      "host_tax_id": 215
     }
   }
 ]

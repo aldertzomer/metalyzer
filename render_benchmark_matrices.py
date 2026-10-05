@@ -1,7 +1,7 @@
 """Render the benchmark source confusion matrices as SVG tables.
 
-Run from the repository root after updating benchmark_classified.tsv or
-benchmark_true_labels.tsv:
+Run from the repository root after updating benchmark_nli.tsv,
+benchmark_llm.tsv, or benchmark_true_labels.tsv:
 
     python render_benchmark_matrices.py
 """
@@ -18,25 +18,9 @@ ROOT = Path(__file__).resolve().parent
 TRUE_LABELS = ROOT / "benchmark_true_labels.tsv"
 ASSET_DIR = ROOT / "assets"
 
-LABELS = [
-    "cat",
-    "cattle",
-    "chicken",
-    "dog",
-    "environment",
-    "goat",
-    "human",
-    "laboratory",
-    "other_animal",
-    "pig",
-    "sheep",
-    "turkey",
-    "unknown",
-    "wastewater",
-    "water",
-    "waterbird",
-    "wildbird",
-]
+with (ROOT / "sources.tsv").open(encoding="utf-8", newline="") as source_file:
+    LABELS = sorted({row["source"].split("(", 1)[0].strip()
+                     for row in csv.DictReader(source_file, delimiter="\t")} | {"unknown"})
 
 SHORT_LABELS = {
     "chicken": "Chk",
@@ -46,7 +30,6 @@ SHORT_LABELS = {
     "turkey": "Turk",
     "unknown": "Unk",
     "wastewater": "WW",
-    "waterbird": "Wbird",
     "wildbird": "Wildbird",
 }
 
@@ -137,7 +120,7 @@ def render_svg(
 
     legend = (
         "Columns: Chk=chicken · Env=environment · Lab=laboratory · Other=other_animal · "
-        "Turk=turkey · Unk=unknown · WW=wastewater · Wbird=waterbird · Wildbird=wildbird"
+        "Turk=turkey · Unk=unknown · WW=wastewater · Wildbird=wildbird"
     )
     percentage_note = "Values are row percentages; each true-source row sums to 100% before rounding."
     suffix = percentage_note if percentages else "Values are absolute counts."
@@ -169,7 +152,7 @@ def render_svg(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--classified", type=Path, default=ROOT / "benchmark_classified.tsv")
+    parser.add_argument("--classified", type=Path, default=ROOT / "benchmark_nli.tsv")
     parser.add_argument("--prefix", default="benchmark", help="Output filename prefix under assets/")
     parser.add_argument("--title", default="Benchmark", help="Title prefix in the SVG")
     args = parser.parse_args()

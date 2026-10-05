@@ -1,8 +1,9 @@
 # Local LLM backend validation
 
-This is the historical Qwen validation report. The default `--method llm`
-backend is now Ministral 3; its supplied test-server results are in the main
-README and `benchmark_smoke/local_ministral_evaluation/`.
+This is an archived Qwen validation report from the earlier source list with
+separate waterbird and wildbird categories. The default `--method llm` backend
+is now Ministral 3. The old full-benchmark output and its derived matrices have
+been replaced; current NLI and local Ministral results are in the main README.
 
 This report records validation of the implementation in `metalyzer.py`,
 including the completed default-model GPU benchmark.
@@ -82,14 +83,13 @@ The requested full GPU benchmark completed with the default
 
 ```bash
 python metalyzer.py --metadata benchmark.tsv --sources sources.tsv \
-  --out benchmark_llm.tsv --id-col run_accession --taxonomy-dir taxonomy \
+  --out historical_qwen_llm.tsv --id-col run_accession --taxonomy-dir taxonomy \
   --method llm --llm-model Qwen/Qwen3-4B-Instruct-2507 \
   --device 0 --llm-batch-size 10
 ```
 
-`benchmark_llm.tsv` contains all 1,320 records and has a one-to-one accession
-match with `benchmark_true_labels.tsv`. Evaluation with
-`benchmark_smoke/evaluate_local_backends.py` produced:
+The historical output contained all 1,320 records. At the time, accession
+matching and evaluation produced:
 
 - 1,223 correct calls: **92.7% overall accuracy**.
 - 255 `host_tax_id` calls and 1,065 LLM calls.
@@ -103,9 +103,10 @@ The invalid outputs are traceable rather than silently mapped: three
 `environmental`, two `duck`, two `environmental water`, and one each for
 `duck: duck (poultry host Anas spp. including duck meat or poultry`,
 `pheasant: chicken (poultry host Gallus gallus including chicken meat or`, and
-`food`. The full per-source metrics and count/row-percentage confusion matrices
-are saved under `benchmark_smoke/local_llm_evaluation/` and presented in the
-README.
+`food`. The historical full-benchmark metrics and matrices have been retired
+because they use the previous taxonomy and source labels. The command above
+shows the original model settings; reproducing these numbers would require the
+earlier source list and true labels.
 
 This resolves the pending default-model functional and full-benchmark hardware
 validation. Peak GPU memory was not recorded by the supplied run, so this report
@@ -159,19 +160,9 @@ Wrote benchmark_smoke/llm_1_7b_10.tsv (n=10)
 
 ## Benchmark comparison
 
-Accession joins were checked for uniqueness and coverage. The saved DeBERTa
-and Mistral predictions were re-evaluated, not regenerated.
-
-| Saved prediction file | Rows | Correct | Accuracy | Unknown | Taxonomy calls | LLM calls |
-|---|---:|---:|---:|---:|---:|---:|
-| benchmark_classified.tsv | 1320 | 1144 | 86.7% | 136 | 255 | 0 |
-| benchmark_mistral.tsv | 1320 | 1267 | 96.0% | 69 | Not recorded | API backend |
-| benchmark_llm.tsv (Qwen3-4B GPU) | 1320 | 1223 | 92.7% | 104 | 255 | 1065 |
-| llm_1_7b_10.tsv (CPU smoke subset only) | 10 | 9 | 90.0% | 1 | 0 | 10 |
-
-Per-class recall/precision, counts, and row-percentage confusion matrices are
-saved in `benchmark_smoke/local_llm_evaluation/`. The 10-row CPU result is not
-directly comparable to the full 1320-row results.
+The historical 10-row Qwen CPU smoke result remains in
+`benchmark_smoke/llm_1_7b_10.tsv`. It is a cat-only subset under the older
+labels, so it is not directly comparable to the current full benchmark.
 
 ## Files changed or created in this task
 
@@ -191,19 +182,11 @@ the two raw NLI log files below remain local and are not included in the commit)
 - `benchmark_smoke/nli_backend_20.log`
 - `benchmark_smoke/nli_backend_20.stderr.log`
 - `benchmark_smoke/llm_1_7b_10.tsv`
-- `benchmark_llm.tsv`
-- `benchmark_smoke/local_llm_evaluation/summary.json`
-- `benchmark_smoke/local_llm_evaluation/benchmark_classified_per_class.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_classified_confusion_counts.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_classified_confusion_percent.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_mistral_per_class.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_mistral_confusion_counts.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_mistral_confusion_percent.tsv`
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_per_class.tsv`
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_confusion_counts.tsv`
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_confusion_percent.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_llm_per_class.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_counts.tsv`
-- `benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_percent.tsv`
+
+The current `benchmark_llm.tsv`, evaluation summary, and NLI/LLM matrices
+replace the historical full-benchmark files named here in the original report.
 
 The normal Hugging Face cache also now contains Qwen3-1.7B outside the repository.
