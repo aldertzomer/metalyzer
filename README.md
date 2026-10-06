@@ -416,9 +416,10 @@ GPU execution uses the model checkpoint's precision (`dtype="auto"`).
 
 ## Benchmark results
 
-The current [`benchmark_nli.tsv`](benchmark_nli.tsv) and
-[`benchmark_llm.tsv`](benchmark_llm.tsv) were run with local host taxonomy
-enabled. Both use the updated [`sources.tsv`](sources.tsv), which combines
+The current [`benchmark_nli.tsv`](benchmark_nli.tsv),
+[`benchmark_llm.tsv`](benchmark_llm.tsv), and
+[`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) were run with local host
+taxonomy enabled. All three use the updated [`sources.tsv`](sources.tsv), which combines
 waterbird and wildbird into `wildbird`, and are evaluated by accession against
 [`benchmark_true_labels.tsv`](benchmark_true_labels.tsv). The saved files include
 `source_llm_score` and `nli_verification_score`; these are output scores, not
@@ -593,21 +594,36 @@ are also available as TSV files.
 
 [![Local Ministral source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
 
-### Experimental Mistral API classifier
+### Mistral API benchmark results
 
-The modular pipeline supports `--method mistral`; see the
-[Mistral module usage](#mistral-api-module) below. The saved API benchmark came
-from the earlier standalone script, which used a separate `waterbird` label.
-It requires a new API run using the current `sources.tsv` before its performance
-can be compared with the updated NLI and local LLM benchmarks.
+The current [`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) contains all
+1,320 records, with 215 `host_tax_id` assignments and 1,105 Mistral API
+assignments. It uses the merged `wildbird` source and the updated true labels.
+The run has 81 `unknown` predictions.
 
-#### Mistral benchmark results
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 20 | 20 | 100.0% | 100.0% |
+| cattle | 99 | 100 | 99 | 100.0% | 99.0% |
+| chicken | 101 | 108 | 101 | 100.0% | 93.5% |
+| dog | 100 | 100 | 100 | 100.0% | 100.0% |
+| environment | 4 | 17 | 4 | 100.0% | 23.5% |
+| goat | 100 | 100 | 100 | 100.0% | 100.0% |
+| human | 100 | 102 | 100 | 100.0% | 98.0% |
+| laboratory | 1 | 1 | 0 | 0.0% | 0.0% |
+| other_animal | 100 | 100 | 99 | 99.0% | 99.0% |
+| pig | 100 | 101 | 100 | 100.0% | 99.0% |
+| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
+| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
+| unknown | 95 | 81 | 80 | 84.2% | 98.8% |
+| wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
+| water | 79 | 71 | 69 | 87.3% | 97.2% |
+| wildbird | 200 | 200 | 198 | 99.0% | 99.0% |
 
-The saved [`benchmark_mistral.tsv`](benchmark_mistral.tsv) is from the earlier
-API run using separate `waterbird` and `wildbird` labels. The API has not yet
-been rerun with the combined source list and updated true labels. Its old
-performance figures are therefore excluded from the current NLI and local LLM
-comparison; a new API benchmark is pending.
+The Mistral API run makes 1,289 correct calls of 1,320 (**97.7% overall
+accuracy**) and assigns a non-unknown source to 1,239 records (93.9%). Precision
+among assigned records is 97.6%. These figures include the shared taxonomy
+assignments, so they measure the complete pipeline rather than API calls alone.
 
 ---
 
@@ -677,8 +693,8 @@ leave an existing output file untouched. Completed API calls may still be billed
 this module does not checkpoint/resume partial runs.
 
 Validation uses mocked API responses, including concurrency, timeouts, retries,
-taxonomy precedence and output serialization. No live Mistral call was made for
-this implementation; the module's classification accuracy has not been benchmarked.
+taxonomy precedence and output serialization. The saved API benchmark above
+reports classification accuracy for a complete run.
 
 ## Performance Notes
 

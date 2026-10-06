@@ -244,4 +244,4 @@ python -m unittest discover -s tests -v
 `metalyzer.py` exposes CLI orchestration only. Former helper imports should move
 to their owning modules (`modules.records.build_record`,
 `modules.nli.parse_source_scores`, `modules.deterministic_source.NCBITaxonomy`,
-etc.). The experimental `metalyzer_mistral.py` remains a separate script.
+etc.).

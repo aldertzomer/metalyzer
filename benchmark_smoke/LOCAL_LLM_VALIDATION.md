@@ -52,8 +52,8 @@ deterministic year/country output.
 AST comparisons against `8b8d4b6:metalyzer.py` confirmed these functions are
 unchanged: `build_record`, `is_empty_like`, `yy_to_yyyy`, `year_from_value`,
 `extract_year_from_row`, `_ascii_fold`, `normalize_country`, and
-`extract_country_from_row`. `taxonomy.py`, `metalyzer_mistral.py`, both source
-files, both environment files and `tests/test_taxonomy.py` were not changed.
+`extract_country_from_row`. `taxonomy.py`, `sources.tsv`, both environment files
+and `tests/test_taxonomy.py` were not changed.
 
 ## Real NLI smoke test
 
