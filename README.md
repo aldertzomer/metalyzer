@@ -472,10 +472,10 @@ The LLM retains checkpoint precision (`dtype="auto"`) on both CPU and GPU and
 loads with `low_cpu_mem_usage=True`. GPU loading uses `device_map` for the
 requested GPU and requires `accelerate`; the model's Mistral tokenizer requires
 `mistral-common`. Mistral's [model card](https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512)
-says the FP8 model can fit in 12 GB of VRAM, or less with further quantization.
+states the FP8 model can fit in 12 GB of VRAM, or less with further quantization.
 Actual memory for this Transformers pipeline also includes activations,
 generation cache, loading overhead, and other processes. The supplied test ran
-on a larger GPU server without recording peak memory, so a 12 GB fit for this
+on a 16 GB GPU server without recording peak memory, so a 12 GB fit for this
 exact command has not been verified. CPU execution may be slow and may need
 substantially more memory.
 
