@@ -2,7 +2,7 @@
 
 This repository contains a Python pipeline to classify biological metadata records using a combination of:
 
-- Source/host classification with DeBERTa zero-shot NLI (default) or a local Hugging Face LLM
+- Source/host classification with DeBERTa zero-shot NLI (default), a local Hugging Face LLM, or the Mistral API
 - Deterministic parsing (for year and country)
 
 The pipeline is designed for large-scale datasets (e.g. ENA/SRA metadata) with heterogeneous formatting.
@@ -35,40 +35,21 @@ Read on for NLI on CPU or GPU, other LLM options, performance, and metrics.
 
 ## Overview
 
-### Modular development
-
-Metalyzer separates the pipeline into independent stages under
-[`modules/`](modules/README.md): date extraction, country normalization,
-deterministic source parsing (including taxonomy ID-to-scientific-name lookup),
-NLI, local LLM, Mistral API, input preparation, and output combination. `metalyzer.py` contains
-command-line options and stage orchestration.
-
-Developers can start with the [module contracts and extension examples](modules/README.md)
-without reading the rest of the pipeline. Typed batch/result containers in
-[`modules/contracts.py`](modules/contracts.py) define row identity, source scores,
-provenance, missing values, and validation. Default commands and TSV columns are
-preserved. `--skip-date` and `--skip-country` disable those stages and omit their
-output columns. Taxonomy is enabled with `--taxonomy-dir`; `--method nli|llm|mistral`
-selects the fallback classifier, which runs only on unresolved rows.
+Metalyzer parses year and country deterministically and classifies the source
+using optional host taxonomy followed by NLI, a local LLM, or the Mistral API.
+Use `--method nli|llm|mistral` to select the fallback classifier for unresolved
+rows. `--skip-date` and `--skip-country` omit those stages and their output
+columns.
 
 For each metadata row, the pipeline performs:
 
-### 1. Source classification (host taxonomy, then NLI, local LLM or Mistral)
+### 1. Source classification (host taxonomy, then NLI or local LLM or Mistral)
 
 1. If `--taxonomy-dir` is supplied, resolve explicit `host_tax_id` values using local NCBI taxonomy.
 2. Unambiguous taxonomy-derived host assignments take precedence over language-model inference.
-3. Only unresolved rows reach the selected backend: DeBERTa zero-shot NLI (`--method nli`, the default), a local generative LLM (`--method llm`), or the Mistral API (`--method mistral`).
+3. Only unresolved rows reach the selected backend: [DeBERTa zero-shot NLI](#nli-classifier) (`--method nli`, the default), a [local Ministral LLM](#local-ministral-classifier) (`--method llm`), or the [Mistral API](#mistral-api-classifier) (`--method mistral`).
 4. NLI predictions below `--min-score` become `unknown`.
 
-The zero-shot model is:
-
-MoritzLaurer/deberta-v3-large-zeroshot-v2.0
-
-The metadata row is converted into a structured string:
-
-host: Gallus gallus; isolation source: neck skin; country: USA
-
-This is evaluated against candidate labels using NLI.
 
 ---
 
@@ -76,11 +57,9 @@ This is evaluated against candidate labels using NLI.
 
 Extracts a 4-digit year (1905–2030) from:
 
-- collection_date
-- 
-- collection_date_start
-- 
-- collection_date_end
+- `collection_date`
+- `collection_date_start`
+- `collection_date_end`
 
 
 Supported formats:
@@ -132,13 +111,16 @@ to standardized country names using:
 
 ### Metadata table (TSV)
 
-Get the metadata table from ENA or ATB, remove all non important columns. Put the source/host interpretable colums as 2nd, 3rd, etc columns for slightly improved performance, then save it as tab delimited file. The first column should start with "run_acc". See for an example benchmark.tsv. 
+Save the metadata as a tab-delimited file with a unique accession column.
+Use `--id-col` to name that column; the supplied [`benchmark.tsv`](benchmark.tsv)
+uses `run_accession`. Include source or host fields that can support
+classification, along with date and country fields when available.
 
 Example:
 
-|run_acc |   host           |  isolation_source |   collection_date  |  country |
----------|------------------|-------------------|--------------------|----------|
-|ERR001  |   Gallus gallus  |  neck skin        |  2019              |  USA     |
+| run_accession | host | isolation_source | collection_date | country |
+|---|---|---|---|---|
+| ERR001 | Gallus gallus | neck skin | 2019 | USA |
 
 For the text sent to NLI, the local LLM, and the Mistral API, Metalyzer omits
 the configured ID column, `host_tax_id`, and generic `tax_id`. The first is an
@@ -373,13 +355,26 @@ LLM runs also report the number of invalid model outputs.
 If all hosts resolve, the fallback classifier is not loaded. The NLI verifier
 still loads for those assignments unless `--disable-verify-source` is set.
 
-Run the offline unit and integration tests with:
+### NLI classifier
 
-```bash
-python -m unittest discover -s tests -v
+`--method nli` is the default source classifier. It runs the
+`MoritzLaurer/deberta-v3-large-zeroshot-v2.0` model locally, without an API key.
+When taxonomy is enabled, host assignments take precedence and only unresolved
+rows reach NLI. The model loads when inference or source verification needs it.
+It runs on a CUDA GPU or CPU.
+
+For each unresolved row, Metalyzer turns the relevant metadata into a readable
+record, for example:
+
+```text
+host: Gallus gallus; isolation source: neck skin; country: USA
 ```
 
-### Standard NLI usage
+The model compares that record with the full source descriptions in
+`sources.tsv` using a biological host or environmental source hypothesis. It
+scores every candidate and assigns the highest-scoring source. If its score is
+below `--min-score` (default `0.2`), the result is `unknown` while the candidate
+scores remain in the output.
 
 ```bash
 export TOKENIZERS_PARALLELISM=true
@@ -397,10 +392,6 @@ python metalyzer.py \
   --min-score 0.2 \
   --taxonomy-dir taxonomy
 ```
----
-On the current taxonomy-enabled benchmark, `--min-score 0.2` gives 85.8%
-overall accuracy and 87.7% precision among records assigned a non-unknown
-source. The cutoff should be rechecked for a new source list or dataset.
 
 Use `--device 0` for the first GPU (the default), or another nonnegative GPU
 index. GPU execution requires a CUDA-enabled PyTorch installation.
@@ -414,77 +405,14 @@ python metalyzer.py --metadata benchmark.tsv --sources sources.tsv --out classif
 NLI CPU execution explicitly uses float32 to avoid slow float16 inference.
 GPU execution uses the model checkpoint's precision (`dtype="auto"`).
 
-## Benchmark results
-
-The current [`benchmark_nli.tsv`](benchmark_nli.tsv),
-[`benchmark_llm.tsv`](benchmark_llm.tsv), and
-[`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) were run with local host
-taxonomy enabled. All three use the updated [`sources.tsv`](sources.tsv), which combines
-waterbird and wildbird into `wildbird`, and are evaluated by accession against
-[`benchmark_true_labels.tsv`](benchmark_true_labels.tsv). The saved files include
-`source_llm_score` and `nli_verification_score`; these are output scores, not
-the recall and precision metrics below. Each run has 215 `host_tax_id`
-assignments and 1,105 model assignments. Accuracy in the per-source tables is
-recall: correct calls divided by true rows. Precision is correct calls divided
-by called rows.
-
-#### NLI benchmark (`--min-score 0.2`)
-
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 22 | 20 | 100.0% | 90.9% |
-| cattle | 99 | 118 | 99 | 100.0% | 83.9% |
-| chicken | 101 | 104 | 99 | 98.0% | 95.2% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 110 | 3 | 75.0% | 2.7% |
-| goat | 100 | 101 | 98 | 98.0% | 97.0% |
-| human | 100 | 89 | 89 | 89.0% | 100.0% |
-| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
-| other_animal | 100 | 56 | 54 | 54.0% | 96.4% |
-| pig | 100 | 106 | 100 | 100.0% | 94.3% |
-| sheep | 100 | 95 | 95 | 95.0% | 100.0% |
-| turkey | 101 | 85 | 85 | 84.2% | 100.0% |
-| unknown | 95 | 106 | 68 | 71.6% | 64.2% |
-| wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
-| water | 79 | 73 | 70 | 88.6% | 95.9% |
-| wildbird | 200 | 135 | 134 | 67.0% | 99.3% |
-
-NLI makes 1,133 correct calls of 1,320 (**85.8% overall accuracy**) and
-assigns a non-unknown source to 1,214 records (92.0%). Precision among those
-assigned records is 87.7%. The run has 106 `unknown` predictions.
-
-### NLI confusion matrices
-
-Rows are true sources, columns are predicted sources, and `n` is the number of
-true records in the row. For NLI rows, the `unknown` prediction is created by
-the 0.2 score cutoff, not by a source candidate.
-
-#### Absolute counts
-
-[![Benchmark source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
-
-The image is a full source-by-source table. Click it to inspect at full resolution.
-
-#### Row percentages
-
-[![Benchmark source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
-
-Each row shows the share of records with that true source assigned to every
-predicted source. The SVG tables are generated from the benchmark TSV files by
-`python render_benchmark_matrices.py`. The per-class
-[metrics](benchmark_smoke/local_llm_evaluation/benchmark_nli_per_class.tsv),
-[counts](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_counts.tsv),
-and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_percent.tsv)
-are available as TSV files.
-
-### Local Hugging Face LLM classifier
+### Local Ministral classifier
 
 `--method llm` selects local generative classification with
 [`mistralai/Ministral-3-8B-Instruct-2512`](https://huggingface.co/mistralai/Ministral-3-8B-Instruct-2512)
 by default. Transformers downloads the tokenizer and weights on first use and
 reuses the standard Hugging Face cache on subsequent runs. Inference runs on
-your machine; no API or API key is required. The existing environments contain
-the required dependencies.
+your machine; no API key is required. The existing environments contain the
+required dependencies.
 
 Taxonomy still takes precedence: only unresolved `host_tax_id` rows reach the
 LLM. The LLM does not load if taxonomy resolves every row. With verification
@@ -549,90 +477,13 @@ processes. The supplied test was run on a larger GPU server; peak memory was
 not recorded. A 12-GB fit is not established. CPU execution may be slow and
 may need substantially more memory.
 
-#### Local Ministral benchmark results
-
-The current `benchmark_llm.tsv` was generated with the default local Ministral
-model, the merged `wildbird` label, and taxonomy enabled. It contains all 1,320
-records: 215 `host_tax_id` assignments and 1,105 local LLM assignments. It has
-92 `unknown` predictions, including one malformed response recorded as
-`invalid_llm_output` evidence. The table uses the updated true labels.
-
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 99 | 97 | 97 | 98.0% | 100.0% |
-| chicken | 101 | 108 | 101 | 100.0% | 93.5% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 29 | 3 | 75.0% | 10.3% |
-| goat | 100 | 100 | 100 | 100.0% | 100.0% |
-| human | 100 | 108 | 99 | 99.0% | 91.7% |
-| laboratory | 1 | 5 | 0 | 0.0% | 0.0% |
-| other_animal | 100 | 101 | 99 | 99.0% | 98.0% |
-| pig | 100 | 99 | 99 | 99.0% | 100.0% |
-| sheep | 100 | 98 | 98 | 98.0% | 100.0% |
-| turkey | 101 | 100 | 100 | 99.0% | 100.0% |
-| unknown | 95 | 92 | 74 | 77.9% | 80.4% |
-| wastewater | 20 | 20 | 20 | 100.0% | 100.0% |
-| water | 79 | 77 | 77 | 97.5% | 100.0% |
-| wildbird | 200 | 166 | 164 | 82.0% | 98.8% |
-
-The local Ministral run makes 1,251 correct calls of 1,320 (**94.8% overall
-accuracy**) and assigns a non-unknown source to 1,228 records (93.0%). Precision
-among assigned records is 95.8%.
-
-Rows are true sources and columns are predicted sources. Click either image to
-inspect the full matrix. The underlying [per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_llm_per_class.tsv),
-[counts](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_counts.tsv),
-and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_percent.tsv)
-are also available as TSV files.
-
-##### Absolute counts
-
-[![Local Ministral source confusion matrix: absolute counts](assets/benchmark-llm-confusion-absolute.svg)](assets/benchmark-llm-confusion-absolute.svg)
-
-##### Row percentages
-
-[![Local Ministral source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
-
-### Mistral API benchmark results
-
-The current [`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) contains all
-1,320 records, with 215 `host_tax_id` assignments and 1,105 Mistral API
-assignments. It uses the merged `wildbird` source and the updated true labels.
-The run has 81 `unknown` predictions.
-
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 99 | 100 | 99 | 100.0% | 99.0% |
-| chicken | 101 | 108 | 101 | 100.0% | 93.5% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 17 | 4 | 100.0% | 23.5% |
-| goat | 100 | 100 | 100 | 100.0% | 100.0% |
-| human | 100 | 102 | 100 | 100.0% | 98.0% |
-| laboratory | 1 | 1 | 0 | 0.0% | 0.0% |
-| other_animal | 100 | 100 | 99 | 99.0% | 99.0% |
-| pig | 100 | 101 | 100 | 100.0% | 99.0% |
-| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
-| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
-| unknown | 95 | 81 | 80 | 84.2% | 98.8% |
-| wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
-| water | 79 | 71 | 69 | 87.3% | 97.2% |
-| wildbird | 200 | 200 | 198 | 99.0% | 99.0% |
-
-The Mistral API run makes 1,289 correct calls of 1,320 (**97.7% overall
-accuracy**) and assigns a non-unknown source to 1,239 records (93.9%). Precision
-among assigned records is 97.6%. These figures include the shared taxonomy
-assignments, so they measure the complete pipeline rather than API calls alone.
-
----
-
-### Mistral API module
+### Mistral API classifier
 
 `--method mistral` uses [`modules/mistral.py`](modules/mistral.py) with the
 standard pipeline inputs and output columns. Taxonomy still takes precedence;
-only unresolved rows are sent to Mistral. Date and country extraction remain
-local. The API module itself does not load PyTorch, Transformers, or local model
+only unresolved rows are sent to the Mistral API. API calls may incur charges.
+Date and country extraction remain local.
+The API module itself does not load PyTorch, Transformers, or local model
 weights; the default source verification step does load DeBERTa for non-unknown
 assignments. Use `--disable-verify-source` when running without local NLI weights.
 
@@ -693,17 +544,174 @@ leave an existing output file untouched. Completed API calls may still be billed
 this module does not checkpoint/resume partial runs.
 
 Validation uses mocked API responses, including concurrency, timeouts, retries,
-taxonomy precedence and output serialization. The saved API benchmark above
+taxonomy precedence and output serialization. The saved API benchmark below
 reports classification accuracy for a complete run.
 
-## Performance Notes
+## Benchmark results
 
-- Source classification runs on the selected CPU or GPU
-- Year and country parsing are CPU-light
-- Batch size can be increased for better GPU utilization
-- current implementation has a single CPU bottleneck. 
+The current [`benchmark_nli.tsv`](benchmark_nli.tsv),
+[`benchmark_llm.tsv`](benchmark_llm.tsv), and
+[`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) were run with local host
+taxonomy enabled. All three use the updated [`sources.tsv`](sources.tsv), which
+combines waterbird and wildbird into `wildbird`, and are evaluated by accession against
+[`benchmark_true_labels.tsv`](benchmark_true_labels.tsv). The saved files include
+`source_llm_score` and `nli_verification_score`; these are output scores, not
+the recall and precision metrics below. Each run has 215 `host_tax_id`
+assignments and 1,105 model assignments. Accuracy in the per-source tables is
+recall: correct calls divided by true rows. Precision is correct calls divided
+by called rows.
+
+| Method | Overall accuracy | Precision among assigned records |
+|---|---:|---:|
+| [NLI](#nli-benchmark) | 85.8% | 87.7% |
+| [Local Ministral](#local-ministral-benchmark-results) | 94.8% | 95.8% |
+| [Mistral API](#mistral-api-benchmark-results) | 97.7% | 97.6% |
+
+### NLI benchmark
+
+The NLI run uses `--min-score 0.2`.
+
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 22 | 20 | 100.0% | 90.9% |
+| cattle | 99 | 118 | 99 | 100.0% | 83.9% |
+| chicken | 101 | 104 | 99 | 98.0% | 95.2% |
+| dog | 100 | 100 | 100 | 100.0% | 100.0% |
+| environment | 4 | 110 | 3 | 75.0% | 2.7% |
+| goat | 100 | 101 | 98 | 98.0% | 97.0% |
+| human | 100 | 89 | 89 | 89.0% | 100.0% |
+| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
+| other_animal | 100 | 56 | 54 | 54.0% | 96.4% |
+| pig | 100 | 106 | 100 | 100.0% | 94.3% |
+| sheep | 100 | 95 | 95 | 95.0% | 100.0% |
+| turkey | 101 | 85 | 85 | 84.2% | 100.0% |
+| unknown | 95 | 106 | 68 | 71.6% | 64.2% |
+| wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
+| water | 79 | 73 | 70 | 88.6% | 95.9% |
+| wildbird | 200 | 135 | 134 | 67.0% | 99.3% |
+
+NLI makes 1,133 correct calls of 1,320 (**85.8% overall accuracy**) and
+assigns a non-unknown source to 1,214 records (92.0%). Precision among those
+assigned records is 87.7%. The run has 106 `unknown` predictions.
+
+#### Confusion matrices
+
+Rows are true sources, columns are predicted sources, and `n` is the number of
+true records in the row. For NLI rows, the `unknown` prediction is created by
+the 0.2 score cutoff, not by a source candidate.
+
+##### Absolute counts
+
+[![Benchmark source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
+
+The image is a full source-by-source table. Click it to inspect at full resolution.
+
+##### Row percentages
+
+[![Benchmark source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
+
+Each row shows the share of records with that true source assigned to every
+predicted source. The SVG tables are generated from the benchmark TSV files by
+`python render_benchmark_matrices.py`. The per-class
+[metrics](benchmark_smoke/local_llm_evaluation/benchmark_nli_per_class.tsv),
+[counts](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_counts.tsv),
+and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_percent.tsv)
+are available as TSV files.
+
+### Local Ministral benchmark results
+
+The current `benchmark_llm.tsv` was generated with the default local Ministral
+model, the merged `wildbird` label, and taxonomy enabled. It contains all 1,320
+records: 215 `host_tax_id` assignments and 1,105 local LLM assignments. It has
+92 `unknown` predictions, including one malformed response recorded as
+`invalid_llm_output` evidence. The table uses the updated true labels.
+
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 20 | 20 | 100.0% | 100.0% |
+| cattle | 99 | 97 | 97 | 98.0% | 100.0% |
+| chicken | 101 | 108 | 101 | 100.0% | 93.5% |
+| dog | 100 | 100 | 100 | 100.0% | 100.0% |
+| environment | 4 | 29 | 3 | 75.0% | 10.3% |
+| goat | 100 | 100 | 100 | 100.0% | 100.0% |
+| human | 100 | 108 | 99 | 99.0% | 91.7% |
+| laboratory | 1 | 5 | 0 | 0.0% | 0.0% |
+| other_animal | 100 | 101 | 99 | 99.0% | 98.0% |
+| pig | 100 | 99 | 99 | 99.0% | 100.0% |
+| sheep | 100 | 98 | 98 | 98.0% | 100.0% |
+| turkey | 101 | 100 | 100 | 99.0% | 100.0% |
+| unknown | 95 | 92 | 74 | 77.9% | 80.4% |
+| wastewater | 20 | 20 | 20 | 100.0% | 100.0% |
+| water | 79 | 77 | 77 | 97.5% | 100.0% |
+| wildbird | 200 | 166 | 164 | 82.0% | 98.8% |
+
+The local Ministral run makes 1,251 correct calls of 1,320 (**94.8% overall
+accuracy**) and assigns a non-unknown source to 1,228 records (93.0%). Precision
+among assigned records is 95.8%.
+
+#### Confusion matrices
+
+Rows are true sources and columns are predicted sources. Click either image to
+inspect the full matrix. The underlying [per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_llm_per_class.tsv),
+[counts](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_counts.tsv),
+and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_percent.tsv)
+are also available as TSV files.
+
+##### Absolute counts
+
+[![Local Ministral source confusion matrix: absolute counts](assets/benchmark-llm-confusion-absolute.svg)](assets/benchmark-llm-confusion-absolute.svg)
+
+##### Row percentages
+
+[![Local Ministral source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
+
+### Mistral API benchmark results
+
+The current [`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) contains all
+1,320 records, with 215 `host_tax_id` assignments and 1,105 Mistral API
+assignments. It uses the merged `wildbird` source and the updated true labels.
+The run has 81 `unknown` predictions.
+
+| Source | True rows | Called rows | Correct | Accuracy | Precision |
+|---|---:|---:|---:|---:|---:|
+| cat | 20 | 20 | 20 | 100.0% | 100.0% |
+| cattle | 99 | 100 | 99 | 100.0% | 99.0% |
+| chicken | 101 | 108 | 101 | 100.0% | 93.5% |
+| dog | 100 | 100 | 100 | 100.0% | 100.0% |
+| environment | 4 | 17 | 4 | 100.0% | 23.5% |
+| goat | 100 | 100 | 100 | 100.0% | 100.0% |
+| human | 100 | 102 | 100 | 100.0% | 98.0% |
+| laboratory | 1 | 1 | 0 | 0.0% | 0.0% |
+| other_animal | 100 | 100 | 99 | 99.0% | 99.0% |
+| pig | 100 | 101 | 100 | 100.0% | 99.0% |
+| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
+| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
+| unknown | 95 | 81 | 80 | 84.2% | 98.8% |
+| wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
+| water | 79 | 71 | 69 | 87.3% | 97.2% |
+| wildbird | 200 | 200 | 198 | 99.0% | 99.0% |
+
+The Mistral API run makes 1,289 correct calls of 1,320 (**97.7% overall
+accuracy**) and assigns a non-unknown source to 1,239 records (93.9%). Precision
+among assigned records is 97.6%. These figures include the shared taxonomy
+assignments, so they measure the complete pipeline rather than API calls alone.
 
 ---
+
+## Development and tests
+
+Metalyzer separates date extraction, country normalization, taxonomy matching,
+NLI, local LLM, Mistral API, input preparation, and output combination into
+[`modules/`](modules/README.md). `metalyzer.py` handles command-line options
+and stage orchestration. The [module contracts and extension examples](modules/README.md)
+describe how to extend the pipeline; [`modules/contracts.py`](modules/contracts.py)
+defines row identity, source scores, provenance, missing values, and validation.
+
+Run the offline unit and integration tests with:
+
+```bash
+python -m unittest discover -s tests -v
+```
 
 ## Design Rationale
 
