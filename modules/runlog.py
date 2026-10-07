@@ -107,6 +107,7 @@ def provenance(args, argv: list[str], batch) -> None:
     ])
     if args.method == "llm":
         values.append(("LLM batch size", args.llm_batch_size))
+        values.append(("llm_min_score", args.llm_min_score))
     values.extend([
         ("Min score (NLI only)", args.min_score),
         ("Max value chars", args.max_value_chars),

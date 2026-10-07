@@ -293,21 +293,22 @@ class MistralTests(unittest.TestCase):
                     metalyzer.parse_args([*argv, option, value])
 
     def test_cli_outputs_standard_fields_and_preserves_existing_output_on_api_failure(self):
-        client, _ = self.mock_client(['{"source":"unknown"}'])
+        client, _ = self.mock_client(['{"source":"turkey"}'])
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.batch.metadata.to_csv(root / "input.tsv", sep="\t", index=False)
             pd.DataFrame({"source": self.sources.labels}).to_csv(root / "sources.tsv", sep="\t", index=False)
             argv = ["--metadata", str(root / "input.tsv"), "--sources", str(root / "sources.tsv"),
                     "--out", str(root / "out.tsv"), "--id-col", "id", "--method", "mistral",
-                    "--limit", "1", "--mistral-retries", "0", "--min-score", "1"]
+                    "--limit", "1", "--mistral-retries", "0", "--min-score", "1",
+                    "--llm-min-score", "1", "--disable-verify-source"]
             with patch.object(deterministic_source, "load_taxonomy", return_value=None):
                 metalyzer.main(argv)
             output = pd.read_csv(root / "out.tsv", sep="\t", dtype=str, keep_default_na=False)
             self.assertEqual(output.columns.tolist(), ["id", *self.sources.columns,
                                                        "nli_verification_score", "year", "country"])
             self.assertEqual(output.nli_verification_score.tolist(), ["NA"])
-            self.assertEqual(output.best_hit.tolist(), ["unknown"])
+            self.assertEqual(output.best_hit.tolist(), ["turkey"])
             self.assertEqual(output.source_method.tolist(), ["mistral"])
             self.assertEqual(output.source_llm_score.tolist(), ["NA"])
             self.assertNotIn("source_verification_score", output.columns)

@@ -11,8 +11,9 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 
 import metalyzer
-from modules import country, records as record_module, deterministic_source, llm as llm_module, nli as nli_module
+from modules import country, records as record_module, deterministic_source, llm as llm_module, nli as nli_module, verification
 from helpers import classify, llm_config
+from modules.contracts import MetadataBatch, SourceResult, SourceVocabulary
 from modules.deterministic_source import TaxonomySourceResult
 
 
@@ -128,11 +129,13 @@ class LocalLLMTests(unittest.TestCase):
         self.assertEqual(args.batch_size, 64)
         self.assertEqual(args.llm_batch_size, 1)
         self.assertEqual(args.llm_max_new_tokens, 16)
+        self.assertEqual(args.llm_min_score, 0.75)
         self.assertIsNone(args.llm_revision)
         self.assertIsNone(args.limit)
         for option, value in [("--device", "-2"), ("--batch-size", "0"),
                               ("--llm-batch-size", "0"), ("--llm-max-new-tokens", "0"),
                               ("--limit", "0"), ("--limit", "-1"), ("--min-score", "1.1"),
+                              ("--llm-min-score", "-0.01"), ("--llm-min-score", "1.01"),
                               ("--method", "api")]:
             with self.subTest(option=option), contextlib.redirect_stderr(io.StringIO()):
                 with self.assertRaises(SystemExit) as error:
@@ -228,6 +231,7 @@ class LocalLLMTests(unittest.TestCase):
         self.assertIn('invalid LLM outputs:  1', self.console.getvalue())
 
     def test_no_model_for_empty_or_all_taxonomy_both_methods(self):
+        self.args.llm_min_score = 1.0
         for method in ('nli', 'llm'):
             for count in (0, 2):
                 with self.subTest(method=method, count=count):
@@ -243,6 +247,7 @@ class LocalLLMTests(unittest.TestCase):
 
     def test_nli_regression_no_causal_model(self):
         self.args.method = 'nli'
+        self.args.llm_min_score = 1.0
         self.args.batch_size = 2
         with patch.object(nli_module, 'pipeline') as nli, patch.object(llm_module, 'load_local_llm') as llm:
             nli.return_value.return_value = [
@@ -292,6 +297,62 @@ class LocalLLMTests(unittest.TestCase):
             self.args.min_score = threshold
             self.assertEqual(self.classify(['record']).best_hit.tolist(), ['turkey'])
         self.assertIn('--min-score is not applicable', self.console.getvalue())
+
+    def test_llm_confidence_cutoff_preserves_score_and_rejected_label(self):
+        hf = self.mocked_hf(['turkey'] * 5 + ['unknown', 'bad response'])
+        with patch.object(llm_module, 'generated_label_score',
+                          side_effect=[0.75, 0.93, 0.43, 0.43, 0.0, 0.2]) as score:
+            first = self.classify(['record'] * 4)
+            self.args.llm_min_score = 0
+            disabled = self.classify(['record'])
+            last = self.classify(['record'] * 2)
+        self.assertEqual(first.best_hit.tolist(), ['turkey', 'turkey', 'unknown', 'unknown'])
+        self.assertEqual(first.source_llm_score.tolist(), [0.75, 0.93, 0.43, 0.43])
+        self.assertEqual(first.source_evidence.tolist(), ['', '', 'llm_low_score=turkey', 'llm_low_score=turkey'])
+        self.assertEqual(disabled.best_hit.tolist(), ['turkey'])
+        self.assertEqual(disabled.source_llm_score.tolist(), [0.0])
+        self.assertEqual(last.best_hit.tolist(), ['unknown', 'unknown'])
+        self.assertEqual(last.source_evidence.iloc[0], '')
+        self.assertEqual(last.source_llm_score.iloc[0], 0.2)
+        self.assertTrue(last.source_evidence.iloc[1].startswith('invalid_llm_output='))
+        self.assertTrue(pd.isna(last.source_llm_score.iloc[1]))
+        self.assertEqual(score.call_count, 6)
+        self.assertEqual(hf.model.generate.call_count, 7)
+
+    def test_cli_logs_llm_threshold_and_filter_totals(self):
+        self.mocked_hf(['turkey', 'sheep', 'unknown'])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            pd.DataFrame({'id': ['a', 'b', 'c'], 'host': ['first', 'second', 'third']}).to_csv(
+                root / 'input.tsv', sep='\t', index=False)
+            pd.DataFrame({'source': LABELS}).to_csv(root / 'sources.tsv', sep='\t', index=False)
+            with patch.object(deterministic_source, 'load_taxonomy', return_value=None), \
+                 patch.object(llm_module, 'generated_label_score', side_effect=[0.43, 0.93, 0.2]):
+                metalyzer.main(['--metadata', str(root / 'input.tsv'), '--sources', str(root / 'sources.tsv'),
+                                '--out', str(root / 'out.tsv'), '--id-col', 'id', '--method', 'llm',
+                                '--device', '-1', '--disable-verify-source'])
+            out = pd.read_csv(root / 'out.tsv', sep='\t', keep_default_na=False)
+            log = (root / 'out.tsv.log').read_text(encoding='utf-8')
+        self.assertEqual(out.best_hit.tolist(), ['unknown', 'sheep', 'unknown'])
+        self.assertEqual(out.source_evidence.tolist(), ['llm_low_score=turkey', '', ''])
+        self.assertEqual(out.source_llm_score.tolist(), [0.43, 0.93, 0.2])
+        self.assertEqual(out.nli_verification_score.tolist(), ['NA'] * 3)
+        self.assertIn('LLM minimum generation score: 0.75', log)
+        self.assertIn('llm_min_score: 0.75', log)
+        self.assertIn('LLM assignments before confidence filtering: 2', log)
+        self.assertIn('LLM low-score calls converted to unknown: 1', log)
+        self.assertIn('LLM assignments retained after confidence filtering: 1', log)
+
+    def test_low_score_unknown_skips_nli_verification(self):
+        self.mocked_hf(['turkey'])
+        with patch.object(llm_module, 'generated_label_score', return_value=0.43):
+            table = self.classify(['record'])
+        batch = MetadataBatch(pd.DataFrame({'id': [0]}), pd.Series(['record']))
+        sources = SourceVocabulary(tuple(LABELS), 'id')
+        with patch.object(nli_module, 'pipeline') as nli:
+            scores = verification.run(batch, sources, SourceResult(table)).values
+        nli.assert_not_called()
+        self.assertTrue(scores.isna().all())
 
     def test_eos_padding_and_revision_omitted(self):
         hf = self.mocked_hf([], no_pad=True)

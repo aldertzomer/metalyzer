@@ -27,6 +27,8 @@ def parse_args(argv=None):
     ap.add_argument("--llm-revision", default=None, help="Optional HF model/tokenizer revision")
     ap.add_argument("--llm-batch-size", type=int, default=1)
     ap.add_argument("--llm-max-new-tokens", type=int, default=16)
+    ap.add_argument("--llm-min-score", type=float, default=0.75,
+                    help="Minimum local LLM generated-label score; lower scores become unknown (default: 0.75)")
     ap.add_argument("--api-key-file", help="Mistral API key file (only read for unresolved Mistral rows)")
     ap.add_argument("--mistral-model", default=mistral.DEFAULT_MISTRAL_MODEL)
     ap.add_argument("--mistral-concurrency", type=int, default=8)
@@ -66,6 +68,8 @@ def parse_args(argv=None):
             ap.error(f"--{option.replace('_', '-')} must be >= 1")
     if not 0.0 <= args.min_score <= 1.0:
         ap.error("--min-score must be between 0 and 1")
+    if not 0.0 <= args.llm_min_score <= 1.0:
+        ap.error("--llm-min-score must be between 0 and 1")
     try:
         args.mistral_config = mistral.MistralConfig(
             api_key_file=args.api_key_file, model=args.mistral_model,
@@ -92,6 +96,7 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
     pending = combine.unresolved(batch, sources, deterministic)
     if method == "llm":
         runlog.emit(f"LLM model: {llm_config.model}")
+        runlog.emit(f"LLM minimum generation score: {llm_config.min_score}")
         runlog.emit("--min-score is not applicable to LLM mode: the LLM does not produce calibrated candidate scores.")
     elif method == "mistral":
         runlog.emit(f"Mistral model: {mistral_config.model}")
@@ -132,7 +137,8 @@ def main(argv=None):
                 nli_config=nli_config, nli_model=nli_model,
                 llm_config=llm.LLMConfig(model=args.llm_model, revision=args.llm_revision,
                                          device=args.device, batch_size=args.llm_batch_size,
-                                         max_new_tokens=args.llm_max_new_tokens),
+                                         max_new_tokens=args.llm_max_new_tokens,
+                                         min_score=args.llm_min_score),
                 mistral_config=args.mistral_config,
             )
             verification_result = verification.run(
@@ -149,10 +155,18 @@ def main(argv=None):
             table = source_result.table
             selected = table[table.source_method == args.method]
             invalid_prefix = {"llm": "invalid_llm_output=", "mistral": "invalid_mistral_output="}.get(args.method)
+            llm_totals = ""
+            if args.method == "llm":
+                rejected = selected.source_evidence.str.startswith("llm_low_score=").sum()
+                retained = (selected.best_hit != "unknown").sum()
+                llm_totals = (f"  LLM assignments before confidence filtering: {retained + rejected}\n"
+                              f"  LLM low-score calls converted to unknown: {rejected}\n"
+                              f"  LLM assignments retained after confidence filtering: {retained}\n")
             runlog.emit("Run totals:\n"
                         f"  total rows: {len(output)}\n"
                         f"  deterministic taxonomy assignments: {(table.source_method == 'host_tax_id').sum()}\n"
                         f"  {args.method.upper()} assignments: {len(selected)}\n"
+                        f"{llm_totals}"
                         f"  unknown calls: {(table.best_hit == 'unknown').sum()}\n"
                         f"  invalid model outputs: {selected.source_evidence.str.startswith(invalid_prefix).sum() if invalid_prefix else 0}\n"
                         f"  NLI verification scores: {verification_result.values.notna().sum()}\n"

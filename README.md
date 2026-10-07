@@ -177,7 +177,7 @@ Example:
 - Short source names must be nonempty, unique, and distinct from the ID, `best_hit`, `source_method`, `source_evidence`, `source_llm_score`, `nli_verification_score`, `year`, and `country` column names
 - Taxonomy-derived rows use `source_method=host_tax_id` and **all source scores are `NA`**, because no NLI inference was performed. They are not artificial probabilities and are not subject to `--min-score`.
 - NLI rows use `source_method=nli`, including below-threshold `unknown` calls; their `source_evidence` is blank.
-- Local LLM rows use `source_method=llm` and all per-source candidate score columns are `NA`. For valid answers, `source_llm_score` is the geometric mean probability of the generated tokens forming the label the local LLM actually produced, including `unknown`. It comes from the existing generation call, with no additional model inference or comparison against other labels. It is **not a calibrated probability that the classification is correct**. If a quoted or JSON response does not allow exact label-token isolation, its score is `NA`. Valid answers have blank evidence; malformed answers become `unknown` with `source_evidence=invalid_llm_output=...` and `source_llm_score=NA` (evidence is sanitized and truncated to 200 characters).
+- Local LLM rows use `source_method=llm` and all per-source candidate score columns are `NA`. For valid answers, `source_llm_score` is the geometric mean probability of the generated tokens forming the label the local LLM actually produced, including `unknown`. It comes from the existing generation call, with no additional model inference or comparison against other labels. It is **not a calibrated probability that the classification is correct**. A valid non-unknown answer below `--llm-min-score` becomes `unknown`, while its original numeric score and rejected label remain available as `source_llm_score` and `source_evidence=llm_low_score=<label>`. A generated `unknown` has blank evidence. If a quoted or JSON response does not allow exact label-token isolation, its score is `NA`. Malformed answers become `unknown` with `source_evidence=invalid_llm_output=...` and `source_llm_score=NA` (evidence is sanitized and truncated to 200 characters).
 - Mistral API rows use `source_method=mistral` with the same `NA` score convention. `unknown` is always allowed, even when absent from the sources file. Malformed answers have `source_evidence=invalid_mistral_output=...`; request/authentication/quota failures abort instead of producing unknown labels.
 - `nli_verification_score` is a separate binary NLI entailment/support score for the final assigned non-unknown source. It is `NA` for `unknown` and when `--disable-verify-source` is set.
 - year as 4-digit string
@@ -189,7 +189,9 @@ messages to the terminal and records provenance in that log: command line,
 local Git commit when available, Python/OS, method and model settings, input
 paths, a SHA256 of `sources.tsv`, local taxonomy file paths/sizes/timestamps,
 and input dimensions. The log also records classification totals and source
-verification counts. Warnings appear on screen and in the log; failures exit
+verification counts. LLM runs record `llm_min_score` and counts before and after
+confidence filtering, including low-score calls converted to `unknown`.
+Warnings appear on screen and in the log; failures exit
 nonzero and leave a full Python traceback in the log. API key contents are
 never logged. Logging and provenance add no columns to the classification TSV.
 Check the installed release with `python metalyzer.py --version`; it exits
@@ -427,9 +429,31 @@ The prompt tells the model that field names alone are not source evidence and
 that ambiguous or absent source values should map to `unknown`. These rules
 also apply to the separate Mistral API method.
 All per-source candidate score columns are `NA`. Valid LLM decisions also have
-`source_llm_score`, as described in [Output](#output). `--min-score` applies
-only to NLI; in LLM mode it prints an informational message and does not affect
-predictions.
+`source_llm_score`, as described in [Output](#output). The default
+`--llm-min-score 0.75` is a quality-control abstention threshold. A low score
+means the local generative model produced its selected label with relatively
+weak generation confidence; it does not mean the source is biologically
+impossible or intrinsically incorrect. A human may still assign it correctly
+from the same metadata. Metalyzer converts valid local LLM source calls below
+the threshold to `unknown` to favor precision and downstream dataset quality,
+deliberately sacrificing some correct calls. The original score and rejected
+label remain available for audit. NLI verification scores only the final
+non-unknown source, so an abstention has `nli_verification_score=NA`.
+Choose the threshold based on whether coverage or precision matters more.
+`--min-score` applies only to NLI; in LLM mode it prints an informational
+message and does not affect predictions.
+
+```bash
+# Default conservative threshold; equivalent to adding --llm-min-score 0.75
+python metalyzer.py ... --method llm
+python metalyzer.py ... --method llm --llm-min-score 0.75
+
+# Greater coverage
+python metalyzer.py ... --method llm --llm-min-score 0.5
+
+# Effectively disable LLM confidence filtering
+python metalyzer.py ... --method llm --llm-min-score 0
+```
 
 ```bash
 python metalyzer.py \

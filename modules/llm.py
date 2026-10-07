@@ -18,10 +18,13 @@ class LLMConfig:
     device: int = 0
     batch_size: int = 1
     max_new_tokens: int = 16
+    min_score: float = 0.75
 
     def __post_init__(self):
         if self.device < -1 or self.batch_size < 1 or self.max_new_tokens < 1:
             raise ValueError("device must be >= -1; batch_size and max_new_tokens must be positive")
+        if not 0.0 <= self.min_score <= 1.0:
+            raise ValueError("llm min_score must be between 0 and 1")
 
 
 def llm_messages(system_prompt, record):
@@ -185,10 +188,13 @@ def run(batch: MetadataBatch, sources: SourceVocabulary, config: LLMConfig = LLM
             key = batch.metadata.index[start + offset]
             output.loc[key, ["best_hit", "source_evidence"]] = [label, evidence]
             if not evidence:
-                output.loc[key, SOURCE_LLM_SCORE_COLUMN] = generated_label_score(
+                score = generated_label_score(
                     tokenizer, generated_only[offset].tolist(), transition_scores[offset].tolist(),
                     response, label,
                 )
+                output.loc[key, SOURCE_LLM_SCORE_COLUMN] = score
+                if label != "unknown" and score < config.min_score:
+                    output.loc[key, ["best_hit", "source_evidence"]] = ["unknown", f"llm_low_score={label}"]
         del encoded, inputs, generated, generated_only, transition_scores, responses, conversations
         emit(f"Batch {start // config.batch_size + 1}: local Ministral source classification done")
     result = SourceResult(output)

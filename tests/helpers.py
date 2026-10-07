@@ -11,7 +11,8 @@ def llm_config(args):
     return LLMConfig(model=getattr(args, "llm_model", LLMConfig.model),
                      revision=getattr(args, "llm_revision", None), device=args.device,
                      batch_size=getattr(args, "llm_batch_size", 1),
-                     max_new_tokens=getattr(args, "llm_max_new_tokens", 16))
+                     max_new_tokens=getattr(args, "llm_max_new_tokens", 16),
+                     min_score=getattr(args, "llm_min_score", 0.75))
 
 
 def classify(df, records, labels, args, taxonomy=None, anchors=None):
