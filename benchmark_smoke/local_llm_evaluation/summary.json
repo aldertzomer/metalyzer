@@ -2,9 +2,9 @@
   {
     "file": "benchmark_nli.tsv",
     "records": 1320,
-    "correct": 1133,
-    "overall_accuracy": 0.8583333333333333,
-    "unknown_predictions": 106,
+    "correct": 1138,
+    "overall_accuracy": 0.8621212121212121,
+    "unknown_predictions": 115,
     "invalid_llm_outputs": 0,
     "taxonomy_calls": 215,
     "llm_calls": 0,
@@ -16,14 +16,28 @@
   {
     "file": "benchmark_llm.tsv",
     "records": 1320,
-    "correct": 1251,
-    "overall_accuracy": 0.9477272727272728,
-    "unknown_predictions": 92,
-    "invalid_llm_outputs": 1,
+    "correct": 1222,
+    "overall_accuracy": 0.9257575757575758,
+    "unknown_predictions": 169,
+    "invalid_llm_outputs": 0,
     "taxonomy_calls": 215,
     "llm_calls": 1105,
     "source_methods": {
       "llm": 1105,
+      "host_tax_id": 215
+    }
+  },
+  {
+    "file": "benchmark_mistral_api.tsv",
+    "records": 1320,
+    "correct": 1284,
+    "overall_accuracy": 0.9727272727272728,
+    "unknown_predictions": 77,
+    "invalid_llm_outputs": 0,
+    "taxonomy_calls": 215,
+    "llm_calls": 0,
+    "source_methods": {
+      "mistral": 1105,
       "host_tax_id": 215
     }
   }

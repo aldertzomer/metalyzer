@@ -1,9 +1,11 @@
 """Render the benchmark source confusion matrices as SVG tables.
 
 Run from the repository root after updating benchmark_nli.tsv,
-benchmark_llm.tsv, or benchmark_true_labels.tsv:
+benchmark_llm.tsv, benchmark_mistral_api.tsv, or benchmark_true_labels.tsv:
 
     python render_benchmark_matrices.py
+    python render_benchmark_matrices.py --classified benchmark_llm.tsv --prefix benchmark-llm --title 'Local Ministral'
+    python render_benchmark_matrices.py --classified benchmark_mistral_api.tsv --prefix benchmark-mistral-api --title 'Mistral API'
 """
 
 from __future__ import annotations
@@ -27,6 +29,7 @@ SHORT_LABELS = {
     "environment": "Env",
     "laboratory": "Lab",
     "other_animal": "Other",
+    "other_food": "Food",
     "turkey": "Turk",
     "unknown": "Unk",
     "wastewater": "WW",
@@ -119,7 +122,7 @@ def render_svg(
             )
 
     legend = (
-        "Columns: Chk=chicken · Env=environment · Lab=laboratory · Other=other_animal · "
+        "Columns: Chk=chicken · Env=environment · Lab=laboratory · Other=other_animal · Food=other_food · "
         "Turk=turkey · Unk=unknown · WW=wastewater · Wildbird=wildbird"
     )
     percentage_note = "Values are row percentages; each true-source row sums to 100% before rounding."

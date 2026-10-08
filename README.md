@@ -153,7 +153,9 @@ Hints help the text classifiers distinguish similar sources. Taxonomy IDs are
 configuration for the deterministic matcher only; NLI, the local LLM and the
 Mistral API receive only the `source` descriptions.
 The current list combines waterbirds and other wild birds under `wildbird`;
-there is no separate `waterbird` output class.
+there is no separate `waterbird` output class. It also includes `other_food`
+for food with no identifiable animal or other listed source. A generic `food`
+field alone does not justify assigning chicken, cattle, or another animal.
 
 
 ---
@@ -575,152 +577,159 @@ reports classification accuracy for a complete run.
 
 ## Benchmark results
 
-The current [`benchmark_nli.tsv`](benchmark_nli.tsv),
-[`benchmark_llm.tsv`](benchmark_llm.tsv), and
-[`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) were run with local host
-taxonomy enabled. All three use the updated [`sources.tsv`](sources.tsv), which
-combines waterbird and wildbird into `wildbird`, and are evaluated by accession against
-[`benchmark_true_labels.tsv`](benchmark_true_labels.tsv). The saved files include
-`source_llm_score` and `nli_verification_score`; these are output scores, not
-the recall and precision metrics below. Each run has 215 `host_tax_id`
-assignments and 1,105 model assignments. Accuracy in the per-source tables is
-recall: correct calls divided by true rows. Precision is correct calls divided
-by called rows.
+The current [NLI](benchmark_nli.tsv), [local Ministral](benchmark_llm.tsv), and
+[Mistral API](benchmark_mistral_api.tsv) outputs use the updated
+[sources](sources.tsv), including `other_food` for food whose animal or other
+listed source is not identifiable. They are evaluated by accession against
+[1,320 reference labels](benchmark_true_labels.tsv). Each run has 215
+deterministic `host_tax_id` assignments and 1,105 model assignments, so these
+figures describe the complete pipeline. `source_llm_score` and
+`nli_verification_score` in the output files are model scores, separate from
+the benchmark accuracy and precision below.
 
 | Method | Overall accuracy | Precision among assigned records |
 |---|---:|---:|
-| [NLI](#nli-benchmark) | 85.8% | 87.7% |
-| [Local Ministral](#local-ministral-benchmark-results) | 94.8% | 95.8% |
-| [Mistral API](#mistral-api-benchmark-results) | 97.7% | 97.6% |
+| [NLI](#nli-benchmark) | 86.2% | 88.3% |
+| [Local Ministral](#local-ministral-benchmark-results) | 92.6% | 99.0% |
+| [Mistral API](#mistral-api-benchmark-results) | 97.3% | 97.1% |
+
+The reference labels contain six `other_food` rows: five have
+`isolation_source=food`, and one has `isolation_source=dairy products`.
+NLI labels none of the six `other_food`; local Ministral and the API each
+label five correctly. All three label the dairy row `cattle`, consistent
+with the current cattle description including dairy products. This small
+group illustrates why generic food metadata should not be treated as evidence
+for chicken or another specific animal. Its six rows do not support a broad
+estimate of `other_food` performance.
+
+Accuracy in the per-source tables is recall (correct calls divided by true
+rows); precision is correct calls divided by called rows. `NA` means no
+predictions were made for that class.
 
 ### NLI benchmark
 
-The NLI run uses `--min-score 0.2`.
+The NLI run uses `--min-score 0.2`. It makes 1,138 correct calls of 1,320
+(86.2% overall accuracy), with 1,205 non-unknown assignments (91.3% coverage)
+and 88.3% precision among assigned records. It predicts `unknown` 115 times.
 
 | Source | True rows | Called rows | Correct | Accuracy | Precision |
 |---|---:|---:|---:|---:|---:|
 | cat | 20 | 22 | 20 | 100.0% | 90.9% |
-| cattle | 99 | 118 | 99 | 100.0% | 83.9% |
-| chicken | 101 | 104 | 99 | 98.0% | 95.2% |
+| cattle | 98 | 112 | 98 | 100.0% | 87.5% |
+| chicken | 101 | 103 | 99 | 98.0% | 96.1% |
 | dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 110 | 3 | 75.0% | 2.7% |
+| environment | 4 | 108 | 3 | 75.0% | 2.8% |
 | goat | 100 | 101 | 98 | 98.0% | 97.0% |
 | human | 100 | 89 | 89 | 89.0% | 100.0% |
 | laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
 | other_animal | 100 | 56 | 54 | 54.0% | 96.4% |
+| other_food | 6 | 0 | 0 | 0.0% | NA |
 | pig | 100 | 106 | 100 | 100.0% | 94.3% |
 | sheep | 100 | 95 | 95 | 95.0% | 100.0% |
 | turkey | 101 | 85 | 85 | 84.2% | 100.0% |
-| unknown | 95 | 106 | 68 | 71.6% | 64.2% |
+| unknown | 90 | 115 | 74 | 82.2% | 64.3% |
 | wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
 | water | 79 | 73 | 70 | 88.6% | 95.9% |
 | wildbird | 200 | 135 | 134 | 67.0% | 99.3% |
 
-NLI makes 1,133 correct calls of 1,320 (**85.8% overall accuracy**) and
-assigns a non-unknown source to 1,214 records (92.0%). Precision among those
-assigned records is 87.7%. The run has 106 `unknown` predictions.
-
-#### Confusion matrices
-
-Rows are true sources, columns are predicted sources, and `n` is the number of
-true records in the row. For NLI rows, the `unknown` prediction is created by
-the 0.2 score cutoff, not by a source candidate.
-
-##### Absolute counts
-
-[![Benchmark source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
-
-The image is a full source-by-source table. Click it to inspect at full resolution.
-
-##### Row percentages
-
-[![Benchmark source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
-
-Each row shows the share of records with that true source assigned to every
-predicted source. The SVG tables are generated from the benchmark TSV files by
-`python render_benchmark_matrices.py`. The per-class
-[metrics](benchmark_smoke/local_llm_evaluation/benchmark_nli_per_class.tsv),
+Rows in the confusion matrices are true sources; columns are predicted sources.
+For NLI, `unknown` can result from the 0.2 score cutoff. The
+[per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_nli_per_class.tsv),
 [counts](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_counts.tsv),
 and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_percent.tsv)
-are available as TSV files.
+are also available as TSV files.
+
+[![NLI source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
+
+[![NLI source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
 
 ### Local Ministral benchmark results
 
-The current `benchmark_llm.tsv` was generated with the default local Ministral
-model, the merged `wildbird` label, and taxonomy enabled. It contains all 1,320
-records: 215 `host_tax_id` assignments and 1,105 local LLM assignments. It has
-92 `unknown` predictions, including one malformed response recorded as
-`invalid_llm_output` evidence. The table uses the updated true labels.
+The local Ministral run uses the default `--llm-min-score 0.75`. It makes
+1,222 correct calls of 1,320 (92.6% overall accuracy), with 1,151
+non-unknown assignments (87.2% coverage) and 99.0% precision among assigned
+records. It predicts `unknown` 169 times: 93 are valid generated labels
+converted to `unknown` by the score cutoff, with their original scores and
+labels retained for audit. No malformed LLM outputs were recorded. The cutoff
+reduces coverage in this run while preserving high precision. Since the source
+list and reference labels also changed, comparisons with earlier benchmark
+results do not isolate the cutoff's effect. These observed figures do not make
+`source_llm_score` a calibrated correctness probability.
 
 | Source | True rows | Called rows | Correct | Accuracy | Precision |
 |---|---:|---:|---:|---:|---:|
 | cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 99 | 97 | 97 | 98.0% | 100.0% |
-| chicken | 101 | 108 | 101 | 100.0% | 93.5% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 29 | 3 | 75.0% | 10.3% |
-| goat | 100 | 100 | 100 | 100.0% | 100.0% |
-| human | 100 | 108 | 99 | 99.0% | 91.7% |
-| laboratory | 1 | 5 | 0 | 0.0% | 0.0% |
-| other_animal | 100 | 101 | 99 | 99.0% | 98.0% |
-| pig | 100 | 99 | 99 | 99.0% | 100.0% |
+| cattle | 98 | 82 | 81 | 82.7% | 98.8% |
+| chicken | 101 | 102 | 101 | 100.0% | 99.0% |
+| dog | 100 | 95 | 95 | 95.0% | 100.0% |
+| environment | 4 | 4 | 3 | 75.0% | 75.0% |
+| goat | 100 | 98 | 98 | 98.0% | 100.0% |
+| human | 100 | 100 | 99 | 99.0% | 99.0% |
+| laboratory | 1 | 6 | 1 | 100.0% | 16.7% |
+| other_animal | 100 | 100 | 99 | 99.0% | 99.0% |
+| other_food | 6 | 5 | 5 | 83.3% | 100.0% |
+| pig | 100 | 92 | 92 | 92.0% | 100.0% |
 | sheep | 100 | 98 | 98 | 98.0% | 100.0% |
-| turkey | 101 | 100 | 100 | 99.0% | 100.0% |
-| unknown | 95 | 92 | 74 | 77.9% | 80.4% |
+| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
+| unknown | 90 | 169 | 83 | 92.2% | 49.1% |
 | wastewater | 20 | 20 | 20 | 100.0% | 100.0% |
-| water | 79 | 77 | 77 | 97.5% | 100.0% |
-| wildbird | 200 | 166 | 164 | 82.0% | 98.8% |
+| water | 79 | 64 | 64 | 81.0% | 100.0% |
+| wildbird | 200 | 164 | 162 | 81.0% | 98.8% |
 
-The local Ministral run makes 1,251 correct calls of 1,320 (**94.8% overall
-accuracy**) and assigns a non-unknown source to 1,228 records (93.0%). Precision
-among assigned records is 95.8%.
-
-#### Confusion matrices
-
-Rows are true sources and columns are predicted sources. Click either image to
-inspect the full matrix. The underlying [per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_llm_per_class.tsv),
+The [per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_llm_per_class.tsv),
 [counts](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_counts.tsv),
 and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_percent.tsv)
-are also available as TSV files.
-
-##### Absolute counts
+are available as TSV files.
 
 [![Local Ministral source confusion matrix: absolute counts](assets/benchmark-llm-confusion-absolute.svg)](assets/benchmark-llm-confusion-absolute.svg)
-
-##### Row percentages
 
 [![Local Ministral source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
 
 ### Mistral API benchmark results
 
-The current [`benchmark_mistral_api.tsv`](benchmark_mistral_api.tsv) contains all
-1,320 records, with 215 `host_tax_id` assignments and 1,105 Mistral API
-assignments. It uses the merged `wildbird` source and the updated true labels.
-The run has 81 `unknown` predictions.
+The Mistral API run makes 1,284 correct calls of 1,320 (97.3% overall
+accuracy), with 1,243 non-unknown assignments (94.2% coverage) and 97.1%
+precision among assigned records. It predicts `unknown` 77 times. The local
+LLM confidence cutoff does not apply to API calls.
 
 | Source | True rows | Called rows | Correct | Accuracy | Precision |
 |---|---:|---:|---:|---:|---:|
 | cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 99 | 100 | 99 | 100.0% | 99.0% |
-| chicken | 101 | 108 | 101 | 100.0% | 93.5% |
+| cattle | 98 | 100 | 98 | 100.0% | 98.0% |
+| chicken | 101 | 104 | 101 | 100.0% | 97.1% |
 | dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 17 | 4 | 100.0% | 23.5% |
+| environment | 4 | 18 | 4 | 100.0% | 22.2% |
 | goat | 100 | 100 | 100 | 100.0% | 100.0% |
-| human | 100 | 102 | 100 | 100.0% | 98.0% |
+| human | 100 | 103 | 100 | 100.0% | 97.1% |
 | laboratory | 1 | 1 | 0 | 0.0% | 0.0% |
-| other_animal | 100 | 100 | 99 | 99.0% | 99.0% |
-| pig | 100 | 101 | 100 | 100.0% | 99.0% |
+| other_animal | 100 | 103 | 97 | 97.0% | 94.2% |
+| other_food | 6 | 6 | 5 | 83.3% | 83.3% |
+| pig | 100 | 100 | 100 | 100.0% | 100.0% |
 | sheep | 100 | 100 | 100 | 100.0% | 100.0% |
 | turkey | 101 | 101 | 101 | 100.0% | 100.0% |
-| unknown | 95 | 81 | 80 | 84.2% | 98.8% |
+| unknown | 90 | 77 | 77 | 85.6% | 100.0% |
 | wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
-| water | 79 | 71 | 69 | 87.3% | 97.2% |
-| wildbird | 200 | 200 | 198 | 99.0% | 99.0% |
+| water | 79 | 72 | 70 | 88.6% | 97.2% |
+| wildbird | 200 | 197 | 193 | 96.5% | 98.0% |
 
-The Mistral API run makes 1,289 correct calls of 1,320 (**97.7% overall
-accuracy**) and assigns a non-unknown source to 1,239 records (93.9%). Precision
-among assigned records is 97.6%. These figures include the shared taxonomy
-assignments, so they measure the complete pipeline rather than API calls alone.
+The [per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_mistral_api_per_class.tsv),
+[counts](benchmark_smoke/local_llm_evaluation/benchmark_mistral_api_confusion_counts.tsv),
+and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_mistral_api_confusion_percent.tsv)
+are available as TSV files.
+
+[![Mistral API source confusion matrix: absolute counts](assets/benchmark-mistral-api-confusion-absolute.svg)](assets/benchmark-mistral-api-confusion-absolute.svg)
+
+[![Mistral API source confusion matrix: row percentages](assets/benchmark-mistral-api-confusion-percent.svg)](assets/benchmark-mistral-api-confusion-percent.svg)
+
+Regenerate the metrics and figures after updating all three benchmark outputs
+and reference labels:
+
+```bash
+python benchmark_smoke/evaluate_local_backends.py
+python render_benchmark_matrices.py
+python render_benchmark_matrices.py --classified benchmark_llm.tsv --prefix benchmark-llm --title "Local Ministral"
+python render_benchmark_matrices.py --classified benchmark_mistral_api.tsv --prefix benchmark-mistral-api --title "Mistral API"
+```
 
 ---
 

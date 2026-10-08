@@ -186,7 +186,7 @@ the two raw NLI log files below remain local and are not included in the commit)
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_confusion_counts.tsv`
 - `benchmark_smoke/local_llm_evaluation/llm_1_7b_10_confusion_percent.tsv`
 
-The current `benchmark_llm.tsv`, evaluation summary, and NLI/LLM matrices
+The current `benchmark_llm.tsv`, evaluation summary, and NLI/LLM/API matrices
 replace the historical full-benchmark files named here in the original report.
 
 The normal Hugging Face cache also now contains Qwen3-1.7B outside the repository.

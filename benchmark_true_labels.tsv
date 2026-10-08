@@ -28,7 +28,7 @@ SRR10082192	cattle	USA	2019
 SRR10138273	cattle	USA	2019
 SRR10186879	cattle	USA	2019
 SRR10245648	cattle	USA	2019
-SRR10257508	cattle	Egypt	2018
+SRR10257508	other_food	Egypt	2018
 SRR10287017	cattle	USA	2019
 SRR10386699	cattle	USA	2019
 SRR11457120	cattle	USA	2013
@@ -928,7 +928,7 @@ SRR9668773	turkey	USA	2019
 ERR10372741	unknown	Portugal	unknown
 ERR10703458	unknown	Denmark	2020
 ERR11003616	unknown	Luxembourg	unknown
-ERR1163442	unknown	United Kingdom	2012
+ERR1163442	other_food	United Kingdom	2012
 ERR11721283	unknown	United Kingdom	2019
 ERR12072012	unknown	United Kingdom	2020
 ERR12072144	unknown	United Kingdom	2021
@@ -1015,10 +1015,10 @@ SRR7411500	unknown	USA	unknown
 SRR8791352	unknown	USA	unknown
 SRR9856010	unknown	USA	unknown
 SRR9864928	unknown	USA	unknown
-SRR9899056	unknown	United Kingdom	2018
-SRR9945146	unknown	United Kingdom	2017
-SRR9945233	unknown	United Kingdom	2017
-SRR9969039	unknown	United Kingdom	2017
+SRR9899056	other_food	United Kingdom	2018
+SRR9945146	other_food	United Kingdom	2017
+SRR9945233	other_food	United Kingdom	2017
+SRR9969039	other_food	United Kingdom	2017
 SRR9971615	unknown	USA	unknown
 ERR4224333	wastewater	Netherlands	2018
 ERR4224353	wastewater	Netherlands	2018
