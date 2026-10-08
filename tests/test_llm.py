@@ -296,7 +296,8 @@ class LocalLLMTests(unittest.TestCase):
         for threshold in (0.0, 1.0):
             self.args.min_score = threshold
             self.assertEqual(self.classify(['record']).best_hit.tolist(), ['turkey'])
-        self.assertIn('--min-score is not applicable', self.console.getvalue())
+        self.assertIn('--min-score applies only to NLI classification', self.console.getvalue())
+        self.assertIn('--llm-min-score filters local LLM calls using source_llm_score', self.console.getvalue())
 
     def test_llm_confidence_cutoff_preserves_score_and_rejected_label(self):
         hf = self.mocked_hf(['turkey'] * 5 + ['unknown', 'bad response'])

@@ -97,7 +97,7 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
     if method == "llm":
         runlog.emit(f"LLM model: {llm_config.model}")
         runlog.emit(f"LLM minimum generation score: {llm_config.min_score}")
-        runlog.emit("--min-score is not applicable to LLM mode: the LLM does not produce calibrated candidate scores.")
+        runlog.emit("--min-score applies only to NLI classification; --llm-min-score filters local LLM calls using source_llm_score, which is not a calibrated probability of correctness.")
     elif method == "mistral":
         runlog.emit(f"Mistral model: {mistral_config.model}")
         runlog.emit("--min-score is not applicable to Mistral mode: the API does not produce calibrated candidate scores.")
