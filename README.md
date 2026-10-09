@@ -775,3 +775,117 @@ Why not classify year/country with NLI?
 ## License
 
 MIT License
+
+## BioSample lookup mode
+
+Use exactly one of `--metadata`, `--biosample`, or `--biosample-file`.
+BioSample mode automatically uses `accession` as the ID column; ordinary TSV
+input still requires `--id-col`. Lookups read the local NCBI BioSample Parquet
+repository and do not query NCBI or ENA for individual accessions.
+
+One accession:
+
+```bash
+python metalyzer.py \
+  --biosample SAMN12345678 \
+  --sources sources.tsv \
+  --out SAMN12345678.tsv \
+  --method llm \
+  --taxonomy-dir taxonomy
+```
+
+Several accessions:
+
+```bash
+python metalyzer.py \
+  --biosample SAMN12345678 SAMN23456789 SAMEA1234567 \
+  --sources sources.tsv \
+  --out biosamples.tsv \
+  --method llm \
+  --taxonomy-dir taxonomy
+```
+
+File of accessions (one per line; blank lines are ignored):
+
+```bash
+python metalyzer.py \
+  --biosample-file biosamples.txt \
+  --sources sources.tsv \
+  --out biosamples.tsv \
+  --method llm \
+  --taxonomy-dir taxonomy
+```
+
+Alternate BioSample store:
+
+```bash
+python metalyzer.py --biosample SAMN12345678 \
+  --biosample-path /data/biosample/biosample.parquet \
+  --sources sources.tsv --out result.tsv --method llm --taxonomy-dir taxonomy
+```
+
+`--biosample-path` defaults to `/mnt/sdd1/data/biosample` on this server and
+accepts a Parquet file or a directory of Parquet shards (including nested
+partitions). The first lookup builds a persistent SQLite accession index beside
+the database, reading only accession batches; subsequent lookups reuse it and
+read only matching row groups in bounded batches. The directory must be writable
+for index creation. An index is rebuilt automatically if file paths, sizes, or
+modification times change. Structural accessions must be unique in the store.
+Missing accessions stop analysis before models are loaded. Requested order and
+duplicates are preserved, including in the regular Metalyzer TSV output.
+
+All nonempty metadata is retained, including unexpected attributes, original
+attribute names, identifiers, and links. Repeated values use ` | `. Literal
+values such as `NA`, `0`, and `false` survive in raw metadata. Source-informative
+fields (host, isolation source, specimen, title, and related fields) come first
+before record truncation; organism and generic tax_id remain available in the
+metadata. The standard formatter still excludes generic tax_id and host_tax_id
+from model text; host_tax_id remains available for deterministic taxonomy.
+
+BioSample records use the exact same classification, verification, date, country,
+logging, and output pipeline as TSV metadata. Local LLM filtering still defaults
+to `--llm-min-score 0.75`, and normal score/evidence columns are unchanged.
+Lookup provenance and index paths are written to the normal `.log` file.
+No intermediate metadata TSV or separate JSON/JSONL output is created.
+
+## Building the local BioSample database
+
+BioSample lookup requires a local copy of the NCBI BioSample archive converted
+to Parquet. Install the environment dependencies, including `pyarrow`, and run:
+
+```bash
+python -m modules.biosample_build \
+  --output-dir /mnt/sdd1/data/biosample
+```
+
+This downloads the complete compressed archive from
+[NCBI's HTTPS BioSample archive](https://ftp.ncbi.nlm.nih.gov/biosample/biosample_set.xml.gz),
+keeps `biosample_set.xml.gz`, streams it through gzip and XML parsing, writes
+`biosample.parquet` in 10,000-record zstd row groups, and creates its accession
+index. Sparse maps retain canonical and original attributes, identifiers, and
+links without creating thousands of empty columns. Attribute frequency catalogues
+are also written beside the database; classification does not require them.
+Progress and completion information are saved in `biosample_build.log`.
+
+**The archive is very large.** Downloading and converting the complete NCBI
+BioSample repository is a one-time setup operation and may take several hours,
+depending on network speed, CPU performance, storage speed, and the current size
+of the NCBI archive. Substantial free disk space is required for both
+`biosample_set.xml.gz` and `biosample.parquet`, the SQLite sidecar, and temporary
+files during rebuilding. Subsequent Metalyzer BioSample lookups use this local
+database and do not need to query NCBI individually.
+
+Existing complete archives and databases are reused by default. Downloads use
+`curl` with HTTPS, retries, and continuation of a `.part` file. Install `curl`
+if it is unavailable. To rebuild from the retained archive:
+
+```bash
+python -m modules.biosample_build --output-dir /data/biosample \
+  --skip-download --force-convert
+```
+
+`--force-download` explicitly downloads the archive again, `--url` overrides
+the archive endpoint, and `--batch-size` changes the bounded write batch size.
+Conversion writes a temporary database and checks Parquet integrity and accession
+round trips before replacement. A parsing or validation failure leaves an
+existing database untouched. The compressed XML is retained for future rebuilds.

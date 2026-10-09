@@ -90,7 +90,8 @@ def provenance(args, argv: list[str], batch) -> None:
         ("Metalyzer version", __version__),
         ("Git commit", _git_commit()),
         ("Command line", subprocess.list2cmdline([
-            sys.executable, str(Path(__file__).resolve().parents[1] / "metalyzer.py"), *argv,
+            sys.executable, str(Path(__file__).resolve().parents[1] / "metalyzer.py"),
+            *(_bounded_command(argv)),
         ])),
         ("Python version", sys.version.split()[0]),
         ("Platform", platform.platform()),
@@ -112,7 +113,7 @@ def provenance(args, argv: list[str], batch) -> None:
         ("Min score (NLI only)", args.min_score),
         ("Max value chars", args.max_value_chars),
         ("Max record chars", args.max_record_chars),
-        ("Metadata path", str(Path(args.metadata).resolve())),
+        ("Metadata path", str(Path(args.metadata).resolve()) if args.metadata else "BioSample input"),
         ("Sources path", str(Path(args.sources).resolve())),
         ("Sources SHA256", _sha256(args.sources)),
         ("Taxonomy directory", str(Path(args.taxonomy_dir).resolve()) if args.taxonomy_dir else "none"),
@@ -131,3 +132,19 @@ def provenance(args, argv: list[str], batch) -> None:
             else:
                 modified = datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat()
                 emit(f"  Taxonomy file {name}: {path.resolve()}; {stat.st_size} bytes; modified {modified}")
+
+
+def _bounded_command(argv):
+    """Never log a potentially enormous accession list."""
+    result = []
+    hiding = False
+    for value in argv:
+        if value == '--biosample':
+            result.extend([value, '<accessions omitted>'])
+            hiding = True
+        elif hiding and not value.startswith('--'):
+            continue
+        else:
+            hiding = False
+            result.append(value)
+    return result

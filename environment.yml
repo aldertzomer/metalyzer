@@ -4,6 +4,7 @@ channels:
 dependencies:
   - python=3.11
   - pandas
+  - pyarrow
   - pycountry
   - transformers>=5.3,<6
   # Local Ministral 3 tokenizer and device_map loading.

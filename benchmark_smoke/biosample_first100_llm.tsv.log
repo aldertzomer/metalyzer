@@ -1,0 +1,160 @@
+Metalyzer 0.2 started
+Input mode: BioSample
+BioSample store: /mnt/sdd1/data/biosample
+Requested BioSamples: 100
+BioSample accession index: /mnt/sdd1/data/biosample/biosample.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 100
+BioSample lookup time: 20.484 seconds
+BioSample metadata columns: 149
+Run provenance:
+  Metalyzer version: 0.2
+  Git commit: fb69a93c046772222198d018bdb8fc0e52a5d7d3
+  Command line: /home/zomer007/miniforge3/envs/metalyzer/bin/python /home/zomer007/PycharmProjects/metalyzer/metalyzer.py --biosample "<accessions omitted>" --sources sources.tsv --out benchmark_smoke/biosample_first100_llm.tsv --method llm --taxonomy-dir /home/zomer007/metalyzer/taxonomy
+  Python version: 3.14.3
+  Platform: Linux-5.4.0-172-generic-x86_64-with-glibc2.31
+  Source method: llm
+  NLI model: MoritzLaurer/deberta-v3-large-zeroshot-v2.0
+  Local LLM model: mistralai/Ministral-3-8B-Instruct-2512
+  Device: 0
+  NLI batch size: 64
+  LLM batch size: 1
+  llm_min_score: 0.75
+  Min score (NLI only): 0.2
+  Max value chars: 300
+  Max record chars: 2000
+  Metadata path: BioSample input
+  Sources path: /home/zomer007/PycharmProjects/metalyzer/sources.tsv
+  Sources SHA256: 9c5a4aa17ae4bf549ba40c14dd6b2c5574ac9e9d4d124311058f28487b155e46
+  Taxonomy directory: /home/zomer007/metalyzer/taxonomy
+  Metadata rows: 100
+  Metadata columns: 149
+  Taxonomy file nodes.dmp: /home/zomer007/metalyzer/taxonomy/nodes.dmp; 232279767 bytes; modified 2026-10-07T13:12:57.588690+00:00
+  Taxonomy file names.dmp: /home/zomer007/metalyzer/taxonomy/names.dmp; 316659961 bytes; modified 2026-10-07T13:12:58.820705+00:00
+  Taxonomy file merged.dmp: /home/zomer007/metalyzer/taxonomy/merged.dmp; 1912229 bytes; modified 2026-10-07T13:12:58.948707+00:00
+Taxonomy configuration:
+  configured anchors: 12
+  valid anchors:      12
+  merged IDs:         0
+  invalid anchors:    0
+  conflicts:          0
+LLM model: mistralai/Ministral-3-8B-Instruct-2512
+LLM minimum generation score: 0.75
+--min-score applies only to NLI classification; --llm-min-score filters local LLM calls using source_llm_score, which is not a calibrated probability of correctness.
+Batch 1: local Ministral source classification done
+Batch 2: local Ministral source classification done
+Batch 3: local Ministral source classification done
+Batch 4: local Ministral source classification done
+Batch 5: local Ministral source classification done
+Batch 6: local Ministral source classification done
+Batch 7: local Ministral source classification done
+Batch 8: local Ministral source classification done
+Batch 9: local Ministral source classification done
+Batch 10: local Ministral source classification done
+Batch 11: local Ministral source classification done
+Batch 12: local Ministral source classification done
+Batch 13: local Ministral source classification done
+Batch 14: local Ministral source classification done
+Batch 15: local Ministral source classification done
+Batch 16: local Ministral source classification done
+Batch 17: local Ministral source classification done
+Batch 18: local Ministral source classification done
+Batch 19: local Ministral source classification done
+Batch 20: local Ministral source classification done
+Batch 21: local Ministral source classification done
+Batch 22: local Ministral source classification done
+Batch 23: local Ministral source classification done
+Batch 24: local Ministral source classification done
+Batch 25: local Ministral source classification done
+Batch 26: local Ministral source classification done
+Batch 27: local Ministral source classification done
+Batch 28: local Ministral source classification done
+Batch 29: local Ministral source classification done
+Batch 30: local Ministral source classification done
+Batch 31: local Ministral source classification done
+Batch 32: local Ministral source classification done
+Batch 33: local Ministral source classification done
+Batch 34: local Ministral source classification done
+Batch 35: local Ministral source classification done
+Batch 36: local Ministral source classification done
+Batch 37: local Ministral source classification done
+Batch 38: local Ministral source classification done
+Batch 39: local Ministral source classification done
+Batch 40: local Ministral source classification done
+Batch 41: local Ministral source classification done
+Batch 42: local Ministral source classification done
+Batch 43: local Ministral source classification done
+Batch 44: local Ministral source classification done
+Batch 45: local Ministral source classification done
+Batch 46: local Ministral source classification done
+Batch 47: local Ministral source classification done
+Batch 48: local Ministral source classification done
+Batch 49: local Ministral source classification done
+Batch 50: local Ministral source classification done
+Batch 51: local Ministral source classification done
+Batch 52: local Ministral source classification done
+Batch 53: local Ministral source classification done
+Batch 54: local Ministral source classification done
+Batch 55: local Ministral source classification done
+Batch 56: local Ministral source classification done
+Batch 57: local Ministral source classification done
+Batch 58: local Ministral source classification done
+Batch 59: local Ministral source classification done
+Batch 60: local Ministral source classification done
+Batch 61: local Ministral source classification done
+Batch 62: local Ministral source classification done
+Batch 63: local Ministral source classification done
+Batch 64: local Ministral source classification done
+Batch 65: local Ministral source classification done
+Batch 66: local Ministral source classification done
+Batch 67: local Ministral source classification done
+Batch 68: local Ministral source classification done
+Batch 69: local Ministral source classification done
+Batch 70: local Ministral source classification done
+Batch 71: local Ministral source classification done
+Batch 72: local Ministral source classification done
+Batch 73: local Ministral source classification done
+Batch 74: local Ministral source classification done
+Batch 75: local Ministral source classification done
+Batch 76: local Ministral source classification done
+Batch 77: local Ministral source classification done
+Batch 78: local Ministral source classification done
+Batch 79: local Ministral source classification done
+Batch 80: local Ministral source classification done
+Batch 81: local Ministral source classification done
+Batch 82: local Ministral source classification done
+Batch 83: local Ministral source classification done
+Batch 84: local Ministral source classification done
+Batch 85: local Ministral source classification done
+Batch 86: local Ministral source classification done
+Batch 87: local Ministral source classification done
+Batch 88: local Ministral source classification done
+Batch 89: local Ministral source classification done
+Batch 90: local Ministral source classification done
+Batch 91: local Ministral source classification done
+Batch 92: local Ministral source classification done
+Batch 93: local Ministral source classification done
+Batch 94: local Ministral source classification done
+Batch 95: local Ministral source classification done
+Batch 96: local Ministral source classification done
+Batch 97: local Ministral source classification done
+Batch 98: local Ministral source classification done
+Batch 99: local Ministral source classification done
+Batch 100: local Ministral source classification done
+Source classification:
+  taxonomy host_tax_id: 0
+  LLM:                  100
+  LLM -> unknown:        0
+  invalid LLM outputs:  0
+Run totals:
+  total rows: 100
+  deterministic taxonomy assignments: 0
+  LLM assignments: 100
+  LLM assignments before confidence filtering: 100
+  LLM low-score calls converted to unknown: 0
+  LLM assignments retained after confidence filtering: 100
+  unknown calls: 0
+  invalid model outputs: 0
+  NLI verification scores: 100
+  output path: benchmark_smoke/biosample_first100_llm.tsv
+  log path: benchmark_smoke/biosample_first100_llm.tsv.log
+Wrote benchmark_smoke/biosample_first100_llm.tsv (n=100)

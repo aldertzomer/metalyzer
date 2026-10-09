@@ -49,6 +49,13 @@ def load(metadata_path: str | Path, sources_path: str | Path, id_col: str, *,
     metadata = read_tsv(metadata_path, nrows=limit)
     if id_col not in metadata:
         raise ValueError(f"ID column {id_col!r} is missing from metadata")
+    sources = load_sources(sources_path, id_col)
+    return prepare_batch(metadata, id_col=id_col, max_value_chars=max_value_chars,
+                         max_record_chars=max_record_chars), sources
+
+
+def load_sources(sources_path: str | Path, id_col: str) -> SourceVocabulary:
+    """Load the shared source vocabulary for either metadata input mode."""
     labels = read_tsv(sources_path)
     column = "source" if "source" in labels else labels.columns[0]
     has_anchors = "taxonomy_anchors" in labels
@@ -56,5 +63,4 @@ def load(metadata_path: str | Path, sources_path: str | Path, id_col: str, *,
              if has_anchors else ()) for _, row in labels.iterrows() if str(row[column]).strip()]
     sources = SourceVocabulary(tuple(label for label, _ in rows), id_col,
                                tuple(anchors for _, anchors in rows))
-    return prepare_batch(metadata, id_col=id_col, max_value_chars=max_value_chars,
-                         max_record_chars=max_record_chars), sources
+    return sources

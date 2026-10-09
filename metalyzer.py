@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+from pathlib import Path
 
 from modules import combine, country, date, deterministic_source, input, llm, mistral, nli, runlog, verification
 from modules.contracts import MetadataBatch, SourceResult, SourceVocabulary
@@ -13,7 +14,12 @@ from modules.version import __version__
 def parse_args(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--version", action="version", version=f"metalyzer {__version__}")
-    ap.add_argument("--metadata", help="Input metadata TSV")
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument("--metadata", help="Input metadata TSV")
+    mode.add_argument("--biosample", nargs="+", help="Local BioSample accessions (requested order)")
+    mode.add_argument("--biosample-file", type=Path, help="One BioSample accession per line")
+    ap.add_argument("--biosample-path", type=Path, default=Path('/mnt/sdd1/data/biosample'),
+                    help="Local BioSample Parquet file or dataset directory")
     ap.add_argument("--sources", help="Sources TSV (labels)")
     ap.add_argument("--out", help="Output TSV")
     ap.add_argument("--id-col", help="ID column name in metadata")
@@ -55,7 +61,11 @@ def parse_args(argv=None):
     args = ap.parse_args(argv)
     if args.download_taxonomy:
         return args
-    for option in ("metadata", "sources", "out", "id_col"):
+    if not (args.metadata or args.biosample or args.biosample_file):
+        ap.error("Exactly one of --metadata, --biosample, --biosample-file is required")
+    if args.biosample or args.biosample_file:
+        args.id_col = "accession"
+    for option in ("sources", "out", "id_col"):
         if not getattr(args, option):
             ap.error(f"--{option.replace('_', '-')} is required for analysis")
     if args.batch_size < 1:
@@ -122,10 +132,23 @@ def main(argv=None):
     with runlog.analysis_log(args.out) as log_path:
         try:
             runlog.emit(f"Metalyzer {__version__} started")
-            batch, sources = input.load(
-                args.metadata, args.sources, args.id_col, limit=args.limit,
-                max_value_chars=args.max_value_chars, max_record_chars=args.max_record_chars,
-            )
+            if args.metadata:
+                batch, sources = input.load(
+                    args.metadata, args.sources, args.id_col, limit=args.limit,
+                    max_value_chars=args.max_value_chars, max_record_chars=args.max_record_chars,
+                )
+            else:
+                from modules.biosample import load_biosamples
+                accessions = args.biosample
+                if args.biosample_file:
+                    accessions = [line.strip() for line in args.biosample_file.read_text().splitlines() if line.strip()]
+                metadata = load_biosamples(accessions, args.biosample_path)
+                if args.limit is not None:
+                    metadata = metadata.iloc[:args.limit]
+                sources = input.load_sources(args.sources, 'accession')
+                batch = input.prepare_batch(metadata, id_col='accession',
+                                            max_value_chars=args.max_value_chars,
+                                            max_record_chars=args.max_record_chars)
             runlog.provenance(args, command, batch)
             taxonomy = deterministic_source.load_taxonomy(args.taxonomy_dir, fallback_method=args.method)
             anchors = (deterministic_source.configured_anchors(sources, taxonomy, report=True)
