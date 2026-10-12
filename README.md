@@ -481,12 +481,12 @@ with ordinary NLI verification, date and country extraction enabled. The
 additional `other_animal` rule was explicitly enabled for this experiment;
 it remains disabled for ordinary runs. No paid Mistral API run was made.
 
-| Method / version | Original accuracy (1,320) | Original assigned precision | Adjusted accuracy (1,276) | Adjusted assigned precision |
-|---|---:|---:|---:|---:|
-| NLI, old saved | 60.98% | 64.43% | 63.01% | 66.75% |
-| NLI, new combined | 72.88% | 75.84% | 75.39% | 78.62% |
-| Ministral, old saved | 85.83% | 90.60% | 88.79% | 94.04% |
-| Ministral, new combined | 85.83% | 90.46% | 88.79% | 93.88% |
+| Method / version | Original accuracy (1,320) | Original assigned precision | Adjusted accuracy (1,276) | Adjusted assigned precision | Deterministic assignments |
+|---|---:|---:|---:|---:|---:|
+| NLI, old saved | 60.98% | 64.43% | 63.01% | 66.75% | 0 |
+| NLI, new combined | 72.88% | 75.84% | 75.39% | 78.62% | 561 |
+| Ministral, old saved | 85.83% | 90.60% | 88.79% | 94.04% | 0 |
+| Ministral, new combined | 85.83% | 90.46% | 88.79% | 93.88% | 561 |
 
 Assigned precision excludes predicted `unknown`; accuracy includes every scored
 record, including reference `unknown`. Original scoring uses unchanged labels.
@@ -762,7 +762,27 @@ reports classification accuracy for a complete run.
 
 ## Benchmark results
 
-The six full source-classification benchmarks below were rerun on 12 October 2026
+### Latest BioSample results with host terminology resolution
+
+The new full NLI and Ministral runs each make **561 deterministic assignments**
+on 1,320 records: **402 exact taxonomy assignments** (1 numeric ID and 401 host
+names), **117 configured host aliases**, and **42 opt-in unlisted-animal
+assignments**. The remaining **759 records** reach the source model. The combined
+experiment explicitly enables `--other-animal-taxonomy`; ordinary runs leave
+that rule disabled. The [full report](#new-full-biosample-gpu-benchmarks) includes
+adjusted scoring, pathway precision, timings and current confusion matrices.
+
+| Input | Method | Correct / total | Accuracy | Assigned precision | Unknown | Deterministic assignments |
+|---|---|---:|---:|---:|---:|---:|
+| BioSample, new combined | [NLI](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_nli_host_terminology.tsv) | 962 / 1320 | 72.88% | 75.84% | 74 | 561 |
+| BioSample, new combined | [Local Ministral](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_llm_host_terminology.tsv) | 1133 / 1320 | 85.83% | 90.46% | 115 | 561 |
+
+Mistral API and TSV benchmarks have not been rerun with the new host terminology
+resolver. Their saved results remain in the historical table below.
+
+### Historical six-backend results before host-name resolution
+
+The six saved source-classification benchmarks below were run on 12 October 2026
 using the reordered [metadata](benchmark.tsv) and
 [accession list](benchmark_accessions.tsv), with 1,320 records and
 1,319 distinct BioSamples. All runs loaded the same local NCBI taxonomy
@@ -787,7 +807,7 @@ Mistral API uses `mistral-small-latest`, seed 12345, and the default API setting
 All methods retain normal NLI source verification, date/country extraction,
 run logs, and TSV output. API results reflect the service available on the run date.
 
-| Input | Method | Correct / total | Accuracy | Assigned precision | Unknown | Taxonomy calls |
+| Input | Method | Correct / total | Accuracy | Assigned precision | Unknown | Numeric taxonomy assignments (historical) |
 |---|---|---:|---:|---:|---:|---:|
 | TSV | [NLI](benchmark_nli.tsv) | 1137 / 1320 | 86.14% | 88.23% | 114 | 215 |
 | TSV | [Local Ministral](benchmark_llm.tsv) | 1215 / 1320 | 92.05% | 98.69% | 171 | 215 |
@@ -797,8 +817,10 @@ run logs, and TSV output. API results reflect the service available on the run d
 | BioSample | [Mistral API](benchmark_biosample_mistral_api.tsv) | 1174 / 1320 | 88.94% | 88.85% | 29 | 0 |
 
 Accuracy includes correct `unknown` predictions. Assigned precision excludes
-predictions of `unknown`. Enabling taxonomy only resolves records with a usable
-`host_tax_id`; the taxonomy-call column reports actual deterministic assignments.
+predictions of `unknown`. These historical runs resolved only numeric
+`host_tax_id` evidence, before exact host-name and operational-alias support.
+Their zero BioSample taxonomy counts describe the saved old outputs; the new
+NLI and Ministral runs above each have 561 deterministic assignments.
 Input modes differ in metadata content and availability of host taxonomy IDs,
 so these results compare the complete pipelines on their respective inputs.
 
@@ -811,9 +833,9 @@ The [BioSample error-analysis report](benchmark_smoke/biosample_diagnostics/repo
 examines source-data conflicts, reference-unknown records with explicit source
 evidence, host taxonomy availability, and controlled NLI recognition tests.
 
-The table and figures above/below retain the complete original 1,320-record
-evaluations of the saved predictions. The new host-name resolver is audited
-separately before any expensive model rerun:
+The historical table and six figures below retain the complete original
+1,320-record evaluations of the saved predictions. The earlier CPU-only
+host-name audit can be reproduced separately:
 
 ```bash
 python benchmark_smoke/audit_host_taxonomy.py \
@@ -831,8 +853,9 @@ unambiguous name matches including common names/synonyms. There were 704
 unresolved/missing names and no ambiguous names or numeric/textual conflicts.
 Only configured source lineages bypass classification: 1 numeric assignment
 plus 401 host-name assignments gives **402 deterministic records**, leaving
-**918 records for model fallback**. The existing model benchmark results remain
-historical until a complete rerun of the updated pipeline.
+**918 records for model fallback**. That audit predates operational aliases and
+the optional unlisted-animal rule. The new NLI and Ministral results above use
+the updated combined pipeline; the six original benchmark files remain preserved.
 
 It also scores the existing six prediction files twice: **original evaluation**
 (all 1,320 records) and **metadata-version-adjusted evaluation** (1,276 records).
@@ -858,7 +881,8 @@ python benchmark_smoke/evaluate_local_backends.py \
 ```
 
 Original and adjusted metrics/confusion tables are written into separate
-subdirectories. Taxonomy counts include both `host_tax_id` and `host_name`.
+subdirectories. The earlier audit counts `host_tax_id` and `host_name`; the new
+terminology report also counts `host_alias` and `host_other_animal` separately.
 
 ### TSV · NLI benchmark
 
