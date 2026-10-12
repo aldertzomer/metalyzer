@@ -97,9 +97,12 @@ def parse_response(content, source_names) -> tuple[str, str]:
 
 
 async def classify_one(client, record: str, row_key: int, sources: SourceVocabulary,
-                       config: MistralConfig, prompt: str, response_format: dict) -> tuple[str, str]:
+                       config: MistralConfig, prompt: str, response_format: dict, metrics=None) -> tuple[str, str]:
     """Bound each request and retry only timeouts and transient HTTP statuses."""
     for attempt in range(config.retries + 1):
+        if metrics is not None:
+            metrics['requests'] += 1
+            metrics['retries'] += int(attempt > 0)
         try:
             response = await asyncio.wait_for(client.chat.complete_async(
                 model=config.model,
@@ -123,6 +126,14 @@ async def classify_one(client, record: str, row_key: int, sources: SourceVocabul
                 f"Mistral request failed for row key {row_key} after {attempt + 1} attempt(s) ({reason}).{hint}"
             ) from None
         choices = getattr(response, "choices", None)
+        if metrics is not None:
+            metrics['completed'] += 1
+            usage = getattr(response, 'usage', None)
+            for name in ['prompt_tokens', 'completion_tokens', 'total_tokens']:
+                count = getattr(usage, name, None)
+                if isinstance(count, int) and not isinstance(count, bool):
+                    metrics[name] += count
+                    metrics['usage_available'] = True
         message = getattr(choices[0], "message", None) if choices else None
         return parse_response(getattr(message, "content", None), sources.names)
 
@@ -139,6 +150,8 @@ async def run_async(batch: MetadataBatch, sources: SourceVocabulary,
     response_format = make_response_format(sources.names)
     rows = iter(batch.records.items())
     completed = 0
+    metrics = dict(requests=0, retries=0, completed=0, prompt_tokens=0, completion_tokens=0,
+                   total_tokens=0, usage_available=False)
 
     # Mistral owns separate sync and async HTTP clients; close both even on error.
     with create_client(config) as client:
@@ -146,7 +159,7 @@ async def run_async(batch: MetadataBatch, sources: SourceVocabulary,
             async def worker():
                 nonlocal completed
                 for key, record in rows:
-                    label, evidence = await classify_one(client, record, key, sources, config, prompt, response_format)
+                    label, evidence = await classify_one(client, record, key, sources, config, prompt, response_format, metrics)
                     output.loc[key, ["best_hit", "source_evidence"]] = [label, evidence]
                     completed += 1
                     if completed % config.progress_every == 0 or completed == len(batch):
@@ -160,6 +173,7 @@ async def run_async(batch: MetadataBatch, sources: SourceVocabulary,
                 for task in tasks:
                     task.cancel()
                 await asyncio.gather(*tasks, return_exceptions=True)
+                emit('Mistral API usage: ' + json.dumps(metrics, sort_keys=True))
 
     result = SourceResult(output)
     result.validate(batch, sources)

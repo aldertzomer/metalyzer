@@ -1,0 +1,89 @@
+Metalyzer 0.2 started
+Run provenance:
+  Metalyzer version: 0.2
+  Git commit: 4168848f954c9825352c3d3ff42fcf715e228c27
+  Command line: /home/zomer007/miniforge3/envs/metalyzer/bin/python /home/zomer007/PycharmProjects/metalyzer/metalyzer.py --metadata /home/zomer007/PycharmProjects/metalyzer/benchmark.tsv --id-col run_accession --sources /home/zomer007/PycharmProjects/metalyzer/sources.tsv --out /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/noisy_field_exclusion/filtered/tsv_nli.tsv --method nli --taxonomy-dir /home/zomer007/metalyzer/taxonomy --other-animal-taxonomy --device 0 --batch-size 64 --llm-batch-size 1 --llm-min-score 0.75 --min-score 0.2 --max-value-chars 300 --max-record-chars 2000
+  Python version: 3.14.3
+  Platform: Linux-5.4.0-172-generic-x86_64-with-glibc2.31
+  Source method: nli
+  NLI model: MoritzLaurer/deberta-v3-large-zeroshot-v2.0
+  Device: 0
+  NLI batch size: 64
+  Min score (NLI only): 0.2
+  Max value chars: 300
+  Max record chars: 2000
+  Noisy-field exclusion: enabled
+  Filtering profile: variant_c_v1
+  Metadata path: /home/zomer007/PycharmProjects/metalyzer/benchmark.tsv
+  Sources path: /home/zomer007/PycharmProjects/metalyzer/sources.tsv
+  Sources SHA256: d92928a36dc0e79df6486b1645d42d72be52f9bce3f733c938292bf5af970f10
+  Taxonomy directory: /home/zomer007/metalyzer/taxonomy
+  Configured host aliases enabled: True
+  Specific other-animal taxonomy enabled: True
+  Metadata rows: 1320
+  Metadata columns: 27
+  Taxonomy file nodes.dmp: /home/zomer007/metalyzer/taxonomy/nodes.dmp; 232279767 bytes; modified 2026-10-07T13:12:57.588690+00:00
+  Taxonomy file names.dmp: /home/zomer007/metalyzer/taxonomy/names.dmp; 316659961 bytes; modified 2026-10-07T13:12:58.820705+00:00
+  Taxonomy file merged.dmp: /home/zomer007/metalyzer/taxonomy/merged.dmp; 1912229 bytes; modified 2026-10-07T13:12:58.948707+00:00
+Taxonomy configuration:
+  configured anchors: 12
+  valid anchors:      12
+  merged IDs:         0
+  invalid anchors:    0
+  conflicts:          0
+Taxonomy resolution:
+  Explicit host taxonomy ID: 215
+  Exact host-name resolution: 4
+    Scientific names: 1
+    Common names/synonyms: 3
+  Configured host aliases: 13
+  Specific unlisted animals: 46
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1042
+  Total deterministic assignments: 278
+  Records continuing to model classification: 1042
+Record rendering statistics (all records): {"administrative_technical": 3924, "after_length_mean": 463.9765151515152, "after_length_median": 469.0, "after_truncated": 0, "before_length_mean": 570.3507575757576, "before_length_median": 562.0, "before_truncated": 0, "fields_considered": 35640, "nonempty_eligible_fields": 17812, "records": 1320, "records_with_omissions": 1320, "redundant_original": 0}
+Record rendering statistics (source model records): {"administrative_technical": 3091, "after_length_mean": 451.06238003838774, "after_length_median": 461.0, "after_truncated": 0, "before_length_mean": 562.1218809980807, "before_length_median": 555.0, "before_truncated": 0, "fields_considered": 28134, "nonempty_eligible_fields": 13690, "records": 1042, "records_with_omissions": 1042, "redundant_original": 0}
+Batch 1: source classification done
+Batch 2: source classification done
+Batch 3: source classification done
+Batch 4: source classification done
+Batch 5: source classification done
+Batch 6: source classification done
+Batch 7: source classification done
+Batch 8: source classification done
+Batch 9: source classification done
+Batch 10: source classification done
+Batch 11: source classification done
+Batch 12: source classification done
+Batch 13: source classification done
+Batch 14: source classification done
+Batch 15: source classification done
+Batch 16: source classification done
+Batch 17: source classification done
+Source model stage seconds (including weight loading): 70.845
+Source classification:
+  taxonomy host_tax_id: 215
+  taxonomy host_name: 4
+  configured host_alias: 13
+  taxonomy host_other_animal: 46
+  taxonomy total: 278
+  NLI:                  1042
+  NLI -> unknown:        92
+NLI verification stage seconds (including any weight loading): 5.933
+NLI token-limit exposure: {"nli_token_exposure_all": {"available": true, "model_token_limit": 512, "records_any_candidate_exceeds_limit": 0, "fraction": 0.0, "measurement": "pre-truncation premise+hypothesis+pair-special-tokens; any candidate"}, "nli_token_exposure_source_model": {"available": true, "model_token_limit": 512, "records_any_candidate_exceeds_limit": 0, "fraction": 0.0, "measurement": "pre-truncation premise+hypothesis+pair-special-tokens; any candidate"}}
+Filtering audit: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/noisy_field_exclusion/filtered/tsv_nli.tsv.filtering.json; excluded fields: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/noisy_field_exclusion/filtered/tsv_nli.tsv.excluded_fields.tsv
+Run totals:
+  total rows: 1320
+  deterministic taxonomy assignments: 278
+  explicit host taxonomy ID assignments: 215
+  exact host-name assignments: 4
+  configured host-alias assignments: 13
+  specific other-animal assignments: 46
+  NLI assignments: 1042
+  unknown calls: 92
+  invalid model outputs: 0
+  NLI verification scores: 1228
+  output path: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/noisy_field_exclusion/filtered/tsv_nli.tsv
+  log path: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/noisy_field_exclusion/filtered/tsv_nli.tsv.log
+Wrote /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/noisy_field_exclusion/filtered/tsv_nli.tsv (n=1320)

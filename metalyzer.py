@@ -57,6 +57,8 @@ def parse_args(argv=None):
     )
     ap.add_argument("--max-value-chars", type=int, default=300)
     ap.add_argument("--max-record-chars", type=int, default=2000)
+    ap.add_argument("--disable-noisy-field-exclusion", action="store_true",
+                    help="Restore legacy model text by disabling Variant C noise removal and duplicate suppression")
 
     ap.add_argument("--skip-date", action="store_true", help="Disable year extraction (omit year column)")
     ap.add_argument("--skip-country", action="store_true", help="Disable country normalization (omit country column)")
@@ -111,6 +113,9 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
     deterministic = deterministic_source.run(batch, sources, taxonomy, anchor_sources=anchor_sources,
                                              use_host_aliases=use_host_aliases, other_animal=other_animal)
     pending = combine.unresolved(batch, sources, deterministic)
+    from modules import record_audit
+    record_audit.report(batch, 'all records')
+    record_audit.report(pending, 'source model records')
     if method == "llm":
         runlog.emit(f"LLM model: {llm_config.model}")
         runlog.emit(f"LLM minimum generation score: {llm_config.min_score}")
@@ -147,6 +152,7 @@ def main(argv=None):
                 batch, sources = input.load(
                     args.metadata, args.sources, args.id_col, limit=args.limit,
                     max_value_chars=args.max_value_chars, max_record_chars=args.max_record_chars,
+                    exclude_noisy_fields=not args.disable_noisy_field_exclusion,
                 )
             else:
                 from modules.biosample import load_biosamples
@@ -159,7 +165,8 @@ def main(argv=None):
                 sources = input.load_sources(args.sources, 'accession')
                 batch = input.prepare_batch(metadata, id_col='accession',
                                             max_value_chars=args.max_value_chars,
-                                            max_record_chars=args.max_record_chars)
+                                            max_record_chars=args.max_record_chars,
+                                            exclude_noisy_fields=not args.disable_noisy_field_exclusion)
             runlog.provenance(args, command, batch)
             taxonomy = deterministic_source.load_taxonomy(args.taxonomy_dir, fallback_method=args.method)
             anchors = (deterministic_source.configured_anchors(sources, taxonomy, report=True)
@@ -182,6 +189,10 @@ def main(argv=None):
                 disabled=args.disable_verify_source, model=nli_model,
             )
             runlog.emit(f"NLI verification stage seconds (including any weight loading): {time.perf_counter() - verification_started:.3f}")
+            from modules import record_audit
+            pending = batch.subset(source_result.table.index[source_result.table.source_method.eq(args.method)])
+            record_audit.write(batch, pending, sources, nli_model, args.out,
+                               not args.disable_noisy_field_exclusion)
             fields = []
             if not args.skip_date:
                 fields.append(date.run(batch))

@@ -85,6 +85,7 @@ class MetadataBatch:
     """
     metadata: pd.DataFrame
     records: pd.Series
+    record_audit: pd.DataFrame | None = None
 
     def __post_init__(self):
         index = self.metadata.index
@@ -100,7 +101,8 @@ class MetadataBatch:
     def subset(self, row_keys) -> "MetadataBatch":
         """Select row keys in the requested order, preserving identity."""
         keys = list(row_keys)
-        return MetadataBatch(self.metadata.loc[keys], self.records.loc[keys])
+        return MetadataBatch(self.metadata.loc[keys], self.records.loc[keys],
+                             self.record_audit.loc[keys] if self.record_audit is not None else None)
 
     def __len__(self):
         return len(self.metadata)

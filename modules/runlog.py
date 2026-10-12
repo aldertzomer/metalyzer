@@ -128,6 +128,8 @@ def provenance(args, argv: list[str], batch) -> None:
         ("Min score (NLI only)", args.min_score),
         ("Max value chars", args.max_value_chars),
         ("Max record chars", args.max_record_chars),
+        ("Noisy-field exclusion", 'disabled' if args.disable_noisy_field_exclusion else 'enabled'),
+        ("Filtering profile", 'legacy' if args.disable_noisy_field_exclusion else 'variant_c_v1'),
         ("Metadata path", str(Path(args.metadata).resolve()) if args.metadata else "BioSample input"),
         ("Sources path", str(Path(args.sources).resolve())),
         ("Sources SHA256", _sha256(args.sources)),

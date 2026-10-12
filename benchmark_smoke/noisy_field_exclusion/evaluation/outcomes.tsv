@@ -1,0 +1,13 @@
+input	method	condition	status	reason	recorded
+tsv	nli	unfiltered	complete		True
+tsv	nli	filtered	complete		True
+tsv	llm	unfiltered	complete		True
+tsv	llm	filtered	complete		True
+tsv	mistral	unfiltered	complete		True
+tsv	mistral	filtered	complete		True
+biosample	nli	unfiltered	complete		True
+biosample	nli	filtered	complete		True
+biosample	llm	unfiltered	complete		True
+biosample	llm	filtered	complete		True
+biosample	mistral	unfiltered	complete		True
+biosample	mistral	filtered	complete		True

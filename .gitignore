@@ -5,3 +5,5 @@ __pycache__/
 # Local benchmark staging, backups and reproducible metadata cache.
 benchmark_smoke/rerun_*/
 benchmark_smoke/biosample_diagnostics/selected_metadata.pkl
+benchmark_smoke/noisy_field_exclusion/input_cache/
+benchmark_smoke/noisy_field_exclusion/*/*.console.log

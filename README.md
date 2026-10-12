@@ -760,9 +760,84 @@ Validation uses mocked API responses, including concurrency, timeouts, retries,
 taxonomy precedence and output serialization. The saved API benchmark below
 reports classification accuracy for a complete run.
 
+## Noisy metadata field exclusion
+
+Metalyzer now removes administrative and technical BioSample fields from the text
+sent to NLI, local Ministral, and the Mistral API by default. This applies to
+ordinary `--metadata` TSV input and local `--biosample` input alike. Registration
+profiles such as `model: Pathogen.env` and `package display name`, accessions,
+submission dates, sequencing details, and laboratory protocol fields can consume
+the limited model context or suggest a source that the sample metadata does not
+support. The filtering profile is `variant_c_v1`.
+
+The filter runs when Metalyzer renders model text. Raw metadata, its column order,
+the normal result TSV schema, deterministic host taxonomy, date/country extraction,
+and the configured 300-character value and 2,000-character record limits remain
+unchanged. Filtering removes fields before record truncation. NLI source
+verification receives the same rendered text as the source classifier. Unknown
+field names continue to appear unless they match a defined administrative or
+technical field. Host, source, specimen, environment, collection-date, study
+context, title, and description fields remain available. An
+`original_attributes.*` value is suppressed only when it duplicates an
+equivalent canonical field; unique or conflicting original values remain.
+
+To restore the previous model text exactly, add
+`--disable-noisy-field-exclusion` to any input mode and method:
+
+```bash
+python metalyzer.py --metadata benchmark.tsv --id-col run_accession \
+  --sources sources.tsv --taxonomy-dir taxonomy --method nli \
+  --disable-noisy-field-exclusion --out unfiltered.tsv
+```
+
+Each run logs the filter setting, field omission counts, record lengths,
+truncation counts, and source-model timings. `<output>.filtering.json` separates
+statistics for all input records and the records reaching the source model;
+`<output>.excluded_fields.tsv` counts omitted field names without storing their
+values. NLI token-limit exposure is reported when the loaded verifier exposes
+its tokenizer.
+
 ## Benchmark results
 
-### Latest TSV and BioSample results with host terminology resolution
+### Current Variant C paired benchmark
+
+Fresh runs compare default filtering with `--disable-noisy-field-exclusion`
+for all three methods and both input modes. Each condition uses the same 1,320
+requests, current configured host aliases, and explicitly enabled
+`--other-animal-taxonomy`. The latter remains opt-in for ordinary runs. Accuracy
+counts reference `benchmark_true_labels.tsv` by run accession. Assigned
+precision excludes `unknown` predictions. The adjusted evaluation excludes
+only the 44 verified CAGED old-goat/current-chicken metadata conflicts; its
+denominator is 1,276. The 41 newer human-evidence/reference-unknown records
+remain scored in both evaluations.
+
+| Input | Method | Full accuracy, unfiltered → filtered | Full assigned precision | Adjusted accuracy, unfiltered → filtered | Adjusted assigned precision |
+|---|---|---:|---:|---:|---:|
+| TSV | NLI | 87.50% → 88.41% | 89.35% → 89.74% | 87.07% → 88.01% | 88.95% → 89.36% |
+| TSV | Local Ministral | 92.05% → 92.80% | 98.61% → 98.88% | 91.77% → 92.55% | 98.55% → 98.83% |
+| TSV | Mistral API | 97.35% → 97.95% | 97.18% → 97.82% | 97.26% → 97.88% | 97.08% → 97.73% |
+| BioSample | NLI | 72.88% → 81.52% | 75.84% → 85.17% | 75.39% → 84.33% | 78.62% → 88.33% |
+| BioSample | Local Ministral | 85.83% → 83.11% | 90.46% → 86.70% | 88.79% → 85.97% | 93.88% → 89.87% |
+| BioSample | Mistral API | 88.41% → 88.94% | 88.30% → 88.96% | 91.46% → 92.01% | 91.42% → 92.11% |
+
+Variant C helps BioSample NLI substantially, but **harms BioSample local
+Ministral** on this benchmark: 11 predictions improve and 47 worsen. The
+small TSV and BioSample API gains have paired uncertainty intervals that
+include or touch zero; fixed-seed API runs can still vary. Filtering is the
+requested default experiment, and `--disable-noisy-field-exclusion` restores
+the measured legacy text when its trade-off is preferable. The paired TSV and
+BioSample taxonomy assignments, date/country values, metadata and output
+schemas were checked unchanged.
+
+The [full Variant C report](benchmark_smoke/noisy_field_exclusion/README.md)
+links the [all-run metrics](benchmark_smoke/noisy_field_exclusion/evaluation/summary.tsv),
+[per-class metrics and confusion matrices](benchmark_smoke/noisy_field_exclusion/evaluation/),
+[paired prediction changes](benchmark_smoke/noisy_field_exclusion/evaluation/paired_summary.tsv),
+[complete before/after text examples](benchmark_smoke/noisy_field_exclusion/evaluation/error_examples.tsv),
+[field exclusions](benchmark_smoke/noisy_field_exclusion/filtered/biosample_nli.tsv.excluded_fields.tsv),
+and [run commands and input hashes](benchmark_smoke/noisy_field_exclusion/manifest.json).
+
+### Earlier TSV and BioSample results with host terminology resolution
 
 The new full BioSample NLI and Ministral runs each make **561 deterministic assignments**
 on 1,320 records: **402 exact taxonomy assignments** (1 numeric ID and 401 host
@@ -779,8 +854,9 @@ adjusted scoring, pathway precision, timings and current confusion matrices.
 | BioSample, new combined | [NLI](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_nli_host_terminology.tsv) | 962 / 1320 | 72.88% | 75.84% | 74 | 561 |
 | BioSample, new combined | [Local Ministral](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_llm_host_terminology.tsv) | 1133 / 1320 | 85.83% | 90.46% | 115 | 561 |
 
-Mistral API benchmarks have not been rerun with the new host terminology resolver.
-Their saved results remain in the historical table below.
+These earlier host-terminology runs did not include the Mistral API. The
+current Variant C comparison above includes fresh API runs with this taxonomy
+configuration; older API results remain in the historical table below.
 
 #### New TSV benchmark and alias impact
 

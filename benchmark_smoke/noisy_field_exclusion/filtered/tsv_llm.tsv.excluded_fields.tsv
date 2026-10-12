@@ -1,0 +1,7 @@
+scope	reason	field	count
+all_records	administrative_technical	experiment_alias	1320
+all_records	administrative_technical	library_name	1284
+all_records	administrative_technical	sample_accession	1320
+source_model_records	administrative_technical	experiment_alias	1042
+source_model_records	administrative_technical	library_name	1007
+source_model_records	administrative_technical	sample_accession	1042

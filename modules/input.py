@@ -15,7 +15,7 @@ def read_tsv(path: str | Path, **kwargs) -> pd.DataFrame:
 
 
 def prepare_batch(metadata: pd.DataFrame, *, id_col: str | None = None, max_value_chars: int = 300,
-                  max_record_chars: int = 2000) -> MetadataBatch:
+                  max_record_chars: int = 2000, exclude_noisy_fields: bool = True) -> MetadataBatch:
     """Assign positional keys once, preserving external IDs and input order."""
     if max_value_chars < 1 or max_record_chars < 1:
         raise ValueError("Record truncation limits must be positive")
@@ -23,11 +23,17 @@ def prepare_batch(metadata: pd.DataFrame, *, id_col: str | None = None, max_valu
     excluded = {"host_tax_id", "tax_id"}
     if id_col is not None:
         excluded.add(id_col)
+    text, audits = [], []
+    for _, row in frame.iterrows():
+        audit = {}
+        text.append(build_record(row, max_value_chars, max_record_chars, excluded,
+                                 exclude_noisy_fields, audit=audit))
+        audits.append(audit)
     records = pd.Series(
-        [build_record(row, max_value_chars, max_record_chars, excluded) for _, row in frame.iterrows()],
+        text,
         index=frame.index, name="record", dtype=object,
     )
-    return MetadataBatch(frame, records)
+    return MetadataBatch(frame, records, pd.DataFrame(audits, index=frame.index))
 
 
 def parse_taxonomy_anchors(value: str) -> tuple[int, ...]:
@@ -42,7 +48,7 @@ def parse_taxonomy_anchors(value: str) -> tuple[int, ...]:
 
 def load(metadata_path: str | Path, sources_path: str | Path, id_col: str, *,
          limit: int | None = None, max_value_chars: int = 300,
-         max_record_chars: int = 2000) -> tuple[MetadataBatch, SourceVocabulary]:
+         max_record_chars: int = 2000, exclude_noisy_fields: bool = True) -> tuple[MetadataBatch, SourceVocabulary]:
     """Read string-valued TSVs without NA coercion; limit applies at read time."""
     if limit is not None and limit < 1:
         raise ValueError("limit must be positive")
@@ -51,7 +57,7 @@ def load(metadata_path: str | Path, sources_path: str | Path, id_col: str, *,
         raise ValueError(f"ID column {id_col!r} is missing from metadata")
     sources = load_sources(sources_path, id_col)
     return prepare_batch(metadata, id_col=id_col, max_value_chars=max_value_chars,
-                         max_record_chars=max_record_chars), sources
+                         max_record_chars=max_record_chars, exclude_noisy_fields=exclude_noisy_fields), sources
 
 
 def load_sources(sources_path: str | Path, id_col: str) -> SourceVocabulary:
