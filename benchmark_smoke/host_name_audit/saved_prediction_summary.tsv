@@ -1,0 +1,13 @@
+file	records	correct	overall_accuracy	evaluation	original_records	excluded_records	unknown_predictions	assigned_predictions	correct_assigned	precision_assigned	invalid_llm_outputs	numeric_taxonomy_calls	host_name_calls	taxonomy_calls	llm_calls
+benchmark_nli.tsv	1320	1137	0.8613636363636363	original	1320	0	114	1206	1064	0.8822553897180763	0	215	0	215	0
+benchmark_llm.tsv	1320	1215	0.9204545454545454	original	1320	0	171	1149	1134	0.9869451697127938	1	215	0	215	1105
+benchmark_mistral_api.tsv	1320	1284	0.9727272727272728	original	1320	0	75	1245	1209	0.9710843373493976	0	215	0	215	0
+benchmark_biosample_nli.tsv	1320	805	0.6098484848484849	original	1320	0	97	1223	788	0.6443172526573998	0	0	0	0	0
+benchmark_biosample_llm.tsv	1320	1133	0.8583333333333333	original	1320	0	118	1202	1089	0.9059900166389351	1	0	0	0	1320
+benchmark_biosample_mistral_api.tsv	1320	1174	0.8893939393939394	original	1320	0	29	1291	1147	0.8884585592563904	0	0	0	0	0
+benchmark_nli.tsv	1276	1093	0.8565830721003135	metadata-version-adjusted	1320	44	114	1162	1020	0.8777969018932874	0	171	0	171	0
+benchmark_llm.tsv	1276	1171	0.9177115987460815	metadata-version-adjusted	1320	44	171	1105	1090	0.9864253393665159	1	171	0	171	1105
+benchmark_mistral_api.tsv	1276	1240	0.9717868338557993	metadata-version-adjusted	1320	44	75	1201	1165	0.9700249791840133	0	171	0	171	0
+benchmark_biosample_nli.tsv	1276	804	0.6300940438871473	metadata-version-adjusted	1320	44	97	1179	787	0.6675148430873622	0	0	0	0	0
+benchmark_biosample_llm.tsv	1276	1133	0.8879310344827587	metadata-version-adjusted	1320	44	118	1158	1089	0.9404145077720207	1	0	0	0	1276
+benchmark_biosample_mistral_api.tsv	1276	1174	0.9200626959247649	metadata-version-adjusted	1320	44	29	1247	1147	0.9198075380914194	0	0	0	0	0

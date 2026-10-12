@@ -1,0 +1,39 @@
+Offline deterministic host taxonomy audit; no model inference
+Taxonomy file nodes.dmp: /home/zomer007/metalyzer/taxonomy/nodes.dmp; 232279767 bytes; modified 2026-10-07T13:12:57.588690+00:00
+Taxonomy file names.dmp: /home/zomer007/metalyzer/taxonomy/names.dmp; 316659961 bytes; modified 2026-10-07T13:12:58.820705+00:00
+Taxonomy file merged.dmp: /home/zomer007/metalyzer/taxonomy/merged.dmp; 1912229 bytes; modified 2026-10-07T13:12:58.948707+00:00
+Input mode: BioSample
+BioSample store: /mnt/sdd1/data/biosample
+Requested BioSamples: 1320
+BioSample accession index: /mnt/sdd1/data/biosample/biosample.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 1320
+BioSample lookup time: 165.378 seconds
+BioSample metadata columns: 319
+Taxonomy configuration:
+  configured anchors: 12
+  valid anchors:      12
+  merged IDs:         0
+  invalid anchors:    0
+  conflicts:          0
+Taxonomy resolution:
+  Explicit host taxonomy ID: 1
+  Exact host-name resolution: 401
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 918
+  Total deterministic assignments: 402
+  Records continuing to model classification: 918
+{
+  "records": 1320,
+  "usable_numeric_host_taxid": 2,
+  "resolvable_scientific_host_name": 479,
+  "resolvable_any_host_name": 616,
+  "unresolved_or_ambiguous_host_name": 704,
+  "ambiguous_host_name": 0,
+  "conflicting_host_evidence": 0,
+  "numeric_textual_conflicts": 0,
+  "explicit_numeric_assignments": 1,
+  "exact_host_name_assignments": 401,
+  "total_deterministic_assignments": 402,
+  "model_fallback_records": 918
+}
+Audit complete: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/host_name_audit; original denominator 1320, metadata-version-adjusted denominator 1276

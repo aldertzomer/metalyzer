@@ -17,6 +17,7 @@ import metalyzer
 from modules import deterministic_source, input, llm, mistral, nli
 from modules.contracts import SourceVocabulary
 from modules.generative import system_prompt
+from helpers import adapt_taxonomy_mock
 
 
 def response(content):
@@ -130,6 +131,7 @@ class MistralTests(unittest.TestCase):
         client, _ = self.mock_client(['{"source":"turkey"}', '{"source":"unknown"}'])
         taxonomy = MagicMock()
         taxonomy.classify_host_taxid.side_effect = [None, deterministic_source.TaxonomySourceResult("sheep", 9940, "Ovis aries"), None]
+        adapt_taxonomy_mock(taxonomy)
         with patch.object(nli, "pipeline") as nli_loader, patch.object(llm, "load_local_llm") as llm_loader:
             result = metalyzer.classify_sources(self.batch, self.sources, method="mistral", taxonomy=taxonomy,
                                                mistral_config=self.config)
@@ -146,6 +148,7 @@ class MistralTests(unittest.TestCase):
             mistral.run(self.batch.subset([]), self.sources).validate(self.batch.subset([]), self.sources)
             taxonomy = MagicMock()
             taxonomy.classify_host_taxid.return_value = deterministic_source.TaxonomySourceResult("sheep", 9940, "Ovis aries")
+            adapt_taxonomy_mock(taxonomy)
             result = metalyzer.classify_sources(self.batch, self.sources, method="mistral", taxonomy=taxonomy)
             self.assertEqual(result.table.source_method.tolist(), ["host_tax_id"] * 3)
             factory.assert_not_called()

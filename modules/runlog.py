@@ -26,6 +26,17 @@ def emit(message: str) -> None:
         print(message, flush=True)
 
 
+def taxonomy_resolution(counts) -> None:
+    total = counts['numeric'] + counts['names']
+    emit("Taxonomy resolution:\n"
+         f"  Explicit host taxonomy ID: {counts['numeric']}\n"
+         f"  Exact host-name resolution: {counts['names']}\n"
+         f"  Ambiguous/conflicting hosts: {counts['ambiguous_conflicting']}\n"
+         f"  No deterministic assignment: {counts['unresolved']}\n"
+         f"  Total deterministic assignments: {total}\n"
+         f"  Records continuing to model classification: {counts['unresolved']}")
+
+
 @contextmanager
 def analysis_log(output_path: str | Path):
     """Attach one console and one file handler; restore warning behavior afterward."""

@@ -1,0 +1,25 @@
+{
+  "records": 1320,
+  "usable_numeric_host_taxid": 2,
+  "resolvable_scientific_host_name": 479,
+  "resolvable_any_host_name": 616,
+  "unresolved_or_ambiguous_host_name": 704,
+  "ambiguous_host_name": 0,
+  "conflicting_host_evidence": 0,
+  "numeric_textual_conflicts": 0,
+  "explicit_numeric_assignments": 1,
+  "exact_host_name_assignments": 401,
+  "total_deterministic_assignments": 402,
+  "model_fallback_records": 918,
+  "excluded_documented_records": 44,
+  "adjusted_records": 1276,
+  "biosample_store": "/mnt/sdd1/data/biosample",
+  "taxonomy_dir": "/home/zomer007/metalyzer/taxonomy",
+  "elapsed_seconds": 214.01146710698958,
+  "input_sha256": {
+    "benchmark.tsv": "8691800c867728e5ee72ade8f80c2d738ba7966ca990070bda511000c90bec69",
+    "benchmark_accessions.tsv": "96ff59c917254016c97850d862dadb43f139e707c382c32862e9d302a271c27a",
+    "benchmark_true_labels.tsv": "7e5a740a919ee6f1414a44459cdd1ca967e1dc7846f738917d5e87ed027c4094",
+    "sources.tsv": "9c5a4aa17ae4bf549ba40c14dd6b2c5574ac9e9d4d124311058f28487b155e46"
+  }
+}

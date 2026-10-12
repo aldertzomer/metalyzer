@@ -12,7 +12,7 @@ import pandas as pd
 
 import metalyzer
 from modules import country, records as record_module, deterministic_source, llm as llm_module, nli as nli_module, verification
-from helpers import classify, llm_config
+from helpers import classify, llm_config, adapt_taxonomy_mock
 from modules.contracts import MetadataBatch, SourceResult, SourceVocabulary
 from modules.deterministic_source import TaxonomySourceResult
 
@@ -214,6 +214,7 @@ class LocalLLMTests(unittest.TestCase):
         taxonomy = MagicMock()
         tax_result = TaxonomySourceResult('sheep', 9940, 'Ovis aries')
         taxonomy.classify_host_taxid.side_effect = [None, tax_result, None]
+        adapt_taxonomy_mock(taxonomy)
         df = pd.DataFrame({'id': ['a', 'b', 'c'], 'host_tax_id': ['', '9940', '']}, index=[7, 8, 9])
         result = self.classify(['first', 'taxonomy-only record', 'third'], taxonomy, df)
         self.assertEqual(taxonomy.classify_host_taxid.call_count, 3)
@@ -238,6 +239,7 @@ class LocalLLMTests(unittest.TestCase):
                     self.args.method = method
                     taxonomy = MagicMock()
                     taxonomy.classify_host_taxid.return_value = TaxonomySourceResult('sheep', 9940, 'Ovis aries')
+                    adapt_taxonomy_mock(taxonomy)
                     with patch.object(nli_module, 'pipeline') as nli, patch.object(llm_module, 'load_local_llm') as llm:
                         result = self.classify(['sheep'] * count, taxonomy)
                     nli.assert_not_called()
@@ -452,6 +454,7 @@ class LocalLLMTests(unittest.TestCase):
         self.mocked_hf(['unknown'])
         taxonomy = MagicMock()
         taxonomy.classify_host_taxid.return_value = TaxonomySourceResult('cat', 9685, 'Felis catus')
+        adapt_taxonomy_mock(taxonomy)
         out = self.classify(['unlisted host'], taxonomy)
         self.assertEqual(out.best_hit.tolist(), ['unknown'])
         self.assertEqual(out.source_method.tolist(), ['llm'])

@@ -7,6 +7,17 @@ from modules.llm import LLMConfig
 from modules.nli import NLIConfig
 
 
+def adapt_taxonomy_mock(taxonomy):
+    """Adapt existing numeric-stage mocks to the expanded host-resolution contract."""
+    from modules.deterministic_source import HostResolution
+    def resolve(row, anchors):
+        result = taxonomy.classify_host_taxid(row.get('host_tax_id'), anchors)
+        return (HostResolution(result, 'host_tax_id', result.evidence)
+                if result is not None else HostResolution())
+    taxonomy.resolve_host_row.side_effect = resolve
+    return taxonomy
+
+
 def llm_config(args):
     return LLMConfig(model=getattr(args, "llm_model", LLMConfig.model),
                      revision=getattr(args, "llm_revision", None), device=args.device,

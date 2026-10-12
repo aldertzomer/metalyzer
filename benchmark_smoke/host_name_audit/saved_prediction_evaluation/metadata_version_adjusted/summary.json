@@ -1,0 +1,131 @@
+[
+  {
+    "file": "benchmark_nli.tsv",
+    "records": 1276,
+    "correct": 1093,
+    "overall_accuracy": 0.8565830721003135,
+    "evaluation": "metadata-version-adjusted",
+    "original_records": 1320,
+    "excluded_records": 44,
+    "unknown_predictions": 114,
+    "assigned_predictions": 1162,
+    "correct_assigned": 1020,
+    "precision_assigned": 0.8777969018932874,
+    "invalid_llm_outputs": 0,
+    "numeric_taxonomy_calls": 171,
+    "host_name_calls": 0,
+    "taxonomy_calls": 171,
+    "llm_calls": 0,
+    "source_methods": {
+      "nli": 1105,
+      "host_tax_id": 171
+    }
+  },
+  {
+    "file": "benchmark_llm.tsv",
+    "records": 1276,
+    "correct": 1171,
+    "overall_accuracy": 0.9177115987460815,
+    "evaluation": "metadata-version-adjusted",
+    "original_records": 1320,
+    "excluded_records": 44,
+    "unknown_predictions": 171,
+    "assigned_predictions": 1105,
+    "correct_assigned": 1090,
+    "precision_assigned": 0.9864253393665159,
+    "invalid_llm_outputs": 1,
+    "numeric_taxonomy_calls": 171,
+    "host_name_calls": 0,
+    "taxonomy_calls": 171,
+    "llm_calls": 1105,
+    "source_methods": {
+      "llm": 1105,
+      "host_tax_id": 171
+    }
+  },
+  {
+    "file": "benchmark_mistral_api.tsv",
+    "records": 1276,
+    "correct": 1240,
+    "overall_accuracy": 0.9717868338557993,
+    "evaluation": "metadata-version-adjusted",
+    "original_records": 1320,
+    "excluded_records": 44,
+    "unknown_predictions": 75,
+    "assigned_predictions": 1201,
+    "correct_assigned": 1165,
+    "precision_assigned": 0.9700249791840133,
+    "invalid_llm_outputs": 0,
+    "numeric_taxonomy_calls": 171,
+    "host_name_calls": 0,
+    "taxonomy_calls": 171,
+    "llm_calls": 0,
+    "source_methods": {
+      "mistral": 1105,
+      "host_tax_id": 171
+    }
+  },
+  {
+    "file": "benchmark_biosample_nli.tsv",
+    "records": 1276,
+    "correct": 804,
+    "overall_accuracy": 0.6300940438871473,
+    "evaluation": "metadata-version-adjusted",
+    "original_records": 1320,
+    "excluded_records": 44,
+    "unknown_predictions": 97,
+    "assigned_predictions": 1179,
+    "correct_assigned": 787,
+    "precision_assigned": 0.6675148430873622,
+    "invalid_llm_outputs": 0,
+    "numeric_taxonomy_calls": 0,
+    "host_name_calls": 0,
+    "taxonomy_calls": 0,
+    "llm_calls": 0,
+    "source_methods": {
+      "nli": 1276
+    }
+  },
+  {
+    "file": "benchmark_biosample_llm.tsv",
+    "records": 1276,
+    "correct": 1133,
+    "overall_accuracy": 0.8879310344827587,
+    "evaluation": "metadata-version-adjusted",
+    "original_records": 1320,
+    "excluded_records": 44,
+    "unknown_predictions": 118,
+    "assigned_predictions": 1158,
+    "correct_assigned": 1089,
+    "precision_assigned": 0.9404145077720207,
+    "invalid_llm_outputs": 1,
+    "numeric_taxonomy_calls": 0,
+    "host_name_calls": 0,
+    "taxonomy_calls": 0,
+    "llm_calls": 1276,
+    "source_methods": {
+      "llm": 1276
+    }
+  },
+  {
+    "file": "benchmark_biosample_mistral_api.tsv",
+    "records": 1276,
+    "correct": 1174,
+    "overall_accuracy": 0.9200626959247649,
+    "evaluation": "metadata-version-adjusted",
+    "original_records": 1320,
+    "excluded_records": 44,
+    "unknown_predictions": 29,
+    "assigned_predictions": 1247,
+    "correct_assigned": 1147,
+    "precision_assigned": 0.9198075380914194,
+    "invalid_llm_outputs": 0,
+    "numeric_taxonomy_calls": 0,
+    "host_name_calls": 0,
+    "taxonomy_calls": 0,
+    "llm_calls": 0,
+    "source_methods": {
+      "mistral": 1276
+    }
+  }
+]

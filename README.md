@@ -309,11 +309,20 @@ python metalyzer.py --metadata benchmark.tsv --sources sources.tsv \
 ```
 
 Use `--device 0` for GPU execution. Normal taxonomy lookup is entirely local:
-files load once and lineages are cached. Only `host_tax_id` triggers taxonomy
-classification; the sample/pathogen `tax_id` is never used as host taxonomy.
+files load once and lineages are cached. Numeric `host_tax_id` and `host_taxid`
+are aliases. When a numeric host ID cannot assign a source, exact `host` or
+`host_scientific_name` values can resolve through the same taxonomy anchors.
+Genuine `original_attributes.host scientific name` aliases are also considered,
+without changing the raw dataframe. Generic `organism` / `tax_id`, titles,
+descriptions and isolation-source text never provide deterministic host evidence.
 Numeric strings, integral decimal values such as `9940.0`, quoted IDs, and
-obsolete IDs in `merged.dmp` are supported. Missing or invalid IDs fall back
-to the selected text classifier. Omitting `--taxonomy-dir`, or supplying unreadable/malformed files,
+obsolete IDs in `merged.dmp` are supported. Names match case-insensitively after
+whitespace normalization, with exact scientific names preferred over uniquely
+mapped NCBI common names/synonyms. Ambiguous names are rejected; there is no
+fuzzy or substring matching. Distinct batch host names are resolved in one
+streaming pass through `names.dmp`, and results are cached without a second
+complete taxonomy-name index. Missing or invalid evidence falls back to the
+selected text classifier. Omitting `--taxonomy-dir`, or supplying unreadable/malformed files,
 produces a warning and uses the selected text classifier for every row.
 
 The `taxonomy_anchors` column in `sources.tsv` controls these assignments.
@@ -330,6 +339,17 @@ configured, valid, merged, invalid, and conflicting anchor counts. Blank
 anchors or no matching lineage for a valid host fall back to the selected
 classifier. The generic sample/pathogen `tax_id` is intentionally never source
 evidence, since it often identifies the sequenced organism instead of its host.
+
+Numeric evidence takes priority when numeric and textual hosts map to the same
+configured source. If one route cannot resolve a configured source, the other
+can be used. Different configured source classes from numeric aliases or host
+name fields are logged as conflicts and left for the normal model fallback.
+Incompatible resolved host taxa are also rejected under broad custom anchors;
+ancestor/descendant host evidence remains compatible.
+Names in unconfigured lineages also fall back: `Sus scrofa` does not become
+domestic pig merely because its descendant `Sus scrofa domesticus` is anchored;
+a duck does not become chicken or wildbird without a matching configured anchor.
+No numeric host ID is fabricated in the input dataframe.
 
 The repository file configures domestic pig (`9825`), chicken (`9031`), turkey
 (`9103`), cattle (`9913`), sheep (`9940`), goat (`9925`), human (`9606`), dog
@@ -355,6 +375,14 @@ SRR17929619     NA      NA      NA  NA      NA      ... sheep    host_tax_id    
 
 Input order, year/country extraction, and NLI score column names are preserved.
 Each run reports taxonomy calls, selected classifier calls, and its `unknown` calls.
+Numeric assignments use `source_method=host_tax_id`; name-derived assignments
+use `source_method=host_name`, for example
+`host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo`. Both routes count
+as deterministic assignments and have `source_llm_score=NA`. Logs distinguish
+numeric assignments, exact-name assignments, conflicts/ambiguities, and rows
+continuing to the selected model. Conflicts/ambiguities are a subset of fallback
+rows. The output schema, model prompts, confidence thresholds and verification
+behavior are unchanged.
 LLM runs also report the number of invalid model outputs.
 If all hosts resolve, the fallback classifier is not loaded. The NLI verifier
 still loads for those assignments unless `--disable-verify-source` is set.
@@ -625,6 +653,55 @@ in the [six-run summary](benchmark_smoke/six_method_evaluation/summary.tsv).
 The [BioSample error-analysis report](benchmark_smoke/biosample_diagnostics/report.md)
 examines source-data conflicts, reference-unknown records with explicit source
 evidence, host taxonomy availability, and controlled NLI recognition tests.
+
+The table and figures above/below retain the complete original 1,320-record
+evaluations of the saved predictions. The new host-name resolver is audited
+separately before any expensive model rerun:
+
+```bash
+python benchmark_smoke/audit_host_taxonomy.py \
+  --taxonomy-dir /home/zomer007/metalyzer/taxonomy
+```
+
+This CPU-only command reads the local BioSample store, reports exact host-name
+and numeric-ID resolution, checks conflicts, and writes an audit under
+`benchmark_smoke/host_name_audit/`. It does not run NLI, Ministral or the API,
+fabricate input taxonomy IDs, replace predictions, or change reference labels.
+
+The [complete offline audit](benchmark_smoke/host_name_audit/README.md) found
+2 usable numeric host IDs, 479 exact scientific-name matches, and 616
+unambiguous name matches including common names/synonyms. There were 704
+unresolved/missing names and no ambiguous names or numeric/textual conflicts.
+Only configured source lineages bypass classification: 1 numeric assignment
+plus 401 host-name assignments gives **402 deterministic records**, leaving
+**918 records for model fallback**. The existing model benchmark results remain
+historical until a complete rerun of the updated pipeline.
+
+It also scores the existing six prediction files twice: **original evaluation**
+(all 1,320 records) and **metadata-version-adjusted evaluation** (1,276 records).
+Only the exact 44 run/BioSample pairs in
+[`goat_host_conflicts.tsv`](benchmark_smoke/biosample_diagnostics/goat_host_conflicts.tsv)
+are excluded from the adjusted denominator. Validation checks old ENA
+`Capra hircus` evidence against current BioSample `Gallus gallus` and
+`ifsac_category=chicken`, including the 18 June 2025 update date in the live audit.
+The historical ENA export is the AllTheBacteria May 2025 snapshot. Production
+classification has no exceptions for these records: `SAMN37735409` resolves to
+chicken from its current host name. The separate 41 reference-unknown/human-evidence
+cases are not excluded or relabeled. The existing error-analysis report remains
+a historical report of the earlier resolver.
+
+For adjusted evaluation of other saved predictions, without changing them:
+
+```bash
+python benchmark_smoke/evaluate_local_backends.py \
+  --only-predictions --prediction benchmark_biosample_llm.tsv best_hit \
+  --accession-mapping benchmark_smoke/six_method_evaluation/accession_mapping.tsv \
+  --conflicts benchmark_smoke/biosample_diagnostics/goat_host_conflicts.tsv \
+  --out-dir benchmark_smoke/metadata_version_evaluation
+```
+
+Original and adjusted metrics/confusion tables are written into separate
+subdirectories. Taxonomy counts include both `host_tax_id` and `host_name`.
 
 ### TSV · NLI benchmark
 

@@ -17,6 +17,54 @@ if TYPE_CHECKING:
 
 TAXDUMP_URL = "https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz"
 FILES = ("nodes.dmp", "names.dmp", "merged.dmp")
+DETERMINISTIC_METHODS = ("host_tax_id", "host_name")
+NUMERIC_HOST_FIELDS = ("host_tax_id", "host_taxid")
+NAME_CLASSES = {"scientific name", "common name", "genbank common name", "synonym", "genbank synonym"}
+MISSING_HOST_NAMES = {"", "na", "n/a", "nan", "<na>", "none", "null", "missing", "unknown",
+                      "unknown host", "unspecified", "not provided", "not collected", "not applicable",
+                      "not available", "not known", "not determined", "not recorded", "no host", "-"}
+
+
+def normalized_host_name(value):
+    """Exact name key: normalize case/whitespace, never infer or tokenize a taxon."""
+    key = " ".join(str(value).split()).casefold() if value is not None else ""
+    return None if key in MISSING_HOST_NAMES else key
+
+
+def host_name_values(row):
+    """Only explicit host fields, including genuine original scientific-name aliases."""
+    values = []
+    for field, value in row.items():
+        name = " ".join(str(field).replace("_", " ").split()).casefold()
+        # The container name contains an underscore; check it before normalization.
+        if str(field).casefold().startswith("original_attributes."):
+            suffix = " ".join(str(field).split(".", 1)[1].replace("_", " ").split()).casefold()
+            accepted = suffix == "host scientific name"
+        else:
+            accepted = name in {"host", "host scientific name"}
+        if accepted and normalized_host_name(value) is not None:
+            values.append((str(field), str(value).strip()))
+    # Canonical host first; original aliases never override it.
+    return sorted(values, key=lambda item: (item[0] != "host", item[0] != "host_scientific_name"))
+
+
+@dataclass(frozen=True)
+class TaxonomyNameResult:
+    taxid: int | None
+    match_type: str  # scientific name, common name/synonym, ambiguous, unresolved, missing
+
+
+@dataclass(frozen=True)
+class HostResolution:
+    result: TaxonomySourceResult | None = None
+    method: str = ""
+    evidence: str = ""
+    numeric_taxids: tuple[int, ...] = ()
+    name_taxids: tuple[int, ...] = ()
+    scientific_name_resolved: bool = False
+    ambiguous: bool = False
+    conflict: str = ""
+    numeric_text_conflict: bool = False
 
 
 @dataclass(frozen=True)
@@ -40,9 +88,11 @@ def _rows(path):
 class NCBITaxonomy:
     def __init__(self, taxonomy_dir):
         directory = Path(taxonomy_dir)
+        self.names_path = (directory / "names.dmp").resolve()
+        self._name_cache = {}
         self.parent_by_taxid = {int(r[0]): int(r[1]) for r in _rows(directory / "nodes.dmp")}
         self.scientific_name_by_taxid = {}
-        for r in _rows(directory / "names.dmp"):
+        for r in _rows(self.names_path):
             if r[3] == "scientific name":
                 taxid, name = int(r[0]), r[1]
                 self.scientific_name_by_taxid[taxid] = name
@@ -86,6 +136,95 @@ class NCBITaxonomy:
 
     def scientific_name(self, taxid):
         return self.scientific_name_by_taxid.get(self.normalize_taxid(taxid), "")
+
+    def resolve_host_names(self, values):
+        """Resolve a batch in one streaming pass, storing only requested exact keys.
+
+        Scientific names take precedence over aliases. Ambiguity is determined
+        across all normalized live taxids, even when they share a source anchor.
+        Repeated batches with already-seen names do not reopen names.dmp.
+        """
+        wanted = {key for value in values if (key := normalized_host_name(value)) is not None}
+        wanted.difference_update(self._name_cache)
+        if not wanted:
+            return
+        scientific = {key: set() for key in wanted}
+        aliases = {key: set() for key in wanted}
+        for row in _rows(self.names_path):
+            if row[3] not in NAME_CLASSES:
+                continue
+            key = normalized_host_name(row[1])
+            if key not in wanted:
+                continue
+            taxid = self.normalize_taxid(row[0])
+            if taxid is None or not self.lineage(taxid) or not self.scientific_name(taxid):
+                continue
+            (scientific if row[3] == "scientific name" else aliases)[key].add(taxid)
+        for key in wanted:
+            matches = scientific[key] or aliases[key]
+            if len(matches) == 1:
+                self._name_cache[key] = TaxonomyNameResult(
+                    next(iter(matches)), "scientific name" if scientific[key] else "common name/synonym")
+            else:
+                self._name_cache[key] = TaxonomyNameResult(None, "ambiguous" if matches else "unresolved")
+
+    def resolve_host_name(self, value):
+        key = normalized_host_name(value)
+        if key is None:
+            return TaxonomyNameResult(None, "missing")
+        self.resolve_host_names([value])
+        return self._name_cache[key]
+
+    def resolve_host_row(self, row, anchor_sources):
+        """Combine explicit numeric and named host evidence without mutating a row."""
+        numeric, named = [], []
+        numeric_taxids, name_taxids = [], []
+        ambiguous = scientific = False
+        for field in NUMERIC_HOST_FIELDS:
+            taxid = self.normalize_taxid(row.get(field))
+            if taxid is not None and self.lineage(taxid) and self.scientific_name(taxid):
+                numeric_taxids.append(taxid)
+                result = self.classify_host_taxid(taxid, anchor_sources)
+                if result is not None:
+                    numeric.append((field, result))
+        names = host_name_values(row)
+        self.resolve_host_names(value for _, value in names)
+        for field, value in names:
+            match = self.resolve_host_name(value)
+            ambiguous |= match.match_type == "ambiguous"
+            if match.taxid is not None:
+                scientific |= match.match_type == "scientific name"
+                name_taxids.append(match.taxid)
+                result = self.classify_host_taxid(match.taxid, anchor_sources)
+                if result is not None:
+                    named.append((field, value, result))
+        facts = dict(numeric_taxids=tuple(dict.fromkeys(numeric_taxids)),
+                     name_taxids=tuple(dict.fromkeys(name_taxids)),
+                     scientific_name_resolved=scientific, ambiguous=ambiguous)
+        classes = {result.source for _, result in numeric} | {result.source for _, _, result in named}
+        if len(classes) > 1:
+            return HostResolution(conflict="different configured source classes: " + ", ".join(sorted(classes)),
+                                  numeric_text_conflict=bool(numeric and named), **facts)
+        # Conflicting host values also matter under a deliberately broad source
+        # anchor. Ancestor/descendant evidence agrees; unrelated taxa do not.
+        taxids = tuple(dict.fromkeys(numeric_taxids + name_taxids))
+        incompatible = [(left, right) for i, left in enumerate(taxids) for right in taxids[i + 1:]
+                        if not self.is_descendant_of(left, right) and not self.is_descendant_of(right, left)]
+        if incompatible:
+            numeric_text_conflict = any(left != right and not self.is_descendant_of(left, right)
+                                        and not self.is_descendant_of(right, left)
+                                        for left in numeric_taxids for right in name_taxids)
+            return HostResolution(conflict="incompatible host taxa: " + ", ".join(f"{a}/{b}" for a, b in incompatible),
+                                  numeric_text_conflict=numeric_text_conflict, **facts)
+        if numeric:
+            field, result = numeric[0]
+            return HostResolution(result, "host_tax_id", f"{field}={result.taxid}; {result.scientific_name}", **facts)
+        # An ambiguous host-name field cannot be bypassed by a second name alias.
+        if named and not ambiguous:
+            field, value, result = named[0]
+            return HostResolution(result, "host_name",
+                                  f"{field}={value}; taxid={result.taxid}; {result.scientific_name}", **facts)
+        return HostResolution(**facts)
 
     def classify_host_taxid(self, taxid, anchor_sources):
         taxid = self.normalize_taxid(taxid)
@@ -181,21 +320,40 @@ def download_taxonomy(directory):
 
 
 def run(batch: MetadataBatch, sources: SourceVocabulary, taxonomy: NCBITaxonomy | None = None,
-        *, anchor_sources: dict[int, set[str]] | None = None) -> SourceResult:
+        *, anchor_sources: dict[int, set[str]] | None = None, diagnostics: list | None = None) -> SourceResult:
     """Return only resolved host rows; absent rows must be handled by a fallback."""
     from .contracts import SourceResult, empty_source_table
+    from . import runlog
 
     resolved = {}
+    counts = dict(numeric=0, names=0, ambiguous_conflicting=0, unresolved=0)
     if taxonomy is not None:
         anchors = anchor_sources if anchor_sources is not None else configured_anchors(sources, taxonomy)
+        taxonomy.resolve_host_names(value for _, row in batch.metadata.iterrows()
+                                    for _, value in host_name_values(row))
+        conflict_examples = []
         for key, row in batch.metadata.iterrows():
-            result = taxonomy.classify_host_taxid(row.get("host_tax_id"), anchors)
-            if result is not None and result.source in sources.names:
-                resolved[key] = result
+            resolution = taxonomy.resolve_host_row(row, anchors)
+            if diagnostics is not None:
+                diagnostics.append(dict(row_key=key, resolution=resolution))
+            if resolution.result is not None and resolution.result.source in sources.names:
+                resolved[key] = resolution
+                counts["numeric" if resolution.method == "host_tax_id" else "names"] += 1
+            else:
+                counts["unresolved"] += 1
+                if resolution.conflict or resolution.ambiguous:
+                    counts["ambiguous_conflicting"] += 1
+                if resolution.conflict and len(conflict_examples) < 10:
+                    conflict_examples.append(f"  row {key}: {resolution.conflict}")
+        for message in conflict_examples:
+            runlog.emit("Host taxonomy conflict" + message)
+    else:
+        counts["unresolved"] = len(batch)
+    runlog.taxonomy_resolution(counts)
     table = empty_source_table(sources, resolved)
-    for key, result in resolved.items():
+    for key, resolution in resolved.items():
         table.loc[key, ["best_hit", "source_method", "source_evidence"]] = [
-            result.source, "host_tax_id", result.evidence,
+            resolution.result.source, resolution.method, resolution.evidence,
         ]
     output = SourceResult(table)
     output.validate(batch, sources)

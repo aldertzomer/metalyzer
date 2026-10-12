@@ -27,6 +27,10 @@ class TaxonomyTests(unittest.TestCase):
             9103: (8782, "Meleagris gallopavo"), 9940: (33208, "Ovis aries"),
             11: (9940, "Sheep subspecies"), 9606: (33208, "Homo sapiens"),
             9685: (33554, "Felis catus"), 9615: (33554, "Canis lupus familiaris"),
+            9925: (33208, "Capra hircus"), 9913: (33208, "Bos taurus"),
+            9823: (33208, "Sus scrofa"), 9825: (9823, "Sus scrofa domesticus"),
+            8839: (8782, "Anas platyrhynchos"),
+            501: (33208, "Shared scientific name"), 502: (33208, "Shared scientific name"),
             1936016: (1, "environmental samples"), 41000: (1936016, "soil metagenome"),
             41001: (1936016, "marine metagenome"), 41002: (1936016, "air metagenome"),
             81077: (1, "artificial sequences"), 32630: (81077, "synthetic construct"),
@@ -287,6 +291,147 @@ class TaxonomyTests(unittest.TestCase):
             metalyzer.main(["--download-taxonomy", "taxonomy"])
             download.assert_called_once_with("taxonomy")
             model.assert_not_called()
+
+
+class HostNameTaxonomyTests(unittest.TestCase):
+    def setUp(self):
+        TaxonomyTests.setUp(self)
+        with (self.directory / 'names.dmp').open('a') as handle:
+            for taxid, name, kind in [(9031, 'chicken', 'common name'), (9103, 'turkey', 'genbank common name'),
+                                      (9606, 'human', 'common name'), (9031, 'poultry', 'synonym'),
+                                      (9103, 'poultry', 'synonym'), (9031, 'Felis catus', 'synonym'),
+                                      (9000, 'old sheep', 'synonym'), (9940, 'old sheep', 'synonym')]:
+                handle.write(f'{taxid} | {name} | | {kind} |\n')
+        self.taxonomy = NCBITaxonomy(self.directory)
+        names = ('chicken', 'turkey', 'goat', 'sheep', 'cattle', 'human', 'cat', 'pig', 'dog', 'wildbird')
+        self.sources = SourceVocabulary(names, 'accession',
+                                        ((9031,), (9103,), (9925,), (9940,), (9913,), (9606,),
+                                         (9685,), (9825,), (9615,), ()))
+        self.anchors = configured_anchors(self.sources, self.taxonomy)
+
+    def run_rows(self, rows, sources=None):
+        batch = input_module.prepare_batch(pd.DataFrame(rows), id_col='accession')
+        return deterministic_source.run(batch, sources or self.sources, self.taxonomy), batch
+
+    def test_exact_names_and_case_whitespace_normalization(self):
+        scientific = [('Gallus gallus', 9031, 'chicken'), ('Meleagris gallopavo', 9103, 'turkey'),
+                      ('Capra hircus', 9925, 'goat'), ('Ovis aries', 9940, 'sheep'),
+                      ('Bos taurus', 9913, 'cattle'), ('Homo sapiens', 9606, 'human'), ('Felis catus', 9685, 'cat')]
+        rows = [{'accession': str(i), 'host': f'  {name.upper().replace(" ", "   ")}  '}
+                for i, (name, _, _) in enumerate(scientific)]
+        result, batch = self.run_rows(rows)
+        self.assertEqual(result.table.best_hit.tolist(), [source for _, _, source in scientific])
+        self.assertEqual(result.table.source_method.tolist(), ['host_name'] * 7)
+        self.assertTrue(result.table.source_llm_score.isna().all())
+        self.assertNotIn('host_tax_id', batch.metadata)
+        for i, (name, taxid, _) in enumerate(scientific):
+            self.assertEqual(self.taxonomy.resolve_host_name(name).taxid, taxid)
+            self.assertIn(f'taxid={taxid}; {name}', result.table.loc[i, 'source_evidence'])
+
+    def test_unique_aliases_scientific_precedence_and_merged_alias(self):
+        for name, expected in [('chicken', 9031), ('turkey', 9103), ('human', 9606), ('old sheep', 9940)]:
+            self.assertEqual(self.taxonomy.resolve_host_name(name).taxid, expected)
+        self.assertEqual(self.taxonomy.resolve_host_name('Felis catus').taxid, 9685)
+        self.assertEqual(self.taxonomy.resolve_host_name('Felis catus').match_type, 'scientific name')
+
+    def test_ambiguous_missing_invalid_and_nonexact_names(self):
+        for name in ['poultry', 'Shared scientific name']:
+            match = self.taxonomy.resolve_host_name(name)
+            self.assertIsNone(match.taxid)
+            self.assertEqual(match.match_type, 'ambiguous')
+        for name in [None, pd.NA, float('nan'), '', ' NA ', 'unknown', 'not collected', 'not applicable',
+                     'tur', 'Gallus gallus sample', 'Gallus gallus | Homo sapiens', 'nonsense']:
+            self.assertIsNone(self.taxonomy.resolve_host_name(name).taxid)
+        result, _ = self.run_rows([{'host': 'poultry'}, {'host': 'Shared scientific name'}, {'host': 'missing'}])
+        self.assertTrue(result.table.empty)
+
+    def test_numeric_aliases_agreement_missing_invalid_and_conflicts(self):
+        rows = [{'host_tax_id': '9940'}, {'host_taxid': '9000'},
+                {'host_tax_id': 'NA', 'host': 'Ovis aries'},
+                {'host_tax_id': '9940', 'host': 'Ovis aries'},
+                {'host_tax_id': '9940', 'host_scientific_name': 'Sheep subspecies'},
+                {'host_tax_id': 'invalid', 'host_scientific_name': 'Bos taurus'},
+                {'host_tax_id': '9913', 'host': 'unrecognized host'},
+                {'host_tax_id': '9913', 'host': 'Capra hircus'},
+                {'host_tax_id': '9913', 'host_taxid': '9925'},
+                {'host': 'Felis catus', 'host_scientific_name': 'Homo sapiens'}]
+        before = pd.DataFrame(rows)
+        with contextlib.redirect_stdout(io.StringIO()) as screen:
+            result, batch = self.run_rows(rows)
+        self.assertEqual(result.table.index.tolist(), list(range(7)))
+        self.assertEqual(result.table.source_method.tolist(), ['host_tax_id', 'host_tax_id', 'host_name',
+                                                              'host_tax_id', 'host_tax_id', 'host_name', 'host_tax_id'])
+        self.assertIn('host_taxid=9940', result.table.loc[1, 'source_evidence'])
+        pd.testing.assert_frame_equal(batch.metadata, before)
+        self.assertIn('Host taxonomy conflict', screen.getvalue())
+        self.assertIn('Ambiguous/conflicting hosts: 3', screen.getvalue())
+        self.assertIn('Total deterministic assignments: 7', screen.getvalue())
+
+    def test_original_host_scientific_alias_and_conflict(self):
+        result, _ = self.run_rows([{'original_attributes.host scientific name': 'Meleagris gallopavo'},
+                                   {'host': 'Gallus gallus', 'original_attributes.host scientific name': 'Homo sapiens'},
+                                   {'host': 'Gallus gallus', 'original_attributes.host_scientific_name': 'Gallus gallus'}])
+        self.assertEqual(result.table.index.tolist(), [0, 2])
+        self.assertEqual(result.table.best_hit.tolist(), ['turkey', 'chicken'])
+        self.assertIn('original_attributes.host scientific name=', result.table.loc[0, 'source_evidence'])
+
+    def test_incompatible_hosts_are_not_hidden_by_a_broad_anchor(self):
+        broad = SourceVocabulary(('animal',), 'accession', ((33208,),))
+        result, _ = self.run_rows([{'host_tax_id': '9031', 'host': 'Homo sapiens'},
+                                   {'host': 'Felis catus', 'original_attributes.host scientific name': 'Homo sapiens'},
+                                   {'host_tax_id': '33208', 'host': 'Felis catus'}], broad)
+        self.assertEqual(result.table.index.tolist(), [2])
+        result, _ = self.run_rows([{'host_tax_id': '8839', 'host': 'Gallus gallus'}])
+        self.assertTrue(result.table.empty)
+
+    def test_pathogen_free_text_and_unconfigured_wildlife_never_assign(self):
+        result, _ = self.run_rows([{'tax_id': '9031', 'organism': 'Gallus gallus'},
+                                   {'title': 'Gallus gallus', 'description': 'host Homo sapiens', 'isolation_source': 'chicken'},
+                                   {'host': 'Sus scrofa'}, {'host': 'Anas platyrhynchos'}])
+        self.assertTrue(result.table.empty)
+        result, _ = self.run_rows([{'host': 'Sus scrofa domesticus'}])
+        self.assertEqual(result.table.best_hit.tolist(), ['pig'])
+        result, _ = self.run_rows([{'host': 'Gallus gallus'}], SourceVocabulary(('chicken',), 'accession'))
+        self.assertTrue(result.table.empty)
+
+    def test_one_names_pass_per_batch_and_cached_results(self):
+        from modules.deterministic_source import _rows
+        with patch.object(deterministic_source, '_rows', wraps=_rows) as reading:
+            self.taxonomy.resolve_host_names(['Gallus gallus', 'turkey', 'poultry', 'missing'])
+            for _ in range(10):
+                for name in ['Gallus gallus', 'TURKEY', 'poultry']:
+                    self.taxonomy.resolve_host_name(name)
+            self.assertEqual(reading.call_count, 1)
+
+    def test_all_methods_skip_fallback_and_verification_still_runs(self):
+        from modules import llm, mistral, verification
+        batch = input_module.prepare_batch(pd.DataFrame({'accession': ['a', 'b'], 'host': ['Gallus gallus', 'Meleagris gallopavo']}), id_col='accession')
+        for method in ['nli', 'llm', 'mistral']:
+            with self.subTest(method=method), patch.object(nli, 'run') as nr, patch.object(llm, 'run') as lr, patch.object(mistral, 'run') as mr:
+                result = metalyzer.classify_sources(batch, self.sources, method=method, taxonomy=self.taxonomy)
+                nr.assert_not_called(); lr.assert_not_called(); mr.assert_not_called()
+                self.assertEqual(result.table.source_method.tolist(), ['host_name', 'host_name'])
+        with patch.object(nli, 'pipeline') as factory:
+            factory.return_value.side_effect = lambda texts, **kw: [{'labels': kw['candidate_labels'], 'scores': [.97]} for _ in texts]
+            verified = verification.run(batch, self.sources, result, nli.NLIConfig(device=-1))
+        self.assertEqual(verified.values.tolist(), [.97, .97])
+
+    def test_cli_log_reports_both_routes_with_regular_output(self):
+        pd.DataFrame({'accession': ['a', 'b'], 'host_taxid': ['9031', ''], 'host': ['Gallus gallus', 'Meleagris gallopavo']}).to_csv(self.directory / 'host.tsv', sep='\t', index=False)
+        pd.DataFrame({'source': self.sources.labels, 'taxonomy_anchors': [','.join(map(str,a)) for a in self.sources.taxonomy_anchors]}).to_csv(self.directory / 'labels.tsv', sep='\t', index=False)
+        with patch.object(nli, 'pipeline') as model, contextlib.redirect_stdout(io.StringIO()):
+            metalyzer.main(['--metadata', str(self.directory / 'host.tsv'), '--sources', str(self.directory / 'labels.tsv'),
+                            '--out', str(self.directory / 'out.tsv'), '--id-col', 'accession',
+                            '--taxonomy-dir', str(self.directory), '--disable-verify-source'])
+        model.assert_not_called()
+        log = (self.directory / 'out.tsv.log').read_text()
+        for text in ['Explicit host taxonomy ID: 1', 'Exact host-name resolution: 1',
+                     'deterministic taxonomy assignments: 2', 'exact host-name assignments: 1', 'Taxonomy file names.dmp:']:
+            self.assertIn(text, log)
+        output = input_module.read_tsv(self.directory / 'out.tsv')
+        self.assertEqual(output.source_method.tolist(), ['host_tax_id', 'host_name'])
+        self.assertIn('nli_verification_score', output)
+        self.assertNotIn('host_taxid', output)  # existing regular output schema
 
 
 if __name__ == "__main__":

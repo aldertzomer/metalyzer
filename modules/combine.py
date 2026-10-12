@@ -71,6 +71,8 @@ def report(result: SourceResult, method: str) -> None:
     classified = table[table.source_method == method]
     emit("Source classification:\n"
           f"  taxonomy host_tax_id: {(table.source_method == 'host_tax_id').sum()}\n"
+          f"  taxonomy host_name: {(table.source_method == 'host_name').sum()}\n"
+          f"  taxonomy total: {table.source_method.isin(['host_tax_id', 'host_name']).sum()}\n"
           f"  {method.upper()}:                  {len(classified)}\n"
           f"  {method.upper()} -> unknown:        {(classified.best_hit == 'unknown').sum()}")
     if method == "llm":

@@ -10,6 +10,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 import metalyzer
+from helpers import adapt_taxonomy_mock
 from modules import biosample as bio, biosample_build as build, input, deterministic_source
 from modules.contracts import SourceResult, empty_source_table
 
@@ -57,6 +58,7 @@ class BioSampleTests(unittest.TestCase):
         self.assertNotIn('tax id:', batch.records[0])
         taxonomy = unittest.mock.Mock()
         taxonomy.classify_host_taxid.return_value = None
+        adapt_taxonomy_mock(taxonomy)
         sources = input.SourceVocabulary(('cat',), 'accession')
         deterministic_source.run(batch, sources, taxonomy, anchor_sources={})
         self.assertEqual(taxonomy.classify_host_taxid.call_args.args[0], '9685')

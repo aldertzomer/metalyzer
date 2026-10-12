@@ -187,7 +187,9 @@ def main(argv=None):
                               f"  LLM assignments retained after confidence filtering: {retained}\n")
             runlog.emit("Run totals:\n"
                         f"  total rows: {len(output)}\n"
-                        f"  deterministic taxonomy assignments: {(table.source_method == 'host_tax_id').sum()}\n"
+                        f"  deterministic taxonomy assignments: {table.source_method.isin(deterministic_source.DETERMINISTIC_METHODS).sum()}\n"
+                        f"  explicit host taxonomy ID assignments: {(table.source_method == 'host_tax_id').sum()}\n"
+                        f"  exact host-name assignments: {(table.source_method == 'host_name').sum()}\n"
                         f"  {args.method.upper()} assignments: {len(selected)}\n"
                         f"{llm_totals}"
                         f"  unknown calls: {(table.best_hit == 'unknown').sum()}\n"
