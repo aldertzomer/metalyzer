@@ -1,0 +1,37 @@
+version	method	evaluation	pathway	records	correct	overall_accuracy	assigned	correct_assigned	assigned_precision
+old_saved	nli	original	host_tax_id	215	215	1.0	215	215	1.0
+old_saved	nli	original	nli	1105	922	0.8343891402714932	991	849	0.856710393541877
+old_saved	nli	metadata_version_adjusted	host_tax_id	171	171	1.0	171	171	1.0
+old_saved	nli	metadata_version_adjusted	nli	1105	922	0.8343891402714932	991	849	0.856710393541877
+new_combined	nli	original	host_alias	13	13	1.0	13	13	1.0
+new_combined	nli	original	host_name	4	4	1.0	4	4	1.0
+new_combined	nli	original	host_other_animal	46	45	0.9782608695652174	46	45	0.9782608695652174
+new_combined	nli	original	host_tax_id	215	215	1.0	215	215	1.0
+new_combined	nli	original	nli	1042	878	0.8426103646833013	933	805	0.8628081457663451
+new_combined	nli	original	host_name: common name/synonym	3	3	1.0	3	3	1.0
+new_combined	nli	original	host_name: scientific name	1	1	1.0	1	1	1.0
+new_combined	nli	metadata_version_adjusted	host_alias	13	13	1.0	13	13	1.0
+new_combined	nli	metadata_version_adjusted	host_name	4	4	1.0	4	4	1.0
+new_combined	nli	metadata_version_adjusted	host_other_animal	46	45	0.9782608695652174	46	45	0.9782608695652174
+new_combined	nli	metadata_version_adjusted	host_tax_id	171	171	1.0	171	171	1.0
+new_combined	nli	metadata_version_adjusted	nli	1042	878	0.8426103646833013	933	805	0.8628081457663451
+new_combined	nli	metadata_version_adjusted	host_name: common name/synonym	3	3	1.0	3	3	1.0
+new_combined	nli	metadata_version_adjusted	host_name: scientific name	1	1	1.0	1	1	1.0
+old_saved	llm	original	host_tax_id	215	215	1.0	215	215	1.0
+old_saved	llm	original	llm	1105	1000	0.9049773755656109	934	919	0.9839400428265525
+old_saved	llm	metadata_version_adjusted	host_tax_id	171	171	1.0	171	171	1.0
+old_saved	llm	metadata_version_adjusted	llm	1105	1000	0.9049773755656109	934	919	0.9839400428265525
+new_combined	llm	original	host_alias	13	13	1.0	13	13	1.0
+new_combined	llm	original	host_name	4	4	1.0	4	4	1.0
+new_combined	llm	original	host_other_animal	46	45	0.9782608695652174	46	45	0.9782608695652174
+new_combined	llm	original	host_tax_id	215	215	1.0	215	215	1.0
+new_combined	llm	original	llm	1042	938	0.9001919385796545	872	857	0.9827981651376146
+new_combined	llm	original	host_name: common name/synonym	3	3	1.0	3	3	1.0
+new_combined	llm	original	host_name: scientific name	1	1	1.0	1	1	1.0
+new_combined	llm	metadata_version_adjusted	host_alias	13	13	1.0	13	13	1.0
+new_combined	llm	metadata_version_adjusted	host_name	4	4	1.0	4	4	1.0
+new_combined	llm	metadata_version_adjusted	host_other_animal	46	45	0.9782608695652174	46	45	0.9782608695652174
+new_combined	llm	metadata_version_adjusted	host_tax_id	171	171	1.0	171	171	1.0
+new_combined	llm	metadata_version_adjusted	llm	1042	938	0.9001919385796545	872	857	0.9827981651376146
+new_combined	llm	metadata_version_adjusted	host_name: common name/synonym	3	3	1.0	3	3	1.0
+new_combined	llm	metadata_version_adjusted	host_name: scientific name	1	1	1.0	1	1	1.0

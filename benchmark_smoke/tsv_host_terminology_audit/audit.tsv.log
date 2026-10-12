@@ -1,0 +1,155 @@
+CPU-only four-configuration audit; no models or network
+Taxonomy configuration:
+  configured anchors: 12
+  valid anchors:      12
+  merged IDs:         0
+  invalid anchors:    0
+  conflicts:          0
+Taxonomy file: /home/zomer007/metalyzer/taxonomy/nodes.dmp; bytes=232279767; mtime_ns=1791378777588689898
+Taxonomy file: /home/zomer007/metalyzer/taxonomy/names.dmp; bytes=316659961; mtime_ns=1791378778820705365
+Taxonomy file: /home/zomer007/metalyzer/taxonomy/merged.dmp; bytes=1912229; mtime_ns=1791378778948706972
+Taxonomy resolution:
+  Explicit host taxonomy ID: 215
+  Exact host-name resolution: 4
+    Scientific names: 1
+    Common names/synonyms: 3
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1101
+  Total deterministic assignments: 219
+  Records continuing to model classification: 1101
+{
+  "configuration": "current",
+  "records": 1320,
+  "numeric": 215,
+  "scientific": 1,
+  "common_synonym": 3,
+  "aliases": 0,
+  "other_animal": 0,
+  "pending": 1101,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 0,
+  "newly_assigned_reference_disagreements": 0,
+  "new_source_distribution": {},
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 0,
+    "Porcine": 0,
+    "Ovine": 0,
+    "Caprine": 0,
+    "Feline": 0
+  }
+}
+Taxonomy resolution:
+  Explicit host taxonomy ID: 215
+  Exact host-name resolution: 4
+    Scientific names: 1
+    Common names/synonyms: 3
+  Configured host aliases: 13
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1088
+  Total deterministic assignments: 232
+  Records continuing to model classification: 1088
+{
+  "configuration": "aliases",
+  "records": 1320,
+  "numeric": 215,
+  "scientific": 1,
+  "common_synonym": 3,
+  "aliases": 13,
+  "other_animal": 0,
+  "pending": 1088,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 13,
+  "newly_assigned_reference_disagreements": 0,
+  "new_source_distribution": {
+    "dog": 8,
+    "sheep": 5
+  },
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 8,
+    "Porcine": 0,
+    "Ovine": 5,
+    "Caprine": 0,
+    "Feline": 0
+  }
+}
+Taxonomy resolution:
+  Explicit host taxonomy ID: 215
+  Exact host-name resolution: 4
+    Scientific names: 1
+    Common names/synonyms: 3
+  Configured host aliases: 0
+  Specific unlisted animals: 46
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1055
+  Total deterministic assignments: 265
+  Records continuing to model classification: 1055
+{
+  "configuration": "other_animal",
+  "records": 1320,
+  "numeric": 215,
+  "scientific": 1,
+  "common_synonym": 3,
+  "aliases": 0,
+  "other_animal": 46,
+  "pending": 1055,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 46,
+  "newly_assigned_reference_disagreements": 1,
+  "new_source_distribution": {
+    "other_animal": 46
+  },
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 0,
+    "Porcine": 0,
+    "Ovine": 0,
+    "Caprine": 0,
+    "Feline": 0
+  }
+}
+Taxonomy resolution:
+  Explicit host taxonomy ID: 215
+  Exact host-name resolution: 4
+    Scientific names: 1
+    Common names/synonyms: 3
+  Configured host aliases: 13
+  Specific unlisted animals: 46
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1042
+  Total deterministic assignments: 278
+  Records continuing to model classification: 1042
+{
+  "configuration": "combined",
+  "records": 1320,
+  "numeric": 215,
+  "scientific": 1,
+  "common_synonym": 3,
+  "aliases": 13,
+  "other_animal": 46,
+  "pending": 1042,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 59,
+  "newly_assigned_reference_disagreements": 1,
+  "new_source_distribution": {
+    "dog": 8,
+    "other_animal": 46,
+    "sheep": 5
+  },
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 8,
+    "Porcine": 0,
+    "Ovine": 5,
+    "Caprine": 0,
+    "Feline": 0
+  }
+}

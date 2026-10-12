@@ -1,0 +1,1321 @@
+configuration	run_accession	accession	host	host_scientific_name	match_type	resolved_taxids	assigned_source	source_method	evidence	ambiguous	conflict	reference	excluded_caged	newly_assigned	reference_disagreement	requires_model
+current	SRR5209498	SAMN06270867		Felis catus	scientific name	9685	cat	host_tax_id	host_tax_id=9685; Felis catus	False		cat	False	False	False	False
+current	ERR4224313	SAMEA6935634		NA						False		cat	False	False	False	True
+current	ERR4224319	SAMEA6935701		NA						False		cat	False	False	False	True
+current	ERR4224321	SAMEA6935730		NA						False		cat	False	False	False	True
+current	ERR4224525	SAMEA6935915		NA						False		cat	False	False	False	True
+current	ERR4224527	SAMEA6935967		NA						False		cat	False	False	False	True
+current	ERR4224528	SAMEA6935975		NA						False		cat	False	False	False	True
+current	ERR4224530	SAMEA6936017		NA						False		cat	False	False	False	True
+current	ERR4224509	SAMEA6936111		NA						False		cat	False	False	False	True
+current	ERR4224544	SAMEA6936135		NA						False		cat	False	False	False	True
+current	ERR4224555	SAMEA6936142		NA						False		cat	False	False	False	True
+current	ERR4224584	SAMEA6936207		NA						False		cat	False	False	False	True
+current	ERR4224591	SAMEA6936256		NA						False		cat	False	False	False	True
+current	ERR4224592	SAMEA6936263		NA						False		cat	False	False	False	True
+current	ERR4224598	SAMEA6936276		NA						False		cat	False	False	False	True
+current	ERR4224614	SAMEA6936368		NA						False		cat	False	False	False	True
+current	ERR2601882	SAMEA4697529		Bos taurus	scientific name	9913	cattle	host_tax_id	host_tax_id=9913; Bos taurus	False		cattle	False	False	False	False
+current	ERR2834479	SAMEA4964260		NA						False		cattle	False	False	False	True
+current	SRR12302131	SAMN15617752		NA						False		cattle	False	False	False	True
+current	SRR12302135	SAMN15617748		NA						False		cattle	False	False	False	True
+current	ERR4224938	SAMEA6935894		NA						False		cattle	False	False	False	True
+current	ERR4224946	SAMEA6935917		NA						False		cattle	False	False	False	True
+current	SRR17900481	SAMN16731337		Bos taurus taurus	scientific name	3733726	cattle	host_name	host_scientific_name=Bos taurus taurus; taxid=3733726; Bos taurus taurus	False		cattle	False	False	False	False
+current	ERR10497142	SAMEA112143362		NA						False		cattle	False	False	False	True
+current	SRR7882485	SAMN10096400		NA						False		cattle	False	False	False	True
+current	SRR2962345	SAMN03387080		Bos taurus	scientific name	9913	cattle	host_tax_id	host_tax_id=9913; Bos taurus	False		cattle	False	False	False	False
+current	SRR11457120	SAMN14504390		NA						False		cattle	False	False	False	True
+current	SRR11457287	SAMN14504500		NA						False		cattle	False	False	False	True
+current	SRR11457294	SAMN14504493		NA						False		cattle	False	False	False	True
+current	SRR6322613	SAMN08057558		Bos taurus	scientific name	9913	cattle	host_tax_id	host_tax_id=9913; Bos taurus	False		cattle	False	False	False	False
+current	SRR2239877	SAMN04027121		NA						False		cattle	False	False	False	True
+current	SRR2423693	SAMN04091204		NA						False		cattle	False	False	False	True
+current	SRR2976804	SAMN04320864		NA						False		cattle	False	False	False	True
+current	SRR3129728	SAMN04444463		NA						False		cattle	False	False	False	True
+current	SRR3139476	SAMN04338322		missing						False		cattle	False	False	False	True
+current	SRR3402099	SAMN04869737		NA						False		cattle	False	False	False	True
+current	SRR5828129	SAMN07349286		Bos taurus	scientific name	9913	cattle	host_tax_id	host_tax_id=9913; Bos taurus	False		cattle	False	False	False	False
+current	SRR3215112	SAMN04543698		NA						False		cattle	False	False	False	True
+current	SRR3611737	SAMN05190028		NA						False		cattle	False	False	False	True
+current	SRR3726434	SAMN05301274		NA						False		cattle	False	False	False	True
+current	SRR3774242	SAMN05366791		NA						False		cattle	False	False	False	True
+current	SRR3995966	SAMN05505590		NA						False		cattle	False	False	False	True
+current	SRR4018340	SAMN05558651		NA						False		cattle	False	False	False	True
+current	SRR5129712	SAMN06179694		NA						False		cattle	False	False	False	True
+current	SRR5164537	SAMN06215672		NA						False		cattle	False	False	False	True
+current	SRR5209911	SAMN06276458		NA						False		cattle	False	False	False	True
+current	SRR5241742	SAMN06133121		NA						False		cattle	False	False	False	True
+current	SRR5297186	SAMN06459314		NA						False		cattle	False	False	False	True
+current	SRR5427956	SAMN06677836		NA						False		cattle	False	False	False	True
+current	SRR5517169	SAMN06915343		NA						False		cattle	False	False	False	True
+current	SRR5582449	SAMN07151558		NA						False		cattle	False	False	False	True
+current	SRR5646894	SAMN07195141		NA						False		cattle	False	False	False	True
+current	SRR5750634	SAMN07271471		NA						False		cattle	False	False	False	True
+current	SRR5754163	SAMN07276199		NA						False		cattle	False	False	False	True
+current	SRR5858791	SAMN07375622		NA						False		cattle	False	False	False	True
+current	SRR5890889	SAMN07442136		NA						False		cattle	False	False	False	True
+current	SRR5941988	SAMN07514264		NA						False		cattle	False	False	False	True
+current	SRR6010310	SAMN07608126		NA						False		cattle	False	False	False	True
+current	SRR6160548	SAMN07775147		NA						False		cattle	False	False	False	True
+current	SRR6269730	SAMN08000889		NA						False		cattle	False	False	False	True
+current	SRR6269763	SAMN08000896		NA						False		cattle	False	False	False	True
+current	SRR6313958	SAMN08051543		NA						False		cattle	False	False	False	True
+current	SRR6313961	SAMN08051516		NA						False		cattle	False	False	False	True
+current	SRR6498630	SAMN08380190		NA						False		cattle	False	False	False	True
+current	SRR6652913	SAMN08437273		NA						False		cattle	False	False	False	True
+current	SRR6844235	SAMN08719177		NA						False		cattle	False	False	False	True
+current	SRR6916748	SAMN08816069		NA						False		cattle	False	False	False	True
+current	SRR6916764	SAMN08816074		NA						False		cattle	False	False	False	True
+current	SRR6973053	SAMN08899166		NA						False		cattle	False	False	False	True
+current	SRR6973059	SAMN08899146		NA						False		cattle	False	False	False	True
+current	SRR7009076	SAMN08930651		NA						False		cattle	False	False	False	True
+current	SRR7163773	SAMN09207366		NA						False		cattle	False	False	False	True
+current	SRR7163778	SAMN09207353		NA						False		cattle	False	False	False	True
+current	SRR7465511	SAMN09534574		NA						False		cattle	False	False	False	True
+current	SRR7465516	SAMN09534582		NA						False		cattle	False	False	False	True
+current	SRR7716478	SAMN09858319		NA						False		cattle	False	False	False	True
+current	SRR7903408	SAMN10129999		NA						False		cattle	False	False	False	True
+current	SRR8172917	SAMN10392845		NA						False		cattle	False	False	False	True
+current	SRR8188915	SAMN10423963		NA						False		cattle	False	False	False	True
+current	SRR8252759	SAMN10489476		NA						False		cattle	False	False	False	True
+current	SRR8256677	SAMN10489942		NA						False		cattle	False	False	False	True
+current	SRR8606599	SAMN10985183		NA						False		cattle	False	False	False	True
+current	SRR10082192	SAMN12710385		NA						False		cattle	False	False	False	True
+current	SRR10138273	SAMN12782202		NA						False		cattle	False	False	False	True
+current	SRR10186879	SAMN12850940		NA						False		cattle	False	False	False	True
+current	SRR10245648	SAMN12993569		NA						False		cattle	False	False	False	True
+current	SRR10287017	SAMN13034481		NA						False		cattle	False	False	False	True
+current	SRR10386699	SAMN13181115		NA						False		cattle	False	False	False	True
+current	SRR11600433	SAMN14680982		NA						False		cattle	False	False	False	True
+current	SRR20988051	SAMN29955742		NA						False		cattle	False	False	False	True
+current	SRR8699411	SAMN11079848		NA						False		cattle	False	False	False	True
+current	SRR8754439	SAMN11173147		NA						False		cattle	False	False	False	True
+current	SRR8832618	SAMN11306778		NA						False		cattle	False	False	False	True
+current	SRR8838824	SAMN11318632		NA						False		cattle	False	False	False	True
+current	SRR8841108	SAMN11322362		NA						False		cattle	False	False	False	True
+current	SRR9045758	SAMN11625698		NA						False		cattle	False	False	False	True
+current	SRR11459624	SAMN14503095		NA						False		cattle	False	False	False	True
+current	SRR12828244	SAMN16450802		NA						False		cattle	False	False	False	True
+current	SRR12828245	SAMN16450804		NA						False		cattle	False	False	False	True
+current	SRR14503779	SAMN19110597		NA						False		cattle	False	False	False	True
+current	SRR14503780	SAMN19110600		NA						False		cattle	False	False	False	True
+current	SRR14518549	SAMN19110589		NA						False		cattle	False	False	False	True
+current	SRR15275302	SAMN20446307		NA						False		cattle	False	False	False	True
+current	SRR16465102	SAMN22369371		NA						False		cattle	False	False	False	True
+current	SRR17988521	SAMN25867698		NA						False		cattle	False	False	False	True
+current	SRR18319608	SAMN26665725		NA						False		cattle	False	False	False	True
+current	SRR18769954	SAMN27597459		NA						False		cattle	False	False	False	True
+current	SRR18771549	SAMN27604100		NA						False		cattle	False	False	False	True
+current	SRR19344124	SAMN28571734		NA						False		cattle	False	False	False	True
+current	SRR21602127	SAMN30888449		NA						False		cattle	False	False	False	True
+current	SRR22222924	SAMN31647958		NA						False		cattle	False	False	False	True
+current	SRR23803202	SAMN33715191		NA						False		cattle	False	False	False	True
+current	SRR25790765	SAMN37196220		NA						False		cattle	False	False	False	True
+current	SRR26806985	SAMN38228020		NA						False		cattle	False	False	False	True
+current	SRR8607992	SAMN10986742		NA						False		cat	False	False	False	True
+current	SRR6627731	SAMN08331821		NA						False		cat	False	False	False	True
+current	SRR8399251	SAMN10696580		missing						False		cat	False	False	False	True
+current	SRR28564538	SAMN40758960		Felis catus	scientific name	9685	cat	host_tax_id	host_tax_id=9685; Felis catus	False		cat	False	False	False	False
+current	SRR26896508	SAMN38340651		NA						False		chicken	False	False	False	True
+current	ERR2197471	SAMEA104390012		NA						False		chicken	False	False	False	True
+current	ERR2197483	SAMEA104390024		NA						False		chicken	False	False	False	True
+current	SRR23704415	SAMN33591268		Gallus gallus	scientific name	9031	chicken	host_tax_id	host_tax_id=9031; Gallus gallus	False		chicken	False	False	False	False
+current	ERR4225077	SAMEA6936349		NA						False		chicken	False	False	False	True
+current	ERR2197617	SAMEA104390158		NA						False		chicken	False	False	False	True
+current	ERR11203419	SAMEA112866708		NA						False		chicken	False	False	False	True
+current	ERR11203555	SAMEA112866844		NA						False		chicken	False	False	False	True
+current	ERR11203677	SAMEA112866966		NA						False		chicken	False	False	False	True
+current	ERR11203907	SAMEA112867196		NA						False		chicken	False	False	False	True
+current	ERR11204032	SAMEA112867321		NA						False		chicken	False	False	False	True
+current	ERR2197355	SAMEA104389896		NA						False		chicken	False	False	False	True
+current	SRR8796760	SAMN11268370		Gallus gallus domesticus	common name/synonym	9031	chicken	host_name	host_scientific_name=Gallus gallus domesticus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+current	ERR946747	SAMEA3487068		NA						False		chicken	False	False	False	True
+current	SRR2920319	SAMN04267348		NA						False		chicken	False	False	False	True
+current	SRR5414427	SAMN06660983		NA						False		chicken	False	False	False	True
+current	SRR5414733	SAMN06661289		NA						False		chicken	False	False	False	True
+current	SRR5414819	SAMN06661375		NA						False		chicken	False	False	False	True
+current	SRR6108377	SAMN07633659		NA						False		chicken	False	False	False	True
+current	SRR12634079	SAMN16122349		NA						False		chicken	False	False	False	True
+current	SRR7503394	SAMN09605178		NA						False		chicken	False	False	False	True
+current	SRR25648167	SAMN36995494		NA						False		chicken	False	False	False	True
+current	SRR7138715	SAMN09098741		NA						False		chicken	False	False	False	True
+current	SRR7525350	SAMN09664933		NA						False		chicken	False	False	False	True
+current	SRR7665260	SAMN09788625		NA						False		chicken	False	False	False	True
+current	SRR7987219	SAMN10222480		NA						False		chicken	False	False	False	True
+current	SRR8074988	SAMN10256504		NA						False		chicken	False	False	False	True
+current	SRR8255905	SAMN10489176		NA						False		chicken	False	False	False	True
+current	SRR8662758	SAMN11047755		NA						False		chicken	False	False	False	True
+current	SRR8662779	SAMN11047729		NA						False		chicken	False	False	False	True
+current	SRR8662861	SAMN11047817		NA						False		chicken	False	False	False	True
+current	SRR8662873	SAMN11047804		NA						False		chicken	False	False	False	True
+current	SRR8663512	SAMN11047601		NA						False		chicken	False	False	False	True
+current	SRR9007373	SAMN11569669		NA						False		chicken	False	False	False	True
+current	SRR10119176	SAMN12747615		NA						False		chicken	False	False	False	True
+current	SRR10200146	SAMN12869770		NA						False		chicken	False	False	False	True
+current	SRR10758621	SAMN13671890		NA						False		chicken	False	False	False	True
+current	SRR11615623	SAMN14737990		NA						False		chicken	False	False	False	True
+current	SRR11629880	SAMN14754931		NA						False		chicken	False	False	False	True
+current	SRR12698365	SAMN15297389		NA						False		chicken	False	False	False	True
+current	SRR29234623	SAMN41233132		Gallus gallus	scientific name	9031	chicken	host_tax_id	host_tax_id=9031; Gallus gallus	False		chicken	False	False	False	False
+current	SRR8753499	SAMN11168288		NA						False		chicken	False	False	False	True
+current	SRR8942631	SAMN11477037		NA						False		chicken	False	False	False	True
+current	SRR9298923	SAMN12052599		NA						False		chicken	False	False	False	True
+current	SRR9417526	SAMN12108977		NA						False		chicken	False	False	False	True
+current	SRR9670813	SAMN12255237		NA						False		chicken	False	False	False	True
+current	SRR9898424	SAMN12491274		NA						False		chicken	False	False	False	True
+current	SRR9962624	SAMN12568040		NA						False		chicken	False	False	False	True
+current	SRR9998277	SAMN12606312		NA						False		chicken	False	False	False	True
+current	SRR10987399	SAMN13941922		NA						False		chicken	False	False	False	True
+current	SRR11085356	SAMN14100342		NA						False		chicken	False	False	False	True
+current	SRR11521675	SAMN14568364		NA						False		chicken	False	False	False	True
+current	SRR11544496	SAMN14592046		NA						False		chicken	False	False	False	True
+current	SRR11966499	SAMN15187424		NA						False		chicken	False	False	False	True
+current	SRR12179540	SAMN15484725		NA						False		chicken	False	False	False	True
+current	SRR12625768	SAMN16112043		NA						False		chicken	False	False	False	True
+current	SRR12788365	SAMN16387722		NA						False		chicken	False	False	False	True
+current	SRR12819058	SAMN16429863		NA						False		chicken	False	False	False	True
+current	SRR13187284	SAMN16984593		NA						False		chicken	False	False	False	True
+current	SRR13592140	SAMN17714987		NA						False		chicken	False	False	False	True
+current	SRR13849948	SAMN18130631		NA						False		chicken	False	False	False	True
+current	SRR14054907	SAMN18448390		NA						False		chicken	False	False	False	True
+current	SRR14286421	SAMN18810949		NA						False		chicken	False	False	False	True
+current	SRR14920260	SAMN19875767		NA						False		chicken	False	False	False	True
+current	SRR15998504	SAMN21541160		NA						False		chicken	False	False	False	True
+current	SRR16012019	SAMN21542140		NA						False		chicken	False	False	False	True
+current	SRR16026962	SAMN21572731		NA						False		chicken	False	False	False	True
+current	SRR16817007	SAMN22933746		NA						False		chicken	False	False	False	True
+current	SRR17478232	SAMN24706814		NA						False		chicken	False	False	False	True
+current	SRR17871415	SAMN25635775		NA						False		chicken	False	False	False	True
+current	SRR18230626	SAMN26441696		NA						False		chicken	False	False	False	True
+current	SRR18339700	SAMN26801590		NA						False		chicken	False	False	False	True
+current	SRR18776851	SAMN27609541		NA						False		chicken	False	False	False	True
+current	SRR19486114	SAMN28794801		NA						False		chicken	False	False	False	True
+current	SRR19842112	SAMN29328425		NA						False		chicken	False	False	False	True
+current	SRR20438527	SAMN29908365		NA						False		chicken	False	False	False	True
+current	SRR20875039	SAMN30170037		NA						False		chicken	False	False	False	True
+current	SRR21598161	SAMN30879293		NA						False		chicken	False	False	False	True
+current	SRR21598450	SAMN30879593		NA						False		chicken	False	False	False	True
+current	SRR21602128	SAMN30888452		NA						False		chicken	False	False	False	True
+current	SRR21728318	SAMN31041049		NA						False		chicken	False	False	False	True
+current	SRR21757000	SAMN31096183		NA						False		chicken	False	False	False	True
+current	SRR21897644	SAMN31276149		NA						False		chicken	False	False	False	True
+current	SRR22007717	SAMN31404946		NA						False		chicken	False	False	False	True
+current	SRR22197412	SAMN31612376		NA						False		chicken	False	False	False	True
+current	SRR22880083	SAMN32387026		NA						False		chicken	False	False	False	True
+current	SRR22987937	SAMN32600855		NA						False		chicken	False	False	False	True
+current	SRR23517257	SAMN33348089		NA						False		chicken	False	False	False	True
+current	SRR23803163	SAMN33715088		NA						False		chicken	False	False	False	True
+current	SRR24016088	SAMN33986051		NA						False		chicken	False	False	False	True
+current	SRR24111455	SAMN34121520		NA						False		chicken	False	False	False	True
+current	SRR24327307	SAMN34411477		NA						False		chicken	False	False	False	True
+current	SRR24339384	SAMN34423116		NA						False		chicken	False	False	False	True
+current	SRR24482067	SAMN35010578		NA						False		chicken	False	False	False	True
+current	SRR24674592	SAMN35222896		NA						False		chicken	False	False	False	True
+current	SRR24698312	SAMN35328519		NA						False		chicken	False	False	False	True
+current	SRR26952112	SAMN38442482		NA						False		chicken	False	False	False	True
+current	SRR27990989	SAMN39967617		NA						False		chicken	False	False	False	True
+current	SRR28745426	SAMN41019511		NA						False		chicken	False	False	False	True
+current	SRR29101205	SAMN41478960		NA						False		chicken	False	False	False	True
+current	SRR29807932	SAMN42468484		NA						False		chicken	False	False	False	True
+current	SRR10537312	SAMN13392879		NA						False		dog	False	False	False	True
+current	SRR10537313	SAMN13392878		NA						False		dog	False	False	False	True
+current	SRR10537320	SAMN13392875		NA						False		dog	False	False	False	True
+current	SRR10537322	SAMN13392865		NA						False		dog	False	False	False	True
+current	SRR10537310	SAMN13392881		NA						False		dog	False	False	False	True
+current	SRR29692399	SAMN42278435		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	ERR4224315	SAMEA6936570		NA						False		dog	False	False	False	True
+current	ERR4224316	SAMEA6935643		NA						False		dog	False	False	False	True
+current	ERR4224317	SAMEA6935645		NA						False		dog	False	False	False	True
+current	ERR4224318	SAMEA6935653		NA						False		dog	False	False	False	True
+current	ERR4224320	SAMEA6935711		NA						False		dog	False	False	False	True
+current	ERR4224322	SAMEA6935740		NA						False		dog	False	False	False	True
+current	ERR4224324	SAMEA6935762		NA						False		dog	False	False	False	True
+current	ERR4224523	SAMEA6935853		NA						False		dog	False	False	False	True
+current	ERR4224532	SAMEA6936026		NA						False		dog	False	False	False	True
+current	ERR4224533	SAMEA6936063		NA						False		dog	False	False	False	True
+current	ERR4224535	SAMEA6936067		NA						False		dog	False	False	False	True
+current	ERR4224537	SAMEA6936073		NA						False		dog	False	False	False	True
+current	ERR4224510	SAMEA6936112		NA						False		dog	False	False	False	True
+current	ERR4224511	SAMEA6936115		NA						False		dog	False	False	False	True
+current	ERR4224515	SAMEA6936118		NA						False		dog	False	False	False	True
+current	ERR4224517	SAMEA6936121		NA						False		dog	False	False	False	True
+current	ERR4224519	SAMEA6936123		NA						False		dog	False	False	False	True
+current	ERR4224522	SAMEA6936130		NA						False		dog	False	False	False	True
+current	ERR4224545	SAMEA6936081		NA						False		dog	False	False	False	True
+current	ERR4224547	SAMEA6936133		NA						False		dog	False	False	False	True
+current	ERR4224548	SAMEA6936136		NA						False		dog	False	False	False	True
+current	ERR4224556	SAMEA6936143		NA						False		dog	False	False	False	True
+current	ERR4224557	SAMEA6936146		NA						False		dog	False	False	False	True
+current	ERR4224559	SAMEA6936702		NA						False		dog	False	False	False	True
+current	ERR4224574	SAMEA6936157		NA						False		dog	False	False	False	True
+current	ERR4224579	SAMEA6936189		NA						False		dog	False	False	False	True
+current	ERR4224588	SAMEA6936226		NA						False		dog	False	False	False	True
+current	ERR4224589	SAMEA6936249		NA						False		dog	False	False	False	True
+current	ERR4224590	SAMEA6936227		NA						False		dog	False	False	False	True
+current	ERR4224593	SAMEA6936264		NA						False		dog	False	False	False	True
+current	ERR4224597	SAMEA6936270		NA						False		dog	False	False	False	True
+current	ERR4224603	SAMEA6936314		NA						False		dog	False	False	False	True
+current	ERR4224605	SAMEA6936327		NA						False		dog	False	False	False	True
+current	ERR4224610	SAMEA6936357		NA						False		dog	False	False	False	True
+current	ERR4224619	SAMEA6936379		NA						False		dog	False	False	False	True
+current	SRR12488025	SAMN15860710		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR12488030	SAMN15860709		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR12623862	SAMN15860712		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR11101933	SAMN14118171		NA						False		dog	False	False	False	True
+current	SRR8787352	SAMN11258574		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR8787372	SAMN11258572		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6232416	SAMN07838742		Canine	unresolved					False		dog	False	False	False	True
+current	SRR6252251	SAMN07967655		canine	unresolved					False		dog	False	False	False	True
+current	SRR6252248	SAMN07967646		canine	unresolved					False		dog	False	False	False	True
+current	SRR7242753	SAMN09279864		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6058449	SAMN07679644		Canine	unresolved					False		dog	False	False	False	True
+current	SRR5579133	SAMN07137788		canine	unresolved					False		dog	False	False	False	True
+current	SRR5935033	SAMN07504894		Canis lupus	scientific name	9612				False		dog	False	False	False	True
+current	SRR6080585	SAMN07710399		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6219838	SAMN07823464		canine	unresolved					False		dog	False	False	False	True
+current	SRR6269843	SAMN08001074		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6289215	SAMN08016801		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6289217	SAMN08016803		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6297976	SAMN08025804		canine	unresolved					False		dog	False	False	False	True
+current	SRR6354173	SAMN08057817		NA						False		dog	False	False	False	True
+current	SRR6366583	SAMN08134947		canine	unresolved					False		dog	False	False	False	True
+current	SRR10611149	SAMN13516372		NA						False		dog	False	False	False	True
+current	SRR10898003	SAMN13866913		NA						False		dog	False	False	False	True
+current	SRR6741488	SAMN08556540		NA						False		dog	False	False	False	True
+current	SRR6813834	SAMN08624510		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6814032	SAMN08624512		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6814034	SAMN08624511		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6814049	SAMN08624507		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6902729	SAMN08744587		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6903158	SAMN08744590		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR7066541	SAMN08930145		NA						False		dog	False	False	False	True
+current	SRR7213803	SAMN09254308		missing						False		dog	False	False	False	True
+current	SRR7499466	SAMN09631652		NA						False		dog	False	False	False	True
+current	SRR7660681	SAMN09784513		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR7660781	SAMN09784510		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR7705338	SAMN09847609		NA						False		dog	False	False	False	True
+current	SRR8041470	SAMN09917873		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR8041688	SAMN09917870		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR8112791	SAMN10262359		NA						False		dog	False	False	False	True
+current	SRR8260220	SAMN10497208		missing						False		dog	False	False	False	True
+current	SRR8388781	SAMN10689123		NA						False		dog	False	False	False	True
+current	SRR8397531	SAMN10686084		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR9029459	SAMN11604753		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR9831419	SAMN12360738		NA						False		dog	False	False	False	True
+current	SRR9831452	SAMN12360803		NA						False		dog	False	False	False	True
+current	SRR13042628	SAMN16781624		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR22974871	SAMN32579332		NA						False		dog	False	False	False	True
+current	SRR23097466	SAMN32767407		NA						False		dog	False	False	False	True
+current	SRR24886328	SAMN35687487		NA						False		dog	False	False	False	True
+current	SRR28564537	SAMN40758961		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR24684368	SAMN35303385		NA						False		dog	False	False	False	True
+current	SRR27150577	SAMN38730545		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR27989230	SAMN39962846		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR28564533	SAMN40758965		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR28564534	SAMN40758964		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR28564535	SAMN40758963		Canis lupus familiaris	scientific name	9615	dog	host_tax_id	host_tax_id=9615; Canis lupus familiaris	False		dog	False	False	False	False
+current	SRR6171584	SAMN07504895		Canis lupus	scientific name	9612				False		dog	False	False	False	True
+current	SRR6171586	SAMN07504897		Canis lupus	scientific name	9612				False		dog	False	False	False	True
+current	SRR6171587	SAMN07504896		Canis lupus	scientific name	9612				False		dog	False	False	False	True
+current	SRR1635285	SAMN03121802		NA						False		environment	False	False	False	True
+current	ERR1163719	SAMEA3683334		NA						False		environment	False	False	False	True
+current	SRR6398721	SAMN07767599		NA						False		environment	False	False	False	True
+current	SRR4022329	SAMN03387096		NA						False		environment	False	False	False	True
+current	SRR26351296	SAMN37735409		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351307	SAMN37735393		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351303	SAMN37735405		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351314	SAMN37735411		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351330	SAMN37735400		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351338	SAMN37735402		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351356	SAMN37735397		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351357	SAMN37735396		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26770173	SAMN38183152		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26770174	SAMN38183151		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218402	SAMN38842797		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218404	SAMN38842795		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218409	SAMN38842803		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218417	SAMN38712325		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218418	SAMN38712326		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218419	SAMN38712327		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218439	SAMN38712341		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218440	SAMN38712323		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218449	SAMN38713230		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218462	SAMN38713233		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218466	SAMN38713236		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218468	SAMN38713231		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR28406692	SAMN40454887		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR28406693	SAMN40454888		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26351310	SAMN37735420		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26678367	SAMN38092512		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26770179	SAMN38183148		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26770196	SAMN38183154		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR26770208	SAMN38183149		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218416	SAMN38712322		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218422	SAMN38712338		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218428	SAMN38712348		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218429	SAMN38712352		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218430	SAMN38712351		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218434	SAMN38712342		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218435	SAMN38712349		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218437	SAMN38712350		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218442	SAMN38712329		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218444	SAMN38712319		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218453	SAMN38713249		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR27218459	SAMN38713237		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR28214326	SAMN40208053		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR28406655	SAMN40454884		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	SRR28406675	SAMN40454860		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	True	False	False	False
+current	ERR4224811	SAMEA6935646		NA						False		goat	False	False	False	True
+current	ERR4224814	SAMEA6935654		NA						False		goat	False	False	False	True
+current	ERR4224815	SAMEA6935655		NA						False		goat	False	False	False	True
+current	ERR4224818	SAMEA6935656		NA						False		goat	False	False	False	True
+current	ERR4224820	SAMEA6935662		NA						False		goat	False	False	False	True
+current	ERR4224822	SAMEA6935666		NA						False		goat	False	False	False	True
+current	ERR4224831	SAMEA6935673		NA						False		goat	False	False	False	True
+current	ERR4224845	SAMEA6935696		NA						False		goat	False	False	False	True
+current	ERR4224858	SAMEA6935703		NA						False		goat	False	False	False	True
+current	ERR4224866	SAMEA6935715		NA						False		goat	False	False	False	True
+current	ERR4224867	SAMEA6935708		NA						False		goat	False	False	False	True
+current	ERR4224868	SAMEA6935716		NA						False		goat	False	False	False	True
+current	ERR4224878	SAMEA6935726		NA						False		goat	False	False	False	True
+current	ERR4224885	SAMEA6935733		NA						False		goat	False	False	False	True
+current	ERR4224891	SAMEA6935741		NA						False		goat	False	False	False	True
+current	ERR4224895	SAMEA6935746		NA						False		goat	False	False	False	True
+current	ERR4224900	SAMEA6935751		NA						False		goat	False	False	False	True
+current	ERR4224908	SAMEA6935760		NA						False		goat	False	False	False	True
+current	ERR4224909	SAMEA6935761		NA						False		goat	False	False	False	True
+current	ERR4224913	SAMEA6935765		NA						False		goat	False	False	False	True
+current	ERR4224914	SAMEA6935508		NA						False		goat	False	False	False	True
+current	ERR4224621	SAMEA6936812		NA						False		goat	False	False	False	True
+current	SRR3094460	SAMN04377874		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	False	False	False	False
+current	SRR12495807	SAMN08235377		Capra aegagrus	scientific name	9923				False		goat	False	False	False	True
+current	SRR3094462	SAMN04377876		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	False	False	False	False
+current	SRR6169167	SAMN07780136		Capra hircus	scientific name	9925	goat	host_tax_id	host_tax_id=9925; Capra hircus	False		goat	False	False	False	False
+current	SRR6048565	SAMN07655745		Goat-Nubian	unresolved					False		goat	False	False	False	True
+current	SRR3210432	SAMN04442370		missing						False		goat	False	False	False	True
+current	SRR3210434	SAMN04442372		Capra aegagrus hircus	common name/synonym	9925	goat	host_name	host_scientific_name=Capra aegagrus hircus; taxid=9925; Capra hircus	False		goat	False	False	False	False
+current	SRR3215289	SAMN04442373		Capra aegagrus hircus	common name/synonym	9925	goat	host_name	host_scientific_name=Capra aegagrus hircus; taxid=9925; Capra hircus	False		goat	False	False	False	False
+current	SRR3692309	SAMN05163884		missing						False		goat	False	False	False	True
+current	SRR7968358	SAMN10180446		NA						False		goat	False	False	False	True
+current	SRR11521726	SAMN14570264		NA						False		goat	False	False	False	True
+current	SRR11521728	SAMN14570266		NA						False		goat	False	False	False	True
+current	SRR11544463	SAMN14575264		NA						False		goat	False	False	False	True
+current	SRR11653840	SAMN14777810		NA						False		goat	False	False	False	True
+current	SRR11654317	SAMN14779579		NA						False		goat	False	False	False	True
+current	SRR11714421	SAMN14844678		NA						False		goat	False	False	False	True
+current	SRR12625731	SAMN16112025		NA						False		goat	False	False	False	True
+current	SRR12798039	SAMN16399176		NA						False		goat	False	False	False	True
+current	SRR13005034	SAMN16703322		NA						False		goat	False	False	False	True
+current	SRR13699958	SAMN17898460		NA						False		goat	False	False	False	True
+current	SRR13764597	SAMN18027924		NA						False		goat	False	False	False	True
+current	SRR14882944	SAMN19814330		NA						False		goat	False	False	False	True
+current	SRR15845037	SAMN21391396		NA						False		goat	False	False	False	True
+current	SRR16085962	SAMN21855460		NA						False		goat	False	False	False	True
+current	SRR16288478	SAMN22211737		NA						False		goat	False	False	False	True
+current	SRR22867655	SAMN32369497		NA						False		goat	False	False	False	True
+current	SRR18959245	SAMN27923466		NA						False		goat	False	False	False	True
+current	SRR18959247	SAMN27923486		NA						False		goat	False	False	False	True
+current	SRR19395871	SAMN28657943		NA						False		goat	False	False	False	True
+current	SRR19487409	SAMN28794940		NA						False		goat	False	False	False	True
+current	SRR19545020	SAMN28875005		NA						False		goat	False	False	False	True
+current	SRR20114915	SAMN29657321		NA						False		goat	False	False	False	True
+current	SRR20994500	SAMN30220874		NA						False		goat	False	False	False	True
+current	SRR22867624	SAMN32369506		NA						False		goat	False	False	False	True
+current	SRR25376760	SAMN13413900		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR25377045	SAMN13413635		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR19905474	SAMN29243881		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR5209619	SAMN06270746		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10859608	SAMN13656967		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR20075845	SAMN29629581		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR28406690	SAMN40454894		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR8126519	SAMN10250843		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR12301978	SAMN15617631		NA						False		human	False	False	False	True
+current	SRR11268237	SAMN14126149		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR12362279	SAMN15516446		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR12362332	SAMN15516398		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR12362453	SAMN15516520		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR26328758	SAMN37736144		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	ERR4224083	SAMEA6936083		NA						False		human	False	False	False	True
+current	ERR4224188	SAMEA6936257		NA						False		human	False	False	False	True
+current	ERR1750947	SAMEA23795668		NA						False		human	False	False	False	True
+current	SRR7280455	SAMN09382286		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR12062933	SAMN15317740		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR17925158	SAMN16731530		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR17925379	SAMN16731697		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR17929568	SAMN16731895		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR17929591	SAMN16731886		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR17964873	SAMN16769367		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR17974319	SAMN16769633		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR20336840	SAMN29855686		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR27376378	SAMN39182608		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR27385303	SAMN39199411		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR12077290	SAMN15351905		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR28623835	SAMN40466989		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	ERR9766650	SAMEA14035526		NA						False		human	False	False	False	True
+current	ERR9766817	SAMEA14035693		NA						False		human	False	False	False	True
+current	ERR9766849	SAMEA14035725		NA						False		human	False	False	False	True
+current	ERR2986658	SAMEA5148099		NA						False		human	False	False	False	True
+current	ERR2986689	SAMEA5148018		NA						False		human	False	False	False	True
+current	ERR083975	SAMEA1010401		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10001393	SAMN12603907		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10056695	SAMN12673118		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10056842	SAMN12673253		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10062883	SAMN12686752		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10490230	SAMN13326907		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR12769653	SAMN16363674		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10001221	SAMN12603983		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10006856	SAMN12610789		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10011173	SAMN12617609		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10013357	SAMN12621853		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10013461	SAMN12621915		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10018227	SAMN12629006		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10019155	SAMN12631020		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10026154	SAMN12643212		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10031344	SAMN12648363		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR10054163	SAMN12670626		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9993653	SAMN12597727		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9948460	SAMN12558405		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9962218	SAMN12567902		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9962473	SAMN12568277		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9968987	SAMN12573987		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9974241	SAMN12585300		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9974246	SAMN12585292		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9974474	SAMN12585469		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9898983	SAMN12492380		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9899111	SAMN12492507		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9900234	SAMN12495503		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9901589	SAMN12500033		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9924020	SAMN12529562		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9924040	SAMN12529515		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9933918	SAMN12538658		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9934144	SAMN12538956		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9942873	SAMN12547214		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9942978	SAMN12547263		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9877373	SAMN12417978		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR9877471	SAMN12418102		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR8886452	SAMN11301759		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR1768072	SAMN03288038		Missing						False		human	False	False	False	True
+current	SRR5188912	SAMN06237933		Missing						False		human	False	False	False	True
+current	SRR6048548	SAMN07502666		missing						False		human	False	False	False	True
+current	SRR6322607	SAMN08057555		Missing						False		human	False	False	False	True
+current	SRR2057227	SAMN03764531		Missing						False		human	False	False	False	True
+current	SRR10738422	SAMN13634663		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR11007823	SAMN13977256		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR4000220	SAMN05511426		Missing						False		human	False	False	False	True
+current	SRR5097312	SAMN06077072		Missing						False		human	False	False	False	True
+current	SRR5230144	SAMN06285352		Missing						False		human	False	False	False	True
+current	SRR5581844	SAMN07135011		Missing						False		human	False	False	False	True
+current	SRR5667095	SAMN07210823		Missing						False		human	False	False	False	True
+current	SRR6202924	SAMN07817128		Missing						False		human	False	False	False	True
+current	SRR6221087	SAMN07811815		Missing						False		human	False	False	False	True
+current	SRR16256362	SAMN20838454		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR6929968	SAMN08849565		missing						False		human	False	False	False	True
+current	SRR7157741	SAMN09203632		missing						False		human	False	False	False	True
+current	SRR7637763	SAMN09760205		missing						False		human	False	False	False	True
+current	SRR7761286	SAMN09927898		missing						False		human	False	False	False	True
+current	SRR7764604	SAMN09930831		missing						False		human	False	False	False	True
+current	SRR7851632	SAMN10077558		missing						False		human	False	False	False	True
+current	SRR7851637	SAMN10077554		missing						False		human	False	False	False	True
+current	SRR7968374	SAMN10180460		missing						False		human	False	False	False	True
+current	SRR8554697	SAMN10908157		missing						False		human	False	False	False	True
+current	SRR8815897	SAMN11288747		NA						False		human	False	False	False	True
+current	SRR9929936	SAMN12535601		NA						False		human	False	False	False	True
+current	SRR13001597	SAMN16689724		Homo sapiens	scientific name	9606	human	host_tax_id	host_tax_id=9606; Homo sapiens	False		human	False	False	False	False
+current	SRR1816221	SAMN03358148		NA						False		laboratory	False	False	False	True
+current	SRR12686293	SAMN16129252		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR12686295	SAMN16129250		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR12686282	SAMN16129262		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR6314321	SAMN08055004		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR6314323	SAMN08055003		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR12686280	SAMN16129264		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR6314857	SAMN08053153		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR12686266	SAMN16129276		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR12686270	SAMN16129273		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR6315299	SAMN08054605		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR12686263	SAMN16129278		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR12686252	SAMN16129288		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR12686254	SAMN16129287		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR12686250	SAMN16129290		Non-human primate	unresolved					False		other_animal	False	False	False	True
+current	SRR6314874	SAMN08053348		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR5209460	SAMN06270905		Procyon lotor	scientific name	9654				False		other_animal	False	False	False	True
+current	SRR5209461	SAMN06270904		Procyon lotor	scientific name	9654				False		other_animal	False	False	False	True
+current	SRR5209462	SAMN06270903		Procyon lotor	scientific name	9654				False		other_animal	False	False	False	True
+current	SRR29262334	SAMN41652103		Vicugna pacos	scientific name	30538				False		other_animal	False	False	False	True
+current	SRR29262329	SAMN41652108		Vicugna pacos	scientific name	30538				False		other_animal	False	False	False	True
+current	SRR29262332	SAMN41652105		Vicugna pacos	scientific name	30538				False		other_animal	False	False	False	True
+current	SRR29262342	SAMN41652116		Vicugna pacos	scientific name	30538				False		other_animal	False	False	False	True
+current	SRR29262348	SAMN41652110		Vicugna pacos	scientific name	30538				False		other_animal	False	False	False	True
+current	SRR12488519	SAMN15860573		Cavia porcellus	scientific name	10141				False		other_animal	False	False	False	True
+current	SRR11101879	SAMN14118220		NA						False		other_animal	False	False	False	True
+current	SRR11101917	SAMN14118185		NA						False		other_animal	False	False	False	True
+current	SRR1635043	SAMN03121716		NA						False		other_animal	False	False	False	True
+current	SRR1635047	SAMN03121719		NA						False		other_animal	False	False	False	True
+current	SRR1635049	SAMN03121721		NA						False		other_animal	False	False	False	True
+current	SRR1635062	SAMN03121730		NA						False		other_animal	False	False	False	True
+current	SRR1635090	SAMN03121736		NA						False		other_animal	False	False	False	True
+current	SRR1635129	SAMN03121737		NA						False		other_animal	False	False	False	True
+current	SRR1635134	SAMN03121740		NA						False		other_animal	False	False	False	True
+current	SRR1635147	SAMN03121744		NA						False		other_animal	False	False	False	True
+current	SRR1635151	SAMN03121746		NA						False		other_animal	False	False	False	True
+current	SRR1635153	SAMN03121747		NA						False		other_animal	False	False	False	True
+current	SRR1635156	SAMN03121750		NA						False		other_animal	False	False	False	True
+current	SRR1635160	SAMN03121753		NA						False		other_animal	False	False	False	True
+current	SRR1635161	SAMN03121754		NA						False		other_animal	False	False	False	True
+current	SRR1635166	SAMN03121759		NA						False		other_animal	False	False	False	True
+current	SRR1635167	SAMN03121760		NA						False		other_animal	False	False	False	True
+current	SRR1635168	SAMN03121761		NA						False		other_animal	False	False	False	True
+current	SRR1635207	SAMN03121766		NA						False		other_animal	False	False	False	True
+current	SRR1635210	SAMN03121768		NA						False		other_animal	False	False	False	True
+current	SRR1635212	SAMN03121769		NA						False		other_animal	False	False	False	True
+current	SRR1635219	SAMN03121772		NA						False		other_animal	False	False	False	True
+current	SRR1635222	SAMN03121773		NA						False		other_animal	False	False	False	True
+current	SRR1635233	SAMN03121776		NA						False		other_animal	False	False	False	True
+current	SRR1635234	SAMN03121777		NA						False		other_animal	False	False	False	True
+current	SRR1635241	SAMN03121782		NA						False		other_animal	False	False	False	True
+current	SRR1635242	SAMN03121783		NA						False		other_animal	False	False	False	True
+current	SRR1635246	SAMN03121785		NA						False		other_animal	False	False	False	True
+current	SRR1635258	SAMN03121789		NA						False		other_animal	False	False	False	True
+current	SRR1635275	SAMN03121792		NA						False		other_animal	False	False	False	True
+current	SRR1635276	SAMN03121793		NA						False		other_animal	False	False	False	True
+current	SRR1635284	SAMN03121801		NA						False		other_animal	False	False	False	True
+current	SRR1814942	SAMN03359755		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR1816192	SAMN03358119		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR1816194	SAMN03358121		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR1816195	SAMN03358122		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR1816196	SAMN03358123		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR1816201	SAMN03358128		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR3619972	SAMN04532340		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR3619973	SAMN04532426		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR3619982	SAMN04532435		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR3619988	SAMN04532440		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR3619993	SAMN04532445		Primate	unresolved					False		other_animal	False	False	False	True
+current	SRR4069394	SAMN04532339		NA						False		other_animal	False	False	False	True
+current	SRR3094499	SAMN04381860		Guinea pig	common name/synonym	10141				False		other_animal	False	False	False	True
+current	SRR3094501	SAMN04381862		Guinea pig	common name/synonym	10141				False		other_animal	False	False	False	True
+current	SRR3094502	SAMN04381863		Guinea pig	common name/synonym	10141				False		other_animal	False	False	False	True
+current	SRR3094503	SAMN04381864		Guinea pig	common name/synonym	10141				False		other_animal	False	False	False	True
+current	SRR3094508	SAMN04381869		Guinea pig	common name/synonym	10141				False		other_animal	False	False	False	True
+current	SRR3094510	SAMN04381871		Guinea pig	common name/synonym	10141				False		other_animal	False	False	False	True
+current	SRR5054226	SAMN06036238		Odocoileus hemionus	scientific name	9872				False		other_animal	False	False	False	True
+current	SRR6169171	SAMN07780144		Missing						False		other_animal	False	False	False	True
+current	SRR27474102	SAMN38910016		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474105	SAMN38910013		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474107	SAMN38910011		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474110	SAMN38909993		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474111	SAMN38909992		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474113	SAMN38910004		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474114	SAMN38910003		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474129	SAMN38909978		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474135	SAMN38909990		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474144	SAMN38909982		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474145	SAMN38909981		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474148	SAMN38909958		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474149	SAMN38909959		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474152	SAMN38909974		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474153	SAMN38909963		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474160	SAMN38909972		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474163	SAMN38909952		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474167	SAMN38910009		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474180	SAMN38909930		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474182	SAMN38909961		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474188	SAMN38909929		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474192	SAMN38909943		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474201	SAMN38910034		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR27474206	SAMN38910029		Macaca mulatta	scientific name	9544				False		other_animal	False	False	False	True
+current	SRR10257508	SAMN13011761		NA						False		other_food	False	False	False	True
+current	ERR1163442	SAMEA3683056		NA						False		other_food	False	False	False	True
+current	SRR9945146	SAMN12550285		NA						False		other_food	False	False	False	True
+current	SRR9945233	SAMN12550351		NA						False		other_food	False	False	False	True
+current	SRR9969039	SAMN12574200		NA						False		other_food	False	False	False	True
+current	SRR9899056	SAMN12492448		NA						False		other_food	False	False	False	True
+current	SRR12301966	SAMN15617875		NA						False		pig	False	False	False	True
+current	SRR12070099	SAMN15221470		Sus scrofa domesticus	scientific name	9825	pig	host_tax_id	host_tax_id=9825; Sus scrofa domesticus	False		pig	False	False	False	False
+current	SRR12070221	SAMN15221566		Sus scrofa domesticus	scientific name	9825	pig	host_tax_id	host_tax_id=9825; Sus scrofa domesticus	False		pig	False	False	False	False
+current	SRR12070098	SAMN15221417		Sus scrofa domesticus	scientific name	9825	pig	host_tax_id	host_tax_id=9825; Sus scrofa domesticus	False		pig	False	False	False	False
+current	SRR12070156	SAMN15221624		Sus scrofa	scientific name	9823				False		pig	False	False	False	True
+current	ERR4224796	SAMEA6935512		NA						False		pig	False	False	False	True
+current	ERR4223940	SAMEA6936580		NA						False		pig	False	False	False	True
+current	ERR4223951	SAMEA6936593		NA						False		pig	False	False	False	True
+current	SRR17152128	SAMN23711199		NA						False		pig	False	False	False	True
+current	ERR10497186	SAMEA112143406		NA						False		pig	False	False	False	True
+current	ERR1163653	SAMEA3683268		NA						False		pig	False	False	False	True
+current	SRR10768360	SAMN13682804		NA						False		pig	False	False	False	True
+current	SRR10768380	SAMN13682833		NA						False		pig	False	False	False	True
+current	SRR10823769	SAMN13719097		NA						False		pig	False	False	False	True
+current	SRR13921946	SAMN18238163		NA						False		pig	False	False	False	True
+current	SRR13921952	SAMN18238177		NA						False		pig	False	False	False	True
+current	SRR13921953	SAMN18238185		NA						False		pig	False	False	False	True
+current	SRR6289028	SAMN07767645		NA						False		pig	False	False	False	True
+current	SRR6376259	SAMN07610875		NA						False		pig	False	False	False	True
+current	SRR6398669	SAMN08217218		NA						False		pig	False	False	False	True
+current	SRR6443378	SAMN07767547		NA						False		pig	False	False	False	True
+current	SRR6664291	SAMN08169011		NA						False		pig	False	False	False	True
+current	SRR6666474	SAMN08457467		NA						False		pig	False	False	False	True
+current	SRR6666794	SAMN08457480		NA						False		pig	False	False	False	True
+current	SRR6745536	SAMN08169017		NA						False		pig	False	False	False	True
+current	SRR6930614	SAMN08849769		NA						False		pig	False	False	False	True
+current	SRR6998296	SAMN08168982		NA						False		pig	False	False	False	True
+current	SRR7014281	SAMN08942366		NA						False		pig	False	False	False	True
+current	SRR7127921	SAMN09071609		NA						False		pig	False	False	False	True
+current	SRR5645350	SAMN06921927		missing						False		pig	False	False	False	True
+current	SRR5760705	SAMN06921944		missing						False		pig	False	False	False	True
+current	SRR5861818	SAMN07343110		missing						False		pig	False	False	False	True
+current	SRR5865320	SAMN06922000		missing						False		pig	False	False	False	True
+current	SRR5865333	SAMN06921999		missing						False		pig	False	False	False	True
+current	SRR5876880	SAMN07343091		missing						False		pig	False	False	False	True
+current	SRR5876891	SAMN07343096		missing						False		pig	False	False	False	True
+current	SRR5963909	SAMN07469561		missing						False		pig	False	False	False	True
+current	SRR6212386	SAMN07509168		NA						False		pig	False	False	False	True
+current	SRR6213864	SAMN07509147		NA						False		pig	False	False	False	True
+current	SRR6236257	SAMN07509157		NA						False		pig	False	False	False	True
+current	SRR6261965	SAMN07532293		NA						False		pig	False	False	False	True
+current	SRR6856173	SAMN07809567		NA						False		pig	False	False	False	True
+current	SRR6860706	SAMN07809616		NA						False		pig	False	False	False	True
+current	SRR6973039	SAMN07809573		NA						False		pig	False	False	False	True
+current	SRR7439653	SAMN08169192		NA						False		pig	False	False	False	True
+current	SRR7496959	SAMN08169104		NA						False		pig	False	False	False	True
+current	SRR7500598	SAMN08169194		NA						False		pig	False	False	False	True
+current	SRR7500639	SAMN08169203		NA						False		pig	False	False	False	True
+current	SRR2727701	SAMN04195079		NA						False		pig	False	False	False	True
+current	SRR2889269	SAMN04229852		NA						False		pig	False	False	False	True
+current	SRR3113830	SAMN04435379		NA						False		pig	False	False	False	True
+current	SRR3185261	SAMN04514642		NA						False		pig	False	False	False	True
+current	SRR3215130	SAMN04543692		NA						False		pig	False	False	False	True
+current	SRR3297736	SAMN04580863		NA						False		pig	False	False	False	True
+current	SRR3350820	SAMN04625656		NA						False		pig	False	False	False	True
+current	SRR3583308	SAMN05171391		NA						False		pig	False	False	False	True
+current	SRR3583313	SAMN05171415		NA						False		pig	False	False	False	True
+current	SRR4301153	SAMN05833060		NA						False		pig	False	False	False	True
+current	SRR5195803	SAMN06250921		NA						False		pig	False	False	False	True
+current	SRR5427944	SAMN06660823		NA						False		pig	False	False	False	True
+current	SRR5427952	SAMN06677842		NA						False		pig	False	False	False	True
+current	SRR5605553	SAMN07168574		NA						False		pig	False	False	False	True
+current	SRR5815730	SAMN07339686		NA						False		pig	False	False	False	True
+current	SRR5815736	SAMN07339692		NA						False		pig	False	False	False	True
+current	SRR6659229	SAMN08447599		NA						False		pig	False	False	False	True
+current	SRR6659230	SAMN08447619		NA						False		pig	False	False	False	True
+current	SRR13276339	SAMN17120229		swine	common name/synonym	9823				False		pig	False	False	False	True
+current	SRR6764260	SAMN08581783		NA						False		pig	False	False	False	True
+current	SRR6793437	SAMN08624119		NA						False		pig	False	False	False	True
+current	SRR6793679	SAMN08624206		NA						False		pig	False	False	False	True
+current	SRR6904941	SAMN08801805		NA						False		pig	False	False	False	True
+current	SRR7367176	SAMN09456128		NA						False		pig	False	False	False	True
+current	SRR7543323	SAMN09693174		NA						False		pig	False	False	False	True
+current	SRR7624020	SAMN09741881		NA						False		pig	False	False	False	True
+current	SRR8420065	SAMN10715419		NA						False		pig	False	False	False	True
+current	SRR9879527	SAMN12421828		NA						False		pig	False	False	False	True
+current	SRR10045171	SAMN12638021		NA						False		pig	False	False	False	True
+current	SRR11600456	SAMN14680986		NA						False		pig	False	False	False	True
+current	SRR11654067	SAMN14777833		NA						False		pig	False	False	False	True
+current	SRR8609085	SAMN10988632		NA						False		pig	False	False	False	True
+current	SRR8635363	SAMN11024143		NA						False		pig	False	False	False	True
+current	SRR8696153	SAMN11082342		NA						False		pig	False	False	False	True
+current	SRR8754469	SAMN11173141		NA						False		pig	False	False	False	True
+current	SRR8951824	SAMN11491694		NA						False		pig	False	False	False	True
+current	SRR9007403	SAMN11569722		NA						False		pig	False	False	False	True
+current	SRR9010153	SAMN11571904		NA						False		pig	False	False	False	True
+current	SRR9289356	SAMN12040843		NA						False		pig	False	False	False	True
+current	SRR9856028	SAMN12391560		NA						False		pig	False	False	False	True
+current	SRR11544808	SAMN14596732		NA						False		pig	False	False	False	True
+current	SRR11654077	SAMN14777876		NA						False		pig	False	False	False	True
+current	SRR12625727	SAMN16112018		NA						False		pig	False	False	False	True
+current	SRR12680074	SAMN16229196		NA						False		pig	False	False	False	True
+current	SRR12782933	SAMN16383944		NA						False		pig	False	False	False	True
+current	SRR17066970	SAMN23492975		NA						False		pig	False	False	False	True
+current	SRR17412822	SAMN24588437		NA						False		pig	False	False	False	True
+current	SRR17656269	SAMN25076273		NA						False		pig	False	False	False	True
+current	SRR18426075	SAMN26857436		NA						False		pig	False	False	False	True
+current	SRR20710162	SAMN30050880		NA						False		pig	False	False	False	True
+current	SRR23513629	SAMN33342930		NA						False		pig	False	False	False	True
+current	SRR23979057	SAMN33927552		NA						False		pig	False	False	False	True
+current	SRR5209489	SAMN06270876		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR22956824	SAMN32543249		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR22956826	SAMN32543247		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR26678370	SAMN38092503		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR26678371	SAMN38092502		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR26351318	SAMN37735414		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR27218412	SAMN38842792		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR27218413	SAMN38842791		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR27218469	SAMN38713247		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	ERR4224309	SAMEA6936572		NA						False		sheep	False	False	False	True
+current	ERR4224861	SAMEA6935706		NA						False		sheep	False	False	False	True
+current	ERR4224567	SAMEA6936163		NA						False		sheep	False	False	False	True
+current	ERR4224617	SAMEA6936789		NA						False		sheep	False	False	False	True
+current	SRR12063017	SAMN15317825		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12063018	SAMN15317824		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12063030	SAMN15317813		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12063032	SAMN15317811		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12063034	SAMN15317809		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12347634	SAMN15675348		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12347652	SAMN15675370		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12347663	SAMN15675360		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12347669	SAMN15675355		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12347670	SAMN15675354		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR12347676	SAMN15675340		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17898864	SAMN16731005		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17898865	SAMN16731004		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17898893	SAMN16731016		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17899234	SAMN16731123		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900361	SAMN16731388		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900362	SAMN16731387		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900429	SAMN16731384		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900435	SAMN16731379		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900439	SAMN16731375		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900532	SAMN16731255		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900535	SAMN16731252		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17900545	SAMN16731243		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17925216	SAMN16731843		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17925217	SAMN16731842		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17925218	SAMN16731841		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17925224	SAMN16731836		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17925265	SAMN16731712		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17925366	SAMN16731708		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17929619	SAMN16731988		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17964877	SAMN16769363		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17964955	SAMN16769468		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17974188	SAMN16769565		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17974194	SAMN16769530		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR17974198	SAMN16769527		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR13362754	SAMN17214798		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR13362760	SAMN17214748		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR13362775	SAMN17214779		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR13362783	SAMN17214772		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094486	SAMN04377900		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094483	SAMN04377897		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR10218159	SAMN12898214		NA						False		sheep	False	False	False	True
+current	SRR10218167	SAMN12898207		NA						False		sheep	False	False	False	True
+current	SRR3619966	SAMN04532420		Ovine	unresolved					False		sheep	False	False	False	True
+current	SRR5230112	SAMN06290218		ovine	unresolved					False		sheep	False	False	False	True
+current	SRR3094408	SAMN04377822		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094413	SAMN04377827		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094418	SAMN04377832		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094423	SAMN04377837		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094446	SAMN04377860		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094464	SAMN04377878		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094432	SAMN04377846		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR3094452	SAMN04377866		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR5397411	SAMN06661615		ovine	unresolved					False		sheep	False	False	False	True
+current	SRR5397416	SAMN06661613		ovine	unresolved					False		sheep	False	False	False	True
+current	SRR3094482	SAMN04377896		Ovis aries	scientific name	9940	sheep	host_tax_id	host_tax_id=9940; Ovis aries	False		sheep	False	False	False	False
+current	SRR5366142	SAMN06611253		ovine	unresolved					False		sheep	False	False	False	True
+current	SRR11459577	SAMN14503108		NA						False		sheep	False	False	False	True
+current	SRR11544459	SAMN14575260		NA						False		sheep	False	False	False	True
+current	SRR11654312	SAMN14779565		NA						False		sheep	False	False	False	True
+current	SRR12625708	SAMN16112003		NA						False		sheep	False	False	False	True
+current	SRR12625725	SAMN16112017		NA						False		sheep	False	False	False	True
+current	SRR12625734	SAMN16112021		NA						False		sheep	False	False	False	True
+current	SRR13238488	SAMN17052385		NA						False		sheep	False	False	False	True
+current	SRR13350071	SAMN17212300		NA						False		sheep	False	False	False	True
+current	SRR13699956	SAMN17898449		NA						False		sheep	False	False	False	True
+current	SRR14228718	SAMN18733916		NA						False		sheep	False	False	False	True
+current	SRR14882958	SAMN19814331		NA						False		sheep	False	False	False	True
+current	SRR18678775	SAMN27406571		NA						False		sheep	False	False	False	True
+current	SRR18959246	SAMN27923475		NA						False		sheep	False	False	False	True
+current	SRR18982390	SAMN27994774		NA						False		sheep	False	False	False	True
+current	SRR19139531	SAMN28156629		NA						False		sheep	False	False	False	True
+current	SRR19486036	SAMN28794718		NA						False		sheep	False	False	False	True
+current	SRR20124469	SAMN29656405		NA						False		sheep	False	False	False	True
+current	SRR20307428	SAMN29826444		NA						False		sheep	False	False	False	True
+current	SRR28199248	SAMN40218291		NA						False		sheep	False	False	False	True
+current	SRR28440137	SAMN40603281		NA						False		sheep	False	False	False	True
+current	SRR28440155	SAMN40603369		NA						False		sheep	False	False	False	True
+current	SRR28764814	SAMN41042988		NA						False		sheep	False	False	False	True
+current	SRR28886116	SAMN41188572		NA						False		sheep	False	False	False	True
+current	SRR28886138	SAMN41188859		NA						False		sheep	False	False	False	True
+current	SRR29205960	SAMN41571437		NA						False		sheep	False	False	False	True
+current	SRR29740282	SAMN42375231		NA						False		sheep	False	False	False	True
+current	SRR29740290	SAMN42375234		NA						False		sheep	False	False	False	True
+current	SRR29740291	SAMN42375238		NA						False		sheep	False	False	False	True
+current	SRR29740293	SAMN42375236		NA						False		sheep	False	False	False	True
+current	SRR29740313	SAMN42375262		NA						False		sheep	False	False	False	True
+current	SRR10698086	SAMN13577901		NA						False		turkey	False	False	False	True
+current	SRR10698082	SAMN13577905		NA						False		turkey	False	False	False	True
+current	ERR4224737	SAMEA6935563		NA						False		turkey	False	False	False	True
+current	ERR4224893	SAMEA6935744		NA						False		turkey	False	False	False	True
+current	ERR4224927	SAMEA6935862		NA						False		turkey	False	False	False	True
+current	ERR10497218	SAMEA112143438		NA						False		turkey	False	False	False	True
+current	SRR10239225	SAMN12725417		NA						False		turkey	False	False	False	True
+current	SRR3113823	SAMN04435360		NA						False		turkey	False	False	False	True
+current	SRR3140161	SAMN04453081		NA						False		turkey	False	False	False	True
+current	SRR5080903	SAMN06111800		NA						False		turkey	False	False	False	True
+current	SRR6108541	SAMN07633823		NA						False		turkey	False	False	False	True
+current	SRR6410196	SAMN08224457		NA						False		turkey	False	False	False	True
+current	SRR5683997	SAMN07237679		NA						False		turkey	False	False	False	True
+current	SRR5754139	SAMN07276193		NA						False		turkey	False	False	False	True
+current	SRR7084862	SAMN09004625		NA						False		turkey	False	False	False	True
+current	SRR7084888	SAMN09004616		NA						False		turkey	False	False	False	True
+current	SRR7138685	SAMN09098808		NA						False		turkey	False	False	False	True
+current	SRR7367187	SAMN09456086		NA						False		turkey	False	False	False	True
+current	SRR7543322	SAMN09693172		NA						False		turkey	False	False	False	True
+current	SRR7708075	SAMN09849935		NA						False		turkey	False	False	False	True
+current	SRR7739737	SAMN09880377		NA						False		turkey	False	False	False	True
+current	SRR7904252	SAMN10129872		NA						False		turkey	False	False	False	True
+current	SRR8075036	SAMN10256458		NA						False		turkey	False	False	False	True
+current	SRR8099154	SAMN10282297		NA						False		turkey	False	False	False	True
+current	SRR8136319	SAMN10346717		NA						False		turkey	False	False	False	True
+current	SRR8208263	SAMN10441558		NA						False		turkey	False	False	False	True
+current	SRR8252758	SAMN10489490		NA						False		turkey	False	False	False	True
+current	SRR8252775	SAMN10489686		NA						False		turkey	False	False	False	True
+current	SRR8375510	SAMN10656527		NA						False		turkey	False	False	False	True
+current	SRR8592659	SAMN10968433		NA						False		turkey	False	False	False	True
+current	SRR8663531	SAMN11047550		NA						False		turkey	False	False	False	True
+current	SRR10097033	SAMN12725514		NA						False		turkey	False	False	False	True
+current	SRR10218502	SAMN12898046		NA						False		turkey	False	False	False	True
+current	SRR10246444	SAMN12993585		NA						False		turkey	False	False	False	True
+current	SRR10447229	SAMN13287125		NA						False		turkey	False	False	False	True
+current	SRR10574919	SAMN13447807		NA						False		turkey	False	False	False	True
+current	SRR10831345	SAMN13738907		NA						False		turkey	False	False	False	True
+current	SRR10834037	SAMN13739873		NA						False		turkey	False	False	False	True
+current	SRR11236364	SAMN14291209		NA						False		turkey	False	False	False	True
+current	SRR13436893	SAMN17315746		NA						False		turkey	False	False	False	True
+current	SRR8538386	SAMN10880125		NA						False		turkey	False	False	False	True
+current	SRR8698547	SAMN11086814		NA						False		turkey	False	False	False	True
+current	SRR8753356	SAMN11168299		NA						False		turkey	False	False	False	True
+current	SRR8838819	SAMN11318641		NA						False		turkey	False	False	False	True
+current	SRR8839759	SAMN11320711		NA						False		turkey	False	False	False	True
+current	SRR8839808	SAMN11320775		NA						False		turkey	False	False	False	True
+current	SRR8942624	SAMN11477071		NA						False		turkey	False	False	False	True
+current	SRR9010123	SAMN11571898		NA						False		turkey	False	False	False	True
+current	SRR9609600	SAMN12151518		NA						False		turkey	False	False	False	True
+current	SRR9643036	SAMN12212497		NA						False		turkey	False	False	False	True
+current	SRR9668773	SAMN12251390		NA						False		turkey	False	False	False	True
+current	SRR11272909	SAMN14337275		NA						False		turkey	False	False	False	True
+current	SRR11521765	SAMN14570277		NA						False		turkey	False	False	False	True
+current	SRR12112583	SAMN15400886		NA						False		turkey	False	False	False	True
+current	SRR12472207	SAMN15850787		NA						False		turkey	False	False	False	True
+current	SRR12515354	SAMN15901771		NA						False		turkey	False	False	False	True
+current	SRR12680060	SAMN16229181		NA						False		turkey	False	False	False	True
+current	SRR13045497	SAMN16784408		NA						False		turkey	False	False	False	True
+current	SRR13059399	SAMN16794613		NA						False		turkey	False	False	False	True
+current	SRR13176900	SAMN16970578		NA						False		turkey	False	False	False	True
+current	SRR13245107	SAMN17079653		NA						False		turkey	False	False	False	True
+current	SRR13797356	SAMN18077813		NA						False		turkey	False	False	False	True
+current	SRR13842615	SAMN18106686		NA						False		turkey	False	False	False	True
+current	SRR14478907	SAMN19092027		NA						False		turkey	False	False	False	True
+current	SRR14619693	SAMN19302371		NA						False		turkey	False	False	False	True
+current	SRR15321209	SAMN20518097		NA						False		turkey	False	False	False	True
+current	SRR15323874	SAMN20554728		NA						False		turkey	False	False	False	True
+current	SRR16089306	SAMN21856713		NA						False		turkey	False	False	False	True
+current	SRR16764944	SAMN22867737		NA						False		turkey	False	False	False	True
+current	SRR16764948	SAMN22867738		NA						False		turkey	False	False	False	True
+current	SRR17067005	SAMN23493043		NA						False		turkey	False	False	False	True
+current	SRR17260636	SAMN24169580		NA						False		turkey	False	False	False	True
+current	SRR17621928	SAMN25003818		NA						False		turkey	False	False	False	True
+current	SRR17657446	SAMN25076911		NA						False		turkey	False	False	False	True
+current	SRR17915050	SAMN25705159		NA						False		turkey	False	False	False	True
+current	SRR18982367	SAMN27994492		NA						False		turkey	False	False	False	True
+current	SRR19139537	SAMN28156616		NA						False		turkey	False	False	False	True
+current	SRR19242167	SAMN28488441		NA						False		turkey	False	False	False	True
+current	SRR19847146	SAMN29335088		NA						False		turkey	False	False	False	True
+current	SRR20994461	SAMN30220859		NA						False		turkey	False	False	False	True
+current	SRR20994490	SAMN30220869		NA						False		turkey	False	False	False	True
+current	SRR20994523	SAMN30220883		NA						False		turkey	False	False	False	True
+current	SRR21909378	SAMN31288862		NA						False		turkey	False	False	False	True
+current	SRR22629699	SAMN32131593		NA						False		turkey	False	False	False	True
+current	SRR22884909	SAMN32389840		NA						False		turkey	False	False	False	True
+current	SRR23525304	SAMN33356324		NA						False		turkey	False	False	False	True
+current	SRR24324263	SAMN34404446		NA						False		turkey	False	False	False	True
+current	SRR24529378	SAMN35064541		NA						False		turkey	False	False	False	True
+current	SRR24660421	SAMN35217531		NA						False		turkey	False	False	False	True
+current	SRR25523927	SAMN36841994		NA						False		turkey	False	False	False	True
+current	SRR25915113	SAMN37283204		NA						False		turkey	False	False	False	True
+current	SRR26304285	SAMN37707087		NA						False		turkey	False	False	False	True
+current	SRR26628477	SAMN38061742		NA						False		turkey	False	False	False	True
+current	SRR26806889	SAMN38227748		NA						False		turkey	False	False	False	True
+current	SRR26959982	SAMN38453090		NA						False		turkey	False	False	False	True
+current	SRR26969078	SAMN38471372		NA						False		turkey	False	False	False	True
+current	SRR27038776	SAMN38638896		NA						False		turkey	False	False	False	True
+current	SRR27040758	SAMN38638914		NA						False		turkey	False	False	False	True
+current	SRR27503896	SAMN39418152		NA						False		turkey	False	False	False	True
+current	SRR28901624	SAMN41218539		Ground Turkey	unresolved					False		turkey	False	False	False	True
+current	SRR27844354	SAMN39746917		NA						False		turkey	False	False	False	True
+current	ERR3144883	SAMEA5328457		NA						False		unknown	False	False	False	True
+current	ERR3145269	SAMEA5326284		NA						False		unknown	False	False	False	True
+current	ERR4879520	SAMEA7632583		NA						False		unknown	False	False	False	True
+current	ERR10703458	SAMEA112260336		NA						False		unknown	False	False	False	True
+current	ERR12953173	SAMEA115501781		NA						False		unknown	False	False	False	True
+current	ERR11003616	SAMEA112765475		NA						False		unknown	False	False	False	True
+current	ERR10372741	SAMEA111483144		NA						False		unknown	False	False	False	True
+current	SRR24880177	SAMN35681707		NA						False		unknown	False	False	False	True
+current	ERR12726479	SAMEA115383977		NA						False		unknown	False	False	False	True
+current	SRR10019064	SAMN12631031		NA						False		unknown	False	False	False	True
+current	ERR11721283	SAMEA114071969		NA						False		unknown	False	False	False	True
+current	ERR12084056	SAMEA114461845		NA						False		unknown	False	False	False	True
+current	ERR12072012	SAMEA114408641		NA						False		unknown	False	False	False	True
+current	ERR12072144	SAMEA114408773		NA						False		unknown	False	False	False	True
+current	ERR12757156	SAMEA115419291		NA						False		unknown	False	False	False	True
+current	ERR1658511	SAMEA4443306		NA						False		unknown	False	False	False	True
+current	ERR1658689	SAMEA4443233		NA						False		unknown	False	False	False	True
+current	ERR1906113	SAMEA103954494		NA						False		unknown	False	False	False	True
+current	ERR3446633	SAMEA5803185		NA						False		unknown	False	False	False	True
+current	ERR439920	SAMEA2274619		NA						False		unknown	False	False	False	True
+current	ERR450239	SAMEA2274688		NA						False		unknown	False	False	False	True
+current	ERR470518	SAMEA2361299		NA						False		unknown	False	False	False	True
+current	ERR470695	SAMEA2361479		NA						False		unknown	False	False	False	True
+current	ERR473837	SAMEA2361639		NA						False		unknown	False	False	False	True
+current	ERR670848	SAMEA2613238		NA						False		unknown	False	False	False	True
+current	ERR694574	SAMEA3168641		NA						False		unknown	False	False	False	True
+current	ERR976125	SAMEA3391383		NA						False		unknown	False	False	False	True
+current	ERR976146	SAMEA3391403		NA						False		unknown	False	False	False	True
+current	ERR137056	SAMEA1401327		NA						False		unknown	False	False	False	True
+current	ERR148287	SAMEA1401339		NA						False		unknown	False	False	False	True
+current	ERR148380	SAMEA1401535		NA						False		unknown	False	False	False	True
+current	ERR1512684	SAMEA4058782		NA						False		unknown	False	False	False	True
+current	ERR1701073	SAMEA4521984		NA						False		unknown	False	False	False	True
+current	ERR213031	SAMEA1572567		NA						False		unknown	False	False	False	True
+current	ERR221328	SAMEA1676325		NA						False		unknown	False	False	False	True
+current	ERR226207	SAMEA1676384		NA						False		unknown	False	False	False	True
+current	ERR226238	SAMEA1676345		NA						False		unknown	False	False	False	True
+current	ERR278336	SAMEA1902805		NA						False		unknown	False	False	False	True
+current	ERR326230	SAMEA1902783		NA						False		unknown	False	False	False	True
+current	ERR330642	SAMEA1969322		NA						False		unknown	False	False	False	True
+current	ERR356059	SAMEA1676335		NA						False		unknown	False	False	False	True
+current	ERR467052	SAMEA2266426		NA						False		unknown	False	False	False	True
+current	ERR594006	SAMEA2743679		NA						False		unknown	False	False	False	True
+current	ERR713652	SAMEA2656597		NA						False		unknown	False	False	False	True
+current	ERR713723	SAMEA2656707		NA						False		unknown	False	False	False	True
+current	SRR1815315	SAMN03360128		NA						False		unknown	False	False	False	True
+current	SRR4069948	SAMN05711866		missing						False		unknown	False	False	False	True
+current	SRR4070139	SAMN05712006		missing						False		unknown	False	False	False	True
+current	SRR24939988	SAMN35758862		Animal	unresolved					False		unknown	False	False	False	True
+current	SRR13169053	SAMN16961722		missing						False		unknown	False	False	False	True
+current	SRR13202276	SAMN17006817		NA						False		unknown	False	False	False	True
+current	SRR15223897	SAMN20357706		missing						False		unknown	False	False	False	True
+current	SRR16969880	SAMN23245086		missing						False		unknown	False	False	False	True
+current	SRR18072425	SAMN26084580		missing						False		unknown	False	False	False	True
+current	SRR21388670	SAMN30631034		missing						False		unknown	False	False	False	True
+current	SRR28095900	SAMN40139976		missing						False		unknown	False	False	False	True
+current	SRR23980959	SAMN33938979		missing						False		unknown	False	False	False	True
+current	SRR25052815	SAMN36022878		missing						False		unknown	False	False	False	True
+current	SRR25382606	SAMN36672414		missing						False		unknown	False	False	False	True
+current	SRR27042677	SAMN38639666		missing						False		unknown	False	False	False	True
+current	SRR10063337	SAMN12687075		missing						False		unknown	False	False	False	True
+current	SRR10699576	SAMN13607553		missing						False		unknown	False	False	False	True
+current	SRR10990438	SAMN13945533		missing						False		unknown	False	False	False	True
+current	SRR11072035	SAMN14088045		missing						False		unknown	False	False	False	True
+current	SRR11853953	SAMN15031454		missing						False		unknown	False	False	False	True
+current	SRR12158718	SAMN15459044		missing						False		unknown	False	False	False	True
+current	SRR12341582	SAMN15663560		missing						False		unknown	False	False	False	True
+current	SRR12422695	SAMN15775603		missing						False		unknown	False	False	False	True
+current	SRR12835194	SAMN16473954		NA						False		unknown	False	False	False	True
+current	SRR12972551	SAMN16636142		missing						False		unknown	False	False	False	True
+current	SRR13923227	SAMN18239645		missing						False		unknown	False	False	False	True
+current	SRR14633216	SAMN19317240		missing						False		unknown	False	False	False	True
+current	SRR15123871	SAMN20201240		missing						False		unknown	False	False	False	True
+current	SRR15178534	SAMN20286149		missing						False		unknown	False	False	False	True
+current	SRR15230816	SAMN20362528		missing						False		unknown	False	False	False	True
+current	SRR17857257	SAMN25582471		missing						False		unknown	False	False	False	True
+current	SRR19383128	SAMN28639237		missing						False		unknown	False	False	False	True
+current	SRR1993248	SAMN03565942		missing						False		unknown	False	False	False	True
+current	SRR24863315	SAMN35663339		NA						False		unknown	False	False	False	True
+current	SRR25436740	SAMN36726060		NA						False		unknown	False	False	False	True
+current	SRR25517464	SAMN36836908		missing						False		unknown	False	False	False	True
+current	SRR27559027	SAMN39456870		NA						False		unknown	False	False	False	True
+current	SRR28868230	SAMN41154350		NA						False		unknown	False	False	False	True
+current	SRR29294247	SAMN41692949		missing						False		unknown	False	False	False	True
+current	SRR29931273	SAMN42764553		NA						False		unknown	False	False	False	True
+current	SRR7411500	SAMN09469946		missing						False		unknown	False	False	False	True
+current	SRR8791352	SAMN11265392		missing						False		unknown	False	False	False	True
+current	SRR9856010	SAMN12391936		missing						False		unknown	False	False	False	True
+current	SRR9864928	SAMN12407739		missing						False		unknown	False	False	False	True
+current	SRR9971615	SAMN12580408		missing						False		unknown	False	False	False	True
+current	SRR12686264	SAMN16129242		NA						False		wastewater	False	False	False	True
+current	SRR12686236	SAMN16129246		NA						False		wastewater	False	False	False	True
+current	SRR6314326	SAMN08055029		NA						False		wastewater	False	False	False	True
+current	ERR4224333	SAMEA6936703		NA						False		wastewater	False	False	False	True
+current	ERR4224353	SAMEA6936175		NA						False		wastewater	False	False	False	True
+current	ERR4224375	SAMEA6936742		NA						False		wastewater	False	False	False	True
+current	ERR4224391	SAMEA6936240		NA						False		wastewater	False	False	False	True
+current	ERR4224394	SAMEA6936755		NA						False		wastewater	False	False	False	True
+current	ERR4224397	SAMEA6936284		NA						False		wastewater	False	False	False	True
+current	ERR4224408	SAMEA6936774		NA						False		wastewater	False	False	False	True
+current	ERR4224419	SAMEA6936784		NA						False		wastewater	False	False	False	True
+current	ERR4224430	SAMEA6936803		NA						False		wastewater	False	False	False	True
+current	ERR4224460	SAMEA6936438		NA						False		wastewater	False	False	False	True
+current	ERR4224474	SAMEA6936835		NA						False		wastewater	False	False	False	True
+current	ERR4224491	SAMEA6936847		NA						False		wastewater	False	False	False	True
+current	ERR4224506	SAMEA6936859		NA						False		wastewater	False	False	False	True
+current	ERR4224507	SAMEA6936462		NA						False		wastewater	False	False	False	True
+current	ERR4224642	SAMEA6936484		NA						False		wastewater	False	False	False	True
+current	ERR4224690	SAMEA6936515		NA						False		wastewater	False	False	False	True
+current	SRR16091611	SAMN21873173		NA						False		wastewater	False	False	False	True
+current	SRR9030816	SAMN11605015		NA						False		water	False	False	False	True
+current	SRR9030837	SAMN11605013		NA						False		water	False	False	False	True
+current	SRR9030874	SAMN11605006		NA						False		water	False	False	False	True
+current	SRR9030879	SAMN11605009		NA						False		water	False	False	False	True
+current	SRR9030813	SAMN11605023		NA						False		water	False	False	False	True
+current	SRR9030821	SAMN11605022		NA						False		water	False	False	False	True
+current	SRR9030826	SAMN11605035		NA						False		water	False	False	False	True
+current	SRR9030829	SAMN11605040		NA						False		water	False	False	False	True
+current	SRR9030830	SAMN11605039		NA						False		water	False	False	False	True
+current	SRR5209565	SAMN06270800		NA						False		water	False	False	False	True
+current	SRR5209487	SAMN06270878		NA						False		water	False	False	False	True
+current	SRR5209548	SAMN06270817		NA						False		water	False	False	False	True
+current	SRR5209551	SAMN06270814		NA						False		water	False	False	False	True
+current	SRR5209541	SAMN06270824		NA						False		water	False	False	False	True
+current	SRR5209546	SAMN06270819		NA						False		water	False	False	False	True
+current	SRR5209458	SAMN06270907		NA						False		water	False	False	False	True
+current	SRR9879555	SAMN12421848		NA						False		water	False	False	False	True
+current	SRR21995107	SAMN28017091		NA						False		water	False	False	False	True
+current	SRR21995108	SAMN28017090		NA						False		water	False	False	False	True
+current	ERR4224335	SAMEA6936155		NA						False		water	False	False	False	True
+current	ERR4224337	SAMEA6936156		NA						False		water	False	False	False	True
+current	ERR4224345	SAMEA6936721		NA						False		water	False	False	False	True
+current	ERR4224349	SAMEA6936724		NA						False		water	False	False	False	True
+current	ERR4224356	SAMEA6936730		NA						False		water	False	False	False	True
+current	ERR4224358	SAMEA6936195		NA						False		water	False	False	False	True
+current	ERR4224388	SAMEA6936760		NA						False		water	False	False	False	True
+current	ERR4224390	SAMEA6936239		NA						False		water	False	False	False	True
+current	ERR4224395	SAMEA6936283		NA						False		water	False	False	False	True
+current	ERR4224412	SAMEA6936778		NA						False		water	False	False	False	True
+current	ERR4224423	SAMEA6936377		NA						False		water	False	False	False	True
+current	ERR4224427	SAMEA6936800		NA						False		water	False	False	False	True
+current	ERR4224434	SAMEA6936806		NA						False		water	False	False	False	True
+current	ERR4224438	SAMEA6936809		NA						False		water	False	False	False	True
+current	ERR4224444	SAMEA6936814		NA						False		water	False	False	False	True
+current	ERR4224464	SAMEA6936831		NA						False		water	False	False	False	True
+current	ERR4224470	SAMEA6936829		NA						False		water	False	False	False	True
+current	ERR4224476	SAMEA6936447		NA						False		water	False	False	False	True
+current	ERR4224496	SAMEA6936853		NA						False		water	False	False	False	True
+current	ERR4224500	SAMEA6936857		NA						False		water	False	False	False	True
+current	ERR4224501	SAMEA6936861		NA						False		water	False	False	False	True
+current	ERR4224632	SAMEA6936865		NA						False		water	False	False	False	True
+current	ERR4224647	SAMEA6936873		NA						False		water	False	False	False	True
+current	ERR4224651	SAMEA6936489		NA						False		water	False	False	False	True
+current	ERR4224662	SAMEA6936498		NA						False		water	False	False	False	True
+current	ERR4224671	SAMEA6936506		NA						False		water	False	False	False	True
+current	ERR4224675	SAMEA6936889		NA						False		water	False	False	False	True
+current	ERR4224686	SAMEA6936897		NA						False		water	False	False	False	True
+current	ERR4224688	SAMEA6936514		NA						False		water	False	False	False	True
+current	ERR4224700	SAMEA6936910		NA						False		water	False	False	False	True
+current	ERR1025588	SAMEA3556567		NA						False		water	False	False	False	True
+current	ERR9129992	SAMEA13301223		NA						False		water	False	False	False	True
+current	ERR321059	SAMEA2163883		NA						False		water	False	False	False	True
+current	ERR321060	SAMEA2163884		NA						False		water	False	False	False	True
+current	SRR6260848	SAMN07981696		NA						False		water	False	False	False	True
+current	SRR6311922	SAMN07611432		NA						False		water	False	False	False	True
+current	SRR6314031	SAMN07611418		NA						False		water	False	False	False	True
+current	SRR6367412	SAMN07611399		NA						False		water	False	False	False	True
+current	SRR6398641	SAMN08217106		NA						False		water	False	False	False	True
+current	SRR6398687	SAMN08217220		NA						False		water	False	False	False	True
+current	SRR6398697	SAMN08217221		NA						False		water	False	False	False	True
+current	SRR6398728	SAMN07767596		NA						False		water	False	False	False	True
+current	SRR6261842	SAMN07982453		NA						False		water	False	False	False	True
+current	SRR6261893	SAMN07982510		NA						False		water	False	False	False	True
+current	SRR6261989	SAMN07982571		NA						False		water	False	False	False	True
+current	SRR6261994	SAMN07532318		NA						False		water	False	False	False	True
+current	SRR7010530	SAMN08204852		NA						False		water	False	False	False	True
+current	SRR7012236	SAMN08204920		NA						False		water	False	False	False	True
+current	SRR7121406	SAMN08995113		NA						False		water	False	False	False	True
+current	SRR7128223	SAMN08995141		NA						False		water	False	False	False	True
+current	SRR7345807	SAMN08169246		NA						False		water	False	False	False	True
+current	SRR7904961	SAMN08169257		NA						False		water	False	False	False	True
+current	SRR8280097	SAMN08169257		NA						False		water	False	False	False	True
+current	SRR8434292	SAMN08204919		NA						False		water	False	False	False	True
+current	SRR8434366	SAMN08169242		NA						False		water	False	False	False	True
+current	SRR8434632	SAMN08204910		NA						False		water	False	False	False	True
+current	SRR3210426	SAMN04442364		NA						False		water	False	False	False	True
+current	SRR14190376	SAMN18676029		NA						False		water	False	False	False	True
+current	SRR12634069	SAMN16122331		NA						False		water	False	False	False	True
+current	SRR14190372	SAMN18676033		NA						False		water	False	False	False	True
+current	SRR15194602	SAMN20308138		Aythya fuligula	scientific name	219594				False		wildbird	False	False	False	True
+current	SRR5209561	SAMN06270804		NA						False		wildbird	False	False	False	True
+current	SRR5209566	SAMN06270799		NA						False		wildbird	False	False	False	True
+current	SRR5209482	SAMN06270883		NA						False		wildbird	False	False	False	True
+current	SRR21995118	SAMN28017081		duck	common name/synonym	8839				False		wildbird	False	False	False	True
+current	SRR21995109	SAMN28017089		Anser sp.	scientific name	8847				False		wildbird	False	False	False	True
+current	SRR21995110	SAMN28017088		Anser sp.	scientific name	8847				False		wildbird	False	False	False	True
+current	SRR21995113	SAMN28017085		Anser sp.	scientific name	8847				False		wildbird	False	False	False	True
+current	SRR21995114	SAMN28017084		Anser sp.	scientific name	8847				False		wildbird	False	False	False	True
+current	ERR2601935	SAMEA4697582		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR14242051	SAMN18746120		NA						False		wildbird	False	False	False	True
+current	SRR14242054	SAMN18746117		NA						False		wildbird	False	False	False	True
+current	SRR14242059	SAMN18746128		NA						False		wildbird	False	False	False	True
+current	SRR23244640	SAMN32932701		NA						False		wildbird	False	False	False	True
+current	SRR23244644	SAMN32932697		NA						False		wildbird	False	False	False	True
+current	SRR23244646	SAMN32932695		NA						False		wildbird	False	False	False	True
+current	SRR23244663	SAMN32932680		NA						False		wildbird	False	False	False	True
+current	SRR23244669	SAMN32932666		NA						False		wildbird	False	False	False	True
+current	SRR23244651	SAMN32932691		NA						False		wildbird	False	False	False	True
+current	SRR23244655	SAMN32932687		NA						False		wildbird	False	False	False	True
+current	SRR11515410	SAMN14564528		Pica pica	scientific name	34924				False		wildbird	False	False	False	True
+current	SRR11515412	SAMN14564527		Pica pica	scientific name	34924				False		wildbird	False	False	False	True
+current	SRR11515420	SAMN14564519		Motacilla alba	scientific name	45807				False		wildbird	False	False	False	True
+current	SRR11515422	SAMN14564491		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515433	SAMN14564490		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515463	SAMN14564489		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515356	SAMN14564497		Corvus sp.	unresolved					False		wildbird	False	False	False	True
+current	SRR11515378	SAMN14564495		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515421	SAMN14564518		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515423	SAMN14564517		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515424	SAMN14564516		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515427	SAMN14564513		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515440	SAMN14564501		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515384	SAMN14564552		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515385	SAMN14564551		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515387	SAMN14564549		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515393	SAMN14564544		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR11515394	SAMN14564543		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR11515359	SAMN14564575		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515368	SAMN14564567		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515369	SAMN14564566		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515374	SAMN14564561		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515380	SAMN14564556		Corvus sp.	unresolved					False		wildbird	False	False	False	True
+current	SRR11515448	SAMN14564600		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515452	SAMN14564597		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515453	SAMN14564596		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515454	SAMN14564595		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515457	SAMN14564592		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	SRR11515458	SAMN14564591		Columba livia	scientific name	8932				False		wildbird	False	False	False	True
+current	ERR2197811	SAMEA104390352		NA						False		wildbird	False	False	False	True
+current	ERR4223916	SAMEA6936798		NA						False		wildbird	False	False	False	True
+current	ERR4223921	SAMEA6936390		NA						False		wildbird	False	False	False	True
+current	ERR4224017	SAMEA6936397		NA						False		wildbird	False	False	False	True
+current	ERR4224018	SAMEA6936398		NA						False		wildbird	False	False	False	True
+current	ERR4224019	SAMEA6936399		NA						False		wildbird	False	False	False	True
+current	ERR4224022	SAMEA6936401		NA						False		wildbird	False	False	False	True
+current	ERR4225086	SAMEA6936491		NA						False		wildbird	False	False	False	True
+current	ERR4225090	SAMEA6936495		NA						False		wildbird	False	False	False	True
+current	ERR4225094	SAMEA6936916		NA						False		wildbird	False	False	False	True
+current	ERR4225099	SAMEA6936521		NA						False		wildbird	False	False	False	True
+current	ERR4225103	SAMEA6936525		NA						False		wildbird	False	False	False	True
+current	ERR4225107	SAMEA6936532		NA						False		wildbird	False	False	False	True
+current	ERR4225112	SAMEA6936542		NA						False		wildbird	False	False	False	True
+current	ERR4225115	SAMEA6936543		NA						False		wildbird	False	False	False	True
+current	ERR4225117	SAMEA6936545		NA						False		wildbird	False	False	False	True
+current	ERR4225118	SAMEA6936546		NA						False		wildbird	False	False	False	True
+current	ERR4225121	SAMEA6936541		NA						False		wildbird	False	False	False	True
+current	SRR27387502	SAMN39202324		Cairina moschata	scientific name	8855				False		wildbird	False	False	False	True
+current	SRR27387504	SAMN39202325		Cairina moschata	scientific name	8855				False		wildbird	False	False	False	True
+current	ERR10497225	SAMEA112143445		NA						False		wildbird	False	False	False	True
+current	SRR4379981	SAMN05878512		Chroicocephalus ridibundus	scientific name	1192867				False		wildbird	False	False	False	True
+current	SRR6197701	SAMN07818933		NA						False		wildbird	False	False	False	True
+current	SRR6197703	SAMN07818935		NA						False		wildbird	False	False	False	True
+current	SRR6197705	SAMN07818937		NA						False		wildbird	False	False	False	True
+current	ERR3546019	SAMEA5968623		NA						False		wildbird	False	False	False	True
+current	ERR3546042	SAMEA5968646		NA						False		wildbird	False	False	False	True
+current	ERR3546043	SAMEA5968647		NA						False		wildbird	False	False	False	True
+current	ERR3546046	SAMEA5968650		NA						False		wildbird	False	False	False	True
+current	ERR3546047	SAMEA5968651		NA						False		wildbird	False	False	False	True
+current	SRR13736803	SAMN17977775		NA						False		wildbird	False	False	False	True
+current	SRR13736807	SAMN17977809		NA						False		wildbird	False	False	False	True
+current	SRR13736811	SAMN17977805		NA						False		wildbird	False	False	False	True
+current	SRR13736820	SAMN17977797		NA						False		wildbird	False	False	False	True
+current	SRR13736822	SAMN17977795		NA						False		wildbird	False	False	False	True
+current	SRR13736827	SAMN17977790		NA						False		wildbird	False	False	False	True
+current	SRR13736830	SAMN17977788		NA						False		wildbird	False	False	False	True
+current	SRR13736833	SAMN17977785		NA						False		wildbird	False	False	False	True
+current	ERR12188772	SAMEA114572043		NA						False		wildbird	False	False	False	True
+current	ERR12188774	SAMEA114572045		NA						False		wildbird	False	False	False	True
+current	ERR12188775	SAMEA114572046		NA						False		wildbird	False	False	False	True
+current	ERR12188769	SAMEA114572040		NA						False		wildbird	False	False	False	True
+current	ERR12188771	SAMEA114572042		NA						False		wildbird	False	False	False	True
+current	SRR13367278	SAMN17225467		NA						False		wildbird	False	False	False	True
+current	SRR13367281	SAMN17225486		NA						False		wildbird	False	False	False	True
+current	SRR13367282	SAMN17225485		NA						False		wildbird	False	False	False	True
+current	SRR13367283	SAMN17225484		NA						False		wildbird	False	False	False	True
+current	SRR13367284	SAMN17225483		NA						False		wildbird	False	False	False	True
+current	SRR13367285	SAMN17225482		NA						False		wildbird	False	False	False	True
+current	SRR13367287	SAMN17225481		NA						False		wildbird	False	False	False	True
+current	SRR13367289	SAMN17225479		NA						False		wildbird	False	False	False	True
+current	SRR13367291	SAMN17225477		NA						False		wildbird	False	False	False	True
+current	SRR13367296	SAMN17225472		NA						False		wildbird	False	False	False	True
+current	SRR13367297	SAMN17225463		NA						False		wildbird	False	False	False	True
+current	SRR13367298	SAMN17225462		NA						False		wildbird	False	False	False	True
+current	ERR1163473	SAMEA3683087		NA						False		wildbird	False	False	False	True
+current	ERR1163626	SAMEA3683241		NA						False		wildbird	False	False	False	True
+current	ERR1163640	SAMEA3683255		NA						False		wildbird	False	False	False	True
+current	ERR1163655	SAMEA3683270		NA						False		wildbird	False	False	False	True
+current	ERR1163661	SAMEA3683276		NA						False		wildbird	False	False	False	True
+current	ERR1163662	SAMEA3683277		NA						False		wildbird	False	False	False	True
+current	ERR1163670	SAMEA3683285		NA						False		wildbird	False	False	False	True
+current	ERR1163751	SAMEA3683366		NA						False		wildbird	False	False	False	True
+current	ERR1163752	SAMEA3683367		NA						False		wildbird	False	False	False	True
+current	ERR1163759	SAMEA3683374		NA						False		wildbird	False	False	False	True
+current	ERR1163780	SAMEA3683395		NA						False		wildbird	False	False	False	True
+current	ERR1163781	SAMEA3683396		NA						False		wildbird	False	False	False	True
+current	SRR1815361	SAMN03360174		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1815406	SAMN03360220		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1815850	SAMN03359139		Corvus brachyrhynchos	scientific name	85066				False		wildbird	False	False	False	True
+current	SRR1815854	SAMN03359143		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1815856	SAMN03359145		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1815867	SAMN03359156		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1816039	SAMN03357966		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1816047	SAMN03357974		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1816048	SAMN03357975		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1816118	SAMN03358045		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1816119	SAMN03358046		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1816124	SAMN03358051		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR1816131	SAMN03358058		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR3619924	SAMN04532210		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR3619935	SAMN04532390		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR3619941	SAMN04532395		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR3619952	SAMN04532406		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR3619961	SAMN04532215		Crow	unresolved					False		wildbird	False	False	False	True
+current	SRR4067224	SAMN04532386		NA						False		wildbird	False	False	False	True
+current	SRR9077775	SAMN10615007		NA						False		wildbird	False	False	False	True
+current	SRR13132260	SAMN16912230		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787346	SAMN11258600		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787347	SAMN11258597		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787349	SAMN11258606		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787350	SAMN11258602		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787351	SAMN11258601		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787354	SAMN11258603		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787357	SAMN11258582		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787361	SAMN11258584		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787362	SAMN11258585		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787363	SAMN11258586		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787364	SAMN11258587		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787395	SAMN11258578		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787399	SAMN11258577		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787404	SAMN11258594		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787406	SAMN11258592		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787409	SAMN11258589		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787410	SAMN11258588		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR8787412	SAMN11258596		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29025215	SAMN41397159		Pigeon	unresolved					False		wildbird	False	False	False	True
+current	SRR12495815	SAMN08235568		Corvus brachyrhynchos	scientific name	85066				False		wildbird	False	False	False	True
+current	SRR12495816	SAMN08235567		Corvus brachyrhynchos	scientific name	85066				False		wildbird	False	False	False	True
+current	SRR12495820	SAMN08235563		Corvus brachyrhynchos	scientific name	85066				False		wildbird	False	False	False	True
+current	SRR12495827	SAMN08235557		Corvus brachyrhynchos	scientific name	85066				False		wildbird	False	False	False	True
+current	SRR12495830	SAMN08235554		Corvus brachyrhynchos	scientific name	85066				False		wildbird	False	False	False	True
+current	SRR2584003	SAMN03387064		Antigone canadensis	scientific name	1977160				False		wildbird	False	False	False	True
+current	SRR29025236	SAMN41397140		Dove	unresolved					False		wildbird	False	False	False	True
+current	SRR29025259	SAMN41397119		Pigeon	unresolved					False		wildbird	False	False	False	True
+current	SRR29025277	SAMN41397085		Dove	unresolved					False		wildbird	False	False	False	True
+current	SRR2915955	SAMN03387059		Antigone canadensis	scientific name	1977160				False		wildbird	False	False	False	True
+current	SRR2915957	SAMN03387062		Antigone canadensis	scientific name	1977160				False		wildbird	False	False	False	True
+current	SRR2962355	SAMN03387055		Antigone canadensis	scientific name	1977160				False		wildbird	False	False	False	True
+current	SRR12634062	SAMN16122325		NA						False		wildbird	False	False	False	True
+current	SRR29316403	SAMN41675804		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316404	SAMN41675803		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316406	SAMN41675801		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316407	SAMN41675852		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316409	SAMN41675850		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316416	SAMN41675844		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316417	SAMN41675843		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316418	SAMN41675842		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316423	SAMN41675837		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316425	SAMN41675806		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316426	SAMN41675805		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316428	SAMN41675795		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316429	SAMN41675835		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316433	SAMN41675832		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316434	SAMN41675831		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316436	SAMN41675829		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316437	SAMN41675828		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316441	SAMN41675798		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316442	SAMN41675824		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316444	SAMN41675822		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316445	SAMN41675821		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316449	SAMN41675817		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316452	SAMN41675797		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316453	SAMN41675814		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316455	SAMN41675812		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316456	SAMN41675811		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316458	SAMN41675809		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316459	SAMN41675808		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR29316460	SAMN41675807		Anas platyrhynchos	scientific name	8839				False		wildbird	False	False	False	True
+current	SRR25523029	SAMN36840652		NA						False		wildbird	False	False	False	True
+current	SRR25523034	SAMN36839097		NA						False		wildbird	False	False	False	True

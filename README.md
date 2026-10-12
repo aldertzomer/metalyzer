@@ -762,9 +762,9 @@ reports classification accuracy for a complete run.
 
 ## Benchmark results
 
-### Latest BioSample results with host terminology resolution
+### Latest TSV and BioSample results with host terminology resolution
 
-The new full NLI and Ministral runs each make **561 deterministic assignments**
+The new full BioSample NLI and Ministral runs each make **561 deterministic assignments**
 on 1,320 records: **402 exact taxonomy assignments** (1 numeric ID and 401 host
 names), **117 configured host aliases**, and **42 opt-in unlisted-animal
 assignments**. The remaining **759 records** reach the source model. The combined
@@ -774,11 +774,90 @@ adjusted scoring, pathway precision, timings and current confusion matrices.
 
 | Input | Method | Correct / total | Accuracy | Assigned precision | Unknown | Deterministic assignments |
 |---|---|---:|---:|---:|---:|---:|
+| TSV, new combined | [NLI](benchmark_smoke/tsv_host_terminology_benchmark/benchmark_tsv_nli_host_terminology.tsv) | 1155 / 1320 | 87.50% | 89.35% | 109 | 278 |
+| TSV, new combined | [Local Ministral](benchmark_smoke/tsv_host_terminology_benchmark/benchmark_tsv_llm_host_terminology.tsv) | 1215 / 1320 | 92.05% | 98.61% | 170 | 278 |
 | BioSample, new combined | [NLI](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_nli_host_terminology.tsv) | 962 / 1320 | 72.88% | 75.84% | 74 | 561 |
 | BioSample, new combined | [Local Ministral](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_llm_host_terminology.tsv) | 1133 / 1320 | 85.83% | 90.46% | 115 | 561 |
 
-Mistral API and TSV benchmarks have not been rerun with the new host terminology
-resolver. Their saved results remain in the historical table below.
+Mistral API benchmarks have not been rerun with the new host terminology resolver.
+Their saved results remain in the historical table below.
+
+#### New TSV benchmark and alias impact
+
+The TSV runs use the original `benchmark.tsv` fields and column order, with
+`--id-col run_accession`; they do not retrieve or merge BioSample metadata.
+They use the same combined configuration and GPU/model settings as the new
+BioSample runs, including explicitly enabled `--other-animal-taxonomy`, normal
+verification and the unchanged local LLM cutoff of 0.75. Original outputs and
+reference labels are preserved. No paid API benchmark was run.
+
+The [TSV CPU audit](benchmark_smoke/tsv_host_terminology_audit/summary.tsv) found:
+
+| TSV configuration | Numeric IDs | Scientific names | Common/synonyms | Aliases | Other animal | Model fallback |
+|---|---:|---:|---:|---:|---:|---:|
+| Exact taxonomy | 215 | 1 | 3 | 0 | 0 | 1,101 |
+| Plus aliases (default) | 215 | 1 | 3 | 13 | 0 | 1,088 |
+| Plus opt-in other animal | 215 | 1 | 3 | 0 | 46 | 1,055 |
+| Combined | 215 | 1 | 3 | 13 | 46 | 1,042 |
+
+Aliases add **eight Canine→dog and five Ovine→sheep assignments**, all matching
+the references, through the export's `host_scientific_name` field. Those terms
+are operational descriptors, not exact scientific names. Numeric IDs retain
+precedence. The four exact-name assignments also bypass the model, but already
+had correct saved model labels. Thus default alias-only analysis has 232
+deterministic records versus the historical runs' 215; the combined experiment
+has 278. There are no ambiguous/conflicting hosts in the TSV audit.
+
+| TSV method / version | Original accuracy (1,320) | Original assigned precision | Adjusted accuracy (1,276) | Adjusted assigned precision |
+|---|---:|---:|---:|---:|
+| NLI, old saved | 86.14% | 88.23% | 85.66% | 87.78% |
+| NLI, new combined | 87.50% | 89.35% | 87.07% | 88.95% |
+| Ministral, old saved | 92.05% | 98.69% | 91.77% | 98.64% |
+| Ministral, new combined | 92.05% | 98.61% | 91.77% | 98.55% |
+
+The original evaluation includes all 1,320 unchanged references. The adjusted
+comparison excludes the same exact 44 documented CAGED run/BioSample pairs,
+leaving 1,276. These TSV records retain their historical goat evidence; all 44
+remain correctly assigned goat. Their exclusion lowers TSV accuracy slightly,
+while avoiding reference-version differences in comparison with current
+BioSample metadata. The 41 human-evidence/reference-unknown records remain
+scored, without relabelling.
+
+All 1,042 remaining model labels match their old saved predictions. Aliases
+correct five NLI decisions and one Ministral decision, with no new errors.
+The opt-in animal rule corrects 14 NLI decisions but changes the wild-goat
+`SAMN08235377` from goat to `other_animal`; the same disagreement costs
+Ministral one previously correct reference match. This explains its flat
+combined accuracy despite the alias gain. The animal rule remains disabled
+by default. Its assignments match 45/46 references; all 13 alias assignments
+match references. See [changes by pathway](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/prediction_change_summary.tsv).
+
+Source-model rows fall from 1,105 to 1,042, saving 63 classifications (5.7%).
+NLI source stage takes 85.5 s, verification 7.3 s and the complete run 114.3 s.
+Ministral takes 442.0 s, 8.9 s and 472.6 s respectively. These stage times
+include weight loading. The old totals were 113.1 s and 452.4 s; fewer model
+rows did not produce a measured overall speedup on this machine, and hardware,
+cache state and taxonomy loading prevent a controlled timing comparison.
+
+- [TSV audit and per-record evidence](benchmark_smoke/tsv_host_terminology_audit/README.md).
+- [Full TSV report](benchmark_smoke/tsv_host_terminology_benchmark/README.md), [source metrics](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/summary.tsv), [pathway metrics](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/pathway_metrics.tsv), and [timings](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/performance.tsv).
+
+![New TSV NLI adjusted confusion matrix](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/metadata_version_adjusted/nli_confusion_percent.svg)
+
+![New TSV Ministral adjusted confusion matrix](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/metadata_version_adjusted/llm_confusion_percent.svg)
+
+Original 1,320-record matrices: [NLI](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/original/nli_confusion_percent.svg), [Ministral](benchmark_smoke/tsv_host_terminology_benchmark/evaluation/original/llm_confusion_percent.svg).
+
+```bash
+python benchmark_smoke/audit_host_terminology.py --input-mode metadata
+python benchmark_smoke/run_host_terminology_benchmarks.py \
+  --input-mode metadata --other-animal-taxonomy
+python benchmark_smoke/evaluate_host_terminology.py --input-mode metadata
+```
+
+The default taxonomy path matches this server; pass `--taxonomy-dir` when
+needed. Omit the animal flag and use a separate `--out-dir` to measure default
+alias-only performance; the full reruns above measure the combined configuration.
 
 ### Historical six-backend results before host-name resolution
 
@@ -820,7 +899,8 @@ Accuracy includes correct `unknown` predictions. Assigned precision excludes
 predictions of `unknown`. These historical runs resolved only numeric
 `host_tax_id` evidence, before exact host-name and operational-alias support.
 Their zero BioSample taxonomy counts describe the saved old outputs; the new
-NLI and Ministral runs above each have 561 deterministic assignments.
+BioSample NLI and Ministral runs above each have 561 deterministic assignments;
+the new TSV runs have 278.
 Input modes differ in metadata content and availability of host taxonomy IDs,
 so these results compare the complete pipelines on their respective inputs.
 

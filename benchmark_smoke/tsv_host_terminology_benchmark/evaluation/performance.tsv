@@ -1,0 +1,3 @@
+method	gpu	gpu_memory_bytes	total_seconds	source_model_stage_seconds_including_load	verification_stage_seconds_including_any_load	source_model_rows	old_source_model_rows	source_model_rows_avoided	old_total_seconds
+nli	NVIDIA GeForce RTX 4070 Ti SUPER	16742416384	114.25488374999259	85.487	7.254	1042	1105	63	113.08326864102855
+llm	NVIDIA GeForce RTX 4070 Ti SUPER	16742416384	472.5631416280521	442.041	8.854	1042	1105	63	452.38350912206806

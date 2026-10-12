@@ -1,0 +1,9 @@
+file	records	correct	overall_accuracy	evaluation	original_records	excluded_records	unknown_predictions	assigned_predictions	correct_assigned	precision_assigned	invalid_llm_outputs	numeric_taxonomy_calls	host_name_calls	host_alias_calls	host_other_animal_calls	taxonomy_calls	llm_calls	version	method
+benchmark_nli.tsv	1320	1137	0.8613636363636363	original	1320	0	114	1206	1064	0.8822553897180763	0	215	0	0	0	215	0	old_saved	nli
+benchmark_nli.tsv	1276	1093	0.8565830721003135	metadata-version-adjusted	1320	44	114	1162	1020	0.8777969018932874	0	171	0	0	0	171	0	old_saved	nli
+benchmark_smoke/tsv_host_terminology_benchmark/benchmark_tsv_nli_host_terminology.tsv	1320	1155	0.875	original	1320	0	109	1211	1082	0.893476465730801	0	215	4	13	46	278	0	new_combined	nli
+benchmark_smoke/tsv_host_terminology_benchmark/benchmark_tsv_nli_host_terminology.tsv	1276	1111	0.8706896551724138	metadata-version-adjusted	1320	44	109	1167	1038	0.8894601542416453	0	171	4	13	46	234	0	new_combined	nli
+benchmark_llm.tsv	1320	1215	0.9204545454545454	original	1320	0	171	1149	1134	0.9869451697127938	1	215	0	0	0	215	1105	old_saved	llm
+benchmark_llm.tsv	1276	1171	0.9177115987460815	metadata-version-adjusted	1320	44	171	1105	1090	0.9864253393665159	1	171	0	0	0	171	1105	old_saved	llm
+benchmark_smoke/tsv_host_terminology_benchmark/benchmark_tsv_llm_host_terminology.tsv	1320	1215	0.9204545454545454	original	1320	0	170	1150	1134	0.9860869565217392	1	215	4	13	46	278	1042	new_combined	llm
+benchmark_smoke/tsv_host_terminology_benchmark/benchmark_tsv_llm_host_terminology.tsv	1276	1171	0.9177115987460815	metadata-version-adjusted	1320	44	170	1106	1090	0.9855334538878843	1	171	4	13	46	234	1042	new_combined	llm

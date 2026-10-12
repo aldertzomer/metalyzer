@@ -1,4 +1,4 @@
-"""Compare four deterministic host configurations using live local BioSamples."""
+"""Compare four deterministic host configurations using local BioSamples or TSV."""
 from __future__ import annotations
 
 import argparse
@@ -17,7 +17,7 @@ from modules import biosample, deterministic_source as ds, input, runlog
 from benchmark_smoke.metadata_version_evaluation import validated_conflict_runs
 
 
-def audit(taxonomy_dir, store, out):
+def audit(taxonomy_dir, store, out, input_mode='biosample'):
     out.mkdir(parents=True, exist_ok=True)
     mapping = input.read_tsv(ROOT / 'benchmark_smoke/host_name_audit/accession_mapping.tsv')
     metadata = input.read_tsv(ROOT / 'benchmark.tsv')
@@ -28,13 +28,16 @@ def audit(taxonomy_dir, store, out):
     if mapping.accession.tolist() != expected.loc[mapping.run_accession].tolist():
         raise ValueError('Stored BioSample mapping differs from benchmark metadata')
     references = truth.set_index('run_accession').final_species
+    if input_mode == 'metadata':
+        mapping = mapping.set_index('run_accession').loc[metadata.run_accession].reset_index()
     started = time.monotonic()
     with runlog.analysis_log(out / 'audit.tsv'):
         runlog.emit('CPU-only four-configuration audit; no models or network')
-        frame = biosample.load_biosamples(mapping.accession.tolist(), store)
+        frame = (metadata if input_mode == 'metadata'
+                 else biosample.load_biosamples(mapping.accession.tolist(), store))
         before = frame.copy(deep=True)
         taxonomy = ds.NCBITaxonomy(taxonomy_dir)
-        sources = input.load_sources(ROOT / 'sources.tsv', 'accession')
+        sources = input.load_sources(ROOT / 'sources.tsv', 'run_accession' if input_mode == 'metadata' else 'accession')
         anchors = ds.configured_anchors(sources, taxonomy, report=True)
         for name in ds.FILES:
             path = (taxonomy_dir / name).resolve()
@@ -43,8 +46,8 @@ def audit(taxonomy_dir, store, out):
         excluded = validated_conflict_runs(
             truth.to_dict('records'), metadata.to_dict('records'), mapping.to_dict('records'),
             input.read_tsv(ROOT / 'benchmark_smoke/biosample_diagnostics/goat_host_conflicts.tsv').to_dict('records'),
-            biosample_rows=frame.to_dict('records'))
-        batch = input.prepare_batch(frame, id_col='accession')
+            biosample_rows=frame.to_dict('records') if input_mode == 'biosample' else None)
+        batch = input.prepare_batch(frame, id_col='run_accession' if input_mode == 'metadata' else 'accession')
         baseline = None
         summaries, all_rows = [], []
         for config, aliases, animals in [('current', False, False), ('aliases', True, False),
@@ -72,7 +75,7 @@ def audit(taxonomy_dir, store, out):
             if baseline is None:
                 baseline = rows
                 old = input.read_tsv(ROOT / 'benchmark_smoke/host_name_audit/audit.tsv')
-                if (old.best_hit.tolist() != [r['assigned_source'] for r in rows]
+                if input_mode == 'biosample' and (old.best_hit.tolist() != [r['assigned_source'] for r in rows]
                         or old.source_method.tolist() != [r['source_method'] for r in rows]):
                     raise ValueError('Baseline differs from the saved current taxonomy audit')
             for row, prior in zip(rows, baseline):
@@ -88,7 +91,7 @@ def audit(taxonomy_dir, store, out):
                            conflicts=sum(bool(r['conflict']) for r in rows), newly_assigned=len(newly),
                            newly_assigned_reference_disagreements=sum(r['reference_disagreement'] for r in newly),
                            new_source_distribution=dict(Counter(r['assigned_source'] for r in newly)),
-                           veterinary_new_assignments={term: sum(r['newly_assigned'] and ds.normalized_host_name(r['host']) == term.casefold() for r in rows)
+                           veterinary_new_assignments={term: sum(r['newly_assigned'] and ds.normalized_host_name(r['host'] or r['host_scientific_name']) == term.casefold() for r in rows)
                                                       for term in ['Bovine', 'Canine', 'Porcine', 'Ovine', 'Caprine', 'Feline']})
             pd.DataFrame(rows).to_csv(out / f'{config}_audit.tsv', sep='\t', index=False)
             pd.DataFrame([r for r in newly if r['reference_disagreement']], columns=rows[0].keys()).to_csv(
@@ -103,7 +106,8 @@ def audit(taxonomy_dir, store, out):
         (out / 'summary.json').write_text(json.dumps(dict(
             configurations=summaries, excluded_caged_runs=sorted(excluded),
             original_records=1320, adjusted_records=1320-len(excluded),
-            elapsed_seconds=time.monotonic()-started, biosample_store=str(store.resolve()),
+            elapsed_seconds=time.monotonic()-started, input_mode=input_mode,
+            biosample_store=str(store.resolve()) if input_mode == 'biosample' else None,
             taxonomy_dir=str(taxonomy_dir.resolve()),
             input_sha256={name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
                           for name in ['sources.tsv', 'benchmark.tsv', 'benchmark_true_labels.tsv', 'benchmark_accessions.tsv']}), indent=2)+'\n')
@@ -116,9 +120,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--taxonomy-dir', type=Path, default=Path('/home/zomer007/metalyzer/taxonomy'))
     parser.add_argument('--biosample-path', type=Path, default=biosample.DEFAULT_STORE)
-    parser.add_argument('--out-dir', type=Path, default=ROOT / 'benchmark_smoke/host_terminology_audit')
+    parser.add_argument('--input-mode', choices=['biosample', 'metadata'], default='biosample')
+    parser.add_argument('--out-dir', type=Path)
     args = parser.parse_args()
-    audit(args.taxonomy_dir, args.biosample_path, args.out_dir)
+    out = args.out_dir or ROOT / ('benchmark_smoke/tsv_host_terminology_audit' if args.input_mode == 'metadata'
+                                 else 'benchmark_smoke/host_terminology_audit')
+    audit(args.taxonomy_dir, args.biosample_path, out, args.input_mode)
 
 
 if __name__ == '__main__':

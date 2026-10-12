@@ -1,4 +1,4 @@
-"""Evaluate new and old BioSample predictions with exact pair exclusions and routes."""
+"""Evaluate new and old BioSample/TSV predictions with exact exclusions and routes."""
 from __future__ import annotations
 
 import argparse
@@ -29,12 +29,18 @@ def route_metrics(rows):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--audit-dir', type=Path, default=ROOT / 'benchmark_smoke/host_terminology_audit')
-    parser.add_argument('--benchmark-dir', type=Path, default=ROOT / 'benchmark_smoke/host_terminology_benchmark')
+    parser.add_argument('--input-mode', choices=['biosample', 'metadata'], default='biosample')
+    parser.add_argument('--audit-dir', type=Path)
+    parser.add_argument('--benchmark-dir', type=Path)
     args = parser.parse_args()
+    prefix = 'tsv_' if args.input_mode == 'metadata' else ''
+    args.audit_dir = args.audit_dir or ROOT / f'benchmark_smoke/{prefix}host_terminology_audit'
+    args.benchmark_dir = args.benchmark_dir or ROOT / f'benchmark_smoke/{prefix}host_terminology_benchmark'
     out = args.benchmark_dir / 'evaluation'
     out.mkdir(parents=True, exist_ok=True)
     manifest = json.loads((args.benchmark_dir / 'manifest.json').read_text())
+    if manifest['inputs'].get('input_mode', 'biosample') != args.input_mode:
+        raise ValueError('Benchmark input mode differs from requested evaluation')
     if any(manifest['runs'].get(method, {}).get('status') != 'complete' for method in ['nli', 'llm']):
         raise ValueError('Both full benchmarks must finish, including verification, before evaluation')
     configuration = 'combined' if manifest['inputs']['other_animal_taxonomy'] else 'aliases'
@@ -55,13 +61,16 @@ def main():
         raise ValueError('The 41 documented human-evidence reference-unknown records must remain scored unchanged')
     summary, strata, performance, changed = [], [], [], []
     for method in ['nli', 'llm']:
-        new_path = args.benchmark_dir / f'benchmark_biosample_{method}_host_terminology.tsv'
-        old_path = ROOT / f'benchmark_biosample_{method}.tsv'
+        mode = 'tsv' if args.input_mode == 'metadata' else 'biosample'
+        new_path = args.benchmark_dir / f'benchmark_{mode}_{method}_host_terminology.tsv'
+        old_path = ROOT / (f'benchmark_{method}.tsv' if args.input_mode == 'metadata' else f'benchmark_biosample_{method}.tsv')
         for version, path in [('old_saved', old_path), ('new_combined' if configuration == 'combined' else 'new_aliases', new_path)]:
             predictions = input.read_tsv(path)
             _, aligned = align_predictions(truth.to_dict('records'), predictions.to_dict('records'), mapping)
             merged = truth.merge(pd.DataFrame(aligned.values()), on='run_accession', validate='one_to_one')
-            merged = merged.merge(audit[['run_accession', 'match_type', 'host', 'newly_assigned', 'source_method']].rename(
+            if 'accession' not in merged:
+                merged['accession'] = merged.run_accession.map({r['run_accession']: r['accession'] for r in mapping})
+            merged = merged.merge(audit[['run_accession', 'match_type', 'host', 'host_scientific_name', 'newly_assigned', 'source_method']].rename(
                 columns={'source_method': 'audit_method'}), on='run_accession', validate='one_to_one')
             if version != 'old_saved':
                 expected = audit[audit.source_method.ne('')].set_index('run_accession')
@@ -88,18 +97,19 @@ def main():
                     values = {key: matrix.loc[key].to_dict() for key in LABELS}
                     for percentages, suffix in [(False, 'absolute'), (True, 'percent')]:
                         render_svg(destination / f'{method}_confusion_{suffix}.svg',
-                                   f'BioSample {method.upper()} · {configuration} · {label} (n={len(rows)})',
+                                   f'{mode.upper()} {method.upper()} · {configuration} · {label} (n={len(rows)})',
                                    totals, values, percentages)
             if version == 'old_saved':
                 previous = merged.set_index('run_accession')
             else:
                 merged[merged.run_accession.isin(human_runs)][[
-                    'run_accession', 'accession', 'host', 'final_species', 'best_hit', 'source_method', 'nli_verification_score'
+                    'run_accession', 'accession', 'host', 'host_scientific_name', 'final_species', 'best_hit', 'source_method', 'nli_verification_score'
                 ]].to_csv(out / f'{method}_reference_unknown_human_evidence.tsv', sep='\t', index=False)
                 for row in merged.to_dict('records'):
                     old = previous.loc[row['run_accession']]
                     changed.append(dict(method=method, run_accession=row['run_accession'], accession=row['accession'],
-                                        host=row['host'], reference=row['final_species'], old_best_hit=old.best_hit,
+                                        host=row['host'], host_scientific_name=row['host_scientific_name'],
+                                        reference=row['final_species'], old_best_hit=old.best_hit,
                                         new_best_hit=row['best_hit'], source_method=row['source_method'],
                                         changed=row['best_hit'] != old.best_hit,
                                         old_correct=old.best_hit == row['final_species'],
@@ -118,7 +128,7 @@ def main():
                                 source_model_rows=int(selected.sum()),
                                 old_source_model_rows=int(previous.source_method.eq(method).sum()),
                                 source_model_rows_avoided=int(previous.source_method.eq(method).sum()-selected.sum()),
-                                old_total_seconds=prior_manifest.get('runs', {}).get('biosample_'+method, {}).get('elapsed_seconds')))
+                                old_total_seconds=prior_manifest.get('runs', {}).get(args.input_mode+'_'+method, {}).get('elapsed_seconds')))
     pd.DataFrame(summary).drop(columns='source_methods').to_csv(out / 'summary.tsv', sep='\t', index=False)
     (out / 'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     pd.DataFrame(strata).to_csv(out / 'pathway_metrics.tsv', sep='\t', index=False)
