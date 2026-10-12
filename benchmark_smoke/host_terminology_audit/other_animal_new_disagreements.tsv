@@ -1,0 +1,2 @@
+configuration	run_accession	accession	host	host_scientific_name	match_type	resolved_taxids	assigned_source	source_method	evidence	ambiguous	conflict	reference	excluded_caged	newly_assigned	reference_disagreement	requires_model
+other_animal	SRR12495807	SAMN08235377	Capra aegagrus		specific unlisted animal	9923	other_animal	host_other_animal	host=Capra aegagrus; taxid=9923; Capra aegagrus; specific_unlisted_nonbird_animal	False		goat	False	True	True	False

@@ -8,6 +8,7 @@ from .contracts import (
     VERIFICATION_COLUMN, empty_source_table,
 )
 from .runlog import emit
+from .deterministic_source import DETERMINISTIC_METHODS
 
 
 def unresolved(batch: MetadataBatch, sources: SourceVocabulary,
@@ -72,7 +73,9 @@ def report(result: SourceResult, method: str) -> None:
     emit("Source classification:\n"
           f"  taxonomy host_tax_id: {(table.source_method == 'host_tax_id').sum()}\n"
           f"  taxonomy host_name: {(table.source_method == 'host_name').sum()}\n"
-          f"  taxonomy total: {table.source_method.isin(['host_tax_id', 'host_name']).sum()}\n"
+          f"  configured host_alias: {(table.source_method == 'host_alias').sum()}\n"
+          f"  taxonomy host_other_animal: {(table.source_method == 'host_other_animal').sum()}\n"
+          f"  taxonomy total: {table.source_method.isin(DETERMINISTIC_METHODS).sum()}\n"
           f"  {method.upper()}:                  {len(classified)}\n"
           f"  {method.upper()} -> unknown:        {(classified.best_hit == 'unknown').sum()}")
     if method == "llm":

@@ -68,3 +68,15 @@ class MetadataVersionTests(unittest.TestCase):
                 elif alteration == 'live_host': self.current[0]['host'] = 'Capra hircus'
                 elif alteration == 'live_update': self.current[0]['last_update'] = '2026-10-12'
                 with self.assertRaises(ValueError): self.validate()
+
+    def test_evaluator_counts_all_deterministic_routes(self):
+        for index, method in enumerate(['host_tax_id', 'host_name', 'host_alias', 'host_other_animal']):
+            self.predictions[index]['source_method'] = method
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / 'prediction.tsv'
+            pd.DataFrame(self.predictions).to_csv(path, sep='\t', index=False)
+            result = evaluate(pd.DataFrame(self.truth), path, 'best_hit', root, False, self.mapping)
+        self.assertEqual(result['taxonomy_calls'], 1320)
+        self.assertEqual(result['host_alias_calls'], 1)
+        self.assertEqual(result['host_other_animal_calls'], 1)

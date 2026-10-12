@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
 from pathlib import Path
 
 from modules import combine, country, date, deterministic_source, input, llm, mistral, nli, runlog, verification
@@ -24,6 +25,10 @@ def parse_args(argv=None):
     ap.add_argument("--out", help="Output TSV")
     ap.add_argument("--id-col", help="ID column name in metadata")
     ap.add_argument("--taxonomy-dir", help="Local NCBI nodes.dmp, names.dmp, merged.dmp directory")
+    ap.add_argument("--disable-host-aliases", action="store_true",
+                    help="Ignore configured operational host aliases; use exact taxonomy only")
+    ap.add_argument("--other-animal-taxonomy", action="store_true",
+                    help="Opt in to specific unlisted nonbird animal host assignments (default: disabled)")
     ap.add_argument("--download-taxonomy", metavar="DIR", help="Download NCBI taxonomy into DIR and exit")
 
     ap.add_argument("--device", type=int, default=0, help="GPU index (default: 0), or -1 for CPU")
@@ -95,6 +100,7 @@ def parse_args(argv=None):
 def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
                      method: str = "nli", taxonomy=None,
                      anchor_sources=None,
+                     use_host_aliases: bool = True, other_animal: bool = False,
                      nli_config: nli.NLIConfig = nli.NLIConfig(),
                      llm_config: llm.LLMConfig = llm.LLMConfig(),
                      mistral_config: mistral.MistralConfig = mistral.MistralConfig(),
@@ -102,7 +108,8 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
     """Run deterministic source resolution, then the selected fallback stage."""
     if method not in {"nli", "llm", "mistral"}:
         raise ValueError("method must be nli, llm or mistral")
-    deterministic = deterministic_source.run(batch, sources, taxonomy, anchor_sources=anchor_sources)
+    deterministic = deterministic_source.run(batch, sources, taxonomy, anchor_sources=anchor_sources,
+                                             use_host_aliases=use_host_aliases, other_animal=other_animal)
     pending = combine.unresolved(batch, sources, deterministic)
     if method == "llm":
         runlog.emit(f"LLM model: {llm_config.model}")
@@ -115,8 +122,12 @@ def classify_sources(batch: MetadataBatch, sources: SourceVocabulary, *,
     if len(pending):
         stage, config = {"nli": (nli.run, nli_config), "llm": (llm.run, llm_config),
                          "mistral": (mistral.run, mistral_config)}[method]
+        started = time.perf_counter()
         results.append(stage(pending, sources, config, model=nli_model)
                        if method == "nli" else stage(pending, sources, config))
+        runlog.emit(f"Source model stage seconds (including weight loading): {time.perf_counter() - started:.3f}")
+    else:
+        runlog.emit("Source model stage seconds (including weight loading): 0.000")
     result = combine.sources(batch, sources, *results)
     combine.report(result, method)
     return result
@@ -157,6 +168,7 @@ def main(argv=None):
             nli_model = nli.NLIModel(nli_config)
             source_result = classify_sources(
                 batch, sources, method=args.method, taxonomy=taxonomy, anchor_sources=anchors,
+                use_host_aliases=not args.disable_host_aliases, other_animal=args.other_animal_taxonomy,
                 nli_config=nli_config, nli_model=nli_model,
                 llm_config=llm.LLMConfig(model=args.llm_model, revision=args.llm_revision,
                                          device=args.device, batch_size=args.llm_batch_size,
@@ -164,10 +176,12 @@ def main(argv=None):
                                          min_score=args.llm_min_score),
                 mistral_config=args.mistral_config,
             )
+            verification_started = time.perf_counter()
             verification_result = verification.run(
                 batch, sources, source_result, nli_config,
                 disabled=args.disable_verify_source, model=nli_model,
             )
+            runlog.emit(f"NLI verification stage seconds (including any weight loading): {time.perf_counter() - verification_started:.3f}")
             fields = []
             if not args.skip_date:
                 fields.append(date.run(batch))
@@ -190,6 +204,8 @@ def main(argv=None):
                         f"  deterministic taxonomy assignments: {table.source_method.isin(deterministic_source.DETERMINISTIC_METHODS).sum()}\n"
                         f"  explicit host taxonomy ID assignments: {(table.source_method == 'host_tax_id').sum()}\n"
                         f"  exact host-name assignments: {(table.source_method == 'host_name').sum()}\n"
+                        f"  configured host-alias assignments: {(table.source_method == 'host_alias').sum()}\n"
+                        f"  specific other-animal assignments: {(table.source_method == 'host_other_animal').sum()}\n"
                         f"  {args.method.upper()} assignments: {len(selected)}\n"
                         f"{llm_totals}"
                         f"  unknown calls: {(table.best_hit == 'unknown').sum()}\n"

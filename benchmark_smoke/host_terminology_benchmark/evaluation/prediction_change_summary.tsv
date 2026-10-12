@@ -1,0 +1,11 @@
+method	source_method	records	changed	improved	worsened
+llm	host_alias	117	2	2	0
+llm	host_name	401	1	0	1
+llm	host_other_animal	42	1	0	1
+llm	host_tax_id	1	0	0	0
+llm	llm	759	0	0	0
+nli	host_alias	117	21	21	0
+nli	host_name	401	106	104	1
+nli	host_other_animal	42	35	34	1
+nli	host_tax_id	1	0	0	0
+nli	nli	759	0	0	0

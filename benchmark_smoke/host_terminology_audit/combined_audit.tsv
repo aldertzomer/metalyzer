@@ -1,0 +1,1321 @@
+configuration	run_accession	accession	host	host_scientific_name	match_type	resolved_taxids	assigned_source	source_method	evidence	ambiguous	conflict	reference	excluded_caged	newly_assigned	reference_disagreement	requires_model
+combined	SRR5209498	SAMN06270867	Felis catus		scientific name	9685	cat	host_name	host=Felis catus; taxid=9685; Felis catus	False		cat	False	False	False	False
+combined	ERR4224313	SAMEA6935634								False		cat	False	False	False	True
+combined	ERR4224319	SAMEA6935701								False		cat	False	False	False	True
+combined	ERR4224321	SAMEA6935730								False		cat	False	False	False	True
+combined	ERR4224525	SAMEA6935915								False		cat	False	False	False	True
+combined	ERR4224527	SAMEA6935967								False		cat	False	False	False	True
+combined	ERR4224528	SAMEA6935975								False		cat	False	False	False	True
+combined	ERR4224530	SAMEA6936017								False		cat	False	False	False	True
+combined	ERR4224509	SAMEA6936111								False		cat	False	False	False	True
+combined	ERR4224544	SAMEA6936135								False		cat	False	False	False	True
+combined	ERR4224555	SAMEA6936142								False		cat	False	False	False	True
+combined	ERR4224584	SAMEA6936207								False		cat	False	False	False	True
+combined	ERR4224591	SAMEA6936256								False		cat	False	False	False	True
+combined	ERR4224592	SAMEA6936263								False		cat	False	False	False	True
+combined	ERR4224598	SAMEA6936276								False		cat	False	False	False	True
+combined	ERR4224614	SAMEA6936368								False		cat	False	False	False	True
+combined	ERR2601882	SAMEA4697529	Bos taurus		scientific name	9913	cattle	host_tax_id	host_taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	ERR2834479	SAMEA4964260								False		cattle	False	False	False	True
+combined	SRR12302131	SAMN15617752								False		cattle	False	False	False	True
+combined	SRR12302135	SAMN15617748								False		cattle	False	False	False	True
+combined	ERR4224938	SAMEA6935894								False		cattle	False	False	False	True
+combined	ERR4224946	SAMEA6935917								False		cattle	False	False	False	True
+combined	SRR17900481	SAMN16731337	Bos taurus taurus		scientific name	3733726	cattle	host_name	host=Bos taurus taurus; taxid=3733726; Bos taurus taurus	False		cattle	False	False	False	False
+combined	ERR10497142	SAMEA112143362	Bos taurus		scientific name	9913	cattle	host_name	host=Bos taurus; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7882485	SAMN10096400	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR2962345	SAMN03387080	Bos taurus		scientific name	9913	cattle	host_name	host=Bos taurus; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR11457120	SAMN14504390								False		cattle	False	False	False	True
+combined	SRR11457287	SAMN14504500								False		cattle	False	False	False	True
+combined	SRR11457294	SAMN14504493								False		cattle	False	False	False	True
+combined	SRR6322613	SAMN08057558	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR2239877	SAMN04027121	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR2423693	SAMN04091204	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR2976804	SAMN04320864	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3129728	SAMN04444463	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3139476	SAMN04338322	Bos taurus		scientific name	9913	cattle	host_name	host=Bos taurus; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3402099	SAMN04869737	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5828129	SAMN07349286	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3215112	SAMN04543698	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3611737	SAMN05190028	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3726434	SAMN05301274	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3774242	SAMN05366791	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR3995966	SAMN05505590	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR4018340	SAMN05558651	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5129712	SAMN06179694	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5164537	SAMN06215672	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5209911	SAMN06276458	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5241742	SAMN06133121	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5297186	SAMN06459314	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5427956	SAMN06677836	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5517169	SAMN06915343	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5582449	SAMN07151558	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5646894	SAMN07195141	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5750634	SAMN07271471	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5754163	SAMN07276199	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5858791	SAMN07375622	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5890889	SAMN07442136	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR5941988	SAMN07514264	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6010310	SAMN07608126	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6160548	SAMN07775147	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6269730	SAMN08000889	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6269763	SAMN08000896	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6313958	SAMN08051543	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6313961	SAMN08051516	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6498630	SAMN08380190	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6652913	SAMN08437273	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6844235	SAMN08719177	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6916748	SAMN08816069	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6916764	SAMN08816074	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6973053	SAMN08899166	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR6973059	SAMN08899146	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7009076	SAMN08930651	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7163773	SAMN09207366	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7163778	SAMN09207353	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7465511	SAMN09534574	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7465516	SAMN09534582	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7716478	SAMN09858319	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR7903408	SAMN10129999	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8172917	SAMN10392845	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8188915	SAMN10423963	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8252759	SAMN10489476	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8256677	SAMN10489942	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8606599	SAMN10985183	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR10082192	SAMN12710385	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR10138273	SAMN12782202	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR10186879	SAMN12850940	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR10245648	SAMN12993569	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR10287017	SAMN13034481	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR10386699	SAMN13181115	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR11600433	SAMN14680982	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR20988051	SAMN29955742								False		cattle	False	False	False	True
+combined	SRR8699411	SAMN11079848	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8754439	SAMN11173147	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8832618	SAMN11306778	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8838824	SAMN11318632	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8841108	SAMN11322362								False		cattle	False	False	False	True
+combined	SRR9045758	SAMN11625698	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR11459624	SAMN14503095	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR12828244	SAMN16450802	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR12828245	SAMN16450804	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR14503779	SAMN19110597	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR14503780	SAMN19110600	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR14518549	SAMN19110589	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR15275302	SAMN20446307	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR16465102	SAMN22369371	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR17988521	SAMN25867698	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR18319608	SAMN26665725	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR18769954	SAMN27597459	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR18771549	SAMN27604100	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR19344124	SAMN28571734	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR21602127	SAMN30888449	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR22222924	SAMN31647958	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR23803202	SAMN33715191	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR25790765	SAMN37196220								False		cattle	False	False	False	True
+combined	SRR26806985	SAMN38228020	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		cattle	False	False	False	False
+combined	SRR8607992	SAMN10986742	Feline		configured host alias		cat	host_alias	host=Feline; configured_host_alias=cat	False		cat	False	True	False	False
+combined	SRR6627731	SAMN08331821	Felis catus		scientific name	9685	cat	host_name	host=Felis catus; taxid=9685; Felis catus	False		cat	False	False	False	False
+combined	SRR8399251	SAMN10696580	missing							False		cat	False	False	False	True
+combined	SRR28564538	SAMN40758960	Felis catus		scientific name	9685	cat	host_name	host=Felis catus; taxid=9685; Felis catus	False		cat	False	False	False	False
+combined	SRR26896508	SAMN38340651								False		chicken	False	False	False	True
+combined	ERR2197471	SAMEA104390012	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR2197483	SAMEA104390024	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	SRR23704415	SAMN33591268	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR4225077	SAMEA6936349								False		chicken	False	False	False	True
+combined	ERR2197617	SAMEA104390158	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR11203419	SAMEA112866708	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR11203555	SAMEA112866844	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR11203677	SAMEA112866966	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR11203907	SAMEA112867196	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR11204032	SAMEA112867321	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR2197355	SAMEA104389896	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	SRR8796760	SAMN11268370	Gallus gallus domesticus		common name/synonym	9031	chicken	host_name	host=Gallus gallus domesticus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	ERR946747	SAMEA3487068	Chicken		common name/synonym	9031	chicken	host_name	host=Chicken; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	SRR2920319	SAMN04267348								False		chicken	False	False	False	True
+combined	SRR5414427	SAMN06660983								False		chicken	False	False	False	True
+combined	SRR5414733	SAMN06661289								False		chicken	False	False	False	True
+combined	SRR5414819	SAMN06661375								False		chicken	False	False	False	True
+combined	SRR6108377	SAMN07633659								False		chicken	False	False	False	True
+combined	SRR12634079	SAMN16122349								False		chicken	False	False	False	True
+combined	SRR7503394	SAMN09605178								False		chicken	False	False	False	True
+combined	SRR25648167	SAMN36995494								False		chicken	False	False	False	True
+combined	SRR7138715	SAMN09098741	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	SRR7525350	SAMN09664933								False		chicken	False	False	False	True
+combined	SRR7665260	SAMN09788625								False		chicken	False	False	False	True
+combined	SRR7987219	SAMN10222480								False		chicken	False	False	False	True
+combined	SRR8074988	SAMN10256504								False		chicken	False	False	False	True
+combined	SRR8255905	SAMN10489176								False		chicken	False	False	False	True
+combined	SRR8662758	SAMN11047755								False		chicken	False	False	False	True
+combined	SRR8662779	SAMN11047729								False		chicken	False	False	False	True
+combined	SRR8662861	SAMN11047817								False		chicken	False	False	False	True
+combined	SRR8662873	SAMN11047804								False		chicken	False	False	False	True
+combined	SRR8663512	SAMN11047601								False		chicken	False	False	False	True
+combined	SRR9007373	SAMN11569669								False		chicken	False	False	False	True
+combined	SRR10119176	SAMN12747615								False		chicken	False	False	False	True
+combined	SRR10200146	SAMN12869770								False		chicken	False	False	False	True
+combined	SRR10758621	SAMN13671890								False		chicken	False	False	False	True
+combined	SRR11615623	SAMN14737990								False		chicken	False	False	False	True
+combined	SRR11629880	SAMN14754931								False		chicken	False	False	False	True
+combined	SRR12698365	SAMN15297389								False		chicken	False	False	False	True
+combined	SRR29234623	SAMN41233132	chicken		common name/synonym	9031	chicken	host_name	host=chicken; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	SRR8753499	SAMN11168288								False		chicken	False	False	False	True
+combined	SRR8942631	SAMN11477037	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	SRR9298923	SAMN12052599								False		chicken	False	False	False	True
+combined	SRR9417526	SAMN12108977	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		chicken	False	False	False	False
+combined	SRR9670813	SAMN12255237								False		chicken	False	False	False	True
+combined	SRR9898424	SAMN12491274								False		chicken	False	False	False	True
+combined	SRR9962624	SAMN12568040								False		chicken	False	False	False	True
+combined	SRR9998277	SAMN12606312								False		chicken	False	False	False	True
+combined	SRR10987399	SAMN13941922								False		chicken	False	False	False	True
+combined	SRR11085356	SAMN14100342								False		chicken	False	False	False	True
+combined	SRR11521675	SAMN14568364								False		chicken	False	False	False	True
+combined	SRR11544496	SAMN14592046								False		chicken	False	False	False	True
+combined	SRR11966499	SAMN15187424								False		chicken	False	False	False	True
+combined	SRR12179540	SAMN15484725								False		chicken	False	False	False	True
+combined	SRR12625768	SAMN16112043								False		chicken	False	False	False	True
+combined	SRR12788365	SAMN16387722								False		chicken	False	False	False	True
+combined	SRR12819058	SAMN16429863								False		chicken	False	False	False	True
+combined	SRR13187284	SAMN16984593								False		chicken	False	False	False	True
+combined	SRR13592140	SAMN17714987								False		chicken	False	False	False	True
+combined	SRR13849948	SAMN18130631								False		chicken	False	False	False	True
+combined	SRR14054907	SAMN18448390								False		chicken	False	False	False	True
+combined	SRR14286421	SAMN18810949								False		chicken	False	False	False	True
+combined	SRR14920260	SAMN19875767								False		chicken	False	False	False	True
+combined	SRR15998504	SAMN21541160								False		chicken	False	False	False	True
+combined	SRR16012019	SAMN21542140								False		chicken	False	False	False	True
+combined	SRR16026962	SAMN21572731								False		chicken	False	False	False	True
+combined	SRR16817007	SAMN22933746								False		chicken	False	False	False	True
+combined	SRR17478232	SAMN24706814								False		chicken	False	False	False	True
+combined	SRR17871415	SAMN25635775								False		chicken	False	False	False	True
+combined	SRR18230626	SAMN26441696								False		chicken	False	False	False	True
+combined	SRR18339700	SAMN26801590								False		chicken	False	False	False	True
+combined	SRR18776851	SAMN27609541								False		chicken	False	False	False	True
+combined	SRR19486114	SAMN28794801								False		chicken	False	False	False	True
+combined	SRR19842112	SAMN29328425								False		chicken	False	False	False	True
+combined	SRR20438527	SAMN29908365								False		chicken	False	False	False	True
+combined	SRR20875039	SAMN30170037								False		chicken	False	False	False	True
+combined	SRR21598161	SAMN30879293								False		chicken	False	False	False	True
+combined	SRR21598450	SAMN30879593								False		chicken	False	False	False	True
+combined	SRR21602128	SAMN30888452								False		chicken	False	False	False	True
+combined	SRR21728318	SAMN31041049								False		chicken	False	False	False	True
+combined	SRR21757000	SAMN31096183								False		chicken	False	False	False	True
+combined	SRR21897644	SAMN31276149								False		chicken	False	False	False	True
+combined	SRR22007717	SAMN31404946								False		chicken	False	False	False	True
+combined	SRR22197412	SAMN31612376								False		chicken	False	False	False	True
+combined	SRR22880083	SAMN32387026								False		chicken	False	False	False	True
+combined	SRR22987937	SAMN32600855								False		chicken	False	False	False	True
+combined	SRR23517257	SAMN33348089								False		chicken	False	False	False	True
+combined	SRR23803163	SAMN33715088								False		chicken	False	False	False	True
+combined	SRR24016088	SAMN33986051								False		chicken	False	False	False	True
+combined	SRR24111455	SAMN34121520								False		chicken	False	False	False	True
+combined	SRR24327307	SAMN34411477								False		chicken	False	False	False	True
+combined	SRR24339384	SAMN34423116								False		chicken	False	False	False	True
+combined	SRR24482067	SAMN35010578								False		chicken	False	False	False	True
+combined	SRR24674592	SAMN35222896								False		chicken	False	False	False	True
+combined	SRR24698312	SAMN35328519								False		chicken	False	False	False	True
+combined	SRR26952112	SAMN38442482								False		chicken	False	False	False	True
+combined	SRR27990989	SAMN39967617								False		chicken	False	False	False	True
+combined	SRR28745426	SAMN41019511								False		chicken	False	False	False	True
+combined	SRR29101205	SAMN41478960								False		chicken	False	False	False	True
+combined	SRR29807932	SAMN42468484								False		chicken	False	False	False	True
+combined	SRR10537312	SAMN13392879								False		dog	False	False	False	True
+combined	SRR10537313	SAMN13392878								False		dog	False	False	False	True
+combined	SRR10537320	SAMN13392875								False		dog	False	False	False	True
+combined	SRR10537322	SAMN13392865								False		dog	False	False	False	True
+combined	SRR10537310	SAMN13392881								False		dog	False	False	False	True
+combined	SRR29692399	SAMN42278435	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	ERR4224315	SAMEA6936570								False		dog	False	False	False	True
+combined	ERR4224316	SAMEA6935643								False		dog	False	False	False	True
+combined	ERR4224317	SAMEA6935645								False		dog	False	False	False	True
+combined	ERR4224318	SAMEA6935653								False		dog	False	False	False	True
+combined	ERR4224320	SAMEA6935711								False		dog	False	False	False	True
+combined	ERR4224322	SAMEA6935740								False		dog	False	False	False	True
+combined	ERR4224324	SAMEA6935762								False		dog	False	False	False	True
+combined	ERR4224523	SAMEA6935853								False		dog	False	False	False	True
+combined	ERR4224532	SAMEA6936026								False		dog	False	False	False	True
+combined	ERR4224533	SAMEA6936063								False		dog	False	False	False	True
+combined	ERR4224535	SAMEA6936067								False		dog	False	False	False	True
+combined	ERR4224537	SAMEA6936073								False		dog	False	False	False	True
+combined	ERR4224510	SAMEA6936112								False		dog	False	False	False	True
+combined	ERR4224511	SAMEA6936115								False		dog	False	False	False	True
+combined	ERR4224515	SAMEA6936118								False		dog	False	False	False	True
+combined	ERR4224517	SAMEA6936121								False		dog	False	False	False	True
+combined	ERR4224519	SAMEA6936123								False		dog	False	False	False	True
+combined	ERR4224522	SAMEA6936130								False		dog	False	False	False	True
+combined	ERR4224545	SAMEA6936081								False		dog	False	False	False	True
+combined	ERR4224547	SAMEA6936133								False		dog	False	False	False	True
+combined	ERR4224548	SAMEA6936136								False		dog	False	False	False	True
+combined	ERR4224556	SAMEA6936143								False		dog	False	False	False	True
+combined	ERR4224557	SAMEA6936146								False		dog	False	False	False	True
+combined	ERR4224559	SAMEA6936702								False		dog	False	False	False	True
+combined	ERR4224574	SAMEA6936157								False		dog	False	False	False	True
+combined	ERR4224579	SAMEA6936189								False		dog	False	False	False	True
+combined	ERR4224588	SAMEA6936226								False		dog	False	False	False	True
+combined	ERR4224589	SAMEA6936249								False		dog	False	False	False	True
+combined	ERR4224590	SAMEA6936227								False		dog	False	False	False	True
+combined	ERR4224593	SAMEA6936264								False		dog	False	False	False	True
+combined	ERR4224597	SAMEA6936270								False		dog	False	False	False	True
+combined	ERR4224603	SAMEA6936314								False		dog	False	False	False	True
+combined	ERR4224605	SAMEA6936327								False		dog	False	False	False	True
+combined	ERR4224610	SAMEA6936357								False		dog	False	False	False	True
+combined	ERR4224619	SAMEA6936379								False		dog	False	False	False	True
+combined	SRR12488025	SAMN15860710	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR12488030	SAMN15860709	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR12623862	SAMN15860712	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR11101933	SAMN14118171	not applicable							False		dog	False	False	False	True
+combined	SRR8787352	SAMN11258574	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR8787372	SAMN11258572	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6232416	SAMN07838742	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6252251	SAMN07967655	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6252248	SAMN07967646	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR7242753	SAMN09279864	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6058449	SAMN07679644	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR5579133	SAMN07137788	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR5935033	SAMN07504894	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6080585	SAMN07710399	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6219838	SAMN07823464	canine		configured host alias		dog	host_alias	host=canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6269843	SAMN08001074	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6289215	SAMN08016801	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6289217	SAMN08016803	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6297976	SAMN08025804	canine		configured host alias		dog	host_alias	host=canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6354173	SAMN08057817	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6366583	SAMN08134947	canine		configured host alias		dog	host_alias	host=canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR10611149	SAMN13516372	canine		configured host alias		dog	host_alias	host=canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR10898003	SAMN13866913	canine		configured host alias		dog	host_alias	host=canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6741488	SAMN08556540	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6813834	SAMN08624510	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6814032	SAMN08624512	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6814034	SAMN08624511	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6814049	SAMN08624507	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6902729	SAMN08744587	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6903158	SAMN08744590	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR7066541	SAMN08930145	Canis lupus		scientific name	9612				False		dog	False	False	False	True
+combined	SRR7213803	SAMN09254308	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR7499466	SAMN09631652	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR7660681	SAMN09784513	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR7660781	SAMN09784510	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR7705338	SAMN09847609	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR8041470	SAMN09917873	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR8041688	SAMN09917870	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR8112791	SAMN10262359	canine		configured host alias		dog	host_alias	host=canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR8260220	SAMN10497208	missing							False		dog	False	False	False	True
+combined	SRR8388781	SAMN10689123	canine		configured host alias		dog	host_alias	host=canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR8397531	SAMN10686084	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR9029459	SAMN11604753	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR9831419	SAMN12360738	Canis lupus		scientific name	9612				False		dog	False	False	False	True
+combined	SRR9831452	SAMN12360803	Canis lupus		scientific name	9612				False		dog	False	False	False	True
+combined	SRR13042628	SAMN16781624	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR22974871	SAMN32579332								False		dog	False	False	False	True
+combined	SRR23097466	SAMN32767407								False		dog	False	False	False	True
+combined	SRR24886328	SAMN35687487								False		dog	False	False	False	True
+combined	SRR28564537	SAMN40758961	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR24684368	SAMN35303385								False		dog	False	False	False	True
+combined	SRR27150577	SAMN38730545	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR27989230	SAMN39962846	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR28564533	SAMN40758965	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR28564534	SAMN40758964	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR28564535	SAMN40758963	Canis lupus familiaris		scientific name	9615	dog	host_name	host=Canis lupus familiaris; taxid=9615; Canis lupus familiaris	False		dog	False	False	False	False
+combined	SRR6171584	SAMN07504895	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6171586	SAMN07504897	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR6171587	SAMN07504896	Canine		configured host alias		dog	host_alias	host=Canine; configured_host_alias=dog	False		dog	False	True	False	False
+combined	SRR1635285	SAMN03121802								False		environment	False	False	False	True
+combined	ERR1163719	SAMEA3683334	Bootsock, Blencathra		unresolved					False		environment	False	False	False	True
+combined	SRR6398721	SAMN07767599								False		environment	False	False	False	True
+combined	SRR4022329	SAMN03387096								False		environment	False	False	False	True
+combined	SRR26351296	SAMN37735409	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351307	SAMN37735393	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351303	SAMN37735405	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351314	SAMN37735411	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351330	SAMN37735400	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351338	SAMN37735402	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351356	SAMN37735397	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351357	SAMN37735396	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26770173	SAMN38183152	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26770174	SAMN38183151	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218402	SAMN38842797	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218404	SAMN38842795	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218409	SAMN38842803	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218417	SAMN38712325	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218418	SAMN38712326	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218419	SAMN38712327	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218439	SAMN38712341	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218440	SAMN38712323	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218449	SAMN38713230	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218462	SAMN38713233	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218466	SAMN38713236	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218468	SAMN38713231	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR28406692	SAMN40454887	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR28406693	SAMN40454888	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26351310	SAMN37735420	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26678367	SAMN38092512	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26770179	SAMN38183148	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26770196	SAMN38183154	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR26770208	SAMN38183149	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218416	SAMN38712322	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218422	SAMN38712338	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218428	SAMN38712348	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218429	SAMN38712352	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218430	SAMN38712351	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218434	SAMN38712342	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218435	SAMN38712349	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218437	SAMN38712350	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218442	SAMN38712329	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218444	SAMN38712319	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218453	SAMN38713249	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR27218459	SAMN38713237	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR28214326	SAMN40208053	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR28406655	SAMN40454884	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	SRR28406675	SAMN40454860	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		goat	True	False	True	False
+combined	ERR4224811	SAMEA6935646								False		goat	False	False	False	True
+combined	ERR4224814	SAMEA6935654								False		goat	False	False	False	True
+combined	ERR4224815	SAMEA6935655								False		goat	False	False	False	True
+combined	ERR4224818	SAMEA6935656								False		goat	False	False	False	True
+combined	ERR4224820	SAMEA6935662								False		goat	False	False	False	True
+combined	ERR4224822	SAMEA6935666								False		goat	False	False	False	True
+combined	ERR4224831	SAMEA6935673								False		goat	False	False	False	True
+combined	ERR4224845	SAMEA6935696								False		goat	False	False	False	True
+combined	ERR4224858	SAMEA6935703								False		goat	False	False	False	True
+combined	ERR4224866	SAMEA6935715								False		goat	False	False	False	True
+combined	ERR4224867	SAMEA6935708								False		goat	False	False	False	True
+combined	ERR4224868	SAMEA6935716								False		goat	False	False	False	True
+combined	ERR4224878	SAMEA6935726								False		goat	False	False	False	True
+combined	ERR4224885	SAMEA6935733								False		goat	False	False	False	True
+combined	ERR4224891	SAMEA6935741								False		goat	False	False	False	True
+combined	ERR4224895	SAMEA6935746								False		goat	False	False	False	True
+combined	ERR4224900	SAMEA6935751								False		goat	False	False	False	True
+combined	ERR4224908	SAMEA6935760								False		goat	False	False	False	True
+combined	ERR4224909	SAMEA6935761								False		goat	False	False	False	True
+combined	ERR4224913	SAMEA6935765								False		goat	False	False	False	True
+combined	ERR4224914	SAMEA6935508								False		goat	False	False	False	True
+combined	ERR4224621	SAMEA6936812								False		goat	False	False	False	True
+combined	SRR3094460	SAMN04377874	goat		common name/synonym	9925	goat	host_name	host=goat; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR12495807	SAMN08235377	Capra aegagrus		specific unlisted animal	9923	other_animal	host_other_animal	host=Capra aegagrus; taxid=9923; Capra aegagrus; specific_unlisted_nonbird_animal	False		goat	False	True	True	False
+combined	SRR3094462	SAMN04377876	goat		common name/synonym	9925	goat	host_name	host=goat; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR6169167	SAMN07780136	Goat		common name/synonym	9925	goat	host_name	host=Goat; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR6048565	SAMN07655745	Goat		common name/synonym	9925	goat	host_name	host=Goat; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR3210432	SAMN04442370	missing							False		goat	False	False	False	True
+combined	SRR3210434	SAMN04442372	Capra aegagrus hircus		common name/synonym	9925	goat	host_name	host=Capra aegagrus hircus; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR3215289	SAMN04442373	Capra aegagrus hircus		common name/synonym	9925	goat	host_name	host=Capra aegagrus hircus; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR3692309	SAMN05163884	missing							False		goat	False	False	False	True
+combined	SRR7968358	SAMN10180446	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR11521726	SAMN14570264	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR11521728	SAMN14570266	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR11544463	SAMN14575264	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR11653840	SAMN14777810	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR11654317	SAMN14779579	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR11714421	SAMN14844678	caprine		configured host alias		goat	host_alias	host=caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR12625731	SAMN16112025	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR12798039	SAMN16399176	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR13005034	SAMN16703322	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR13699958	SAMN17898460	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR13764597	SAMN18027924	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR14882944	SAMN19814330	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR15845037	SAMN21391396								False		goat	False	False	False	True
+combined	SRR16085962	SAMN21855460								False		goat	False	False	False	True
+combined	SRR16288478	SAMN22211737								False		goat	False	False	False	True
+combined	SRR22867655	SAMN32369497	Capra aegagrus hircus		common name/synonym	9925	goat	host_name	host=Capra aegagrus hircus; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR18959245	SAMN27923466	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR18959247	SAMN27923486	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR19395871	SAMN28657943	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR19487409	SAMN28794940	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR19545020	SAMN28875005	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR20114915	SAMN29657321	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR20994500	SAMN30220874	Caprine		configured host alias		goat	host_alias	host=Caprine; configured_host_alias=goat	False		goat	False	True	False	False
+combined	SRR22867624	SAMN32369506	Capra aegagrus hircus		common name/synonym	9925	goat	host_name	host=Capra aegagrus hircus; taxid=9925; Capra hircus	False		goat	False	False	False	False
+combined	SRR25376760	SAMN13413900	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR25377045	SAMN13413635	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR19905474	SAMN29243881	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR5209619	SAMN06270746	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10859608	SAMN13656967	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR20075845	SAMN29629581	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR28406690	SAMN40454894	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR8126519	SAMN10250843	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR12301978	SAMN15617631								False		human	False	False	False	True
+combined	SRR11268237	SAMN14126149	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR12362279	SAMN15516446	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR12362332	SAMN15516398	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR12362453	SAMN15516520	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR26328758	SAMN37736144	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	ERR4224083	SAMEA6936083								False		human	False	False	False	True
+combined	ERR4224188	SAMEA6936257								False		human	False	False	False	True
+combined	ERR1750947	SAMEA23795668	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR7280455	SAMN09382286	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR12062933	SAMN15317740	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR17925158	SAMN16731530	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR17925379	SAMN16731697	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR17929568	SAMN16731895	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR17929591	SAMN16731886	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR17964873	SAMN16769367	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR17974319	SAMN16769633	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR20336840	SAMN29855686	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR27376378	SAMN39182608	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR27385303	SAMN39199411	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR12077290	SAMN15351905	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR28623835	SAMN40466989	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	ERR9766650	SAMEA14035526	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	ERR9766817	SAMEA14035693	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	ERR9766849	SAMEA14035725	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	ERR2986658	SAMEA5148099	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	ERR2986689	SAMEA5148018	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	ERR083975	SAMEA1010401	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10001393	SAMN12603907	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10056695	SAMN12673118	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10056842	SAMN12673253	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10062883	SAMN12686752	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10490230	SAMN13326907	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR12769653	SAMN16363674	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10001221	SAMN12603983	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10006856	SAMN12610789	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10011173	SAMN12617609	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10013357	SAMN12621853	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10013461	SAMN12621915	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10018227	SAMN12629006	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10019155	SAMN12631020	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10026154	SAMN12643212	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10031344	SAMN12648363	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR10054163	SAMN12670626	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9993653	SAMN12597727	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9948460	SAMN12558405	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9962218	SAMN12567902	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9962473	SAMN12568277	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9968987	SAMN12573987	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9974241	SAMN12585300	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9974246	SAMN12585292	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9974474	SAMN12585469	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9898983	SAMN12492380	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9899111	SAMN12492507	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9900234	SAMN12495503	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9901589	SAMN12500033	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9924020	SAMN12529562	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9924040	SAMN12529515	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9933918	SAMN12538658	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9934144	SAMN12538956	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9942873	SAMN12547214	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9942978	SAMN12547263	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9877373	SAMN12417978	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR9877471	SAMN12418102	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR8886452	SAMN11301759	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR1768072	SAMN03288038	missing							False		human	False	False	False	True
+combined	SRR5188912	SAMN06237933	missing							False		human	False	False	False	True
+combined	SRR6048548	SAMN07502666	missing							False		human	False	False	False	True
+combined	SRR6322607	SAMN08057555	missing							False		human	False	False	False	True
+combined	SRR2057227	SAMN03764531	missing							False		human	False	False	False	True
+combined	SRR10738422	SAMN13634663	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR11007823	SAMN13977256	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR4000220	SAMN05511426	missing							False		human	False	False	False	True
+combined	SRR5097312	SAMN06077072	missing							False		human	False	False	False	True
+combined	SRR5230144	SAMN06285352	missing							False		human	False	False	False	True
+combined	SRR5581844	SAMN07135011	missing							False		human	False	False	False	True
+combined	SRR5667095	SAMN07210823	missing							False		human	False	False	False	True
+combined	SRR6202924	SAMN07817128	missing							False		human	False	False	False	True
+combined	SRR6221087	SAMN07811815	missing							False		human	False	False	False	True
+combined	SRR16256362	SAMN20838454	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR6929968	SAMN08849565	missing							False		human	False	False	False	True
+combined	SRR7157741	SAMN09203632	missing							False		human	False	False	False	True
+combined	SRR7637763	SAMN09760205	missing							False		human	False	False	False	True
+combined	SRR7761286	SAMN09927898	missing							False		human	False	False	False	True
+combined	SRR7764604	SAMN09930831	missing							False		human	False	False	False	True
+combined	SRR7851632	SAMN10077558	missing							False		human	False	False	False	True
+combined	SRR7851637	SAMN10077554	missing							False		human	False	False	False	True
+combined	SRR7968374	SAMN10180460	missing							False		human	False	False	False	True
+combined	SRR8554697	SAMN10908157	missing							False		human	False	False	False	True
+combined	SRR8815897	SAMN11288747								False		human	False	False	False	True
+combined	SRR9929936	SAMN12535601								False		human	False	False	False	True
+combined	SRR13001597	SAMN16689724	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		human	False	False	False	False
+combined	SRR1816221	SAMN03358148								False		laboratory	False	False	False	True
+combined	SRR12686293	SAMN16129252	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR12686295	SAMN16129250	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR12686282	SAMN16129262	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR6314321	SAMN08055004	not provided							False		other_animal	False	False	False	True
+combined	SRR6314323	SAMN08055003	not provided							False		other_animal	False	False	False	True
+combined	SRR12686280	SAMN16129264	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR6314857	SAMN08053153	not provided							False		other_animal	False	False	False	True
+combined	SRR12686266	SAMN16129276	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR12686270	SAMN16129273	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR6315299	SAMN08054605	not provided							False		other_animal	False	False	False	True
+combined	SRR12686263	SAMN16129278	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR12686252	SAMN16129288	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR12686254	SAMN16129287	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR12686250	SAMN16129290	Non-human primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR6314874	SAMN08053348	not provided							False		other_animal	False	False	False	True
+combined	SRR5209460	SAMN06270905	Procyon lotor		specific unlisted animal	9654	other_animal	host_other_animal	host=Procyon lotor; taxid=9654; Procyon lotor; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR5209461	SAMN06270904	Procyon lotor		specific unlisted animal	9654	other_animal	host_other_animal	host=Procyon lotor; taxid=9654; Procyon lotor; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR5209462	SAMN06270903	Procyon lotor		specific unlisted animal	9654	other_animal	host_other_animal	host=Procyon lotor; taxid=9654; Procyon lotor; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR29262334	SAMN41652103	alpaca		specific unlisted animal	30538	other_animal	host_other_animal	host=alpaca; taxid=30538; Vicugna pacos; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR29262329	SAMN41652108	alpaca		specific unlisted animal	30538	other_animal	host_other_animal	host=alpaca; taxid=30538; Vicugna pacos; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR29262332	SAMN41652105	alpaca		specific unlisted animal	30538	other_animal	host_other_animal	host=alpaca; taxid=30538; Vicugna pacos; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR29262342	SAMN41652116	alpaca		specific unlisted animal	30538	other_animal	host_other_animal	host=alpaca; taxid=30538; Vicugna pacos; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR29262348	SAMN41652110	alpaca		specific unlisted animal	30538	other_animal	host_other_animal	host=alpaca; taxid=30538; Vicugna pacos; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR12488519	SAMN15860573	Cavia porcellus		specific unlisted animal	10141	other_animal	host_other_animal	host=Cavia porcellus; taxid=10141; Cavia porcellus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR11101879	SAMN14118220	not applicable							False		other_animal	False	False	False	True
+combined	SRR11101917	SAMN14118185	not applicable							False		other_animal	False	False	False	True
+combined	SRR1635043	SAMN03121716								False		other_animal	False	False	False	True
+combined	SRR1635047	SAMN03121719								False		other_animal	False	False	False	True
+combined	SRR1635049	SAMN03121721								False		other_animal	False	False	False	True
+combined	SRR1635062	SAMN03121730								False		other_animal	False	False	False	True
+combined	SRR1635090	SAMN03121736								False		other_animal	False	False	False	True
+combined	SRR1635129	SAMN03121737								False		other_animal	False	False	False	True
+combined	SRR1635134	SAMN03121740								False		other_animal	False	False	False	True
+combined	SRR1635147	SAMN03121744								False		other_animal	False	False	False	True
+combined	SRR1635151	SAMN03121746								False		other_animal	False	False	False	True
+combined	SRR1635153	SAMN03121747								False		other_animal	False	False	False	True
+combined	SRR1635156	SAMN03121750								False		other_animal	False	False	False	True
+combined	SRR1635160	SAMN03121753								False		other_animal	False	False	False	True
+combined	SRR1635161	SAMN03121754								False		other_animal	False	False	False	True
+combined	SRR1635166	SAMN03121759								False		other_animal	False	False	False	True
+combined	SRR1635167	SAMN03121760								False		other_animal	False	False	False	True
+combined	SRR1635168	SAMN03121761								False		other_animal	False	False	False	True
+combined	SRR1635207	SAMN03121766								False		other_animal	False	False	False	True
+combined	SRR1635210	SAMN03121768								False		other_animal	False	False	False	True
+combined	SRR1635212	SAMN03121769								False		other_animal	False	False	False	True
+combined	SRR1635219	SAMN03121772								False		other_animal	False	False	False	True
+combined	SRR1635222	SAMN03121773								False		other_animal	False	False	False	True
+combined	SRR1635233	SAMN03121776								False		other_animal	False	False	False	True
+combined	SRR1635234	SAMN03121777								False		other_animal	False	False	False	True
+combined	SRR1635241	SAMN03121782								False		other_animal	False	False	False	True
+combined	SRR1635242	SAMN03121783								False		other_animal	False	False	False	True
+combined	SRR1635246	SAMN03121785								False		other_animal	False	False	False	True
+combined	SRR1635258	SAMN03121789								False		other_animal	False	False	False	True
+combined	SRR1635275	SAMN03121792								False		other_animal	False	False	False	True
+combined	SRR1635276	SAMN03121793								False		other_animal	False	False	False	True
+combined	SRR1635284	SAMN03121801								False		other_animal	False	False	False	True
+combined	SRR1814942	SAMN03359755	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR1816192	SAMN03358119	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR1816194	SAMN03358121	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR1816195	SAMN03358122	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR1816196	SAMN03358123	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR1816201	SAMN03358128	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR3619972	SAMN04532340	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR3619973	SAMN04532426	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR3619982	SAMN04532435	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR3619988	SAMN04532440	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR3619993	SAMN04532445	Primate		unresolved					False		other_animal	False	False	False	True
+combined	SRR4069394	SAMN04532339	not collected							False		other_animal	False	False	False	True
+combined	SRR3094499	SAMN04381860	Guinea pig		specific unlisted animal	10141	other_animal	host_other_animal	host=Guinea pig; taxid=10141; Cavia porcellus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR3094501	SAMN04381862	Guinea pig		specific unlisted animal	10141	other_animal	host_other_animal	host=Guinea pig; taxid=10141; Cavia porcellus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR3094502	SAMN04381863	Guinea pig		specific unlisted animal	10141	other_animal	host_other_animal	host=Guinea pig; taxid=10141; Cavia porcellus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR3094503	SAMN04381864	Guinea pig		specific unlisted animal	10141	other_animal	host_other_animal	host=Guinea pig; taxid=10141; Cavia porcellus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR3094508	SAMN04381869	Guinea pig		specific unlisted animal	10141	other_animal	host_other_animal	host=Guinea pig; taxid=10141; Cavia porcellus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR3094510	SAMN04381871	Guinea pig		specific unlisted animal	10141	other_animal	host_other_animal	host=Guinea pig; taxid=10141; Cavia porcellus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR5054226	SAMN06036238	Mule deer		specific unlisted animal	9872	other_animal	host_other_animal	host=Mule deer; taxid=9872; Odocoileus hemionus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR6169171	SAMN07780144	Mule deer		specific unlisted animal	9872	other_animal	host_other_animal	host=Mule deer; taxid=9872; Odocoileus hemionus; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474102	SAMN38910016	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474105	SAMN38910013	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474107	SAMN38910011	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474110	SAMN38909993	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474111	SAMN38909992	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474113	SAMN38910004	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474114	SAMN38910003	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474129	SAMN38909978	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474135	SAMN38909990	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474144	SAMN38909982	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474145	SAMN38909981	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474148	SAMN38909958	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474149	SAMN38909959	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474152	SAMN38909974	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474153	SAMN38909963	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474160	SAMN38909972	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474163	SAMN38909952	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474167	SAMN38910009	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474180	SAMN38909930	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474182	SAMN38909961	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474188	SAMN38909929	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474192	SAMN38909943	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474201	SAMN38910034	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR27474206	SAMN38910029	Macaca mulatta		specific unlisted animal	9544	other_animal	host_other_animal	host=Macaca mulatta; taxid=9544; Macaca mulatta; specific_unlisted_nonbird_animal	False		other_animal	False	True	False	False
+combined	SRR10257508	SAMN13011761								False		other_food	False	False	False	True
+combined	ERR1163442	SAMEA3683056	chicken offal or meat		unresolved					False		other_food	False	False	False	True
+combined	SRR9945146	SAMN12550285	not applicable							False		other_food	False	False	False	True
+combined	SRR9945233	SAMN12550351	not applicable							False		other_food	False	False	False	True
+combined	SRR9969039	SAMN12574200	not applicable							False		other_food	False	False	False	True
+combined	SRR9899056	SAMN12492448	not applicable							False		other_food	False	False	False	True
+combined	SRR12301966	SAMN15617875								False		pig	False	False	False	True
+combined	SRR12070099	SAMN15221470	Sus scrofa domesticus		scientific name	9825	pig	host_name	host=Sus scrofa domesticus; taxid=9825; Sus scrofa domesticus	False		pig	False	False	False	False
+combined	SRR12070221	SAMN15221566	Sus scrofa domesticus		scientific name	9825	pig	host_name	host=Sus scrofa domesticus; taxid=9825; Sus scrofa domesticus	False		pig	False	False	False	False
+combined	SRR12070098	SAMN15221417	Sus scrofa domesticus		scientific name	9825	pig	host_name	host=Sus scrofa domesticus; taxid=9825; Sus scrofa domesticus	False		pig	False	False	False	False
+combined	SRR12070156	SAMN15221624	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	ERR4224796	SAMEA6935512								False		pig	False	False	False	True
+combined	ERR4223940	SAMEA6936580								False		pig	False	False	False	True
+combined	ERR4223951	SAMEA6936593								False		pig	False	False	False	True
+combined	SRR17152128	SAMN23711199								False		pig	False	False	False	True
+combined	ERR10497186	SAMEA112143406	Sus scrofa domesticus		scientific name	9825	pig	host_name	host=Sus scrofa domesticus; taxid=9825; Sus scrofa domesticus	False		pig	False	False	False	False
+combined	ERR1163653	SAMEA3683268	pig		common name/synonym	9823				False		pig	False	False	False	True
+combined	SRR10768360	SAMN13682804	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR10768380	SAMN13682833	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR10823769	SAMN13719097	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR13921946	SAMN18238163	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR13921952	SAMN18238177	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR13921953	SAMN18238185	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6289028	SAMN07767645	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6376259	SAMN07610875	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6398669	SAMN08217218	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6443378	SAMN07767547	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6664291	SAMN08169011	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6666474	SAMN08457467	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6666794	SAMN08457480	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6745536	SAMN08169017	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6930614	SAMN08849769	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6998296	SAMN08168982	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR7014281	SAMN08942366	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR7127921	SAMN09071609	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5645350	SAMN06921927	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5760705	SAMN06921944	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5861818	SAMN07343110	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5865320	SAMN06922000	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5865333	SAMN06921999	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5876880	SAMN07343091	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5876891	SAMN07343096	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR5963909	SAMN07469561	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6212386	SAMN07509168	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6213864	SAMN07509147	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6236257	SAMN07509157	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6261965	SAMN07532293	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6856173	SAMN07809567	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6860706	SAMN07809616	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6973039	SAMN07809573	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR7439653	SAMN08169192	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR7496959	SAMN08169104	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR7500598	SAMN08169194	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR7500639	SAMN08169203	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR2727701	SAMN04195079	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR2889269	SAMN04229852	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR3113830	SAMN04435379	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR3185261	SAMN04514642	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR3215130	SAMN04543692	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR3297736	SAMN04580863	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR3350820	SAMN04625656	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR3583308	SAMN05171391	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR3583313	SAMN05171415	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR4301153	SAMN05833060	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR5195803	SAMN06250921	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR5427944	SAMN06660823	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR5427952	SAMN06677842	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR5605553	SAMN07168574	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR5815730	SAMN07339686	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR5815736	SAMN07339692	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR6659229	SAMN08447599	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR6659230	SAMN08447619	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR13276339	SAMN17120229	Porcine		configured host alias		pig	host_alias	host=Porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR6764260	SAMN08581783	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR6793437	SAMN08624119	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR6793679	SAMN08624206	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR6904941	SAMN08801805	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR7367176	SAMN09456128	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR7543323	SAMN09693174	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR7624020	SAMN09741881	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR8420065	SAMN10715419	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR9879527	SAMN12421828	porcine		configured host alias		pig	host_alias	host=porcine; configured_host_alias=pig	False		pig	False	True	False	False
+combined	SRR10045171	SAMN12638021	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR11600456	SAMN14680986	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR11654067	SAMN14777833	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR8609085	SAMN10988632	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR8635363	SAMN11024143	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR8696153	SAMN11082342	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR8754469	SAMN11173141	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR8951824	SAMN11491694	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR9007403	SAMN11569722	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR9010153	SAMN11571904	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR9289356	SAMN12040843	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR9856028	SAMN12391560	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR11544808	SAMN14596732	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR11654077	SAMN14777876	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR12625727	SAMN16112018	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR12680074	SAMN16229196	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR12782933	SAMN16383944	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR17066970	SAMN23492975	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR17412822	SAMN24588437	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR17656269	SAMN25076273	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR18426075	SAMN26857436	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR20710162	SAMN30050880	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR23513629	SAMN33342930	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR23979057	SAMN33927552	Sus scrofa		scientific name	9823				False		pig	False	False	False	True
+combined	SRR5209489	SAMN06270876	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR22956824	SAMN32543249	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR22956826	SAMN32543247	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR26678370	SAMN38092503	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR26678371	SAMN38092502	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR26351318	SAMN37735414	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR27218412	SAMN38842792	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR27218413	SAMN38842791	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR27218469	SAMN38713247	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	ERR4224309	SAMEA6936572								False		sheep	False	False	False	True
+combined	ERR4224861	SAMEA6935706								False		sheep	False	False	False	True
+combined	ERR4224567	SAMEA6936163								False		sheep	False	False	False	True
+combined	ERR4224617	SAMEA6936789								False		sheep	False	False	False	True
+combined	SRR12063017	SAMN15317825	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12063018	SAMN15317824	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12063030	SAMN15317813	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12063032	SAMN15317811	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12063034	SAMN15317809	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12347634	SAMN15675348	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12347652	SAMN15675370	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12347663	SAMN15675360	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12347669	SAMN15675355	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12347670	SAMN15675354	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR12347676	SAMN15675340	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17898864	SAMN16731005	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17898865	SAMN16731004	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17898893	SAMN16731016	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17899234	SAMN16731123	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900361	SAMN16731388	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900362	SAMN16731387	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900429	SAMN16731384	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900435	SAMN16731379	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900439	SAMN16731375	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900532	SAMN16731255	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900535	SAMN16731252	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17900545	SAMN16731243	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17925216	SAMN16731843	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17925217	SAMN16731842	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17925218	SAMN16731841	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17925224	SAMN16731836	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17925265	SAMN16731712	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17925366	SAMN16731708	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17929619	SAMN16731988	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17964877	SAMN16769363	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17964955	SAMN16769468	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17974188	SAMN16769565	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17974194	SAMN16769530	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR17974198	SAMN16769527	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR13362754	SAMN17214798	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR13362760	SAMN17214748	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR13362775	SAMN17214779	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR13362783	SAMN17214772	Ovis aries		scientific name	9940	sheep	host_name	host=Ovis aries; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094486	SAMN04377900	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094483	SAMN04377897	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR10218159	SAMN12898214								False		sheep	False	False	False	True
+combined	SRR10218167	SAMN12898207								False		sheep	False	False	False	True
+combined	SRR3619966	SAMN04532420	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR5230112	SAMN06290218	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR3094408	SAMN04377822	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094413	SAMN04377827	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094418	SAMN04377832	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094423	SAMN04377837	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094446	SAMN04377860	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094464	SAMN04377878	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094432	SAMN04377846	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR3094452	SAMN04377866	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR5397411	SAMN06661615	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR5397416	SAMN06661613	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR3094482	SAMN04377896	Sheep		common name/synonym	9940	sheep	host_name	host=Sheep; taxid=9940; Ovis aries	False		sheep	False	False	False	False
+combined	SRR5366142	SAMN06611253	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR11459577	SAMN14503108	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR11544459	SAMN14575260	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR11654312	SAMN14779565	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR12625708	SAMN16112003	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR12625725	SAMN16112017	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR12625734	SAMN16112021	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR13238488	SAMN17052385	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR13350071	SAMN17212300	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR13699956	SAMN17898449	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR14228718	SAMN18733916	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR14882958	SAMN19814331	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR18678775	SAMN27406571	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR18959246	SAMN27923475	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR18982390	SAMN27994774	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR19139531	SAMN28156629	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR19486036	SAMN28794718	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR20124469	SAMN29656405	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR20307428	SAMN29826444	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR28199248	SAMN40218291	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR28440137	SAMN40603281	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR28440155	SAMN40603369	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR28764814	SAMN41042988	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR28886116	SAMN41188572	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR28886138	SAMN41188859	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR29205960	SAMN41571437	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR29740282	SAMN42375231	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR29740290	SAMN42375234	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR29740291	SAMN42375238	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR29740293	SAMN42375236	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR29740313	SAMN42375262	Ovine		configured host alias		sheep	host_alias	host=Ovine; configured_host_alias=sheep	False		sheep	False	True	False	False
+combined	SRR10698086	SAMN13577901								False		turkey	False	False	False	True
+combined	SRR10698082	SAMN13577905								False		turkey	False	False	False	True
+combined	ERR4224737	SAMEA6935563								False		turkey	False	False	False	True
+combined	ERR4224893	SAMEA6935744								False		turkey	False	False	False	True
+combined	ERR4224927	SAMEA6935862								False		turkey	False	False	False	True
+combined	ERR10497218	SAMEA112143438	Meleagris gallopavo f. domestica		unresolved					False		turkey	False	False	False	True
+combined	SRR10239225	SAMN12725417								False		turkey	False	False	False	True
+combined	SRR3113823	SAMN04435360	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR3140161	SAMN04453081	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR5080903	SAMN06111800	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR6108541	SAMN07633823								False		turkey	False	False	False	True
+combined	SRR6410196	SAMN08224457								False		turkey	False	False	False	True
+combined	SRR5683997	SAMN07237679								False		turkey	False	False	False	True
+combined	SRR5754139	SAMN07276193	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR7084862	SAMN09004625	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR7084888	SAMN09004616								False		turkey	False	False	False	True
+combined	SRR7138685	SAMN09098808	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR7367187	SAMN09456086								False		turkey	False	False	False	True
+combined	SRR7543322	SAMN09693172	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR7708075	SAMN09849935	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR7739737	SAMN09880377	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR7904252	SAMN10129872	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8075036	SAMN10256458								False		turkey	False	False	False	True
+combined	SRR8099154	SAMN10282297	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8136319	SAMN10346717								False		turkey	False	False	False	True
+combined	SRR8208263	SAMN10441558	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8252758	SAMN10489490	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8252775	SAMN10489686	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8375510	SAMN10656527	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8592659	SAMN10968433	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8663531	SAMN11047550								False		turkey	False	False	False	True
+combined	SRR10097033	SAMN12725514	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR10218502	SAMN12898046	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR10246444	SAMN12993585	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR10447229	SAMN13287125								False		turkey	False	False	False	True
+combined	SRR10574919	SAMN13447807	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR10831345	SAMN13738907								False		turkey	False	False	False	True
+combined	SRR10834037	SAMN13739873								False		turkey	False	False	False	True
+combined	SRR11236364	SAMN14291209	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR13436893	SAMN17315746	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8538386	SAMN10880125								False		turkey	False	False	False	True
+combined	SRR8698547	SAMN11086814								False		turkey	False	False	False	True
+combined	SRR8753356	SAMN11168299								False		turkey	False	False	False	True
+combined	SRR8838819	SAMN11318641	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8839759	SAMN11320711	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8839808	SAMN11320775	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR8942624	SAMN11477071	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR9010123	SAMN11571898	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR9609600	SAMN12151518								False		turkey	False	False	False	True
+combined	SRR9643036	SAMN12212497	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR9668773	SAMN12251390	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR11272909	SAMN14337275								False		turkey	False	False	False	True
+combined	SRR11521765	SAMN14570277	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR12112583	SAMN15400886								False		turkey	False	False	False	True
+combined	SRR12472207	SAMN15850787	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR12515354	SAMN15901771	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR12680060	SAMN16229181	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR13045497	SAMN16784408	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR13059399	SAMN16794613								False		turkey	False	False	False	True
+combined	SRR13176900	SAMN16970578								False		turkey	False	False	False	True
+combined	SRR13245107	SAMN17079653	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR13797356	SAMN18077813	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR13842615	SAMN18106686								False		turkey	False	False	False	True
+combined	SRR14478907	SAMN19092027								False		turkey	False	False	False	True
+combined	SRR14619693	SAMN19302371	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR15321209	SAMN20518097	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR15323874	SAMN20554728								False		turkey	False	False	False	True
+combined	SRR16089306	SAMN21856713	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR16764944	SAMN22867737	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR16764948	SAMN22867738	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR17067005	SAMN23493043	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR17260636	SAMN24169580	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR17621928	SAMN25003818	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR17657446	SAMN25076911	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR17915050	SAMN25705159	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR18982367	SAMN27994492	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR19139537	SAMN28156616	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR19242167	SAMN28488441	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR19847146	SAMN29335088	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR20994461	SAMN30220859	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR20994490	SAMN30220869	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR20994523	SAMN30220883	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR21909378	SAMN31288862	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR22629699	SAMN32131593	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR22884909	SAMN32389840	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR23525304	SAMN33356324								False		turkey	False	False	False	True
+combined	SRR24324263	SAMN34404446								False		turkey	False	False	False	True
+combined	SRR24529378	SAMN35064541								False		turkey	False	False	False	True
+combined	SRR24660421	SAMN35217531	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR25523927	SAMN36841994	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR25915113	SAMN37283204	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR26304285	SAMN37707087	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR26628477	SAMN38061742	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR26806889	SAMN38227748	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR26959982	SAMN38453090	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR26969078	SAMN38471372								False		turkey	False	False	False	True
+combined	SRR27038776	SAMN38638896	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR27040758	SAMN38638914	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR27503896	SAMN39418152	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	SRR28901624	SAMN41218539	Ground Turkey		unresolved					False		turkey	False	False	False	True
+combined	SRR27844354	SAMN39746917	Meleagris gallopavo		scientific name	9103	turkey	host_name	host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo	False		turkey	False	False	False	False
+combined	ERR3144883	SAMEA5328457	Gallus gallus domesticus		common name/synonym	9031	chicken	host_name	host=Gallus gallus domesticus; taxid=9031; Gallus gallus	False		unknown	False	False	True	False
+combined	ERR3145269	SAMEA5326284	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	ERR4879520	SAMEA7632583	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	ERR10703458	SAMEA112260336	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	ERR12953173	SAMEA115501781								False		unknown	False	False	False	True
+combined	ERR11003616	SAMEA112765475								False		unknown	False	False	False	True
+combined	ERR10372741	SAMEA111483144								False		unknown	False	False	False	True
+combined	SRR24880177	SAMN35681707								False		unknown	False	False	False	True
+combined	ERR12726479	SAMEA115383977								False		unknown	False	False	False	True
+combined	SRR10019064	SAMN12631031	not applicable							False		unknown	False	False	False	True
+combined	ERR11721283	SAMEA114071969								False		unknown	False	False	False	True
+combined	ERR12084056	SAMEA114461845								False		unknown	False	False	False	True
+combined	ERR12072012	SAMEA114408641								False		unknown	False	False	False	True
+combined	ERR12072144	SAMEA114408773								False		unknown	False	False	False	True
+combined	ERR12757156	SAMEA115419291								False		unknown	False	False	False	True
+combined	ERR1658511	SAMEA4443306								False		unknown	False	False	False	True
+combined	ERR1658689	SAMEA4443233								False		unknown	False	False	False	True
+combined	ERR1906113	SAMEA103954494								False		unknown	False	False	False	True
+combined	ERR3446633	SAMEA5803185								False		unknown	False	False	False	True
+combined	ERR439920	SAMEA2274619								False		unknown	False	False	False	True
+combined	ERR450239	SAMEA2274688								False		unknown	False	False	False	True
+combined	ERR470518	SAMEA2361299								False		unknown	False	False	False	True
+combined	ERR470695	SAMEA2361479								False		unknown	False	False	False	True
+combined	ERR473837	SAMEA2361639								False		unknown	False	False	False	True
+combined	ERR670848	SAMEA2613238								False		unknown	False	False	False	True
+combined	ERR694574	SAMEA3168641								False		unknown	False	False	False	True
+combined	ERR976125	SAMEA3391383								False		unknown	False	False	False	True
+combined	ERR976146	SAMEA3391403								False		unknown	False	False	False	True
+combined	ERR137056	SAMEA1401327								False		unknown	False	False	False	True
+combined	ERR148287	SAMEA1401339								False		unknown	False	False	False	True
+combined	ERR148380	SAMEA1401535								False		unknown	False	False	False	True
+combined	ERR1512684	SAMEA4058782								False		unknown	False	False	False	True
+combined	ERR1701073	SAMEA4521984								False		unknown	False	False	False	True
+combined	ERR213031	SAMEA1572567								False		unknown	False	False	False	True
+combined	ERR221328	SAMEA1676325								False		unknown	False	False	False	True
+combined	ERR226207	SAMEA1676384								False		unknown	False	False	False	True
+combined	ERR226238	SAMEA1676345								False		unknown	False	False	False	True
+combined	ERR278336	SAMEA1902805								False		unknown	False	False	False	True
+combined	ERR326230	SAMEA1902783								False		unknown	False	False	False	True
+combined	ERR330642	SAMEA1969322								False		unknown	False	False	False	True
+combined	ERR356059	SAMEA1676335								False		unknown	False	False	False	True
+combined	ERR467052	SAMEA2266426								False		unknown	False	False	False	True
+combined	ERR594006	SAMEA2743679								False		unknown	False	False	False	True
+combined	ERR713652	SAMEA2656597								False		unknown	False	False	False	True
+combined	ERR713723	SAMEA2656707								False		unknown	False	False	False	True
+combined	SRR1815315	SAMN03360128								False		unknown	False	False	False	True
+combined	SRR4069948	SAMN05711866	missing							False		unknown	False	False	False	True
+combined	SRR4070139	SAMN05712006	missing							False		unknown	False	False	False	True
+combined	SRR24939988	SAMN35758862	Animal		unresolved					False		unknown	False	False	False	True
+combined	SRR13169053	SAMN16961722	missing							False		unknown	False	False	False	True
+combined	SRR13202276	SAMN17006817								False		unknown	False	False	False	True
+combined	SRR15223897	SAMN20357706	missing							False		unknown	False	False	False	True
+combined	SRR16969880	SAMN23245086	missing							False		unknown	False	False	False	True
+combined	SRR18072425	SAMN26084580	missing							False		unknown	False	False	False	True
+combined	SRR21388670	SAMN30631034	missing							False		unknown	False	False	False	True
+combined	SRR28095900	SAMN40139976	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	SRR23980959	SAMN33938979	missing							False		unknown	False	False	False	True
+combined	SRR25052815	SAMN36022878	missing							False		unknown	False	False	False	True
+combined	SRR25382606	SAMN36672414	missing							False		unknown	False	False	False	True
+combined	SRR27042677	SAMN38639666	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	SRR10063337	SAMN12687075	missing							False		unknown	False	False	False	True
+combined	SRR10699576	SAMN13607553	missing							False		unknown	False	False	False	True
+combined	SRR10990438	SAMN13945533	missing							False		unknown	False	False	False	True
+combined	SRR11072035	SAMN14088045	missing							False		unknown	False	False	False	True
+combined	SRR11853953	SAMN15031454	missing							False		unknown	False	False	False	True
+combined	SRR12158718	SAMN15459044	missing							False		unknown	False	False	False	True
+combined	SRR12341582	SAMN15663560	missing							False		unknown	False	False	False	True
+combined	SRR12422695	SAMN15775603	missing							False		unknown	False	False	False	True
+combined	SRR12835194	SAMN16473954	Bovine		common name/synonym	9913	cattle	host_name	host=Bovine; taxid=9913; Bos taurus	False		unknown	False	False	True	False
+combined	SRR12972551	SAMN16636142	missing							False		unknown	False	False	False	True
+combined	SRR13923227	SAMN18239645	missing							False		unknown	False	False	False	True
+combined	SRR14633216	SAMN19317240	missing							False		unknown	False	False	False	True
+combined	SRR15123871	SAMN20201240	missing							False		unknown	False	False	False	True
+combined	SRR15178534	SAMN20286149	missing							False		unknown	False	False	False	True
+combined	SRR15230816	SAMN20362528	missing							False		unknown	False	False	False	True
+combined	SRR17857257	SAMN25582471	missing							False		unknown	False	False	False	True
+combined	SRR19383128	SAMN28639237	missing							False		unknown	False	False	False	True
+combined	SRR1993248	SAMN03565942	missing							False		unknown	False	False	False	True
+combined	SRR24863315	SAMN35663339								False		unknown	False	False	False	True
+combined	SRR25436740	SAMN36726060	missing							False		unknown	False	False	False	True
+combined	SRR25517464	SAMN36836908	missing							False		unknown	False	False	False	True
+combined	SRR27559027	SAMN39456870	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	SRR28868230	SAMN41154350								False		unknown	False	False	False	True
+combined	SRR29294247	SAMN41692949	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	SRR29931273	SAMN42764553	Homo sapiens		scientific name	9606	human	host_name	host=Homo sapiens; taxid=9606; Homo sapiens	False		unknown	False	False	True	False
+combined	SRR7411500	SAMN09469946	missing							False		unknown	False	False	False	True
+combined	SRR8791352	SAMN11265392	missing							False		unknown	False	False	False	True
+combined	SRR9856010	SAMN12391936	missing							False		unknown	False	False	False	True
+combined	SRR9864928	SAMN12407739	missing							False		unknown	False	False	False	True
+combined	SRR9971615	SAMN12580408	missing							False		unknown	False	False	False	True
+combined	SRR12686264	SAMN16129242								False		wastewater	False	False	False	True
+combined	SRR12686236	SAMN16129246								False		wastewater	False	False	False	True
+combined	SRR6314326	SAMN08055029								False		wastewater	False	False	False	True
+combined	ERR4224333	SAMEA6936703								False		wastewater	False	False	False	True
+combined	ERR4224353	SAMEA6936175								False		wastewater	False	False	False	True
+combined	ERR4224375	SAMEA6936742								False		wastewater	False	False	False	True
+combined	ERR4224391	SAMEA6936240								False		wastewater	False	False	False	True
+combined	ERR4224394	SAMEA6936755								False		wastewater	False	False	False	True
+combined	ERR4224397	SAMEA6936284								False		wastewater	False	False	False	True
+combined	ERR4224408	SAMEA6936774								False		wastewater	False	False	False	True
+combined	ERR4224419	SAMEA6936784								False		wastewater	False	False	False	True
+combined	ERR4224430	SAMEA6936803								False		wastewater	False	False	False	True
+combined	ERR4224460	SAMEA6936438								False		wastewater	False	False	False	True
+combined	ERR4224474	SAMEA6936835								False		wastewater	False	False	False	True
+combined	ERR4224491	SAMEA6936847								False		wastewater	False	False	False	True
+combined	ERR4224506	SAMEA6936859								False		wastewater	False	False	False	True
+combined	ERR4224507	SAMEA6936462								False		wastewater	False	False	False	True
+combined	ERR4224642	SAMEA6936484								False		wastewater	False	False	False	True
+combined	ERR4224690	SAMEA6936515								False		wastewater	False	False	False	True
+combined	SRR16091611	SAMN21873173								False		wastewater	False	False	False	True
+combined	SRR9030816	SAMN11605015								False		water	False	False	False	True
+combined	SRR9030837	SAMN11605013								False		water	False	False	False	True
+combined	SRR9030874	SAMN11605006								False		water	False	False	False	True
+combined	SRR9030879	SAMN11605009								False		water	False	False	False	True
+combined	SRR9030813	SAMN11605023								False		water	False	False	False	True
+combined	SRR9030821	SAMN11605022								False		water	False	False	False	True
+combined	SRR9030826	SAMN11605035								False		water	False	False	False	True
+combined	SRR9030829	SAMN11605040								False		water	False	False	False	True
+combined	SRR9030830	SAMN11605039								False		water	False	False	False	True
+combined	SRR5209565	SAMN06270800								False		water	False	False	False	True
+combined	SRR5209487	SAMN06270878								False		water	False	False	False	True
+combined	SRR5209548	SAMN06270817								False		water	False	False	False	True
+combined	SRR5209551	SAMN06270814								False		water	False	False	False	True
+combined	SRR5209541	SAMN06270824								False		water	False	False	False	True
+combined	SRR5209546	SAMN06270819								False		water	False	False	False	True
+combined	SRR5209458	SAMN06270907								False		water	False	False	False	True
+combined	SRR9879555	SAMN12421848								False		water	False	False	False	True
+combined	SRR21995107	SAMN28017091								False		water	False	False	False	True
+combined	SRR21995108	SAMN28017090								False		water	False	False	False	True
+combined	ERR4224335	SAMEA6936155								False		water	False	False	False	True
+combined	ERR4224337	SAMEA6936156								False		water	False	False	False	True
+combined	ERR4224345	SAMEA6936721								False		water	False	False	False	True
+combined	ERR4224349	SAMEA6936724								False		water	False	False	False	True
+combined	ERR4224356	SAMEA6936730								False		water	False	False	False	True
+combined	ERR4224358	SAMEA6936195								False		water	False	False	False	True
+combined	ERR4224388	SAMEA6936760								False		water	False	False	False	True
+combined	ERR4224390	SAMEA6936239								False		water	False	False	False	True
+combined	ERR4224395	SAMEA6936283								False		water	False	False	False	True
+combined	ERR4224412	SAMEA6936778								False		water	False	False	False	True
+combined	ERR4224423	SAMEA6936377								False		water	False	False	False	True
+combined	ERR4224427	SAMEA6936800								False		water	False	False	False	True
+combined	ERR4224434	SAMEA6936806								False		water	False	False	False	True
+combined	ERR4224438	SAMEA6936809								False		water	False	False	False	True
+combined	ERR4224444	SAMEA6936814								False		water	False	False	False	True
+combined	ERR4224464	SAMEA6936831								False		water	False	False	False	True
+combined	ERR4224470	SAMEA6936829								False		water	False	False	False	True
+combined	ERR4224476	SAMEA6936447								False		water	False	False	False	True
+combined	ERR4224496	SAMEA6936853								False		water	False	False	False	True
+combined	ERR4224500	SAMEA6936857								False		water	False	False	False	True
+combined	ERR4224501	SAMEA6936861								False		water	False	False	False	True
+combined	ERR4224632	SAMEA6936865								False		water	False	False	False	True
+combined	ERR4224647	SAMEA6936873								False		water	False	False	False	True
+combined	ERR4224651	SAMEA6936489								False		water	False	False	False	True
+combined	ERR4224662	SAMEA6936498								False		water	False	False	False	True
+combined	ERR4224671	SAMEA6936506								False		water	False	False	False	True
+combined	ERR4224675	SAMEA6936889								False		water	False	False	False	True
+combined	ERR4224686	SAMEA6936897								False		water	False	False	False	True
+combined	ERR4224688	SAMEA6936514								False		water	False	False	False	True
+combined	ERR4224700	SAMEA6936910								False		water	False	False	False	True
+combined	ERR1025588	SAMEA3556567	Environmental		unresolved					False		water	False	False	False	True
+combined	ERR9129992	SAMEA13301223								False		water	False	False	False	True
+combined	ERR321059	SAMEA2163883								False		water	False	False	False	True
+combined	ERR321060	SAMEA2163884								False		water	False	False	False	True
+combined	SRR6260848	SAMN07981696								False		water	False	False	False	True
+combined	SRR6311922	SAMN07611432								False		water	False	False	False	True
+combined	SRR6314031	SAMN07611418								False		water	False	False	False	True
+combined	SRR6367412	SAMN07611399								False		water	False	False	False	True
+combined	SRR6398641	SAMN08217106								False		water	False	False	False	True
+combined	SRR6398687	SAMN08217220								False		water	False	False	False	True
+combined	SRR6398697	SAMN08217221								False		water	False	False	False	True
+combined	SRR6398728	SAMN07767596								False		water	False	False	False	True
+combined	SRR6261842	SAMN07982453								False		water	False	False	False	True
+combined	SRR6261893	SAMN07982510								False		water	False	False	False	True
+combined	SRR6261989	SAMN07982571								False		water	False	False	False	True
+combined	SRR6261994	SAMN07532318								False		water	False	False	False	True
+combined	SRR7010530	SAMN08204852								False		water	False	False	False	True
+combined	SRR7012236	SAMN08204920								False		water	False	False	False	True
+combined	SRR7121406	SAMN08995113								False		water	False	False	False	True
+combined	SRR7128223	SAMN08995141								False		water	False	False	False	True
+combined	SRR7345807	SAMN08169246								False		water	False	False	False	True
+combined	SRR7904961	SAMN08169257								False		water	False	False	False	True
+combined	SRR8280097	SAMN08169257								False		water	False	False	False	True
+combined	SRR8434292	SAMN08204919								False		water	False	False	False	True
+combined	SRR8434366	SAMN08169242								False		water	False	False	False	True
+combined	SRR8434632	SAMN08204910								False		water	False	False	False	True
+combined	SRR3210426	SAMN04442364								False		water	False	False	False	True
+combined	SRR14190376	SAMN18676029	missing							False		water	False	False	False	True
+combined	SRR12634069	SAMN16122331								False		water	False	False	False	True
+combined	SRR14190372	SAMN18676033	missing							False		water	False	False	False	True
+combined	SRR15194602	SAMN20308138	Aythya fuligula		scientific name	219594				False		wildbird	False	False	False	True
+combined	SRR5209561	SAMN06270804								False		wildbird	False	False	False	True
+combined	SRR5209566	SAMN06270799								False		wildbird	False	False	False	True
+combined	SRR5209482	SAMN06270883								False		wildbird	False	False	False	True
+combined	SRR21995118	SAMN28017081	duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	SRR21995109	SAMN28017089	goose		common name/synonym	8847				False		wildbird	False	False	False	True
+combined	SRR21995110	SAMN28017088	goose		common name/synonym	8847				False		wildbird	False	False	False	True
+combined	SRR21995113	SAMN28017085	goose		common name/synonym	8847				False		wildbird	False	False	False	True
+combined	SRR21995114	SAMN28017084	goose		common name/synonym	8847				False		wildbird	False	False	False	True
+combined	ERR2601935	SAMEA4697582	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR14242051	SAMN18746120								False		wildbird	False	False	False	True
+combined	SRR14242054	SAMN18746117								False		wildbird	False	False	False	True
+combined	SRR14242059	SAMN18746128								False		wildbird	False	False	False	True
+combined	SRR23244640	SAMN32932701	wild bird		unresolved					False		wildbird	False	False	False	True
+combined	SRR23244644	SAMN32932697	wild bird		unresolved					False		wildbird	False	False	False	True
+combined	SRR23244646	SAMN32932695	wild bird		unresolved					False		wildbird	False	False	False	True
+combined	SRR23244663	SAMN32932680	wild bird		unresolved					False		wildbird	False	False	False	True
+combined	SRR23244669	SAMN32932666	wild bird		unresolved					False		wildbird	False	False	False	True
+combined	SRR23244651	SAMN32932691	wild bird		unresolved					False		wildbird	False	False	False	True
+combined	SRR23244655	SAMN32932687	wild bird		unresolved					False		wildbird	False	False	False	True
+combined	SRR11515410	SAMN14564528	Pica pica		scientific name	34924				False		wildbird	False	False	False	True
+combined	SRR11515412	SAMN14564527	Pica pica		scientific name	34924				False		wildbird	False	False	False	True
+combined	SRR11515420	SAMN14564519	Motacilla alba		scientific name	45807				False		wildbird	False	False	False	True
+combined	SRR11515422	SAMN14564491	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515433	SAMN14564490	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515463	SAMN14564489	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515356	SAMN14564497	Corvus sp.		unresolved					False		wildbird	False	False	False	True
+combined	SRR11515378	SAMN14564495	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515421	SAMN14564518	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515423	SAMN14564517	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515424	SAMN14564516	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515427	SAMN14564513	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515440	SAMN14564501	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515384	SAMN14564552	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515385	SAMN14564551	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515387	SAMN14564549	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515393	SAMN14564544	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR11515394	SAMN14564543	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR11515359	SAMN14564575	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515368	SAMN14564567	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515369	SAMN14564566	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515374	SAMN14564561	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515380	SAMN14564556	Corvus sp.		unresolved					False		wildbird	False	False	False	True
+combined	SRR11515448	SAMN14564600	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515452	SAMN14564597	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515453	SAMN14564596	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515454	SAMN14564595	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515457	SAMN14564592	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	SRR11515458	SAMN14564591	Columba livia		scientific name	8932				False		wildbird	False	False	False	True
+combined	ERR2197811	SAMEA104390352	Gallus gallus		scientific name	9031	chicken	host_name	host=Gallus gallus; taxid=9031; Gallus gallus	False		wildbird	False	False	True	False
+combined	ERR4223916	SAMEA6936798								False		wildbird	False	False	False	True
+combined	ERR4223921	SAMEA6936390								False		wildbird	False	False	False	True
+combined	ERR4224017	SAMEA6936397								False		wildbird	False	False	False	True
+combined	ERR4224018	SAMEA6936398								False		wildbird	False	False	False	True
+combined	ERR4224019	SAMEA6936399								False		wildbird	False	False	False	True
+combined	ERR4224022	SAMEA6936401								False		wildbird	False	False	False	True
+combined	ERR4225086	SAMEA6936491								False		wildbird	False	False	False	True
+combined	ERR4225090	SAMEA6936495								False		wildbird	False	False	False	True
+combined	ERR4225094	SAMEA6936916								False		wildbird	False	False	False	True
+combined	ERR4225099	SAMEA6936521								False		wildbird	False	False	False	True
+combined	ERR4225103	SAMEA6936525								False		wildbird	False	False	False	True
+combined	ERR4225107	SAMEA6936532								False		wildbird	False	False	False	True
+combined	ERR4225112	SAMEA6936542								False		wildbird	False	False	False	True
+combined	ERR4225115	SAMEA6936543								False		wildbird	False	False	False	True
+combined	ERR4225117	SAMEA6936545								False		wildbird	False	False	False	True
+combined	ERR4225118	SAMEA6936546								False		wildbird	False	False	False	True
+combined	ERR4225121	SAMEA6936541								False		wildbird	False	False	False	True
+combined	SRR27387502	SAMN39202324	Cairina moschata		scientific name	8855				False		wildbird	False	False	False	True
+combined	SRR27387504	SAMN39202325	Cairina moschata		scientific name	8855				False		wildbird	False	False	False	True
+combined	ERR10497225	SAMEA112143445	Perdix perdix		scientific name	9052				False		wildbird	False	False	False	True
+combined	SRR4379981	SAMN05878512	Chroicocephalus ridibundus		scientific name	1192867				False		wildbird	False	False	False	True
+combined	SRR6197701	SAMN07818933								False		wildbird	False	False	False	True
+combined	SRR6197703	SAMN07818935								False		wildbird	False	False	False	True
+combined	SRR6197705	SAMN07818937								False		wildbird	False	False	False	True
+combined	ERR3546019	SAMEA5968623	Pica pica		scientific name	34924				False		wildbird	False	False	False	True
+combined	ERR3546042	SAMEA5968646	Coloeus monedula		scientific name	30423				False		wildbird	False	False	False	True
+combined	ERR3546043	SAMEA5968647	Pica pica		scientific name	34924				False		wildbird	False	False	False	True
+combined	ERR3546046	SAMEA5968650	Coloeus monedula		scientific name	30423				False		wildbird	False	False	False	True
+combined	ERR3546047	SAMEA5968651	Coloeus monedula		scientific name	30423				False		wildbird	False	False	False	True
+combined	SRR13736803	SAMN17977775								False		wildbird	False	False	False	True
+combined	SRR13736807	SAMN17977809								False		wildbird	False	False	False	True
+combined	SRR13736811	SAMN17977805								False		wildbird	False	False	False	True
+combined	SRR13736820	SAMN17977797								False		wildbird	False	False	False	True
+combined	SRR13736822	SAMN17977795								False		wildbird	False	False	False	True
+combined	SRR13736827	SAMN17977790								False		wildbird	False	False	False	True
+combined	SRR13736830	SAMN17977788								False		wildbird	False	False	False	True
+combined	SRR13736833	SAMN17977785								False		wildbird	False	False	False	True
+combined	ERR12188772	SAMEA114572043								False		wildbird	False	False	False	True
+combined	ERR12188774	SAMEA114572045								False		wildbird	False	False	False	True
+combined	ERR12188775	SAMEA114572046								False		wildbird	False	False	False	True
+combined	ERR12188769	SAMEA114572040								False		wildbird	False	False	False	True
+combined	ERR12188771	SAMEA114572042								False		wildbird	False	False	False	True
+combined	SRR13367278	SAMN17225467								False		wildbird	False	False	False	True
+combined	SRR13367281	SAMN17225486								False		wildbird	False	False	False	True
+combined	SRR13367282	SAMN17225485								False		wildbird	False	False	False	True
+combined	SRR13367283	SAMN17225484								False		wildbird	False	False	False	True
+combined	SRR13367284	SAMN17225483								False		wildbird	False	False	False	True
+combined	SRR13367285	SAMN17225482								False		wildbird	False	False	False	True
+combined	SRR13367287	SAMN17225481								False		wildbird	False	False	False	True
+combined	SRR13367289	SAMN17225479								False		wildbird	False	False	False	True
+combined	SRR13367291	SAMN17225477								False		wildbird	False	False	False	True
+combined	SRR13367296	SAMN17225472								False		wildbird	False	False	False	True
+combined	SRR13367297	SAMN17225463								False		wildbird	False	False	False	True
+combined	SRR13367298	SAMN17225462								False		wildbird	False	False	False	True
+combined	ERR1163473	SAMEA3683087	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163626	SAMEA3683241	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163640	SAMEA3683255	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163655	SAMEA3683270	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163661	SAMEA3683276	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163662	SAMEA3683277	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163670	SAMEA3683285	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163751	SAMEA3683366	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163752	SAMEA3683367	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163759	SAMEA3683374	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163780	SAMEA3683395	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	ERR1163781	SAMEA3683396	Duck		common name/synonym	8839				False		wildbird	False	False	False	True
+combined	SRR1815361	SAMN03360174	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1815406	SAMN03360220	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1815850	SAMN03359139	Corvus brachyrhynchos		scientific name	85066				False		wildbird	False	False	False	True
+combined	SRR1815854	SAMN03359143	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1815856	SAMN03359145	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1815867	SAMN03359156	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1816039	SAMN03357966	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1816047	SAMN03357974	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1816048	SAMN03357975	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1816118	SAMN03358045	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1816119	SAMN03358046	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1816124	SAMN03358051	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR1816131	SAMN03358058	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR3619924	SAMN04532210	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR3619935	SAMN04532390	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR3619941	SAMN04532395	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR3619952	SAMN04532406	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR3619961	SAMN04532215	Crow		unresolved					False		wildbird	False	False	False	True
+combined	SRR4067224	SAMN04532386	not collected							False		wildbird	False	False	False	True
+combined	SRR9077775	SAMN10615007								False		wildbird	False	False	False	True
+combined	SRR13132260	SAMN16912230	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787346	SAMN11258600	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787347	SAMN11258597	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787349	SAMN11258606	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787350	SAMN11258602	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787351	SAMN11258601	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787354	SAMN11258603	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787357	SAMN11258582	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787361	SAMN11258584	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787362	SAMN11258585	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787363	SAMN11258586	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787364	SAMN11258587	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787395	SAMN11258578	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787399	SAMN11258577	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787404	SAMN11258594	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787406	SAMN11258592	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787409	SAMN11258589	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787410	SAMN11258588	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR8787412	SAMN11258596	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29025215	SAMN41397159	Columbidae		scientific name	8930				False		wildbird	False	False	False	True
+combined	SRR12495815	SAMN08235568	Corvus brachyrhynchos		scientific name	85066				False		wildbird	False	False	False	True
+combined	SRR12495816	SAMN08235567	Corvus brachyrhynchos		scientific name	85066				False		wildbird	False	False	False	True
+combined	SRR12495820	SAMN08235563	Corvus brachyrhynchos		scientific name	85066				False		wildbird	False	False	False	True
+combined	SRR12495827	SAMN08235557	Corvus brachyrhynchos		scientific name	85066				False		wildbird	False	False	False	True
+combined	SRR12495830	SAMN08235554	Corvus brachyrhynchos		scientific name	85066				False		wildbird	False	False	False	True
+combined	SRR2584003	SAMN03387064	Antigone canadensis		scientific name	1977160				False		wildbird	False	False	False	True
+combined	SRR29025236	SAMN41397140	Columbidae		scientific name	8930				False		wildbird	False	False	False	True
+combined	SRR29025259	SAMN41397119	Columbidae		scientific name	8930				False		wildbird	False	False	False	True
+combined	SRR29025277	SAMN41397085	Columbidae		scientific name	8930				False		wildbird	False	False	False	True
+combined	SRR2915955	SAMN03387059	Antigone canadensis		scientific name	1977160				False		wildbird	False	False	False	True
+combined	SRR2915957	SAMN03387062	Antigone canadensis		scientific name	1977160				False		wildbird	False	False	False	True
+combined	SRR2962355	SAMN03387055	Antigone canadensis		scientific name	1977160				False		wildbird	False	False	False	True
+combined	SRR12634062	SAMN16122325								False		wildbird	False	False	False	True
+combined	SRR29316403	SAMN41675804	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316404	SAMN41675803	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316406	SAMN41675801	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316407	SAMN41675852	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316409	SAMN41675850	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316416	SAMN41675844	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316417	SAMN41675843	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316418	SAMN41675842	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316423	SAMN41675837	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316425	SAMN41675806	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316426	SAMN41675805	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316428	SAMN41675795	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316429	SAMN41675835	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316433	SAMN41675832	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316434	SAMN41675831	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316436	SAMN41675829	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316437	SAMN41675828	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316441	SAMN41675798	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316442	SAMN41675824	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316444	SAMN41675822	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316445	SAMN41675821	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316449	SAMN41675817	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316452	SAMN41675797	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316453	SAMN41675814	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316455	SAMN41675812	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316456	SAMN41675811	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316458	SAMN41675809	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316459	SAMN41675808	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR29316460	SAMN41675807	Anas platyrhynchos		scientific name	8839				False		wildbird	False	False	False	True
+combined	SRR25523029	SAMN36840652								False		wildbird	False	False	False	True
+combined	SRR25523034	SAMN36839097								False		wildbird	False	False	False	True

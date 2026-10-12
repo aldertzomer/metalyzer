@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 TAXDUMP_URL = "https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz"
 FILES = ("nodes.dmp", "names.dmp", "merged.dmp")
-DETERMINISTIC_METHODS = ("host_tax_id", "host_name")
+DETERMINISTIC_METHODS = ("host_tax_id", "host_name", "host_alias", "host_other_animal")
 NUMERIC_HOST_FIELDS = ("host_tax_id", "host_taxid")
 NAME_CLASSES = {"scientific name", "common name", "genbank common name", "synonym", "genbank synonym"}
 MISSING_HOST_NAMES = {"", "na", "n/a", "nan", "<na>", "none", "null", "missing", "unknown",
@@ -65,12 +65,13 @@ class HostResolution:
     ambiguous: bool = False
     conflict: str = ""
     numeric_text_conflict: bool = False
+    match_type: str = ""
 
 
 @dataclass(frozen=True)
 class TaxonomySourceResult:
     source: str
-    taxid: int
+    taxid: int | None
     scientific_name: str
 
     @property
@@ -90,7 +91,13 @@ class NCBITaxonomy:
         directory = Path(taxonomy_dir)
         self.names_path = (directory / "names.dmp").resolve()
         self._name_cache = {}
-        self.parent_by_taxid = {int(r[0]): int(r[1]) for r in _rows(directory / "nodes.dmp")}
+        self.parent_by_taxid = {}
+        self.specific_host_taxids = set()
+        for row in _rows(directory / "nodes.dmp"):
+            taxid = int(row[0])
+            self.parent_by_taxid[taxid] = int(row[1])
+            if row[2] in {"species", "subspecies"}:
+                self.specific_host_taxids.add(taxid)
         self.scientific_name_by_taxid = {}
         for r in _rows(self.names_path):
             if r[3] == "scientific name":
@@ -175,7 +182,8 @@ class NCBITaxonomy:
         self.resolve_host_names([value])
         return self._name_cache[key]
 
-    def resolve_host_row(self, row, anchor_sources):
+    def resolve_host_row(self, row, anchor_sources, *, host_alias_sources=None,
+                         other_animal=False):
         """Combine explicit numeric and named host evidence without mutating a row."""
         numeric, named = [], []
         numeric_taxids, name_taxids = [], []
@@ -197,11 +205,11 @@ class NCBITaxonomy:
                 name_taxids.append(match.taxid)
                 result = self.classify_host_taxid(match.taxid, anchor_sources)
                 if result is not None:
-                    named.append((field, value, result))
+                    named.append((field, value, result, match.match_type))
         facts = dict(numeric_taxids=tuple(dict.fromkeys(numeric_taxids)),
                      name_taxids=tuple(dict.fromkeys(name_taxids)),
                      scientific_name_resolved=scientific, ambiguous=ambiguous)
-        classes = {result.source for _, result in numeric} | {result.source for _, _, result in named}
+        classes = {result.source for _, result in numeric} | {result.source for _, _, result, _ in named}
         if len(classes) > 1:
             return HostResolution(conflict="different configured source classes: " + ", ".join(sorted(classes)),
                                   numeric_text_conflict=bool(numeric and named), **facts)
@@ -216,14 +224,47 @@ class NCBITaxonomy:
                                         for left in numeric_taxids for right in name_taxids)
             return HostResolution(conflict="incompatible host taxa: " + ", ".join(f"{a}/{b}" for a, b in incompatible),
                                   numeric_text_conflict=numeric_text_conflict, **facts)
+        aliases = [(field, value, host_alias_sources[key]) for field, value in names
+                   if host_alias_sources and (key := normalized_host_name(value)) in host_alias_sources]
+        alias_classes = {source for _, _, source in aliases}
+        if len(alias_classes | classes) > 1:
+            return HostResolution(conflict="configured host alias contradicts host source evidence", **facts)
+        if aliases:
+            alias_source = aliases[0][2]
+            source_anchors = [anchor for anchor, sources in anchor_sources.items() if alias_source in sources]
+            # An operational descriptor cannot override an explicit taxon outside
+            # its configured lineage, including ancestors of domestic anchors.
+            if any(not any(self.is_descendant_of(taxid, anchor) for anchor in source_anchors)
+                   for taxid in taxids):
+                return HostResolution(conflict="configured host alias contradicts resolved host taxon", **facts)
         if numeric:
             field, result = numeric[0]
             return HostResolution(result, "host_tax_id", f"{field}={result.taxid}; {result.scientific_name}", **facts)
         # An ambiguous host-name field cannot be bypassed by a second name alias.
         if named and not ambiguous:
-            field, value, result = named[0]
+            field, value, result, match_type = min(named, key=lambda item: item[3] != "scientific name")
             return HostResolution(result, "host_name",
-                                  f"{field}={value}; taxid={result.taxid}; {result.scientific_name}", **facts)
+                                  f"{field}={value}; taxid={result.taxid}; {result.scientific_name}",
+                                  match_type=match_type, **facts)
+        if aliases and not ambiguous:
+            field, value, source = aliases[0]
+            return HostResolution(TaxonomySourceResult(source, None, ""), "host_alias",
+                                  f"{field}={value}; configured_host_alias={source}",
+                                  match_type="configured host alias", **facts)
+        if other_animal and name_taxids and not ambiguous:
+            # Compatible fields may include an ancestor; choose the most specific
+            # explicit named taxon. Never infer a name from numeric-only evidence.
+            taxid = max(name_taxids, key=lambda value: len(self.lineage(value)))
+            lineage = self.lineage(taxid)
+            if (taxid in self.specific_host_taxids and 33208 in lineage and 8782 not in lineage
+                    and not any(self.is_descendant_of(anchor, taxid) for anchor in anchor_sources)
+                    and not any(anchor in lineage for anchor in anchor_sources)):
+                field, value = next((field, value) for field, value in names
+                                    if self.resolve_host_name(value).taxid == taxid)
+                result = TaxonomySourceResult("other_animal", taxid, self.scientific_name(taxid))
+                return HostResolution(result, "host_other_animal",
+                                      f"{field}={value}; taxid={taxid}; {result.scientific_name}; specific_unlisted_nonbird_animal",
+                                      match_type="specific unlisted animal", **facts)
         return HostResolution(**facts)
 
     def classify_host_taxid(self, taxid, anchor_sources):
@@ -320,25 +361,38 @@ def download_taxonomy(directory):
 
 
 def run(batch: MetadataBatch, sources: SourceVocabulary, taxonomy: NCBITaxonomy | None = None,
-        *, anchor_sources: dict[int, set[str]] | None = None, diagnostics: list | None = None) -> SourceResult:
+        *, anchor_sources: dict[int, set[str]] | None = None, diagnostics: list | None = None,
+        use_host_aliases: bool = True, other_animal: bool = False) -> SourceResult:
     """Return only resolved host rows; absent rows must be handled by a fallback."""
     from .contracts import SourceResult, empty_source_table
     from . import runlog
 
     resolved = {}
-    counts = dict(numeric=0, names=0, ambiguous_conflicting=0, unresolved=0)
+    counts = dict(numeric=0, names=0, scientific=0, common=0, aliases=0, other_animal=0,
+                  ambiguous_conflicting=0, unresolved=0)
     if taxonomy is not None:
         anchors = anchor_sources if anchor_sources is not None else configured_anchors(sources, taxonomy)
+        aliases = {alias: source for source, values in zip(sources.names, sources.host_aliases)
+                   for alias in values} if use_host_aliases else {}
         taxonomy.resolve_host_names(value for _, row in batch.metadata.iterrows()
                                     for _, value in host_name_values(row))
         conflict_examples = []
         for key, row in batch.metadata.iterrows():
-            resolution = taxonomy.resolve_host_row(row, anchors)
+            options = {}
+            if aliases:
+                options['host_alias_sources'] = aliases
+            if other_animal and 'other_animal' in sources.names:
+                options['other_animal'] = True
+            resolution = taxonomy.resolve_host_row(row, anchors, **options)
             if diagnostics is not None:
                 diagnostics.append(dict(row_key=key, resolution=resolution))
             if resolution.result is not None and resolution.result.source in sources.names:
                 resolved[key] = resolution
-                counts["numeric" if resolution.method == "host_tax_id" else "names"] += 1
+                route = {'host_tax_id': 'numeric', 'host_name': 'names',
+                         'host_alias': 'aliases', 'host_other_animal': 'other_animal'}[resolution.method]
+                counts[route] += 1
+                if route == 'names':
+                    counts['scientific' if resolution.match_type == 'scientific name' else 'common'] += 1
             else:
                 counts["unresolved"] += 1
                 if resolution.conflict or resolution.ambiguous:

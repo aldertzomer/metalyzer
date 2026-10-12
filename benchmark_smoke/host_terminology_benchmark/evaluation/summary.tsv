@@ -1,0 +1,9 @@
+file	records	correct	overall_accuracy	evaluation	original_records	excluded_records	unknown_predictions	assigned_predictions	correct_assigned	precision_assigned	invalid_llm_outputs	numeric_taxonomy_calls	host_name_calls	host_alias_calls	host_other_animal_calls	taxonomy_calls	llm_calls	version	method
+benchmark_biosample_nli.tsv	1320	805	0.6098484848484849	original	1320	0	97	1223	788	0.6443172526573998	0	0	0	0	0	0	0	old_saved	nli
+benchmark_biosample_nli.tsv	1276	804	0.6300940438871473	metadata-version-adjusted	1320	44	97	1179	787	0.6675148430873622	0	0	0	0	0	0	0	old_saved	nli
+benchmark_smoke/host_terminology_benchmark/benchmark_biosample_nli_host_terminology.tsv	1320	962	0.7287878787878788	original	1320	0	74	1246	945	0.7584269662921348	0	1	401	117	42	561	0	new_combined	nli
+benchmark_smoke/host_terminology_benchmark/benchmark_biosample_nli_host_terminology.tsv	1276	962	0.7539184952978056	metadata-version-adjusted	1320	44	74	1202	945	0.7861896838602329	0	1	357	117	42	517	0	new_combined	nli
+benchmark_biosample_llm.tsv	1320	1133	0.8583333333333333	original	1320	0	118	1202	1089	0.9059900166389351	1	0	0	0	0	0	1320	old_saved	llm
+benchmark_biosample_llm.tsv	1276	1133	0.8879310344827587	metadata-version-adjusted	1320	44	118	1158	1089	0.9404145077720207	1	0	0	0	0	0	1276	old_saved	llm
+benchmark_smoke/host_terminology_benchmark/benchmark_biosample_llm_host_terminology.tsv	1320	1133	0.8583333333333333	original	1320	0	115	1205	1090	0.9045643153526971	1	1	401	117	42	561	759	new_combined	llm
+benchmark_smoke/host_terminology_benchmark/benchmark_biosample_llm_host_terminology.tsv	1276	1133	0.8879310344827587	metadata-version-adjusted	1320	44	115	1161	1090	0.9388458225667528	1	1	357	117	42	517	759	new_combined	llm

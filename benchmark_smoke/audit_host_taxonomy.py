@@ -55,7 +55,8 @@ def main(argv=None):
         anchors = deterministic_source.configured_anchors(sources, taxonomy, report=True)
         diagnostics = []
         result = deterministic_source.run(input.prepare_batch(frame, id_col='accession'), sources,
-                                          taxonomy, anchor_sources=anchors, diagnostics=diagnostics)
+                                          taxonomy, anchor_sources=anchors, diagnostics=diagnostics,
+                                          use_host_aliases=False)
         pd.testing.assert_frame_equal(frame, before)
         audit = []
         for item, mapped in zip(diagnostics, mapping):

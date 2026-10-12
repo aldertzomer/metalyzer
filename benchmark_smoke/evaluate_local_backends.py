@@ -9,8 +9,12 @@ The three saved full-benchmark files are evaluated by default. Pass an explicit
 import argparse
 import json
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import pandas as pd
+from modules.deterministic_source import DETERMINISTIC_METHODS
 try:
     from .benchmark_evaluation import align_predictions
 except ImportError:
@@ -55,7 +59,9 @@ def evaluate(truth, path, column, directory, allow_subset, accession_mapping=Non
         if "source_evidence" in merged else None,
         "numeric_taxonomy_calls": methods.get("host_tax_id", 0) if methods is not None else None,
         "host_name_calls": methods.get("host_name", 0) if methods is not None else None,
-        "taxonomy_calls": sum(methods.get(route, 0) for route in ("host_tax_id", "host_name")) if methods is not None else None,
+        "host_alias_calls": methods.get("host_alias", 0) if methods is not None else None,
+        "host_other_animal_calls": methods.get("host_other_animal", 0) if methods is not None else None,
+        "taxonomy_calls": sum(methods.get(route, 0) for route in DETERMINISTIC_METHODS) if methods is not None else None,
         "llm_calls": methods.get("llm", 0) if methods is not None else None,
         "source_methods": methods,
     }

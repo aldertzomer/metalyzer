@@ -31,6 +31,7 @@ class SourceVocabulary:
     labels: tuple[str, ...]
     id_col: str
     taxonomy_anchors: tuple[tuple[int, ...], ...] = ()
+    host_aliases: tuple[tuple[str, ...], ...] = ()
 
     def __post_init__(self):
         object.__setattr__(self, "labels", tuple(self.labels))
@@ -43,6 +44,28 @@ class SourceVocabulary:
         ):
             raise ValueError("Taxonomy anchors must be positive integer IDs aligned with source labels")
         object.__setattr__(self, "taxonomy_anchors", anchors)
+        aliases = self.host_aliases or ((),) * len(self.labels)
+        if len(aliases) != len(self.labels):
+            raise ValueError("Host aliases must be aligned with source labels")
+        normalized, owners = [], {}
+        missing = {"na", "n/a", "nan", "none", "null", "unknown", "missing", "not collected", "not applicable"}
+        for source, row in zip(self.names, aliases):
+            keys = []
+            for value in row:
+                if (not isinstance(value, str) or not value.strip()
+                        or any(char in value for char in ";|\t\n\r")
+                        or not any(char.isalpha() for char in value)):
+                    raise ValueError(f"Blank or malformed host_aliases entry: {value!r}")
+                key = " ".join(value.split()).casefold()
+                if key in missing:
+                    raise ValueError(f"Missing-value placeholder cannot be a host alias: {value!r}")
+                if key in owners and owners[key] != source:
+                    raise ValueError(f"Conflicting host alias {value!r}: {owners[key]} / {source}")
+                owners[key] = source
+                if key not in keys:
+                    keys.append(key)
+            normalized.append(tuple(keys))
+        object.__setattr__(self, "host_aliases", tuple(normalized))
 
     @property
     def names(self) -> tuple[str, ...]:

@@ -1,0 +1,5 @@
+configuration	records	numeric	scientific	common_synonym	aliases	other_animal	pending	ambiguous	conflicts	newly_assigned	newly_assigned_reference_disagreements
+current	1320	1	295	106	0	0	918	0	0	0	0
+aliases	1320	1	295	106	117	0	801	0	0	117	0
+other_animal	1320	1	295	106	0	42	876	0	0	42	1
+combined	1320	1	295	106	117	42	759	0	0	159	1

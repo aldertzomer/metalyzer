@@ -1,0 +1,168 @@
+CPU-only four-configuration audit; no models or network
+Input mode: BioSample
+BioSample store: /mnt/sdd1/data/biosample
+Requested BioSamples: 1320
+BioSample accession index: /mnt/sdd1/data/biosample/biosample.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 1320
+BioSample lookup time: 169.835 seconds
+BioSample metadata columns: 319
+Taxonomy configuration:
+  configured anchors: 12
+  valid anchors:      12
+  merged IDs:         0
+  invalid anchors:    0
+  conflicts:          0
+Taxonomy file: /home/zomer007/metalyzer/taxonomy/nodes.dmp; bytes=232279767; mtime_ns=1791378777588689898
+Taxonomy file: /home/zomer007/metalyzer/taxonomy/names.dmp; bytes=316659961; mtime_ns=1791378778820705365
+Taxonomy file: /home/zomer007/metalyzer/taxonomy/merged.dmp; bytes=1912229; mtime_ns=1791378778948706972
+Taxonomy resolution:
+  Explicit host taxonomy ID: 1
+  Exact host-name resolution: 401
+    Scientific names: 295
+    Common names/synonyms: 106
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 918
+  Total deterministic assignments: 402
+  Records continuing to model classification: 918
+{
+  "configuration": "current",
+  "records": 1320,
+  "numeric": 1,
+  "scientific": 295,
+  "common_synonym": 106,
+  "aliases": 0,
+  "other_animal": 0,
+  "pending": 918,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 0,
+  "newly_assigned_reference_disagreements": 0,
+  "new_source_distribution": {},
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 0,
+    "Porcine": 0,
+    "Ovine": 0,
+    "Caprine": 0,
+    "Feline": 0
+  }
+}
+Taxonomy resolution:
+  Explicit host taxonomy ID: 1
+  Exact host-name resolution: 401
+    Scientific names: 295
+    Common names/synonyms: 106
+  Configured host aliases: 117
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 801
+  Total deterministic assignments: 519
+  Records continuing to model classification: 801
+{
+  "configuration": "aliases",
+  "records": 1320,
+  "numeric": 1,
+  "scientific": 295,
+  "common_synonym": 106,
+  "aliases": 117,
+  "other_animal": 0,
+  "pending": 801,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 117,
+  "newly_assigned_reference_disagreements": 0,
+  "new_source_distribution": {
+    "cat": 1,
+    "dog": 22,
+    "goat": 20,
+    "pig": 39,
+    "sheep": 35
+  },
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 22,
+    "Porcine": 39,
+    "Ovine": 35,
+    "Caprine": 20,
+    "Feline": 1
+  }
+}
+Taxonomy resolution:
+  Explicit host taxonomy ID: 1
+  Exact host-name resolution: 401
+    Scientific names: 295
+    Common names/synonyms: 106
+  Configured host aliases: 0
+  Specific unlisted animals: 42
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 876
+  Total deterministic assignments: 444
+  Records continuing to model classification: 876
+{
+  "configuration": "other_animal",
+  "records": 1320,
+  "numeric": 1,
+  "scientific": 295,
+  "common_synonym": 106,
+  "aliases": 0,
+  "other_animal": 42,
+  "pending": 876,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 42,
+  "newly_assigned_reference_disagreements": 1,
+  "new_source_distribution": {
+    "other_animal": 42
+  },
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 0,
+    "Porcine": 0,
+    "Ovine": 0,
+    "Caprine": 0,
+    "Feline": 0
+  }
+}
+Taxonomy resolution:
+  Explicit host taxonomy ID: 1
+  Exact host-name resolution: 401
+    Scientific names: 295
+    Common names/synonyms: 106
+  Configured host aliases: 117
+  Specific unlisted animals: 42
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 759
+  Total deterministic assignments: 561
+  Records continuing to model classification: 759
+{
+  "configuration": "combined",
+  "records": 1320,
+  "numeric": 1,
+  "scientific": 295,
+  "common_synonym": 106,
+  "aliases": 117,
+  "other_animal": 42,
+  "pending": 759,
+  "ambiguous": 0,
+  "conflicts": 0,
+  "newly_assigned": 159,
+  "newly_assigned_reference_disagreements": 1,
+  "new_source_distribution": {
+    "cat": 1,
+    "dog": 22,
+    "other_animal": 42,
+    "goat": 20,
+    "pig": 39,
+    "sheep": 35
+  },
+  "veterinary_new_assignments": {
+    "Bovine": 0,
+    "Canine": 22,
+    "Porcine": 39,
+    "Ovine": 35,
+    "Caprine": 20,
+    "Feline": 1
+  }
+}

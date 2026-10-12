@@ -42,8 +42,9 @@ input.load -> MetadataBatch + SourceVocabulary
 | `generative` | `system_prompt`, `allowed_source_names`, `invalid_response_evidence` | Source descriptions/names or a response | Shared prompt, implicit unknown label and evidence formatting; no model/SDK imports |
 | `combine` | `unresolved`, `sources`, `run`, `write` | Batch, vocabulary, stage results; path for writing | Validated subsets, source result, assembled DataFrame, TSV |
 
-Taxonomy resolution uses the optional `SourceVocabulary.taxonomy_anchors`,
-parsed from comma-separated NCBI IDs in `sources.tsv`. The first configured
+Taxonomy resolution uses optional `SourceVocabulary.taxonomy_anchors` (comma-separated
+NCBI IDs) and `SourceVocabulary.host_aliases` (semicolon-separated operational
+terms) from `sources.tsv`. The first configured
 ancestor of `host_tax_id` wins. Invalid IDs and duplicate normalized anchors
 across sources fail validation before classification. `tax_id` is ignored for
 source matching. Only `labels` reach
@@ -79,7 +80,7 @@ Series. The frozen dataclasses prevent attribute reassignment, not pandas edits.
 Do not reset a subset's index, align by sample ID, or assume IDs are unique.
 `--limit` is applied while reading the metadata TSV to avoid loading unused rows.
 
-`SourceVocabulary(labels: tuple[str, ...], id_col: str)` contains full source
+`SourceVocabulary(labels: tuple[str, ...], id_col: str, taxonomy_anchors=(), host_aliases=())` contains full source
 descriptions in source-file order. `sources.names` strips the first `(` and all
 following text, preserving multi-word names. Names must be nonempty, unique,
 and must not collide with the ID or output metadata columns. `sources.columns`
@@ -94,7 +95,7 @@ Return `SourceResult(table: pandas.DataFrame)` with this column order:
 |---|---|
 | One column per `sources.names`, in order | Numeric score in `[0, 1]`, or float NaN for unavailable scores |
 | `best_hit` | Exact canonical label, or `unknown` |
-| `source_method` | Nonempty provenance string, e.g. `host_tax_id`, `nli`, `llm`, `mistral`, or your new method |
+| `source_method` | Nonempty provenance string: `host_tax_id`, `host_name`, `host_alias`, `host_other_animal`, `nli`, `llm`, `mistral`, or your new method |
 | `source_evidence` | String explaining the decision, or `""` |
 | `source_llm_score` | Geometric mean probability of generated label tokens for valid local LLM calls, or float NaN |
 
@@ -113,10 +114,17 @@ The combiner calls this validation even if your module already did.
 
 Existing stage semantics:
 
-- Taxonomy uses only `host_tax_id`, never pathogen/sample `tax_id`. It follows
+- Taxonomy uses `host_tax_id` / `host_taxid` and exact `host` / `host_scientific_name`, never pathogen/sample `tax_id` or `organism`. It follows
   merged IDs, translates IDs through scientific names, walks host lineages, and
   respects the selected vocabulary. Unresolved or unavailable labels are omitted.
   Scores are NaN. Evidence is `host_tax_id=9940; Ovis aries`.
+  Names resolve in a cached batch pass through the local taxonomy. Optional
+  operational aliases use `host_alias` without fabricating a taxid and reject
+  contradictory resolved taxa. `--disable-host-aliases` selects exact taxonomy
+  only. The independent, default-disabled `--other-animal-taxonomy` rule uses
+  `host_other_animal` for specific unlisted nonbird animal taxa, excluding
+  ancestors of configured anchors. All routes bypass source-model calls but
+  retain final NLI verification. See the main README for constraints and audit.
 - `NCBITaxonomy.normalize_taxid(value)` returns a current valid integer ID or
   `None`; `scientific_name(value)` returns its scientific name or `""`.
   These are available directly in `deterministic_source` for taxid translation

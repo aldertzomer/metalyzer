@@ -60,7 +60,10 @@ def load_sources(sources_path: str | Path, id_col: str) -> SourceVocabulary:
     column = "source" if "source" in labels else labels.columns[0]
     has_anchors = "taxonomy_anchors" in labels
     rows = [(str(row[column]).strip(), parse_taxonomy_anchors(str(row["taxonomy_anchors"]))
-             if has_anchors else ()) for _, row in labels.iterrows() if str(row[column]).strip()]
-    sources = SourceVocabulary(tuple(label for label, _ in rows), id_col,
-                               tuple(anchors for _, anchors in rows))
+             if has_anchors else (),
+             tuple(str(row['host_aliases']).split(';'))
+             if 'host_aliases' in labels and str(row['host_aliases']).strip() else ())
+            for _, row in labels.iterrows() if str(row[column]).strip()]
+    sources = SourceVocabulary(tuple(row[0] for row in rows), id_col,
+                               tuple(row[1] for row in rows), tuple(row[2] for row in rows))
     return sources

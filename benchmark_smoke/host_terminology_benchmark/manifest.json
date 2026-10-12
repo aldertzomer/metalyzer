@@ -1,0 +1,110 @@
+{
+  "inputs": {
+    "other_animal_taxonomy": true,
+    "input_sha256": {
+      "sources.tsv": "d92928a36dc0e79df6486b1645d42d72be52f9bce3f733c938292bf5af970f10",
+      "benchmark.tsv": "8691800c867728e5ee72ade8f80c2d738ba7966ca990070bda511000c90bec69",
+      "benchmark_accessions.tsv": "96ff59c917254016c97850d862dadb43f139e707c382c32862e9d302a271c27a",
+      "benchmark_true_labels.tsv": "7e5a740a919ee6f1414a44459cdd1ca967e1dc7846f738917d5e87ed027c4094"
+    },
+    "code_sha256": {
+      "metalyzer.py": "82d10ee10e84a9e4020f89aed86d457afbc83d420ef26919e444779af1b903b5",
+      "modules/__init__.py": "0bd6a0102f0d7de86826dcd68849369719d970ed3b225e54781067e7fbaeb2c3",
+      "modules/biosample.py": "2eb8368d65b7a3e6137ae0917ffa9ed88fcfb3d75236c8cedfddd7fec61762e9",
+      "modules/biosample_build.py": "6d4dba4370154f7c2c25617c9e1c14b0615735d765c9db7e303177c3492d5b5b",
+      "modules/combine.py": "1e43d81d53a8899c79113c16734b6b00e5c31f5b8e5b5964eb1138f0f6fbf054",
+      "modules/contracts.py": "2fe55861d90b52af597614c432df923c8d85d234b1792065237d3e088cd41ad7",
+      "modules/country.py": "c2c0d172283807954a7800e0b9b4ef29168b5d1ecea47e1242b54ffdeae14eaa",
+      "modules/date.py": "0c4fa0a0b5c2ab030efb06e778bdc0845d906488161ad10f11710d460534eb8a",
+      "modules/deterministic_source.py": "311e89edbf6a8a09819d824535ba44c8af4893183293c18485f93ab6157e3de2",
+      "modules/generative.py": "0db5b0f823ff57b425dcdf3e63a1aa38d8f58396e78bb2408b6b502b56143e57",
+      "modules/input.py": "244845f78641deda7e7d82293a1a3b0664fa1b102d8260198a88457932d0264f",
+      "modules/llm.py": "b34bc101f9479c37cec4b26dba72879b162197bd43aa66f4a9519b41dbccf26c",
+      "modules/mistral.py": "f45d3d9f4842954b97a45708581a72e3c18da84631a420d2343f4647b12bf93e",
+      "modules/nli.py": "82c88b02067a358a28ed0ea8776f77e11a52f669ec79ea34127b9eeb2e78656a",
+      "modules/records.py": "04f8f1dded08489ced5a4533ef68d41248b88cd415af484cdb8a6d72f3896e2c",
+      "modules/runlog.py": "650a63c5c51ccbb9f9c2c01ca759f258858f4d423f0287eeb2bd7d95de8653b5",
+      "modules/verification.py": "77ae464daeb128672f63e5eb509f0261a3039b411aa1903bc640d0158ea6f94e",
+      "modules/version.py": "198307607e2292d47829c8aee1a5bbc7bee503076e2e857dbf26cc805c2437fe"
+    },
+    "taxonomy_files": {
+      "nodes.dmp": {
+        "bytes": 232279767,
+        "mtime_ns": 1791378777588689898
+      },
+      "names.dmp": {
+        "bytes": 316659961,
+        "mtime_ns": 1791378778820705365
+      },
+      "merged.dmp": {
+        "bytes": 1912229,
+        "mtime_ns": 1791378778948706972
+      }
+    }
+  },
+  "gpu": "NVIDIA GeForce RTX 4070 Ti SUPER",
+  "gpu_memory_bytes": 16742416384,
+  "torch_version": "2.10.0",
+  "cuda_version": "12.9",
+  "started": "2026-10-12T12:36:59.217751+00:00",
+  "runs": {
+    "nli": {
+      "status": "complete",
+      "returncode": 0,
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--biosample-file",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/host_terminology_audit/biosample_accessions.txt",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/host_terminology_benchmark/benchmark_biosample_nli_host_terminology.tsv",
+        "--method",
+        "nli",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy",
+        "--device",
+        "0",
+        "--batch-size",
+        "64",
+        "--llm-batch-size",
+        "1",
+        "--llm-min-score",
+        "0.75",
+        "--other-animal-taxonomy"
+      ],
+      "elapsed_seconds": 414.23776431393344,
+      "finished": "2026-10-12T12:43:53.455891+00:00"
+    },
+    "llm": {
+      "status": "complete",
+      "returncode": 0,
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--biosample-file",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/host_terminology_audit/biosample_accessions.txt",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/host_terminology_benchmark/benchmark_biosample_llm_host_terminology.tsv",
+        "--method",
+        "llm",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy",
+        "--device",
+        "0",
+        "--batch-size",
+        "64",
+        "--llm-batch-size",
+        "1",
+        "--llm-min-score",
+        "0.75",
+        "--other-animal-taxonomy"
+      ],
+      "elapsed_seconds": 570.4557541999966,
+      "finished": "2026-10-12T12:53:23.912651+00:00"
+    }
+  }
+}

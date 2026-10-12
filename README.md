@@ -45,7 +45,7 @@ For each metadata row, the pipeline performs:
 
 ### 1. Source classification (host taxonomy, then NLI or local LLM or Mistral)
 
-1. If `--taxonomy-dir` is supplied, resolve explicit `host_tax_id` values using local NCBI taxonomy.
+1. If `--taxonomy-dir` is supplied, resolve explicit host taxonomy IDs or exact host names using local NCBI taxonomy, then configured operational aliases. The additional unlisted-animal rule is opt-in.
 2. Unambiguous taxonomy-derived host assignments take precedence over language-model inference.
 3. Only unresolved rows reach the selected backend: [DeBERTa zero-shot NLI](#nli-classifier) (`--method nli`, the default), a [local Ministral LLM](#local-ministral-classifier) (`--method llm`), or the [Mistral API](#mistral-api-classifier) (`--method mistral`).
 4. NLI predictions below `--min-score` become `unknown`.
@@ -386,6 +386,163 @@ behavior are unchanged.
 LLM runs also report the number of invalid model outputs.
 If all hosts resolve, the fallback classifier is not loaded. The NLI verifier
 still loads for those assignments unless `--disable-verify-source` is set.
+
+### BioSample host terminology and unlisted animals
+
+Current NCBI BioSamples often provide a scientific name in `host` without a
+numeric host taxonomy ID. Metalyzer first uses explicit `host_tax_id` / `host_taxid`,
+then exact scientific names, then uniquely resolved NCBI common names/synonyms.
+These paths use local `names.dmp`, merged IDs and the configured source anchors.
+
+The optional `host_aliases` column in `sources.tsv` adds operational host
+terminology. Multiple aliases are separated by semicolons, for example
+`canine; companion dog`. Matching is case-insensitive after whitespace
+normalization and requires the entire explicit host field. `Porcine` may map
+to pig; `porcine-associated wastewater` does not. Aliases never use titles,
+isolation sources, generic organism names or pathogen taxids. Source descriptions
+and anchors remain unchanged, and older source files without aliases still work.
+Blank cells mean no aliases; empty entries inside a list, malformed values,
+missing-value placeholders and aliases shared by different classes are rejected
+before model loading.
+
+The supplied aliases are canine→dog, porcine→pig, ovine→sheep, caprine→goat,
+feline→cat and bovine→cattle. These are **explicit operational assumptions**:
+canine and porcine do not identify domestic species taxonomically. An alias
+cannot override incompatible numeric or resolved named taxa, including wild
+canids or `Sus scrofa` outside the domestic-pig anchor. Such conflicts continue
+to the normal model fallback. Exact NCBI assignment remains primary; `Bovine`
+continues to use its NCBI name match. Disable all source aliases for strict
+taxonomy-only host resolution with `--disable-host-aliases`.
+
+`--other-animal-taxonomy` independently opts in to an additional `other_animal`
+assignment for unambiguously named animal species/subspecies outside configured
+source lineages. It requires that category in the source vocabulary, excludes
+birds, and rejects taxa that are ancestors of any configured anchor. Thus
+Metazoa, Mammalia, Canidae, `Sus scrofa`, goose, duck and Columbidae retain fallback
+under the supplied vocabulary. No broad Metazoa anchor is added. This rule is
+**disabled by default**: a resolved species does not establish ecological or
+domestication context, and the audit includes one wild-goat/reference-goat
+disagreement. The separate option makes its impact auditable.
+
+| Evidence route | `source_method` | Example `source_evidence` |
+|---|---|---|
+| Supplied numeric host ID | `host_tax_id` | `host_tax_id=9940; Ovis aries` |
+| Exact NCBI host name | `host_name` | `host=Meleagris gallopavo; taxid=9103; Meleagris gallopavo` |
+| Configured operational descriptor | `host_alias` | `host=Porcine; configured_host_alias=pig` |
+| Opt-in specific unlisted animal | `host_other_animal` | `host=alpaca; taxid=30538; Vicugna pacos; specific_unlisted_nonbird_animal` |
+
+All deterministic routes have `source_llm_score=NA`, bypass source-model
+classification and retain normal NLI verification. Raw metadata and the TSV
+schema are unchanged; aliases never fabricate a numeric host ID. Logs distinguish
+scientific/common name routes, aliases, unlisted animals, conflicts and fallback.
+Model prompts, thresholds, `--llm-min-score 0.75`, date/country extraction and
+BioSample storage are unchanged.
+
+The [four-configuration CPU audit](benchmark_smoke/host_terminology_audit/summary.tsv)
+uses the same 1,320 requests and existing accession mapping:
+
+| Configuration | Numeric ID | Scientific name | Common/synonym | Alias | Other animal | Model fallback |
+|---|---:|---:|---:|---:|---:|---:|
+| Current exact taxonomy | 1 | 295 | 106 | 0 | 0 | 918 |
+| Plus aliases (default) | 1 | 295 | 106 | 117 | 0 | 801 |
+| Plus opt-in other animal | 1 | 295 | 106 | 0 | 42 | 876 |
+| Combined | 1 | 295 | 106 | 117 | 42 | 759 |
+
+These are assignment counts; a taxonomically resolved name may still need the
+model. All four configurations have zero ambiguous/conflicting hosts in this
+benchmark. The aliases newly assign Canine 22, Porcine 39, Ovine 35, Caprine 20
+and Feline 1, all consistent with existing references. All 83 Bovine records
+still use `host_name`. The 42 additional animals include five alpacas; 41 match
+the references. `SAMN08235377` (`Capra aegagrus`, wild goat) instead receives
+`other_animal`, while its reference says goat. This does not justify a
+species-specific production exception or enabling the broader rule by default.
+See [all per-record evidence](benchmark_smoke/host_terminology_audit/audit.tsv)
+and [new disagreements](benchmark_smoke/host_terminology_audit/combined_new_disagreements.tsv).
+
+Reproduce the audit and new local GPU benchmarks (no paid API):
+
+```bash
+python benchmark_smoke/audit_host_terminology.py --taxonomy-dir /path/to/taxonomy
+python benchmark_smoke/run_host_terminology_benchmarks.py \
+  --taxonomy-dir /path/to/taxonomy --other-animal-taxonomy
+```
+
+The benchmark explicitly enables the opt-in rule to measure the combined
+configuration. Omit that flag and choose a separate `--out-dir` to benchmark
+the default alias-only configuration. Earlier outputs and reference labels
+remain untouched.
+
+#### New full BioSample GPU benchmarks
+
+The combined configuration was run on all 1,320 requests with a 16 GB
+RTX 4070 Ti SUPER, cached weights and offline model loading. NLI batch size
+was 64, Ministral batch size 1, NLI cutoff 0.2 and local LLM cutoff 0.75,
+with ordinary NLI verification, date and country extraction enabled. The
+additional `other_animal` rule was explicitly enabled for this experiment;
+it remains disabled for ordinary runs. No paid Mistral API run was made.
+
+| Method / version | Original accuracy (1,320) | Original assigned precision | Adjusted accuracy (1,276) | Adjusted assigned precision |
+|---|---:|---:|---:|---:|
+| NLI, old saved | 60.98% | 64.43% | 63.01% | 66.75% |
+| NLI, new combined | 72.88% | 75.84% | 75.39% | 78.62% |
+| Ministral, old saved | 85.83% | 90.60% | 88.79% | 94.04% |
+| Ministral, new combined | 85.83% | 90.46% | 88.79% | 93.88% |
+
+Assigned precision excludes predicted `unknown`; accuracy includes every scored
+record, including reference `unknown`. Original scoring uses unchanged labels.
+Adjusted scoring excludes only the 44 live-verified CAGED run/BioSample pairs:
+the May 2025 ENA snapshot says goat, while current BioSample has chicken and
+an 18 June 2025 update. These are reference-version differences, not demonstrated
+model failures. The separate 41 documented human-evidence/reference-unknown
+records remain scored and visible; no reference was relabelled.
+
+All 759 records that still required a model received the same labels as their
+old saved predictions, for both backends. The changes therefore occurred on
+deterministically assigned records. Aliases corrected 21 old NLI decisions and
+two old Ministral decisions, with no new errors. The additional animal rule
+corrected 34 NLI decisions but changed the wild-goat record from goat to
+`other_animal`; Ministral had already correctly matched the other 41 references.
+Ministral's two alias gains were offset by that wild-goat disagreement and
+`SAMEA7632583`, where explicit `Homo sapiens` correctly triggers `host_name`
+but the unchanged reference says `unknown`. Its accuracy is consequently flat,
+with a slight precision decrease as more records receive assignments.
+
+On the adjusted denominator, deterministic-route precision is: numeric IDs
+100% (1/1), scientific names 96.41% (242/251), common names/synonyms 98.11%
+(104/106), aliases 100% (117/117), and additional animals 97.62% (41/42).
+This small benchmark supports keeping the supplied aliases enabled but does
+not establish their validity for every veterinary dataset. The broader animal
+rule stays opt-in. Default alias-only coverage is audited above; the full new
+model metrics in this table measure the combined configuration.
+
+| New run | Source-model rows | Source-model stage, including load | NLI verification stage | Total run |
+|---|---:|---:|---:|---:|
+| NLI | 759 | 175.8 s | 20.1 s | 414.2 s |
+| Ministral | 759 | 331.2 s | 21.3 s | 570.5 s |
+
+These are measured wall-clock stage times, including tokenization/inference and
+weight loading, rather than GPU kernel-only times. Totals also include local
+Parquet lookup and taxonomy loading. Source-model rows fall by 561 (42.5%)
+versus the saved runs' 1,320, and by 159 (17.3%) versus the previous exact-name
+resolver's 918 pending records. Verification still runs on final non-unknown
+assignments. The old total run times were 539.9 s (NLI) and 785.9 s (Ministral);
+hardware/cache differences mean these are not a controlled speed comparison.
+
+- Fresh normal TSV outputs: [NLI](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_nli_host_terminology.tsv), [Ministral](benchmark_smoke/host_terminology_benchmark/benchmark_biosample_llm_host_terminology.tsv).
+- [All source metrics](benchmark_smoke/host_terminology_benchmark/evaluation/summary.tsv), [pathway metrics](benchmark_smoke/host_terminology_benchmark/evaluation/pathway_metrics.tsv), [timing](benchmark_smoke/host_terminology_benchmark/evaluation/performance.tsv), and [per-record changes](benchmark_smoke/host_terminology_benchmark/evaluation/prediction_comparison.tsv).
+- Retained reference-unknown/human-evidence records: [NLI](benchmark_smoke/host_terminology_benchmark/evaluation/nli_reference_unknown_human_evidence.tsv), [Ministral](benchmark_smoke/host_terminology_benchmark/evaluation/llm_reference_unknown_human_evidence.tsv).
+
+![New BioSample NLI adjusted confusion matrix](benchmark_smoke/host_terminology_benchmark/evaluation/metadata_version_adjusted/nli_confusion_percent.svg)
+
+![New BioSample Ministral adjusted confusion matrix](benchmark_smoke/host_terminology_benchmark/evaluation/metadata_version_adjusted/llm_confusion_percent.svg)
+
+Original 1,320-record confusion matrices: [NLI](benchmark_smoke/host_terminology_benchmark/evaluation/original/nli_confusion_percent.svg), [Ministral](benchmark_smoke/host_terminology_benchmark/evaluation/original/llm_confusion_percent.svg).
+Both evaluation directories also contain absolute-count SVGs and TSVs.
+Reproduce scoring after both full runs finish:
+
+```bash
+python benchmark_smoke/evaluate_host_terminology.py
+```
 
 ### NLI classifier
 

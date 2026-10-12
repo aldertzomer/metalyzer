@@ -27,10 +27,14 @@ def emit(message: str) -> None:
 
 
 def taxonomy_resolution(counts) -> None:
-    total = counts['numeric'] + counts['names']
+    total = counts['numeric'] + counts['names'] + counts.get('aliases', 0) + counts.get('other_animal', 0)
     emit("Taxonomy resolution:\n"
          f"  Explicit host taxonomy ID: {counts['numeric']}\n"
          f"  Exact host-name resolution: {counts['names']}\n"
+         f"    Scientific names: {counts.get('scientific', 0)}\n"
+         f"    Common names/synonyms: {counts.get('common', 0)}\n"
+         f"  Configured host aliases: {counts.get('aliases', 0)}\n"
+         f"  Specific unlisted animals: {counts.get('other_animal', 0)}\n"
          f"  Ambiguous/conflicting hosts: {counts['ambiguous_conflicting']}\n"
          f"  No deterministic assignment: {counts['unresolved']}\n"
          f"  Total deterministic assignments: {total}\n"
@@ -128,6 +132,8 @@ def provenance(args, argv: list[str], batch) -> None:
         ("Sources path", str(Path(args.sources).resolve())),
         ("Sources SHA256", _sha256(args.sources)),
         ("Taxonomy directory", str(Path(args.taxonomy_dir).resolve()) if args.taxonomy_dir else "none"),
+        ("Configured host aliases enabled", not args.disable_host_aliases),
+        ("Specific other-animal taxonomy enabled", args.other_animal_taxonomy),
         ("Metadata rows", len(batch)),
         ("Metadata columns", len(batch.metadata.columns)),
     ])
