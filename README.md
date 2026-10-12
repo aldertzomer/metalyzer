@@ -577,159 +577,104 @@ reports classification accuracy for a complete run.
 
 ## Benchmark results
 
-The current [NLI](benchmark_nli.tsv), [local Ministral](benchmark_llm.tsv), and
-[Mistral API](benchmark_mistral_api.tsv) outputs use the updated
-[sources](sources.tsv), including `other_food` for food whose animal or other
-listed source is not identifiable. They are evaluated by accession against
-[1,320 reference labels](benchmark_true_labels.tsv). Each run has 215
-deterministic `host_tax_id` assignments and 1,105 model assignments, so these
-figures describe the complete pipeline. `source_llm_score` and
-`nli_verification_score` in the output files are model scores, separate from
-the benchmark accuracy and precision below.
+The six full source-classification benchmarks below were rerun on 12 October 2026
+using the reordered [metadata](benchmark.tsv) and
+[accession list](benchmark_accessions.tsv), with 1,320 records and
+1,319 distinct BioSamples. All runs loaded the same local NCBI taxonomy
+and validated the 12 anchors configured in [sources.tsv](sources.tsv).
 
-| Method | Overall accuracy | Precision among assigned records |
-|---|---:|---:|
-| [NLI](#nli-benchmark) | 86.2% | 88.3% |
-| [Local Ministral](#local-ministral-benchmark-results) | 92.6% | 99.0% |
-| [Mistral API](#mistral-api-benchmark-results) | 97.3% | 97.1% |
+`benchmark_accessions.tsv` contains sequencing run IDs. These were mapped to
+BioSample IDs using `sample_accession` in `benchmark.tsv`; the order and
+duplicate BioSample request were preserved. BioSample metadata came exclusively
+from the local indexed Parquet repository. It was not supplemented with TSV
+metadata. The [run-to-BioSample mapping](benchmark_smoke/six_method_evaluation/accession_mapping.tsv)
+is retained for reproducible evaluation.
 
-The reference labels contain six `other_food` rows: five have
-`isolation_source=food`, and one has `isolation_source=dairy products`.
-NLI labels none of the six `other_food`; local Ministral and the API each
-label five correctly. All three label the dairy row `cattle`, consistent
-with the current cattle description including dairy products. This small
-group illustrates why generic food metadata should not be treated as evidence
-for chicken or another specific animal. Its six rows do not support a broad
-estimate of `other_food` performance.
+Only source labels are scored against `final_species` in
+[benchmark_true_labels.tsv](benchmark_true_labels.tsv). Truth-file order does not
+affect matching: TSV outputs join by `run_accession`; BioSample outputs join
+through the accession mapping, preserving repeated requests. Every run was
+checked for complete coverage. Country, year, LLM confidence and NLI verification
+scores are not scoring targets here.
 
-Accuracy in the per-source tables is recall (correct calls divided by true
-rows); precision is correct calls divided by called rows. `NA` means no
-predictions were made for that class.
+NLI uses `--min-score 0.2`; local Ministral uses `--llm-min-score 0.75`.
+Mistral API uses `mistral-small-latest`, seed 12345, and the default API settings.
+All methods retain normal NLI source verification, date/country extraction,
+run logs, and TSV output. API results reflect the service available on the run date.
 
-### NLI benchmark
+| Input | Method | Correct / total | Accuracy | Assigned precision | Unknown | Taxonomy calls |
+|---|---|---:|---:|---:|---:|---:|
+| TSV | [NLI](benchmark_nli.tsv) | 1137 / 1320 | 86.14% | 88.23% | 114 | 215 |
+| TSV | [Local Ministral](benchmark_llm.tsv) | 1215 / 1320 | 92.05% | 98.69% | 171 | 215 |
+| TSV | [Mistral API](benchmark_mistral_api.tsv) | 1284 / 1320 | 97.27% | 97.11% | 75 | 215 |
+| BioSample | [NLI](benchmark_biosample_nli.tsv) | 805 / 1320 | 60.98% | 64.43% | 97 | 0 |
+| BioSample | [Local Ministral](benchmark_biosample_llm.tsv) | 1133 / 1320 | 85.83% | 90.60% | 118 | 0 |
+| BioSample | [Mistral API](benchmark_biosample_mistral_api.tsv) | 1174 / 1320 | 88.94% | 88.85% | 29 | 0 |
 
-The NLI run uses `--min-score 0.2`. It makes 1,138 correct calls of 1,320
-(86.2% overall accuracy), with 1,205 non-unknown assignments (91.3% coverage)
-and 88.3% precision among assigned records. It predicts `unknown` 115 times.
+Accuracy includes correct `unknown` predictions. Assigned precision excludes
+predictions of `unknown`. Enabling taxonomy only resolves records with a usable
+`host_tax_id`; the taxonomy-call column reports actual deterministic assignments.
+Input modes differ in metadata content and availability of host taxonomy IDs,
+so these results compare the complete pipelines on their respective inputs.
 
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 22 | 20 | 100.0% | 90.9% |
-| cattle | 98 | 112 | 98 | 100.0% | 87.5% |
-| chicken | 101 | 103 | 99 | 98.0% | 96.1% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 108 | 3 | 75.0% | 2.8% |
-| goat | 100 | 101 | 98 | 98.0% | 97.0% |
-| human | 100 | 89 | 89 | 89.0% | 100.0% |
-| laboratory | 1 | 2 | 1 | 100.0% | 50.0% |
-| other_animal | 100 | 56 | 54 | 54.0% | 96.4% |
-| other_food | 6 | 0 | 0 | 0.0% | NA |
-| pig | 100 | 106 | 100 | 100.0% | 94.3% |
-| sheep | 100 | 95 | 95 | 95.0% | 100.0% |
-| turkey | 101 | 85 | 85 | 84.2% | 100.0% |
-| unknown | 90 | 115 | 74 | 82.2% | 64.3% |
-| wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
-| water | 79 | 73 | 70 | 88.6% | 95.9% |
-| wildbird | 200 | 135 | 134 | 67.0% | 99.3% |
+Rows in each confusion matrix are true sources; columns are predicted sources.
+The embedded figures show row percentages. Absolute-count figures and per-source
+recall/precision tables are linked below. All source metrics are also available
+in the [six-run summary](benchmark_smoke/six_method_evaluation/summary.tsv).
 
-Rows in the confusion matrices are true sources; columns are predicted sources.
-For NLI, `unknown` can result from the 0.2 score cutoff. The
-[per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_nli_per_class.tsv),
-[counts](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_counts.tsv),
-and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_nli_confusion_percent.tsv)
-are also available as TSV files.
+The [BioSample error-analysis report](benchmark_smoke/biosample_diagnostics/report.md)
+examines source-data conflicts, reference-unknown records with explicit source
+evidence, host taxonomy availability, and controlled NLI recognition tests.
 
-[![NLI source confusion matrix: absolute counts](assets/benchmark-confusion-absolute.svg)](assets/benchmark-confusion-absolute.svg)
+### TSV · NLI benchmark
 
-[![NLI source confusion matrix: row percentages](assets/benchmark-confusion-percent.svg)](assets/benchmark-confusion-percent.svg)
+[![TSV · NLI source confusion matrix](assets/benchmark-tsv-nli-confusion-percent.svg)](assets/benchmark-tsv-nli-confusion-percent.svg)
 
-### Local Ministral benchmark results
+[Absolute counts](assets/benchmark-tsv-nli-confusion-absolute.svg) · [Per-source metrics](benchmark_smoke/six_method_evaluation/benchmark_nli_per_class.tsv) · [Confusion counts TSV](benchmark_smoke/six_method_evaluation/benchmark_nli_confusion_counts.tsv)
 
-The local Ministral run uses the default `--llm-min-score 0.75`. It makes
-1,222 correct calls of 1,320 (92.6% overall accuracy), with 1,151
-non-unknown assignments (87.2% coverage) and 99.0% precision among assigned
-records. It predicts `unknown` 169 times: 93 are valid generated labels
-converted to `unknown` by the score cutoff, with their original scores and
-labels retained for audit. No malformed LLM outputs were recorded. The cutoff
-reduces coverage in this run while preserving high precision. Since the source
-list and reference labels also changed, comparisons with earlier benchmark
-results do not isolate the cutoff's effect. These observed figures do not make
-`source_llm_score` a calibrated correctness probability.
+### TSV · Local Ministral benchmark
 
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 98 | 82 | 81 | 82.7% | 98.8% |
-| chicken | 101 | 102 | 101 | 100.0% | 99.0% |
-| dog | 100 | 95 | 95 | 95.0% | 100.0% |
-| environment | 4 | 4 | 3 | 75.0% | 75.0% |
-| goat | 100 | 98 | 98 | 98.0% | 100.0% |
-| human | 100 | 100 | 99 | 99.0% | 99.0% |
-| laboratory | 1 | 6 | 1 | 100.0% | 16.7% |
-| other_animal | 100 | 100 | 99 | 99.0% | 99.0% |
-| other_food | 6 | 5 | 5 | 83.3% | 100.0% |
-| pig | 100 | 92 | 92 | 92.0% | 100.0% |
-| sheep | 100 | 98 | 98 | 98.0% | 100.0% |
-| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
-| unknown | 90 | 169 | 83 | 92.2% | 49.1% |
-| wastewater | 20 | 20 | 20 | 100.0% | 100.0% |
-| water | 79 | 64 | 64 | 81.0% | 100.0% |
-| wildbird | 200 | 164 | 162 | 81.0% | 98.8% |
+[![TSV · Local Ministral source confusion matrix](assets/benchmark-tsv-llm-confusion-percent.svg)](assets/benchmark-tsv-llm-confusion-percent.svg)
 
-The [per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_llm_per_class.tsv),
-[counts](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_counts.tsv),
-and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_llm_confusion_percent.tsv)
-are available as TSV files.
+[Absolute counts](assets/benchmark-tsv-llm-confusion-absolute.svg) · [Per-source metrics](benchmark_smoke/six_method_evaluation/benchmark_llm_per_class.tsv) · [Confusion counts TSV](benchmark_smoke/six_method_evaluation/benchmark_llm_confusion_counts.tsv)
 
-[![Local Ministral source confusion matrix: absolute counts](assets/benchmark-llm-confusion-absolute.svg)](assets/benchmark-llm-confusion-absolute.svg)
+### TSV · Mistral API benchmark
 
-[![Local Ministral source confusion matrix: row percentages](assets/benchmark-llm-confusion-percent.svg)](assets/benchmark-llm-confusion-percent.svg)
+[![TSV · Mistral API source confusion matrix](assets/benchmark-tsv-mistral-api-confusion-percent.svg)](assets/benchmark-tsv-mistral-api-confusion-percent.svg)
 
-### Mistral API benchmark results
+[Absolute counts](assets/benchmark-tsv-mistral-api-confusion-absolute.svg) · [Per-source metrics](benchmark_smoke/six_method_evaluation/benchmark_mistral_api_per_class.tsv) · [Confusion counts TSV](benchmark_smoke/six_method_evaluation/benchmark_mistral_api_confusion_counts.tsv)
 
-The Mistral API run makes 1,284 correct calls of 1,320 (97.3% overall
-accuracy), with 1,243 non-unknown assignments (94.2% coverage) and 97.1%
-precision among assigned records. It predicts `unknown` 77 times. The local
-LLM confidence cutoff does not apply to API calls.
+### BioSample · NLI benchmark
 
-| Source | True rows | Called rows | Correct | Accuracy | Precision |
-|---|---:|---:|---:|---:|---:|
-| cat | 20 | 20 | 20 | 100.0% | 100.0% |
-| cattle | 98 | 100 | 98 | 100.0% | 98.0% |
-| chicken | 101 | 104 | 101 | 100.0% | 97.1% |
-| dog | 100 | 100 | 100 | 100.0% | 100.0% |
-| environment | 4 | 18 | 4 | 100.0% | 22.2% |
-| goat | 100 | 100 | 100 | 100.0% | 100.0% |
-| human | 100 | 103 | 100 | 100.0% | 97.1% |
-| laboratory | 1 | 1 | 0 | 0.0% | 0.0% |
-| other_animal | 100 | 103 | 97 | 97.0% | 94.2% |
-| other_food | 6 | 6 | 5 | 83.3% | 83.3% |
-| pig | 100 | 100 | 100 | 100.0% | 100.0% |
-| sheep | 100 | 100 | 100 | 100.0% | 100.0% |
-| turkey | 101 | 101 | 101 | 100.0% | 100.0% |
-| unknown | 90 | 77 | 77 | 85.6% | 100.0% |
-| wastewater | 20 | 18 | 18 | 90.0% | 100.0% |
-| water | 79 | 72 | 70 | 88.6% | 97.2% |
-| wildbird | 200 | 197 | 193 | 96.5% | 98.0% |
+[![BioSample · NLI source confusion matrix](assets/benchmark-biosample-nli-confusion-percent.svg)](assets/benchmark-biosample-nli-confusion-percent.svg)
 
-The [per-class metrics](benchmark_smoke/local_llm_evaluation/benchmark_mistral_api_per_class.tsv),
-[counts](benchmark_smoke/local_llm_evaluation/benchmark_mistral_api_confusion_counts.tsv),
-and [row percentages](benchmark_smoke/local_llm_evaluation/benchmark_mistral_api_confusion_percent.tsv)
-are available as TSV files.
+[Absolute counts](assets/benchmark-biosample-nli-confusion-absolute.svg) · [Per-source metrics](benchmark_smoke/six_method_evaluation/benchmark_biosample_nli_per_class.tsv) · [Confusion counts TSV](benchmark_smoke/six_method_evaluation/benchmark_biosample_nli_confusion_counts.tsv)
 
-[![Mistral API source confusion matrix: absolute counts](assets/benchmark-mistral-api-confusion-absolute.svg)](assets/benchmark-mistral-api-confusion-absolute.svg)
+### BioSample · Local Ministral benchmark
 
-[![Mistral API source confusion matrix: row percentages](assets/benchmark-mistral-api-confusion-percent.svg)](assets/benchmark-mistral-api-confusion-percent.svg)
+[![BioSample · Local Ministral source confusion matrix](assets/benchmark-biosample-llm-confusion-percent.svg)](assets/benchmark-biosample-llm-confusion-percent.svg)
 
-Regenerate the metrics and figures after updating all three benchmark outputs
-and reference labels:
+[Absolute counts](assets/benchmark-biosample-llm-confusion-absolute.svg) · [Per-source metrics](benchmark_smoke/six_method_evaluation/benchmark_biosample_llm_per_class.tsv) · [Confusion counts TSV](benchmark_smoke/six_method_evaluation/benchmark_biosample_llm_confusion_counts.tsv)
+
+### BioSample · Mistral API benchmark
+
+[![BioSample · Mistral API source confusion matrix](assets/benchmark-biosample-mistral-api-confusion-percent.svg)](assets/benchmark-biosample-mistral-api-confusion-percent.svg)
+
+[Absolute counts](assets/benchmark-biosample-mistral-api-confusion-absolute.svg) · [Per-source metrics](benchmark_smoke/six_method_evaluation/benchmark_biosample_mistral_api_per_class.tsv) · [Confusion counts TSV](benchmark_smoke/six_method_evaluation/benchmark_biosample_mistral_api_confusion_counts.tsv)
+
+Regenerate all six runs, metrics and figures from the repository root:
 
 ```bash
-python benchmark_smoke/evaluate_local_backends.py
-python render_benchmark_matrices.py
-python render_benchmark_matrices.py --classified benchmark_llm.tsv --prefix benchmark-llm --title "Local Ministral"
-python render_benchmark_matrices.py --classified benchmark_mistral_api.tsv --prefix benchmark-mistral-api --title "Mistral API"
+python benchmark_smoke/run_six_benchmarks.py
+python benchmark_smoke/publish_six_benchmarks.py
 ```
+
+The runner preserves prior outputs under `benchmark_smoke/rerun_20261012/previous_outputs/`
+and resumes completed runs only when the input hashes match. Its default
+taxonomy and API-key paths match this server; override `--taxonomy-dir` and
+`--api-key-file` for another installation. The active environment must provide
+GPU access, cached local models, and the optional Mistral SDK. API runs require
+network access and may incur charges.
 
 ---
 

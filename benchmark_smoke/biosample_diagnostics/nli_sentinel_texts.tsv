@@ -1,0 +1,18 @@
+case	expected	record	accession	prediction	top_score
+turkey_latin	turkey	host: Meleagris gallopavo; isolation source: Animal-Turkey-Young Turkey	turkey_latin	goat	0.7747959494590759
+turkey_english	turkey	host: turkey; isolation source: Animal-Turkey-Young Turkey	turkey_english	turkey	0.5365996360778809
+turkey_no_host	turkey	isolation source: Animal-Turkey-Young Turkey	turkey_no_host	turkey	0.40454187989234924
+turkey_sentence	turkey	The biological source of this sample is turkey.	turkey_sentence	turkey	0.7619707584381104
+chicken_latin	chicken	host: Gallus gallus; isolation source: feces	chicken_latin	goat	0.6055242419242859
+chicken_english	chicken	host: chicken; isolation source: feces	chicken_english	chicken	0.9213914275169373
+chicken_sentence	chicken	The biological source of this sample is chicken.	chicken_sentence	chicken	0.926121175289154
+sheep_latin	sheep	host: Ovis aries; isolation source: feces	sheep_latin	goat	0.4359196722507477
+sheep_english	sheep	host: sheep; isolation source: feces	sheep_english	sheep	0.9758172631263733
+pig_latin	pig	host: Sus scrofa domesticus; isolation source: feces	pig_latin	sheep	0.31998640298843384
+pig_english	pig	host: pig; isolation source: feces	pig_english	pig	0.9465480446815491
+goose_fields	wildbird	isolation source: Goose faeces	goose_fields	wastewater	0.2183510810136795
+goose_sentence	wildbird	The sample is goose faeces from a wild bird.	goose_sentence	wildbird	0.8643768429756165
+primate_fields	other_animal	host: Non-human primate; isolation source: feces	primate_fields	wastewater	0.3041034936904907
+primate_sentence	other_animal	The sample is feces from a non-human primate.	primate_sentence	other_animal	0.2458682358264923
+cat_latin	cat	host: Felis catus; isolation source: feces	cat_latin	cat	0.9420608282089233
+cat_english	cat	host: cat; isolation source: feces	cat_english	cat	0.973783552646637

@@ -1,0 +1,165 @@
+{
+  "inputs": {
+    "benchmark.tsv": "8691800c867728e5ee72ade8f80c2d738ba7966ca990070bda511000c90bec69",
+    "benchmark_accessions.tsv": "96ff59c917254016c97850d862dadb43f139e707c382c32862e9d302a271c27a",
+    "benchmark_true_labels.tsv": "7e5a740a919ee6f1414a44459cdd1ca967e1dc7846f738917d5e87ed027c4094",
+    "sources.tsv": "9c5a4aa17ae4bf549ba40c14dd6b2c5574ac9e9d4d124311058f28487b155e46",
+    "taxonomy": [
+      [
+        "nodes.dmp",
+        232279767,
+        1791378777588689898
+      ],
+      [
+        "names.dmp",
+        316659961,
+        1791378778820705365
+      ],
+      [
+        "merged.dmp",
+        1912229,
+        1791378778948706972
+      ]
+    ]
+  },
+  "started": "2026-10-12T07:15:39.156254+00:00",
+  "records": 1320,
+  "runs": {
+    "metadata_nli": {
+      "status": "complete",
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--metadata",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark.tsv",
+        "--id-col",
+        "run_accession",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_nli.tsv",
+        "--method",
+        "nli",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy"
+      ],
+      "output": "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_nli.tsv",
+      "returncode": 0,
+      "elapsed_seconds": 113.08326864102855,
+      "finished": "2026-10-12T07:17:32.240641+00:00"
+    },
+    "metadata_llm": {
+      "status": "complete",
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--metadata",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark.tsv",
+        "--id-col",
+        "run_accession",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_llm.tsv",
+        "--method",
+        "llm",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy"
+      ],
+      "output": "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_llm.tsv",
+      "returncode": 0,
+      "elapsed_seconds": 452.38350912206806,
+      "finished": "2026-10-12T07:25:04.624937+00:00"
+    },
+    "metadata_mistral": {
+      "status": "complete",
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--metadata",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark.tsv",
+        "--id-col",
+        "run_accession",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_mistral_api.tsv",
+        "--method",
+        "mistral",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy",
+        "--api-key-file",
+        "/home/zomer007/mistral.key"
+      ],
+      "output": "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_mistral_api.tsv",
+      "returncode": 0,
+      "elapsed_seconds": 87.47051540308166,
+      "finished": "2026-10-12T07:26:32.096973+00:00"
+    },
+    "biosample_nli": {
+      "status": "complete",
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--biosample-file",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/biosample_accessions.txt",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_nli.tsv",
+        "--method",
+        "nli",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy"
+      ],
+      "output": "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_nli.tsv",
+      "returncode": 0,
+      "elapsed_seconds": 539.8932265070034,
+      "finished": "2026-10-12T07:35:31.990992+00:00"
+    },
+    "biosample_llm": {
+      "status": "complete",
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--biosample-file",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/biosample_accessions.txt",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_llm.tsv",
+        "--method",
+        "llm",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy"
+      ],
+      "output": "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_llm.tsv",
+      "returncode": 0,
+      "elapsed_seconds": 785.9168399949558,
+      "finished": "2026-10-12T07:48:37.908638+00:00"
+    },
+    "biosample_mistral": {
+      "status": "complete",
+      "command": [
+        "/home/zomer007/miniforge3/envs/metalyzer/bin/python",
+        "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py",
+        "--biosample-file",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/biosample_accessions.txt",
+        "--sources",
+        "/home/zomer007/PycharmProjects/metalyzer/sources.tsv",
+        "--out",
+        "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_mistral_api.tsv",
+        "--method",
+        "mistral",
+        "--taxonomy-dir",
+        "/home/zomer007/metalyzer/taxonomy",
+        "--api-key-file",
+        "/home/zomer007/mistral.key"
+      ],
+      "output": "/home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_mistral_api.tsv",
+      "returncode": 0,
+      "elapsed_seconds": 309.638950718916,
+      "finished": "2026-10-12T07:53:47.548106+00:00"
+    }
+  }
+}

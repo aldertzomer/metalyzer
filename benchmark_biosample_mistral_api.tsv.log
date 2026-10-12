@@ -1,0 +1,186 @@
+Metalyzer 0.2 started
+Input mode: BioSample
+BioSample store: /mnt/sdd1/data/biosample
+Requested BioSamples: 1320
+BioSample accession index: /mnt/sdd1/data/biosample/biosample.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 1320
+BioSample lookup time: 145.327 seconds
+BioSample metadata columns: 319
+Run provenance:
+  Metalyzer version: 0.2
+  Git commit: c62929351df57e8e35104c79f4ef8c3e1c5d23b6
+  Command line: /home/zomer007/miniforge3/envs/metalyzer/bin/python /home/zomer007/PycharmProjects/metalyzer/metalyzer.py --biosample-file /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/biosample_accessions.txt --sources /home/zomer007/PycharmProjects/metalyzer/sources.tsv --out /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_mistral_api.tsv --method mistral --taxonomy-dir /home/zomer007/metalyzer/taxonomy --api-key-file /home/zomer007/mistral.key
+  Python version: 3.14.3
+  Platform: Linux-5.4.0-172-generic-x86_64-with-glibc2.31
+  Source method: mistral
+  NLI model: MoritzLaurer/deberta-v3-large-zeroshot-v2.0
+  Mistral API model: mistral-small-latest
+  Device: 0
+  NLI batch size: 64
+  Min score (NLI only): 0.2
+  Max value chars: 300
+  Max record chars: 2000
+  Metadata path: BioSample input
+  Sources path: /home/zomer007/PycharmProjects/metalyzer/sources.tsv
+  Sources SHA256: 9c5a4aa17ae4bf549ba40c14dd6b2c5574ac9e9d4d124311058f28487b155e46
+  Taxonomy directory: /home/zomer007/metalyzer/taxonomy
+  Metadata rows: 1320
+  Metadata columns: 319
+  Taxonomy file nodes.dmp: /home/zomer007/metalyzer/taxonomy/nodes.dmp; 232279767 bytes; modified 2026-10-07T13:12:57.588690+00:00
+  Taxonomy file names.dmp: /home/zomer007/metalyzer/taxonomy/names.dmp; 316659961 bytes; modified 2026-10-07T13:12:58.820705+00:00
+  Taxonomy file merged.dmp: /home/zomer007/metalyzer/taxonomy/merged.dmp; 1912229 bytes; modified 2026-10-07T13:12:58.948707+00:00
+Taxonomy configuration:
+  configured anchors: 12
+  valid anchors:      12
+  merged IDs:         0
+  invalid anchors:    0
+  conflicts:          0
+Mistral model: mistral-small-latest
+--min-score is not applicable to Mistral mode: the API does not produce calibrated candidate scores.
+Mistral classified 10/1320
+Mistral classified 20/1320
+Mistral classified 30/1320
+Mistral classified 40/1320
+Mistral classified 50/1320
+Mistral classified 60/1320
+Mistral classified 70/1320
+Mistral classified 80/1320
+Mistral classified 90/1320
+Mistral classified 100/1320
+Mistral classified 110/1320
+Mistral classified 120/1320
+Mistral classified 130/1320
+Mistral classified 140/1320
+Mistral classified 150/1320
+Mistral classified 160/1320
+Mistral classified 170/1320
+Mistral classified 180/1320
+Mistral classified 190/1320
+Mistral classified 200/1320
+Mistral classified 210/1320
+Mistral classified 220/1320
+Mistral classified 230/1320
+Mistral classified 240/1320
+Mistral classified 250/1320
+Mistral classified 260/1320
+Mistral classified 270/1320
+Mistral classified 280/1320
+Mistral classified 290/1320
+Mistral classified 300/1320
+Mistral classified 310/1320
+Mistral classified 320/1320
+Mistral classified 330/1320
+Mistral classified 340/1320
+Mistral classified 350/1320
+Mistral classified 360/1320
+Mistral classified 370/1320
+Mistral classified 380/1320
+Mistral classified 390/1320
+Mistral classified 400/1320
+Mistral classified 410/1320
+Mistral classified 420/1320
+Mistral classified 430/1320
+Mistral classified 440/1320
+Mistral classified 450/1320
+Mistral classified 460/1320
+Mistral classified 470/1320
+Mistral classified 480/1320
+Mistral classified 490/1320
+Mistral classified 500/1320
+Mistral classified 510/1320
+Mistral classified 520/1320
+Mistral classified 530/1320
+Mistral classified 540/1320
+Mistral classified 550/1320
+Mistral classified 560/1320
+Mistral classified 570/1320
+Mistral classified 580/1320
+Mistral classified 590/1320
+Mistral classified 600/1320
+Mistral classified 610/1320
+Mistral classified 620/1320
+Mistral classified 630/1320
+Mistral classified 640/1320
+Mistral classified 650/1320
+Mistral classified 660/1320
+Mistral classified 670/1320
+Mistral classified 680/1320
+Mistral classified 690/1320
+Mistral classified 700/1320
+Mistral classified 710/1320
+Mistral classified 720/1320
+Mistral classified 730/1320
+Mistral classified 740/1320
+Mistral classified 750/1320
+Mistral classified 760/1320
+Mistral classified 770/1320
+Mistral classified 780/1320
+Mistral classified 790/1320
+Mistral classified 800/1320
+Mistral classified 810/1320
+Mistral classified 820/1320
+Mistral classified 830/1320
+Mistral classified 840/1320
+Mistral classified 850/1320
+Mistral classified 860/1320
+Mistral classified 870/1320
+Mistral classified 880/1320
+Mistral classified 890/1320
+Mistral classified 900/1320
+Mistral classified 910/1320
+Mistral classified 920/1320
+Mistral classified 930/1320
+Mistral classified 940/1320
+Mistral classified 950/1320
+Mistral classified 960/1320
+Mistral classified 970/1320
+Mistral classified 980/1320
+Mistral classified 990/1320
+Mistral classified 1000/1320
+Mistral classified 1010/1320
+Mistral classified 1020/1320
+Mistral classified 1030/1320
+Mistral classified 1040/1320
+Mistral classified 1050/1320
+Mistral classified 1060/1320
+Mistral classified 1070/1320
+Mistral classified 1080/1320
+Mistral classified 1090/1320
+Mistral classified 1100/1320
+Mistral classified 1110/1320
+Mistral classified 1120/1320
+Mistral classified 1130/1320
+Mistral classified 1140/1320
+Mistral classified 1150/1320
+Mistral classified 1160/1320
+Mistral classified 1170/1320
+Mistral classified 1180/1320
+Mistral classified 1190/1320
+Mistral classified 1200/1320
+Mistral classified 1210/1320
+Mistral classified 1220/1320
+Mistral classified 1230/1320
+Mistral classified 1240/1320
+Mistral classified 1250/1320
+Mistral classified 1260/1320
+Mistral classified 1270/1320
+Mistral classified 1280/1320
+Mistral classified 1290/1320
+Mistral classified 1300/1320
+Mistral classified 1310/1320
+Mistral classified 1320/1320
+Source classification:
+  taxonomy host_tax_id: 0
+  MISTRAL:                  1320
+  MISTRAL -> unknown:        29
+  invalid Mistral outputs:  0
+Run totals:
+  total rows: 1320
+  deterministic taxonomy assignments: 0
+  MISTRAL assignments: 1320
+  unknown calls: 29
+  invalid model outputs: 0
+  NLI verification scores: 1291
+  output path: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_mistral_api.tsv
+  log path: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_mistral_api.tsv.log
+Wrote /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/rerun_20261012/benchmark_biosample_mistral_api.tsv (n=1320)

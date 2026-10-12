@@ -14,6 +14,7 @@ import csv
 import argparse
 from html import escape
 from pathlib import Path
+from benchmark_smoke.benchmark_evaluation import align_predictions
 
 
 ROOT = Path(__file__).resolve().parent
@@ -42,11 +43,14 @@ def read_tsv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle, delimiter="\t"))
 
 
-def load_matrix(classified: Path) -> tuple[dict[str, int], dict[str, dict[str, int]]]:
-    true_rows = read_tsv(TRUE_LABELS)
+def load_matrix(classified: Path, accession_mapping: Path | None = None,
+                truth_path: Path = TRUE_LABELS) -> tuple[dict[str, int], dict[str, dict[str, int]]]:
+    true_rows = read_tsv(truth_path)
     classified_rows = read_tsv(classified)
-    true_by_id = {row["run_accession"]: row["final_species"] for row in true_rows}
-    predicted_by_id = {row["run_accession"]: row["best_hit"] for row in classified_rows}
+    truth, predictions = align_predictions(true_rows, classified_rows,
+                                           read_tsv(accession_mapping) if accession_mapping else None)
+    true_by_id = {key: row['final_species'] for key, row in truth.items()}
+    predicted_by_id = {key: row['best_hit'] for key, row in predictions.items()}
 
     if set(true_by_id) != set(predicted_by_id):
         raise ValueError("Benchmark and classified files do not contain the same accessions.")
@@ -113,7 +117,7 @@ def render_svg(
             value = matrix[true_label][predicted_label]
             fill, text_colour = colour(value, total)
             x = matrix_x + column * cell_width
-            displayed = f"{value / total * 100:.1f}%" if percentages else str(value)
+            displayed = f"{value / total * 100:.1f}%" if percentages and total else ('NA' if percentages else str(value))
             cells.append(
                 f'<rect x="{x}" y="{y}" width="{cell_width}" height="{cell_height}" fill="{fill}" class="matrix-cell"/>'
             )
@@ -143,8 +147,8 @@ def render_svg(
   <rect width="100%" height="100%" fill="white"/>
   <text x="0" y="27" class="title">{escape(title)}</text>
   <text x="0" y="48" class="subtitle">Rows: true source · Columns: predicted source · n: true records</text>
-  <text x="8" y="{header_height - 8}" class="header" transform="rotate(-48 8 {header_height - 8})">True source</text>
-  <text x="{left_width + total_width / 2}" y="{header_height - 8}" class="header" transform="rotate(-48 {left_width + total_width / 2} {header_height - 8})">n</text>
+  <text x="8" y="{header_height - 8}" class="header" style="text-anchor: start">True source</text>
+  <text x="{left_width + total_width / 2}" y="{header_height - 8}" class="header" style="text-anchor: middle">n</text>
   {''.join(cells)}
   <text x="0" y="{height - 29}" class="legend">{escape(legend)}</text>
   <text x="0" y="{height - 10}" class="legend">{escape(suffix)}</text>
@@ -156,11 +160,12 @@ def render_svg(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--classified", type=Path, default=ROOT / "benchmark_nli.tsv")
+    parser.add_argument("--accession-mapping", type=Path, help="Run-to-BioSample mapping for BioSample predictions")
     parser.add_argument("--prefix", default="benchmark", help="Output filename prefix under assets/")
     parser.add_argument("--title", default="Benchmark", help="Title prefix in the SVG")
     args = parser.parse_args()
     classified = args.classified if args.classified.is_absolute() else ROOT / args.classified
-    row_totals, matrix = load_matrix(classified)
+    row_totals, matrix = load_matrix(classified, args.accession_mapping)
     ASSET_DIR.mkdir(exist_ok=True)
     render_svg(
         ASSET_DIR / f"{args.prefix}-confusion-absolute.svg",

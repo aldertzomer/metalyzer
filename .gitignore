@@ -1,3 +1,7 @@
 __pycache__/
 *.py[cod]
 .venv/
+
+# Local benchmark staging, backups and reproducible metadata cache.
+benchmark_smoke/rerun_*/
+benchmark_smoke/biosample_diagnostics/selected_metadata.pkl

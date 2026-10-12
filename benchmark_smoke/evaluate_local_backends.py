@@ -11,15 +11,17 @@ import json
 from pathlib import Path
 
 import pandas as pd
+try:
+    from .benchmark_evaluation import align_predictions
+except ImportError:
+    from benchmark_evaluation import align_predictions
 
 
-def evaluate(truth, path, column, directory, allow_subset):
+def evaluate(truth, path, column, directory, allow_subset, accession_mapping=None):
     predictions = pd.read_csv(path, sep="\t", dtype=str, keep_default_na=False)
-    if predictions.run_accession.duplicated().any() or truth.run_accession.duplicated().any():
-        raise ValueError("Duplicate accession in truth or predictions")
-    predicted_ids, true_ids = set(predictions.run_accession), set(truth.run_accession)
-    if not predicted_ids <= true_ids or (not allow_subset and predicted_ids != true_ids):
-        raise ValueError(f"Accession mismatch: {path}; use --allow-subset only for smoke tests")
+    _, aligned = align_predictions(truth.to_dict('records'), predictions.to_dict('records'),
+                                   accession_mapping, allow_subset=allow_subset)
+    predictions = pd.DataFrame(aligned.values())
     merged = truth.merge(predictions, on="run_accession", validate="one_to_one")
     labels = sorted(set(truth.final_species) | set(predictions[column]))
     matrix = pd.crosstab(merged.final_species, merged[column]).reindex(index=labels, columns=labels, fill_value=0)
@@ -34,10 +36,15 @@ def evaluate(truth, path, column, directory, allow_subset):
         directory / f"{stem}_confusion_percent.tsv", sep="\t", index_label="true_source", na_rep="NA")
     per_class.to_csv(directory / f"{stem}_per_class.tsv", sep="\t", index_label="source", na_rep="NA")
     methods = predictions.source_method.value_counts().to_dict() if "source_method" in predictions else None
+    assigned = merged[column] != 'unknown'
+    correct_assigned = int(((merged[column] == merged.final_species) & assigned).sum())
     result = {
         "file": str(path), "records": len(merged), "correct": int(correct.sum()),
         "overall_accuracy": float(correct.sum() / len(merged)) if len(merged) else None,
         "unknown_predictions": int((predictions[column] == "unknown").sum()),
+        "assigned_predictions": int(assigned.sum()),
+        "correct_assigned": correct_assigned,
+        "precision_assigned": correct_assigned / int(assigned.sum()) if assigned.any() else None,
         "invalid_llm_outputs": int(predictions.source_evidence.str.startswith("invalid_llm_output=").sum())
         if "source_evidence" in predictions else None,
         "taxonomy_calls": methods.get("host_tax_id", 0) if methods is not None else None,
@@ -53,13 +60,17 @@ def main():
     parser.add_argument("--prediction", nargs=2, action="append", default=[], metavar=("FILE", "COLUMN"))
     parser.add_argument("--out-dir", default="benchmark_smoke/local_llm_evaluation")
     parser.add_argument("--allow-subset", action="store_true")
+    parser.add_argument("--only-predictions", action="store_true", help="Evaluate only explicit --prediction files")
+    parser.add_argument("--accession-mapping", type=Path, help="Run-to-BioSample mapping TSV")
     args = parser.parse_args()
     directory = Path(args.out_dir)
     directory.mkdir(parents=True, exist_ok=True)
     truth = pd.read_csv(args.truth, sep="\t", dtype=str, keep_default_na=False)
-    sources = [("benchmark_nli.tsv", "best_hit"), ("benchmark_llm.tsv", "best_hit"),
-               ("benchmark_mistral_api.tsv", "best_hit"), *args.prediction]
-    results = [evaluate(truth, Path(path), col, directory, args.allow_subset) for path, col in sources]
+    sources = ([] if args.only_predictions else [("benchmark_nli.tsv", "best_hit"), ("benchmark_llm.tsv", "best_hit"),
+               ("benchmark_mistral_api.tsv", "best_hit")]) + args.prediction
+    mapping = (pd.read_csv(args.accession_mapping, sep='\t', dtype=str, keep_default_na=False).to_dict('records')
+               if args.accession_mapping else None)
+    results = [evaluate(truth, Path(path), col, directory, args.allow_subset, mapping) for path, col in sources]
     report = json.dumps(results, indent=2)
     (directory / "summary.json").write_text(report + "\n", encoding="utf-8")
     print(report)

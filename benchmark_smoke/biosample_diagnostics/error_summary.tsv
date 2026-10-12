@@ -1,0 +1,4 @@
+method	tsv_correct	bio_correct	both_correct	bio_fixes	bio_breaks	both_wrong
+nli	1137	805	769	36	368	147
+llm	1215	1133	1081	52	134	53
+mistral	1284	1174	1165	9	119	27

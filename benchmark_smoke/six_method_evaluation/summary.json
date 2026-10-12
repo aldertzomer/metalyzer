@@ -1,0 +1,119 @@
+[
+  {
+    "file": "benchmark_nli.tsv",
+    "records": 1320,
+    "correct": 1137,
+    "overall_accuracy": 0.8613636363636363,
+    "unknown_predictions": 114,
+    "assigned_predictions": 1206,
+    "correct_assigned": 1064,
+    "precision_assigned": 0.8822553897180763,
+    "invalid_llm_outputs": 0,
+    "taxonomy_calls": 215,
+    "llm_calls": 0,
+    "source_methods": {
+      "nli": 1105,
+      "host_tax_id": 215
+    },
+    "input_mode": "metadata",
+    "method": "nli",
+    "elapsed_seconds": 113.08326864102855
+  },
+  {
+    "file": "benchmark_llm.tsv",
+    "records": 1320,
+    "correct": 1215,
+    "overall_accuracy": 0.9204545454545454,
+    "unknown_predictions": 171,
+    "assigned_predictions": 1149,
+    "correct_assigned": 1134,
+    "precision_assigned": 0.9869451697127938,
+    "invalid_llm_outputs": 1,
+    "taxonomy_calls": 215,
+    "llm_calls": 1105,
+    "source_methods": {
+      "llm": 1105,
+      "host_tax_id": 215
+    },
+    "input_mode": "metadata",
+    "method": "llm",
+    "elapsed_seconds": 452.38350912206806
+  },
+  {
+    "file": "benchmark_mistral_api.tsv",
+    "records": 1320,
+    "correct": 1284,
+    "overall_accuracy": 0.9727272727272728,
+    "unknown_predictions": 75,
+    "assigned_predictions": 1245,
+    "correct_assigned": 1209,
+    "precision_assigned": 0.9710843373493976,
+    "invalid_llm_outputs": 0,
+    "taxonomy_calls": 215,
+    "llm_calls": 0,
+    "source_methods": {
+      "mistral": 1105,
+      "host_tax_id": 215
+    },
+    "input_mode": "metadata",
+    "method": "mistral",
+    "elapsed_seconds": 87.47051540308166
+  },
+  {
+    "file": "benchmark_biosample_nli.tsv",
+    "records": 1320,
+    "correct": 805,
+    "overall_accuracy": 0.6098484848484849,
+    "unknown_predictions": 97,
+    "assigned_predictions": 1223,
+    "correct_assigned": 788,
+    "precision_assigned": 0.6443172526573998,
+    "invalid_llm_outputs": 0,
+    "taxonomy_calls": 0,
+    "llm_calls": 0,
+    "source_methods": {
+      "nli": 1320
+    },
+    "input_mode": "biosample",
+    "method": "nli",
+    "elapsed_seconds": 539.8932265070034
+  },
+  {
+    "file": "benchmark_biosample_llm.tsv",
+    "records": 1320,
+    "correct": 1133,
+    "overall_accuracy": 0.8583333333333333,
+    "unknown_predictions": 118,
+    "assigned_predictions": 1202,
+    "correct_assigned": 1089,
+    "precision_assigned": 0.9059900166389351,
+    "invalid_llm_outputs": 1,
+    "taxonomy_calls": 0,
+    "llm_calls": 1320,
+    "source_methods": {
+      "llm": 1320
+    },
+    "input_mode": "biosample",
+    "method": "llm",
+    "elapsed_seconds": 785.9168399949558
+  },
+  {
+    "file": "benchmark_biosample_mistral_api.tsv",
+    "records": 1320,
+    "correct": 1174,
+    "overall_accuracy": 0.8893939393939394,
+    "unknown_predictions": 29,
+    "assigned_predictions": 1291,
+    "correct_assigned": 1147,
+    "precision_assigned": 0.8884585592563904,
+    "invalid_llm_outputs": 0,
+    "taxonomy_calls": 0,
+    "llm_calls": 0,
+    "source_methods": {
+      "mistral": 1320
+    },
+    "input_mode": "biosample",
+    "method": "mistral",
+    "elapsed_seconds": 309.638950718916
+  }
+]
