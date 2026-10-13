@@ -1,0 +1,25 @@
+{
+  "biosample": {
+    "deterministic": 516,
+    "records": 1275,
+    "source_model_calls_per_condition": 759,
+    "taxonomy_by_pathway": {
+      "host_alias": 117,
+      "host_name": 356,
+      "host_other_animal": 42,
+      "host_tax_id": 1
+    }
+  },
+  "paid_api_calls_if_all_four_runs": 3600,
+  "tsv": {
+    "deterministic": 234,
+    "records": 1275,
+    "source_model_calls_per_condition": 1041,
+    "taxonomy_by_pathway": {
+      "host_alias": 13,
+      "host_name": 4,
+      "host_other_animal": 46,
+      "host_tax_id": 171
+    }
+  }
+}

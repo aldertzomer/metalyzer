@@ -1,0 +1,2 @@
+run_accession	accession	true_source	unfiltered_best_hit	filtered_best_hit	unfiltered_source_method	filtered_source_method	unfiltered_correct	filtered_correct	unfiltered_llm_score	filtered_llm_score	unfiltered_verification	filtered_verification	model_classified	changed_prediction
+ERR10372741	SAMEA111483144	unknown	unknown	human	nli	nli	True	False	NA	NA	NA	0.9593832492828369	True	True

@@ -1,0 +1,6 @@
+run_accession	accession	true_source	unfiltered_best_hit	filtered_best_hit	unfiltered_source_method	filtered_source_method	unfiltered_correct	filtered_correct	unfiltered_llm_score	filtered_llm_score	unfiltered_verification	filtered_verification	model_classified	changed_prediction
+SRR6314874	SAMN08053348	other_animal	other_animal	human	mistral	mistral	True	False	NA	NA	0.00877910852432251	0.003087369492277503	True	True
+ERR4224474	SAMEA6936835	wastewater	wastewater	water	mistral	mistral	True	False	NA	NA	0.9569571018218994	0.9300146102905273	True	True
+ERR4224690	SAMEA6936515	wastewater	wastewater	water	mistral	mistral	True	False	NA	NA	0.9641530513763428	0.9495291113853455	True	True
+ERR1163661	SAMEA3683276	wildbird	wildbird	other_animal	mistral	mistral	True	False	NA	NA	0.04620574787259102	0.0002341358340345323	True	True
+ERR1163752	SAMEA3683367	wildbird	wildbird	other_animal	mistral	mistral	True	False	NA	NA	0.006085737142711878	0.0002780309587251395	True	True

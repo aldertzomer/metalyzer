@@ -1,0 +1,156 @@
+Metalyzer 0.2 started
+Input mode: BioSample; selected local Parquet records: 1275
+BioSample store: /mnt/sdd1/data/biosample
+BioSample accession index: /mnt/sdd1/data/biosample/biosample.accessions.sqlite
+Run provenance:
+  Metalyzer version: 0.2
+  Git commit: c01e1389b89aefaf748b6ae79a71ca3dcc08d45c
+  Command line: /home/zomer007/miniforge3/envs/metalyzer/bin/python /home/zomer007/PycharmProjects/metalyzer/metalyzer.py --biosample-file /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/current_benchmark/inputs/biosample_accessions.txt --sources /home/zomer007/PycharmProjects/metalyzer/sources.tsv --out /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/current_benchmark/results/unfiltered/biosample_mistral.tsv --method mistral --taxonomy-dir /home/zomer007/metalyzer/taxonomy --other-animal-taxonomy --device 0 --batch-size 64 --min-score 0.2 --llm-batch-size 1 --llm-min-score 0.75 --max-value-chars 300 --max-record-chars 2000 --disable-noisy-field-exclusion --api-key-file /home/zomer007/mistral.key --mistral-model mistral-small-latest --mistral-random-seed 12345
+  Python version: 3.14.3
+  Platform: Linux-5.4.0-172-generic-x86_64-with-glibc2.31
+  Source method: mistral
+  NLI model: MoritzLaurer/deberta-v3-large-zeroshot-v2.0
+  Mistral API model: mistral-small-latest
+  Device: 0
+  NLI batch size: 64
+  Min score (NLI only): 0.2
+  Max value chars: 300
+  Max record chars: 2000
+  Noisy-field exclusion: disabled
+  Filtering profile: legacy
+  Metadata path: BioSample input
+  Sources path: /home/zomer007/PycharmProjects/metalyzer/sources.tsv
+  Sources SHA256: d92928a36dc0e79df6486b1645d42d72be52f9bce3f733c938292bf5af970f10
+  Taxonomy directory: /home/zomer007/metalyzer/taxonomy
+  Configured host aliases enabled: True
+  Specific other-animal taxonomy enabled: True
+  Metadata rows: 1275
+  Metadata columns: 319
+  Taxonomy file nodes.dmp: /home/zomer007/metalyzer/taxonomy/nodes.dmp; 232279767 bytes; modified 2026-10-07T13:12:57.588690+00:00
+  Taxonomy file names.dmp: /home/zomer007/metalyzer/taxonomy/names.dmp; 316659961 bytes; modified 2026-10-07T13:12:58.820705+00:00
+  Taxonomy file merged.dmp: /home/zomer007/metalyzer/taxonomy/merged.dmp; 1912229 bytes; modified 2026-10-07T13:12:58.948707+00:00
+Taxonomy configuration:
+  configured anchors: 12
+  valid anchors:      12
+  merged IDs:         0
+  invalid anchors:    0
+  conflicts:          0
+Taxonomy resolution:
+  Explicit host taxonomy ID: 1
+  Exact host-name resolution: 356
+    Scientific names: 250
+    Common names/synonyms: 106
+  Configured host aliases: 117
+  Specific unlisted animals: 42
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 759
+  Total deterministic assignments: 516
+  Records continuing to model classification: 759
+Record rendering statistics (all records): {"administrative_technical": 0, "after_length_mean": 1407.7545098039216, "after_length_median": 1530.0, "after_truncated": 108, "before_length_mean": 1407.7545098039216, "before_length_median": 1530.0, "before_truncated": 108, "fields_considered": 406725, "nonempty_eligible_fields": 47543, "records": 1275, "records_with_omissions": 0, "redundant_original": 0}
+Record rendering statistics (source model records): {"administrative_technical": 0, "after_length_mean": 1365.7786561264822, "after_length_median": 1496.0, "after_truncated": 37, "before_length_mean": 1365.7786561264822, "before_length_median": 1496.0, "before_truncated": 37, "fields_considered": 242121, "nonempty_eligible_fields": 27652, "records": 759, "records_with_omissions": 0, "redundant_original": 0}
+Mistral model: mistral-small-latest
+--min-score is not applicable to Mistral mode: the API does not produce calibrated candidate scores.
+Mistral classified 10/759
+Mistral classified 20/759
+Mistral classified 30/759
+Mistral classified 40/759
+Mistral classified 50/759
+Mistral classified 60/759
+Mistral classified 70/759
+Mistral classified 80/759
+Mistral classified 90/759
+Mistral classified 100/759
+Mistral classified 110/759
+Mistral classified 120/759
+Mistral classified 130/759
+Mistral classified 140/759
+Mistral classified 150/759
+Mistral classified 160/759
+Mistral classified 170/759
+Mistral classified 180/759
+Mistral classified 190/759
+Mistral classified 200/759
+Mistral classified 210/759
+Mistral classified 220/759
+Mistral classified 230/759
+Mistral classified 240/759
+Mistral classified 250/759
+Mistral classified 260/759
+Mistral classified 270/759
+Mistral classified 280/759
+Mistral classified 290/759
+Mistral classified 300/759
+Mistral classified 310/759
+Mistral classified 320/759
+Mistral classified 330/759
+Mistral classified 340/759
+Mistral classified 350/759
+Mistral classified 360/759
+Mistral classified 370/759
+Mistral classified 380/759
+Mistral classified 390/759
+Mistral classified 400/759
+Mistral classified 410/759
+Mistral classified 420/759
+Mistral classified 430/759
+Mistral classified 440/759
+Mistral classified 450/759
+Mistral classified 460/759
+Mistral classified 470/759
+Mistral classified 480/759
+Mistral classified 490/759
+Mistral classified 500/759
+Mistral classified 510/759
+Mistral classified 520/759
+Mistral classified 530/759
+Mistral classified 540/759
+Mistral classified 550/759
+Mistral classified 560/759
+Mistral classified 570/759
+Mistral classified 580/759
+Mistral classified 590/759
+Mistral classified 600/759
+Mistral classified 610/759
+Mistral classified 620/759
+Mistral classified 630/759
+Mistral classified 640/759
+Mistral classified 650/759
+Mistral classified 660/759
+Mistral classified 670/759
+Mistral classified 680/759
+Mistral classified 690/759
+Mistral classified 700/759
+Mistral classified 710/759
+Mistral classified 720/759
+Mistral classified 730/759
+Mistral classified 740/759
+Mistral classified 750/759
+Mistral classified 759/759
+Mistral API usage: {"completed": 759, "completion_tokens": 6102, "prompt_tokens": 915280, "requests": 781, "retries": 22, "total_tokens": 921382, "usage_available": true}
+Source model stage seconds (including weight loading): 135.829
+Source classification:
+  taxonomy host_tax_id: 1
+  taxonomy host_name: 356
+  configured host_alias: 117
+  taxonomy host_other_animal: 42
+  taxonomy total: 516
+  MISTRAL:                  759
+  MISTRAL -> unknown:        31
+  invalid Mistral outputs:  0
+NLI verification stage seconds (including any weight loading): 26.294
+NLI token-limit exposure: {"nli_token_exposure_all": {"available": true, "model_token_limit": 512, "records_any_candidate_exceeds_limit": 371, "fraction": 0.2909803921568627, "premise_token_median": 420.0, "premise_token_mean": 400.62666666666667, "premise_token_max": 658, "measurement": "pre-truncation premise+hypothesis+pair-special-tokens; any candidate"}, "nli_token_exposure_source_model": {"available": true, "model_token_limit": 512, "records_any_candidate_exceeds_limit": 272, "fraction": 0.3583662714097497, "premise_token_median": 408.0, "premise_token_mean": 396.25823451910406, "premise_token_max": 658, "measurement": "pre-truncation premise+hypothesis+pair-special-tokens; any candidate"}}
+Filtering audit: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/current_benchmark/results/unfiltered/biosample_mistral.tsv.filtering.json; excluded fields: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/current_benchmark/results/unfiltered/biosample_mistral.tsv.excluded_fields.tsv
+Run totals:
+  total rows: 1275
+  deterministic taxonomy assignments: 516
+  explicit host taxonomy ID assignments: 1
+  exact host-name assignments: 356
+  configured host-alias assignments: 117
+  specific other-animal assignments: 42
+  MISTRAL assignments: 759
+  unknown calls: 31
+  invalid model outputs: 0
+  NLI verification scores: 1244
+  output path: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/current_benchmark/results/unfiltered/biosample_mistral.tsv
+  log path: /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/current_benchmark/results/unfiltered/biosample_mistral.tsv.log
+Wrote /home/zomer007/PycharmProjects/metalyzer/benchmark_smoke/current_benchmark/results/unfiltered/biosample_mistral.tsv (n=1275)

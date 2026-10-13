@@ -1,0 +1,52 @@
+{
+  "enabled": true,
+  "profile": "variant_c_v1",
+  "all_records": {
+    "records": 1275,
+    "fields_considered": 406725,
+    "nonempty_eligible_fields": 47543,
+    "administrative_technical": 26802,
+    "redundant_original": 8879,
+    "before_truncated": 108,
+    "after_truncated": 0,
+    "records_with_omissions": 1275,
+    "before_length_median": 1530.0,
+    "before_length_mean": 1407.7545098039216,
+    "after_length_median": 281.0,
+    "after_length_mean": 296.84078431372546
+  },
+  "source_model_records": {
+    "records": 759,
+    "fields_considered": 242121,
+    "nonempty_eligible_fields": 27652,
+    "administrative_technical": 16830,
+    "redundant_original": 4518,
+    "before_truncated": 37,
+    "after_truncated": 0,
+    "records_with_omissions": 759,
+    "before_length_median": 1496.0,
+    "before_length_mean": 1365.7786561264822,
+    "after_length_median": 214.0,
+    "after_length_mean": 262.0197628458498
+  },
+  "nli_token_exposure_all": {
+    "available": true,
+    "model_token_limit": 512,
+    "records_any_candidate_exceeds_limit": 0,
+    "fraction": 0.0,
+    "premise_token_median": 69.0,
+    "premise_token_mean": 76.8792156862745,
+    "premise_token_max": 184,
+    "measurement": "pre-truncation premise+hypothesis+pair-special-tokens; any candidate"
+  },
+  "nli_token_exposure_source_model": {
+    "available": true,
+    "model_token_limit": 512,
+    "records_any_candidate_exceeds_limit": 0,
+    "fraction": 0.0,
+    "premise_token_median": 54.0,
+    "premise_token_mean": 66.76416337285903,
+    "premise_token_max": 162,
+    "measurement": "pre-truncation premise+hypothesis+pair-special-tokens; any candidate"
+  }
+}

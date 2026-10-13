@@ -1,0 +1,13 @@
+input	method	filter	status	reason
+tsv	nli	unfiltered	complete	
+tsv	nli	filtered	complete	
+tsv	llm	unfiltered	complete	
+tsv	llm	filtered	complete	
+tsv	mistral	unfiltered	complete	
+tsv	mistral	filtered	complete	
+biosample	nli	unfiltered	complete	
+biosample	nli	filtered	complete	
+biosample	llm	unfiltered	complete	
+biosample	llm	filtered	complete	
+biosample	mistral	unfiltered	complete	
+biosample	mistral	filtered	complete	

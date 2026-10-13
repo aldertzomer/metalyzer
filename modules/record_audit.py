@@ -2,6 +2,7 @@
 from collections import Counter
 import json
 from pathlib import Path
+from statistics import fmean, median
 
 import pandas as pd
 
@@ -44,8 +45,12 @@ def nli_exposure(batch, sources, model):
     extra = tokenizer.num_special_tokens_to_add(pair=True)
     lengths = {text: len(tokenizer(text, add_special_tokens=False)['input_ids']) for text in set(batch.records)}
     exposed = sum(lengths[text] + max_hypothesis + extra > limit for text in batch.records)
+    token_lengths = [lengths[text] for text in batch.records]
     return dict(available=True, model_token_limit=limit, records_any_candidate_exceeds_limit=int(exposed),
                 fraction=exposed / len(batch) if len(batch) else 0.0,
+                premise_token_median=float(median(token_lengths)) if token_lengths else 0.0,
+                premise_token_mean=float(fmean(token_lengths)) if token_lengths else 0.0,
+                premise_token_max=max(token_lengths, default=0),
                 measurement='pre-truncation premise+hypothesis+pair-special-tokens; any candidate')
 
 

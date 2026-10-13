@@ -1,0 +1,14 @@
+run_accession	accession	true_source	unfiltered_best_hit	filtered_best_hit	unfiltered_source_method	filtered_source_method	unfiltered_correct	filtered_correct	unfiltered_llm_score	filtered_llm_score	unfiltered_verification	filtered_verification	model_classified	changed_prediction
+ERR10372741	SAMEA111483144	unknown	unknown	chicken	nli	nli	True	False	NA	NA	NA	0.6418995261192322	True	True
+ERR12757156	SAMEA115419291	unknown	unknown	cattle	nli	nli	True	False	NA	NA	NA	0.6492173671722412	True	True
+SRR4069948	SAMN05711866	unknown	unknown	cattle	nli	nli	True	False	NA	NA	NA	0.5386495590209961	True	True
+SRR4070139	SAMN05712006	unknown	unknown	cattle	nli	nli	True	False	NA	NA	NA	0.5480140447616577	True	True
+SRR9030816	SAMN11605015	environment	environment	water	nli	nli	True	False	NA	NA	0.9253649711608887	0.9267027378082275	True	True
+SRR9030837	SAMN11605013	environment	environment	water	nli	nli	True	False	NA	NA	0.9243468642234802	0.9200026392936707	True	True
+SRR9030874	SAMN11605006	environment	environment	water	nli	nli	True	False	NA	NA	0.9219218492507935	0.9212868213653564	True	True
+SRR9030879	SAMN11605009	environment	environment	water	nli	nli	True	False	NA	NA	0.9242786169052124	0.9192085266113281	True	True
+SRR9030813	SAMN11605023	environment	environment	water	nli	nli	True	False	NA	NA	0.9256343245506287	0.92950439453125	True	True
+SRR9030821	SAMN11605022	environment	environment	water	nli	nli	True	False	NA	NA	0.9270337224006653	0.9250947833061218	True	True
+SRR9030826	SAMN11605035	environment	environment	water	nli	nli	True	False	NA	NA	0.9288617968559265	0.9279531240463257	True	True
+SRR9030829	SAMN11605040	environment	environment	water	nli	nli	True	False	NA	NA	0.924346923828125	0.9300146102905273	True	True
+SRR9030830	SAMN11605039	environment	environment	water	nli	nli	True	False	NA	NA	0.9244834184646606	0.914976954460144	True	True

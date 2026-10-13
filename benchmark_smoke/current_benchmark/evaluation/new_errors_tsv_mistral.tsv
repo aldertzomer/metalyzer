@@ -1,0 +1,6 @@
+run_accession	accession	true_source	unfiltered_best_hit	filtered_best_hit	unfiltered_source_method	filtered_source_method	unfiltered_correct	filtered_correct	unfiltered_llm_score	filtered_llm_score	unfiltered_verification	filtered_verification	model_classified	changed_prediction
+SRR6169171	SAMN07780144	other_animal	other_animal	wildbird	mistral	mistral	True	False	NA	NA	0.0021742256358265877	0.0002684288192540407	True	True
+SRR13202276	SAMN17006817	unknown	unknown	chicken	mistral	mistral	True	False	NA	NA	NA	0.32850250601768494	True	True
+SRR24863315	SAMN35663339	chicken	chicken	unknown	mistral	mistral	True	False	NA	NA	0.01707807369530201	NA	True	True
+ERR1025588	SAMEA3556567	water	water	environment	mistral	mistral	True	False	NA	NA	0.9689150452613831	0.21076630055904388	True	True
+ERR12188771	SAMEA114572042	wildbird	wildbird	other_animal	mistral	mistral	True	False	NA	NA	0.0360160730779171	0.17603328824043274	True	True

@@ -1,0 +1,27 @@
+{
+  "derived_sha256": {
+    "accessions": "f0116a2637c54242053dbc12f84b32c8382a7e1ec4f19d6952d0fe92cf4894ec",
+    "atb": "def594eb97b6fa6b1e0cede25dc68bc811e3cb5663e219d4600eb20467e21786",
+    "biosample_requests": "9fc75acc59990d881b883f9c4c4f0a668fc28855e44652151c8fdf4ddf65d885",
+    "excluded": "f5f1ecd9eca95a6e8539910a1dbc560c32c7da561a5c62bb65d5588a4527a443",
+    "mapping": "8710bafbe991d370a6e454b556407db2f4ddfe202ab3d1dd29ec362f8e1418dd",
+    "truth": "a46d97eef28eb3031518924bc19ad136d54e4bf3e6afcf99247a0d875eb584d6"
+  },
+  "duplicate_biosample_accessions": {
+    "SAMN08169257": 2
+  },
+  "excluded_caged_goat_chicken": 44,
+  "excluded_duck_chicken": 1,
+  "excluded_runs": 45,
+  "historical_metadata": "AllTheBacteria ENA export, 2025-05-06",
+  "included_runs": 1275,
+  "labels_from_predictions": false,
+  "order": "Original ATB and accession-request relative order; truth joined by run_accession",
+  "reference": "benchmark_true_labels.tsv, adjudicated at c01e1389b89aefaf748b6ae79a71ca3dcc08d45c",
+  "source_sha256": {
+    "benchmark.tsv": "8691800c867728e5ee72ade8f80c2d738ba7966ca990070bda511000c90bec69",
+    "benchmark_accessions.tsv": "96ff59c917254016c97850d862dadb43f139e707c382c32862e9d302a271c27a",
+    "benchmark_true_labels.tsv": "a46d97eef28eb3031518924bc19ad136d54e4bf3e6afcf99247a0d875eb584d6",
+    "goat_host_conflicts.tsv": "7cc0f74c627251e774ea3de84a7b841d11af50b7c956a5b6a2cfff76dc3fc023"
+  }
+}
