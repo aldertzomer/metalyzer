@@ -58,14 +58,14 @@ class CountryNormalizationTests(unittest.TestCase):
     def test_priority_and_original_attributes(self):
         cases = [
             ({"original_attributes.sample_identifier": "AL",
-              "geo_loc_name": "Netherlands"}, "Netherlands"),
+              "geo_loc_name": "Netherlands"}, "NL"),
             ({"original_attributes.country": "Albania",
-              "geo_loc_name": "Netherlands"}, "Netherlands"),
+              "geo_loc_name": "Netherlands"}, "NL"),
             ({"original_attributes.sample_type": "TH",
-              "country": "United Kingdom"}, "United Kingdom"),
+              "country": "United Kingdom"}, "GB"),
             ({"country": "USA:SC",
-              "original_attributes.specimen_name": "VG"}, "United States"),
-            ({"country": "NA", "location": "France"}, "France"),
+              "original_attributes.specimen_name": "VG"}, "US"),
+            ({"country": "NA", "location": "France"}, "FR"),
             ({"original_attributes.sample_identifier": "AL"}, "unknown"),
         ]
         for metadata, expected in cases:
@@ -76,7 +76,7 @@ class CountryNormalizationTests(unittest.TestCase):
         self.assertEqual(
             extract_country_from_row(pd.Series({"sample_title": "unrelated"}),
                                      "country: N/A; geo loc name: Turkey"),
-            "Turkey",
+            "TR",
         )
         self.assertEqual(
             extract_country_from_row(pd.Series({"sample_title": "unrelated"}),
