@@ -8,7 +8,7 @@ duck and current chicken evidence. No excluded run is scored. Of the 1,275
 retained runs, 57 source labels were corrected by metadata adjudication:
 41 unknown→human, four unknown→chicken, one unknown→cattle, one
 unknown→water, one other_food→chicken, and nine water→environment. Country
-and year labels were preserved. Some adjudications were model-informed, so
+values have been encoded as ISO 3166-1 alpha-2; year labels were preserved. Some adjudications were model-informed, so
 this is a **working reference**, not independent validation data.
 
 The [dataset manifest](inputs/dataset_manifest.json) provides the source and
@@ -29,7 +29,7 @@ all runs. The off condition passes `--disable-noisy-field-exclusion`; source
 taxonomy and metadata are otherwise identical. DeBERTa uses a 0.2 threshold
 and batch size 64; local Ministral uses 0.75 and batch size 1; API requests
 use `mistral-small-latest` with seed 12345. NLI source verification, date and
-country extraction are enabled. Values are limited to 300 characters and
+country extraction are enabled; new country outputs use ISO 3166-1 alpha-2 (or `unknown`). Values are limited to 300 characters and
 records to 2,000 characters. The command list and package versions are in the
 run manifest. The API phase requires explicit approval for fresh paid calls.
 The evaluation estimates API spend from reported token usage at Mistral's
@@ -119,3 +119,8 @@ assigned precision excludes predictions of `unknown`. Paired confidence
 intervals and McNemar tests are descriptive because this working benchmark
 has informed pipeline development. API output can vary even with a fixed
 seed, so paired differences cannot all be attributed to filtering.
+
+
+## Country-code migration (October 2026)
+
+The authoritative `benchmark_true_labels.tsv` and its 1,275-row synchronized copy now use ISO 3166-1 alpha-2 codes (e.g., `USA → US`, `United Kingdom → GB`, `Turkey → TR`). Unknown locations remain `unknown`. Historical ATB input metadata is unchanged. Previously committed prediction outputs are historical snapshots whose `country` values still use the old representation; do not compare them directly with the converted reference. Source-classification predictions remain independently interpretable. Recompute or convert only the country column before a new country-accuracy evaluation; rerunning a source classifier is unnecessary for that conversion. The existing run manifest and output hashes remain a record of the historical run, so a fresh benchmark work directory is needed for a new benchmark under the updated code.

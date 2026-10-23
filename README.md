@@ -133,7 +133,7 @@ host IDs, `host_name` for exact NCBI host-name resolution, `host_alias`
 for configured terms, `host_other_animal` for the opt-in animal rule, and
 `nli`, `llm` or `mistral` for model decisions. `source_evidence`
 contains a short explanation or model fallback reason. `year` and
-`country` are extracted independently of source classification. The
+`country` are extracted independently of source classification. `country` is an ISO 3166-1 alpha-2 code (e.g., `US`, `GB`, `NL`, `TR`, `KR`, `CD`, `VI`) or `unknown`. The
 `<out>.log` file records taxonomy, model and filtering provenance.
 
 ## Current benchmark results
@@ -154,7 +154,7 @@ Among retained runs, 57 source labels were corrected: 41
 `water→environment`. `SRR10257508` remains `other_food`; nine
 seasonally ambiguous Troups Creek Wetland isolates are `environment`;
 seal isolates are `other_animal`, while seal-study sediment is
-`environment`. Previous country and year references are preserved.
+`environment`. Previous year references are preserved; the 1,275 country references have been normalized to ISO 3166-1 alpha-2 without changing their geographic meaning.
 
 Some corrections relied on manual metadata adjudication, including
 model-informed decisions. These labels are a **working benchmark reference,
@@ -209,7 +209,7 @@ python -m unittest discover -s tests -v
 ```
 
 The local phase runs NLI and Ministral on the GPU. The API phase is separate
-because it incurs charges. The evaluator aligns each BioSample prediction
+because it incurs charges. Archived pre-ISO prediction files still contain historical country names; they need country-only re-extraction (no source-model inference) or a new run before country-reference comparison. The evaluator aligns each BioSample prediction
 through the stored run-to-BioSample mapping and checks deterministic
 assignments, metadata, year/country values and output schema between filtering
 conditions. Manifests record input, source, taxonomy and code hashes, model
