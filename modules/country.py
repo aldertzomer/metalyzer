@@ -186,7 +186,7 @@ def normalize_country(raw: str) -> str:
 # Use only dedicated geographic fields. Substring matching on "origin"
 # accidentally matches every "original_attributes.*" BioSample column.
 RE_KV_COUNTRY = re.compile(
-    r"(?:^|;)\\s*(?:country|location|geo loc name|geographic location)\\s*:\\s*([^;]+)",
+    r"(?:^|;)\s*(?:country|location|geo loc name|geographic location)\s*:\s*([^;]+)",
     re.IGNORECASE,
 )
 
