@@ -1,4 +1,4 @@
-"""Country normalization. run(batch) returns FieldResult named country."""
+"""Country normalization to ISO 3166-1 alpha-2 (or 'unknown')."""
 import re
 import unicodedata
 
@@ -49,16 +49,28 @@ ALIASES = {
 }
 
 
-# Names where pycountry's display value is undesirable or ambiguous.
-DISPLAY_OVERRIDES = {
-    "TR": "Turkey",
-    "KR": "South Korea",
-    "KP": "North Korea",
-    "CG": "Republic of the Congo",
-    "CD": "Democratic Republic of the Congo",
-    "VI": "US Virgin Islands",
-    "VG": "British Virgin Islands",
+# Stable ISO 3166-1 alpha-2 codes used by metalyzer and benchmark references.
+# ISO reserves GB for the United Kingdom; UK is accepted as an input alias.
+SPECIAL_CODES = {
+    "United States": "US",
+    "United Kingdom": "GB",
+    "South Korea": "KR",
+    "North Korea": "KP",
+    "Turkey": "TR",
+    "Republic of the Congo": "CG",
+    "Democratic Republic of the Congo": "CD",
+    "US Virgin Islands": "VI",
+    "British Virgin Islands": "VG",
 }
+
+
+def _to_iso2(name: str) -> str:
+    if name in SPECIAL_CODES:
+        return SPECIAL_CODES[name]
+    try:
+        return pycountry.countries.lookup(name).alpha_2
+    except LookupError as exc:
+        raise ValueError(f"Unrecognized country alias target: {name!r}") from exc
 
 # The prefix "original" is not evidence for a geographic origin field.
 GEOGRAPHIC_FIELD_PRIORITY = (
@@ -127,8 +139,8 @@ def _key(s: str) -> str:
 
 
 # Apply the same normalization to the historical alias list.
-ALIASES = {_key(name): value for name, value in ALIASES.items()}
-ALIASES.update({_key(name): value for name, value in ADDITIONAL_ALIASES.items()})
+ALIASES = {_key(name): _to_iso2(value) for name, value in ALIASES.items()}
+ALIASES.update({_key(name): _to_iso2(value) for name, value in ADDITIONAL_ALIASES.items()})
 
 
 def _resolve_country(token: str, *, fuzzy: bool = False) -> str | None:
@@ -149,7 +161,7 @@ def _resolve_country(token: str, *, fuzzy: bool = False) -> str | None:
         if not matches:
             return None
         matched = matches[0]
-    return DISPLAY_OVERRIDES.get(matched.alpha_2, matched.name)
+    return matched.alpha_2
 
 
 def normalize_country(raw: str) -> str:
@@ -217,7 +229,7 @@ def extract_country_from_row(row: pd.Series, record: str) -> str:
 
 
 def run(batch: MetadataBatch) -> FieldResult:
-    """Return standardized country names, or 'unknown' when unresolved."""
+    """Return ISO 3166-1 alpha-2 codes, or 'unknown' when unresolved."""
     return FieldResult(pd.Series(
         [extract_country_from_row(row, batch.records.loc[key])
          for key, row in batch.metadata.iterrows()],
