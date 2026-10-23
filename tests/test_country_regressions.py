@@ -1,7 +1,10 @@
 """Regression tests for ISO country parsing and BioSample field selection."""
+import csv
+from pathlib import Path
 import unittest
 
 import pandas as pd
+import pycountry
 
 from modules.country import extract_country_from_row, normalize_country
 
@@ -84,6 +87,27 @@ class CountryNormalizationTests(unittest.TestCase):
             "unknown",
         )
 
+
+    def test_reference_countries_use_iso2(self):
+        root = Path(__file__).resolve().parents[1]
+        canonical = root / "benchmark_true_labels.tsv"
+        benchmark = root / "benchmark_smoke/current_benchmark/inputs/benchmark_true_labels_1275.tsv"
+        self.assertEqual(canonical.read_bytes(), benchmark.read_bytes())
+
+        with canonical.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle, delimiter="\\t"))
+        self.assertEqual(len(rows), 1275)
+        self.assertEqual(len({row["run_accession"] for row in rows}), 1275)
+        for row in rows:
+            value = row["final_country"]
+            with self.subTest(run_accession=row["run_accession"], country=value):
+                self.assertTrue(
+                    value == "unknown" or (
+                        len(value) == 2
+                        and value.isupper()
+                        and pycountry.countries.get(alpha_2=value) is not None
+                    )
+                )
 
 if __name__ == "__main__":
     unittest.main()
