@@ -35,7 +35,7 @@ ALIASES = {
     "south korea": "South Korea",
     "republic of korea": "South Korea",
     "korea, republic of": "South Korea",
-    "korea": "South Korea",  # change to None if you prefer ambiguous->unknown
+    "korea": "South Korea",
 
     # Vietnam
     "viet nam": "Vietnam",
@@ -70,13 +70,10 @@ AMBIGUOUS_COUNTRIES = {"virgin islands"}
 
 SPLIT_RE = re.compile(r"[;|/]+")
 
-COUNTRY_HINTS = ("country", "location", "geographic", "origin")
-
 
 def _ascii_fold(s: str) -> str:
     s = unicodedata.normalize("NFKD", s)
     return "".join(ch for ch in s if not unicodedata.combining(ch))
-
 
 
 ADDITIONAL_ALIASES = {
