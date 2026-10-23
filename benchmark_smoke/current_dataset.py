@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 
 import pandas as pd
+import pycountry
 
 from modules.input import read_tsv
 
@@ -56,6 +57,19 @@ def build_dataset(
     metadata = read_tsv(metadata_path)
     requests = read_tsv(accessions_path)
     truth = read_tsv(truth_path)
+    if "final_country" not in truth.columns:
+        raise ValueError("Reference labels lack final_country")
+    invalid_countries = sorted({
+        country for country in truth.final_country
+        if country != "unknown"
+        and (len(country) != 2 or not country.isupper()
+             or pycountry.countries.get(alpha_2=country) is None)
+    })
+    if invalid_countries:
+        raise ValueError(
+            "Reference final_country must use ISO 3166-1 alpha-2 or 'unknown': "
+            + ", ".join(invalid_countries)
+        )
     metadata_runs = _runs(metadata, "ATB metadata")
     request_runs = _runs(requests, "accession requests")
     truth_runs = _runs(truth, "reference labels")
@@ -130,7 +144,10 @@ def build_dataset(
     request_file.write_text(request_text)
     paths["biosample_requests"] = request_file
     manifest = {
-        "reference": "benchmark_true_labels.tsv, adjudicated at c01e1389b89aefaf748b6ae79a71ca3dcc08d45c",
+        "reference": ("benchmark_true_labels.tsv, source labels adjudicated at "
+                      "c01e1389b89aefaf748b6ae79a71ca3dcc08d45c; "
+                      "country values converted to ISO 3166-1 alpha-2"),
+        "country_standard": "ISO 3166-1 alpha-2; missing: unknown",
         "historical_metadata": "AllTheBacteria ENA export, 2025-05-06",
         "source_sha256": {name: digest(path) for name, path in [
             ("benchmark.tsv", metadata_path), ("benchmark_accessions.tsv", accessions_path),
