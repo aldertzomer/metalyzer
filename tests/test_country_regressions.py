@@ -87,7 +87,6 @@ class CountryNormalizationTests(unittest.TestCase):
             "unknown",
         )
 
-
     def test_reference_countries_use_iso2(self):
         root = Path(__file__).resolve().parents[1]
         canonical = root / "benchmark_true_labels.tsv"
@@ -95,7 +94,7 @@ class CountryNormalizationTests(unittest.TestCase):
         self.assertEqual(canonical.read_bytes(), benchmark.read_bytes())
 
         with canonical.open(encoding="utf-8", newline="") as handle:
-            rows = list(csv.DictReader(handle, delimiter="\\t"))
+            rows = list(csv.DictReader(handle, delimiter="\t"))
         self.assertEqual(len(rows), 1275)
         self.assertEqual(len({row["run_accession"] for row in rows}), 1275)
         for row in rows:
@@ -108,6 +107,7 @@ class CountryNormalizationTests(unittest.TestCase):
                         and pycountry.countries.get(alpha_2=value) is not None
                     )
                 )
+
 
 if __name__ == "__main__":
     unittest.main()
