@@ -1,0 +1,24 @@
+run_accession	accession	previous_reference_country	revised_reference_country	atb_predicted_country	biosample_predicted_country	atb_country_raw	atb_location_raw	biosample_geo_loc_name_raw	reason
+SRR3094499	SAMN04381860	US	unknown	unknown	unknown	NA	NA	not collected	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+SRR3094501	SAMN04381862	US	unknown	unknown	unknown	NA	NA	not collected	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+SRR3094502	SAMN04381863	US	unknown	unknown	unknown	NA	NA	not collected	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+SRR3094503	SAMN04381864	US	unknown	unknown	unknown	NA	NA	not collected	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+SRR3094508	SAMN04381869	US	unknown	unknown	unknown	NA	NA	not collected	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+SRR3094510	SAMN04381871	US	unknown	unknown	unknown	NA	NA	not collected	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR11003616	SAMEA112765475	LU	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR10372741	SAMEA111483144	PT	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR1658511	SAMEA4443306	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR1658689	SAMEA4443233	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR1906113	SAMEA103954494	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR3446633	SAMEA5803185	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR439920	SAMEA2274619	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR450239	SAMEA2274688	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR470518	SAMEA2361299	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR470695	SAMEA2361479	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR473837	SAMEA2361639	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR670848	SAMEA2613238	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR694574	SAMEA3168641	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR976125	SAMEA3391383	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+ERR976146	SAMEA3391403	GB	unknown	unknown	unknown	NA	NA		Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+SRR27559027	SAMN39456870	US	unknown	unknown	unknown	NA	NA	missing	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
+SRR29294247	SAMN41692949	US	unknown	unknown	unknown	missing	NA	missing	Both input sources lack an explicit country value; previous adjudicated location not independently supported by inspected location fields
