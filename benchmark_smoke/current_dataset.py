@@ -146,7 +146,9 @@ def build_dataset(
     manifest = {
         "reference": ("benchmark_true_labels.tsv, source labels adjudicated at "
                       "c01e1389b89aefaf748b6ae79a71ca3dcc08d45c; "
-                      "country values converted to ISO 3166-1 alpha-2"),
+                      "country codes ISO 3166-1 alpha-2; 23 unsupported country "
+                      "references revised to unknown on 2026-10-24 "
+                      "(see country_audit/reference_country_changes_2026-10-24.tsv)"),
         "country_standard": "ISO 3166-1 alpha-2; missing: unknown",
         "historical_metadata": "AllTheBacteria ENA export, 2025-05-06",
         "source_sha256": {name: digest(path) for name, path in [
