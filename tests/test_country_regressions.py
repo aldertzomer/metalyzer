@@ -125,5 +125,38 @@ class CountryNormalizationTests(unittest.TestCase):
                 )
 
 
+    def test_audited_reference_revisions(self):
+        root = Path(__file__).resolve().parents[1]
+        audit = root / "benchmark_smoke/current_benchmark/country_audit"
+
+        def read_rows(path):
+            with path.open(encoding="utf-8", newline="") as handle:
+                return list(csv.DictReader(handle, delimiter="\t"))
+
+        truth_rows = read_rows(root / "benchmark_true_labels.tsv")
+        countries = {row["run_accession"]: row["final_country"] for row in truth_rows}
+        changed = read_rows(audit / "reference_country_changes_2026-10-24.tsv")
+        self.assertEqual(len(changed), 23)
+        self.assertEqual(len({row["run_accession"] for row in changed}), 23)
+        for row in changed:
+            with self.subTest(run=row["run_accession"]):
+                self.assertNotEqual(row["previous_reference_country"], "unknown")
+                self.assertEqual(row["atb_predicted_country"], "unknown")
+                self.assertEqual(row["biosample_predicted_country"], "unknown")
+                self.assertEqual(row["revised_reference_country"], "unknown")
+                self.assertEqual(countries[row["run_accession"]], "unknown")
+
+        reviewed = read_rows(audit / "review_eight_conflicts_2026-10-24.tsv")
+        self.assertEqual(len(reviewed), 8)
+        self.assertEqual(len({row["run_accession"] for row in reviewed}), 8)
+        self.assertEqual(countries["ERR946747"], "GB")
+        for row in reviewed:
+            with self.subTest(reviewed_run=row["run_accession"]):
+                self.assertEqual(
+                    countries[row["run_accession"]],
+                    row["reviewed_reference"],
+                )
+
+
 if __name__ == "__main__":
     unittest.main()
