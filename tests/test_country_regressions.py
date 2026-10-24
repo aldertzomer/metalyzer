@@ -146,15 +146,32 @@ class CountryNormalizationTests(unittest.TestCase):
                 self.assertEqual(row["revised_reference_country"], "unknown")
                 self.assertEqual(countries[row["run_accession"]], "unknown")
 
+        # Preserve the earlier eight-case review as historical evidence,
+        # while treating the seven conflicting country values as unlabelled.
         reviewed = read_rows(audit / "review_eight_conflicts_2026-10-24.tsv")
         self.assertEqual(len(reviewed), 8)
         self.assertEqual(len({row["run_accession"] for row in reviewed}), 8)
         self.assertEqual(countries["ERR946747"], "GB")
-        for row in reviewed:
-            with self.subTest(reviewed_run=row["run_accession"]):
+        uk = next(row for row in reviewed if row["run_accession"] == "ERR946747")
+        self.assertEqual(uk["reviewed_reference"], "GB")
+
+        conflicts = read_rows(audit / "conflicted_country_revisions_2026-10-24.tsv")
+        self.assertEqual(len(conflicts), 7)
+        expected_conflicts = {
+            "SRR6314321", "SRR6314323", "SRR6314857",
+            "SRR6315299", "SRR6314874", "SRR6314326",
+            "SRR23525304",
+        }
+        self.assertEqual({row["run_accession"] for row in conflicts},
+                         expected_conflicts)
+        historical = {row["run_accession"]: row for row in reviewed}
+        for row in conflicts:
+            with self.subTest(conflicted_run=row["run_accession"]):
+                self.assertEqual(row["revised_reference_country"], "unknown")
+                self.assertEqual(countries[row["run_accession"]], "unknown")
                 self.assertEqual(
-                    countries[row["run_accession"]],
-                    row["reviewed_reference"],
+                    row["previous_reference_country"],
+                    historical[row["run_accession"]]["reviewed_reference"],
                 )
 
 
