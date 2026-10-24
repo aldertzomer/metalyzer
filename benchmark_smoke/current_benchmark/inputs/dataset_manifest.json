@@ -6,7 +6,7 @@
     "biosample_requests": "9fc75acc59990d881b883f9c4c4f0a668fc28855e44652151c8fdf4ddf65d885",
     "excluded": "f5f1ecd9eca95a6e8539910a1dbc560c32c7da561a5c62bb65d5588a4527a443",
     "mapping": "8710bafbe991d370a6e454b556407db2f4ddfe202ab3d1dd29ec362f8e1418dd",
-    "truth": "4a552f60b8acff6c769e7ec5051b59be8da007f1364614d330d7b0852a12bac9"
+    "truth": "da79afda2859c8ffe2c5f4987613fa507801a64d07e5727d0536ad65c14804b3"
   },
   "duplicate_biosample_accessions": {
     "SAMN08169257": 2
@@ -18,11 +18,11 @@
   "included_runs": 1275,
   "labels_from_predictions": false,
   "order": "Original ATB and accession-request relative order; truth joined by run_accession",
-  "reference": "benchmark_true_labels.tsv, source labels adjudicated at c01e1389b89aefaf748b6ae79a71ca3dcc08d45c; country codes ISO 3166-1 alpha-2; 23 unsupported references changed to unknown and ERR946747 restored to GB on 2026-10-24 (see country_audit reference change/review TSV files)",
+  "reference": "benchmark_true_labels.tsv, source labels adjudicated at c01e1389b89aefaf748b6ae79a71ca3dcc08d45c; country codes ISO 3166-1 alpha-2; 23 unsupported and 7 conflicted country references set to unknown; ERR946747 set to GB on 2026-10-24 (see country_audit review TSV files)",
   "source_sha256": {
     "benchmark.tsv": "8691800c867728e5ee72ade8f80c2d738ba7966ca990070bda511000c90bec69",
     "benchmark_accessions.tsv": "96ff59c917254016c97850d862dadb43f139e707c382c32862e9d302a271c27a",
-    "benchmark_true_labels.tsv": "4a552f60b8acff6c769e7ec5051b59be8da007f1364614d330d7b0852a12bac9",
+    "benchmark_true_labels.tsv": "da79afda2859c8ffe2c5f4987613fa507801a64d07e5727d0536ad65c14804b3",
     "goat_host_conflicts.tsv": "7cc0f74c627251e774ea3de84a7b841d11af50b7c956a5b6a2cfff76dc3fc023"
   }
 }
