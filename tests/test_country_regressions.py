@@ -58,6 +58,22 @@ class CountryNormalizationTests(unittest.TestCase):
             with self.subTest(raw=raw):
                 self.assertEqual(normalize_country(raw), expected)
 
+    def test_namibia_na_ambiguity(self):
+        # "NA" is commonly a missing marker as well as Namibia's ISO2
+        # code.  Do not reinterpret absent metadata as Namibia.
+        self.assertEqual(normalize_country("NA"), "unknown")
+        self.assertEqual(normalize_country("N/A"), "unknown")
+        self.assertEqual(normalize_country("Namibia"), "NA")
+        self.assertEqual(normalize_country("Namibia: Windhoek"), "NA")
+        self.assertEqual(
+            extract_country_from_row(pd.Series({"geo_loc_name": "Namibia"}), ""),
+            "NA",
+        )
+        self.assertEqual(
+            extract_country_from_row(pd.Series({"geo_loc_name": "NA"}), ""),
+            "unknown",
+        )
+
     def test_priority_and_original_attributes(self):
         cases = [
             ({"original_attributes.sample_identifier": "AL",
