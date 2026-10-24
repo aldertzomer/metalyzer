@@ -1,0 +1,736 @@
+test_duplicate_truth_or_prediction_run_fails (test_benchmark_evaluation.BenchmarkAlignmentTests.test_duplicate_truth_or_prediction_run_fails) ... ok
+test_missing_predictions_fail_unless_subset_allowed (test_benchmark_evaluation.BenchmarkAlignmentTests.test_missing_predictions_fail_unless_subset_allowed) ... ok
+test_repeated_biosample_maps_to_distinct_runs (test_benchmark_evaluation.BenchmarkAlignmentTests.test_repeated_biosample_maps_to_distinct_runs) ... ok
+test_truth_order_does_not_control_alignment (test_benchmark_evaluation.BenchmarkAlignmentTests.test_truth_order_does_not_control_alignment) ... ok
+test_unmapped_biosamples_fail (test_benchmark_evaluation.BenchmarkAlignmentTests.test_unmapped_biosamples_fail) ... ok
+test_wrong_biosample_order_fails (test_benchmark_evaluation.BenchmarkAlignmentTests.test_wrong_biosample_order_fails) ... ok
+test_biosample_matrix_counts_duplicates_and_handles_empty_classes (test_benchmark_evaluation.BenchmarkFigureTests.test_biosample_matrix_counts_duplicates_and_handles_empty_classes) ... ok
+test_build_gzip_batches_and_roundtrip (test_biosample.BioSampleTests.test_build_gzip_batches_and_roundtrip) ... Input mode: BioSample
+BioSample store: /tmp/tmp9g3gbuex/biosample.parquet.5wlzs4my.tmp
+Requested BioSamples: 2
+BioSample accession index: /tmp/tmp9g3gbuex/biosample.parquet.5wlzs4my.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 2
+BioSample lookup time: 0.012 seconds
+BioSample metadata columns: 17
+Input mode: BioSample
+BioSample store: /tmp/tmp9g3gbuex/biosample.parquet
+Requested BioSamples: 2
+BioSample accession index: /tmp/tmp9g3gbuex/biosample.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 2
+BioSample lookup time: 0.016 seconds
+BioSample metadata columns: 17
+ok
+test_cli_and_normal_tsv_pipeline (test_biosample.BioSampleTests.test_cli_and_normal_tsv_pipeline) ... usage: python -m unittest [-h] [--version] [--metadata METADATA |
+                          --biosample BIOSAMPLE [BIOSAMPLE ...] |
+                          --biosample-file BIOSAMPLE_FILE]
+                          [--biosample-path BIOSAMPLE_PATH]
+                          [--sources SOURCES] [--out OUT] [--id-col ID_COL]
+                          [--taxonomy-dir TAXONOMY_DIR]
+                          [--disable-host-aliases] [--other-animal-taxonomy]
+                          [--download-taxonomy DIR] [--device DEVICE]
+                          [--batch-size BATCH_SIZE]
+                          [--method {nli,llm,mistral}] [--llm-model LLM_MODEL]
+                          [--llm-revision LLM_REVISION]
+                          [--llm-batch-size LLM_BATCH_SIZE]
+                          [--llm-max-new-tokens LLM_MAX_NEW_TOKENS]
+                          [--llm-min-score LLM_MIN_SCORE]
+                          [--api-key-file API_KEY_FILE]
+                          [--mistral-model MISTRAL_MODEL]
+                          [--mistral-concurrency MISTRAL_CONCURRENCY]
+                          [--mistral-retries MISTRAL_RETRIES]
+                          [--mistral-timeout MISTRAL_TIMEOUT]
+                          [--mistral-random-seed MISTRAL_RANDOM_SEED]
+                          [--mistral-max-tokens MISTRAL_MAX_TOKENS]
+                          [--mistral-progress-every MISTRAL_PROGRESS_EVERY]
+                          [--limit LIMIT] [--min-score MIN_SCORE]
+                          [--max-value-chars MAX_VALUE_CHARS]
+                          [--max-record-chars MAX_RECORD_CHARS]
+                          [--disable-noisy-field-exclusion] [--skip-date]
+                          [--skip-country] [--disable-verify-source]
+python -m unittest: error: --id-col is required for analysis
+usage: python -m unittest [-h] [--version] [--metadata METADATA |
+                          --biosample BIOSAMPLE [BIOSAMPLE ...] |
+                          --biosample-file BIOSAMPLE_FILE]
+                          [--biosample-path BIOSAMPLE_PATH]
+                          [--sources SOURCES] [--out OUT] [--id-col ID_COL]
+                          [--taxonomy-dir TAXONOMY_DIR]
+                          [--disable-host-aliases] [--other-animal-taxonomy]
+                          [--download-taxonomy DIR] [--device DEVICE]
+                          [--batch-size BATCH_SIZE]
+                          [--method {nli,llm,mistral}] [--llm-model LLM_MODEL]
+                          [--llm-revision LLM_REVISION]
+                          [--llm-batch-size LLM_BATCH_SIZE]
+                          [--llm-max-new-tokens LLM_MAX_NEW_TOKENS]
+                          [--llm-min-score LLM_MIN_SCORE]
+                          [--api-key-file API_KEY_FILE]
+                          [--mistral-model MISTRAL_MODEL]
+                          [--mistral-concurrency MISTRAL_CONCURRENCY]
+                          [--mistral-retries MISTRAL_RETRIES]
+                          [--mistral-timeout MISTRAL_TIMEOUT]
+                          [--mistral-random-seed MISTRAL_RANDOM_SEED]
+                          [--mistral-max-tokens MISTRAL_MAX_TOKENS]
+                          [--mistral-progress-every MISTRAL_PROGRESS_EVERY]
+                          [--limit LIMIT] [--min-score MIN_SCORE]
+                          [--max-value-chars MAX_VALUE_CHARS]
+                          [--max-record-chars MAX_RECORD_CHARS]
+                          [--disable-noisy-field-exclusion] [--skip-date]
+                          [--skip-country] [--disable-verify-source]
+python -m unittest: error: argument --biosample: not allowed with argument --metadata
+Metalyzer 0.2 started
+Input mode: BioSample
+BioSample store: /tmp/tmpwd1971lj/biosample.parquet
+Requested BioSamples: 2
+Building BioSample accession index: /tmp/tmpwd1971lj/biosample.accessions.sqlite
+Indexed BioSamples: 1; elapsed: 0.0s
+BioSample accession index: /tmp/tmpwd1971lj/biosample.accessions.sqlite; index built/reused: built
+Resolved BioSamples: 2
+BioSample lookup time: 0.015 seconds
+BioSample metadata columns: 15
+Run provenance:
+  Metalyzer version: 0.2
+  Git commit: 1e97dfaff29d72e75c8f8de2f129f732745d3aac
+  Command line: /home/zomer007/miniforge3/envs/metalyzer/bin/python /home/zomer007/PycharmProjects/metalyzer/metalyzer.py --biosample-file /tmp/tmpwd1971lj/accessions.txt --biosample-path /tmp/tmpwd1971lj/biosample.parquet --sources /tmp/tmpwd1971lj/sources.tsv --out /tmp/tmpwd1971lj/result.tsv --method llm --disable-verify-source
+  Python version: 3.14.3
+  Platform: Linux-5.4.0-172-generic-x86_64-with-glibc2.31
+  Source method: llm
+  NLI model: MoritzLaurer/deberta-v3-large-zeroshot-v2.0
+  Local LLM model: mistralai/Ministral-3-8B-Instruct-2512
+  Device: 0
+  NLI batch size: 64
+  LLM batch size: 1
+  llm_min_score: 0.75
+  Min score (NLI only): 0.2
+  Max value chars: 300
+  Max record chars: 2000
+  Noisy-field exclusion: enabled
+  Filtering profile: variant_c_v1
+  Metadata path: BioSample input
+  Sources path: /tmp/tmpwd1971lj/sources.tsv
+  Sources SHA256: 4be6c87fb1605bb1f6bf925daa90806605aaecd801b265e55d21957d73e6cd7b
+  Taxonomy directory: none
+  Configured host aliases enabled: True
+  Specific other-animal taxonomy enabled: False
+  Metadata rows: 2
+  Metadata columns: 15
+NLI verification stage seconds (including any weight loading): 0.007
+NLI token-limit exposure: {"nli_token_exposure_all": {"available": false}, "nli_token_exposure_source_model": {"available": false}}
+Filtering audit: /tmp/tmpwd1971lj/result.tsv.filtering.json; excluded fields: /tmp/tmpwd1971lj/result.tsv.excluded_fields.tsv
+Run totals:
+  total rows: 2
+  deterministic taxonomy assignments: 0
+  explicit host taxonomy ID assignments: 0
+  exact host-name assignments: 0
+  configured host-alias assignments: 0
+  specific other-animal assignments: 0
+  LLM assignments: 2
+  LLM assignments before confidence filtering: 0
+  LLM low-score calls converted to unknown: 0
+  LLM assignments retained after confidence filtering: 0
+  unknown calls: 2
+  invalid model outputs: 0
+  NLI verification scores: 0
+  output path: /tmp/tmpwd1971lj/result.tsv
+  log path: /tmp/tmpwd1971lj/result.tsv.log
+Wrote /tmp/tmpwd1971lj/result.tsv (n=2)
+ok
+test_conversion_failure_preserves_existing (test_biosample.BioSampleTests.test_conversion_failure_preserves_existing) ... ok
+test_directory_reuses_file_index_and_shards (test_biosample.BioSampleTests.test_directory_reuses_file_index_and_shards) ... Building BioSample accession index: /tmp/tmp8db54n1r/biosample.accessions.sqlite
+Indexed BioSamples: 1; elapsed: 0.0s
+BioSample accession index: /tmp/tmp8db54n1r/biosample.accessions.sqlite; index built/reused: built
+Input mode: BioSample
+BioSample store: /tmp/tmp8db54n1r
+Requested BioSamples: 1
+BioSample accession index: /tmp/tmp8db54n1r/biosample.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 1
+BioSample lookup time: 0.007 seconds
+BioSample metadata columns: 15
+Input mode: BioSample
+BioSample store: /tmp/tmp8db54n1r
+Requested BioSamples: 2
+Building BioSample accession index: /tmp/tmp8db54n1r/biosample.accessions.sqlite
+Indexed BioSamples: 1; elapsed: 0.0s
+Indexed BioSamples: 4; elapsed: 0.0s
+BioSample accession index: /tmp/tmp8db54n1r/biosample.accessions.sqlite; index built/reused: built
+Resolved BioSamples: 2
+BioSample lookup time: 0.015 seconds
+BioSample metadata columns: 16
+ok
+test_lookup_order_duplicates_maps_and_priority (test_biosample.BioSampleTests.test_lookup_order_duplicates_maps_and_priority) ... Input mode: BioSample
+BioSample store: /tmp/tmp7qpvw2ce/biosample.parquet
+Requested BioSamples: 3
+Building BioSample accession index: /tmp/tmp7qpvw2ce/biosample.accessions.sqlite
+Indexed BioSamples: 1; elapsed: 0.0s
+BioSample accession index: /tmp/tmp7qpvw2ce/biosample.accessions.sqlite; index built/reused: built
+Resolved BioSamples: 3
+BioSample lookup time: 0.009 seconds
+BioSample metadata columns: 15
+Input mode: BioSample
+BioSample store: /tmp/tmp7qpvw2ce/biosample.parquet
+Requested BioSamples: 1
+BioSample accession index: /tmp/tmp7qpvw2ce/biosample.accessions.sqlite; index built/reused: reused
+Resolved BioSamples: 1
+BioSample lookup time: 0.006 seconds
+BioSample metadata columns: 15
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 3
+  Total deterministic assignments: 0
+  Records continuing to model classification: 3
+ok
+test_missing_and_index_reuse_invalidation (test_biosample.BioSampleTests.test_missing_and_index_reuse_invalidation) ... Input mode: BioSample
+BioSample store: /tmp/tmpnf_0jbnh/biosample.parquet
+Requested BioSamples: 2
+Building BioSample accession index: /tmp/tmpnf_0jbnh/biosample.accessions.sqlite
+Indexed BioSamples: 1; elapsed: 0.0s
+BioSample accession index: /tmp/tmpnf_0jbnh/biosample.accessions.sqlite; index built/reused: built
+ok
+test_missing_fails_before_model_creation (test_biosample.BioSampleTests.test_missing_fails_before_model_creation) ... BioSample accession index: /tmp/tmpnf_0jbnh/biosample.accessions.sqlite; index built/reused: reused
+Metalyzer 0.2 started
+Input mode: BioSample
+BioSample store: /tmp/tmp6b333vga/biosample.parquet
+Requested BioSamples: 1
+Building BioSample accession index: /tmp/tmp6b333vga/biosample.accessions.sqlite
+Indexed BioSamples: 1; elapsed: 0.0s
+BioSample accession index: /tmp/tmp6b333vga/biosample.accessions.sqlite; index built/reused: built
+Metalyzer analysis failed
+Traceback (most recent call last):
+  File "/home/zomer007/PycharmProjects/metalyzer/metalyzer.py", line 162, in main
+    metadata = load_biosamples(accessions, args.biosample_path)
+  File "/home/zomer007/PycharmProjects/metalyzer/modules/biosample.py", line 172, in load_biosamples
+    raise ValueError(f'Missing BioSample accessions ({len(missing)}): ' + ', '.join(missing[:20]) + (' ...' if len(missing) > 20 else ''))
+ValueError: Missing BioSample accessions (1): missing-accession
+ok
+test_nested_and_null_leaves (test_biosample.BioSampleTests.test_nested_and_null_leaves) ... ok
+test_streamed_download_resume_and_failure (test_biosample.BioSampleTests.test_streamed_download_resume_and_failure) ... ok
+test_audited_reference_revisions (test_country_regressions.CountryNormalizationTests.test_audited_reference_revisions) ... ok
+test_country_names_and_aliases (test_country_regressions.CountryNormalizationTests.test_country_names_and_aliases) ... ok
+test_namibia_na_ambiguity (test_country_regressions.CountryNormalizationTests.test_namibia_na_ambiguity) ... ok
+test_priority_and_original_attributes (test_country_regressions.CountryNormalizationTests.test_priority_and_original_attributes) ... ok
+test_record_fallback_and_multiple_candidates (test_country_regressions.CountryNormalizationTests.test_record_fallback_and_multiple_candidates) ... ok
+test_reference_countries_use_iso2 (test_country_regressions.CountryNormalizationTests.test_reference_countries_use_iso2) ... ok
+test_duplicate_run_and_mismatched_request_sets_fail (test_current_benchmark.CurrentDatasetTests.test_duplicate_run_and_mismatched_request_sets_fail) ... ok
+test_missing_reference_run_and_extra_exclusion_fail (test_current_benchmark.CurrentDatasetTests.test_missing_reference_run_and_extra_exclusion_fail) ... ok
+test_real_reference_selection_and_documented_exclusions (test_current_benchmark.CurrentDatasetTests.test_real_reference_selection_and_documented_exclusions) ... ok
+test_changed_biosample_cache_hash_rejects_result_reuse (test_current_benchmark.CurrentRunnerTests.test_changed_biosample_cache_hash_rejects_result_reuse) ... ok
+test_identical_taxonomy_settings_and_explicit_legacy_switch (test_current_benchmark.CurrentRunnerTests.test_identical_taxonomy_settings_and_explicit_legacy_switch) ... ok
+test_readme_relative_links_exist (test_current_benchmark.CurrentRunnerTests.test_readme_relative_links_exist) ... ok
+test_alias_contradictions_and_compatible_exact_evidence (test_host_terminology.HostTerminologyTests.test_alias_contradictions_and_compatible_exact_evidence) ... ok
+test_alias_validation_precedes_model_loading_for_tsv (test_host_terminology.HostTerminologyTests.test_alias_validation_precedes_model_loading_for_tsv) ... ok
+test_ambiguous_names_cannot_be_bypassed_by_an_alias (test_host_terminology.HostTerminologyTests.test_ambiguous_names_cannot_be_bypassed_by_an_alias) ... ok
+test_cli_switches_and_unchanged_llm_threshold (test_host_terminology.HostTerminologyTests.test_cli_switches_and_unchanged_llm_threshold) ... ok
+test_extra_methods_skip_classifiers_keep_normal_output_and_logging (test_host_terminology.HostTerminologyTests.test_extra_methods_skip_classifiers_keep_normal_output_and_logging) ... ok
+test_multiple_aliases_and_optional_old_vocabulary (test_host_terminology.HostTerminologyTests.test_multiple_aliases_and_optional_old_vocabulary) ... ok
+test_operational_aliases_exact_normalized_and_taxonomy_primary (test_host_terminology.HostTerminologyTests.test_operational_aliases_exact_normalized_and_taxonomy_primary) ... ok
+test_specific_unlisted_animals_opt_in_and_conservative_boundaries (test_host_terminology.HostTerminologyTests.test_specific_unlisted_animals_opt_in_and_conservative_boundaries) ... ok
+test_verification_still_scores_both_additional_routes (test_host_terminology.HostTerminologyTests.test_verification_still_scores_both_additional_routes) ... ok
+test_ambiguous_normalization_and_exact_labels (test_llm.LocalLLMTests.test_ambiguous_normalization_and_exact_labels) ... ok
+test_chat_messages_preserve_record (test_llm.LocalLLMTests.test_chat_messages_preserve_record) ... ok
+test_cli_defaults_and_validation (test_llm.LocalLLMTests.test_cli_defaults_and_validation) ... ok
+test_cli_limit_schema_and_deterministic_fields (test_llm.LocalLLMTests.test_cli_limit_schema_and_deterministic_fields) ... ok
+test_cli_logs_llm_threshold_and_filter_totals (test_llm.LocalLLMTests.test_cli_logs_llm_threshold_and_filter_totals) ... ok
+test_cuda_validation_and_explicit_device (test_llm.LocalLLMTests.test_cuda_validation_and_explicit_device) ... ok
+test_empty_cli_preserves_schema_and_method_warning (test_llm.LocalLLMTests.test_empty_cli_preserves_schema_and_method_warning) ... ok
+test_eos_padding_and_revision_omitted (test_llm.LocalLLMTests.test_eos_padding_and_revision_omitted) ... ok
+test_explicit_unknown_source_column (test_llm.LocalLLMTests.test_explicit_unknown_source_column) ... ok
+test_generated_label_score_uses_only_label_tokens (test_llm.LocalLLMTests.test_generated_label_score_uses_only_label_tokens) ... ok
+test_generation_batches_and_model_loading (test_llm.LocalLLMTests.test_generation_batches_and_model_loading) ... ok
+test_invalid_evidence_sanitized_and_truncated (test_llm.LocalLLMTests.test_invalid_evidence_sanitized_and_truncated) ... ok
+test_llm_confidence_cutoff_preserves_score_and_rejected_label (test_llm.LocalLLMTests.test_llm_confidence_cutoff_preserves_score_and_rejected_label) ... ok
+test_low_score_unknown_skips_nli_verification (test_llm.LocalLLMTests.test_low_score_unknown_skips_nli_verification) ... ok
+test_min_score_does_not_change_llm_calls (test_llm.LocalLLMTests.test_min_score_does_not_change_llm_calls) ... ok
+test_missing_padding_and_eos_rejected (test_llm.LocalLLMTests.test_missing_padding_and_eos_rejected) ... ok
+test_mixed_taxonomy_invalid_output_and_order (test_llm.LocalLLMTests.test_mixed_taxonomy_invalid_output_and_order) ... ok
+test_nli_regression_no_causal_model (test_llm.LocalLLMTests.test_nli_regression_no_causal_model) ... ok
+test_no_model_for_empty_or_all_taxonomy_both_methods (test_llm.LocalLLMTests.test_no_model_for_empty_or_all_taxonomy_both_methods) ... ok
+test_prompt_preserves_natural_record_and_omits_na (test_llm.LocalLLMTests.test_prompt_preserves_natural_record_and_omits_na) ... ok
+test_quoted_label_score_excludes_quotes_and_eos (test_llm.LocalLLMTests.test_quoted_label_score_excludes_quotes_and_eos) ... ok
+test_response_parser (test_llm.LocalLLMTests.test_response_parser) ... ok
+test_shared_source_validation (test_llm.LocalLLMTests.test_shared_source_validation) ... ok
+test_taxonomy_unavailable_label_falls_back_to_llm (test_llm.LocalLLMTests.test_taxonomy_unavailable_label_falls_back_to_llm) ... /home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09858f71f0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09858f76a0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09858f7b50>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09858f7d30>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09858f7c40>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09858f7e20>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bc9a0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bca90>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bc6d0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bc8b0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bd210>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bf5b0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bf6a0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bf790>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bfa60>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bfb50>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bf880>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bf970>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bc7c0>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f09859bfe20>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f098581c040>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f098581c220>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/zomer007/miniforge3/envs/metalyzer/lib/python3.14/unittest/mock.py:2252: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7f098581c310>
+  def __init__(self, name, parent):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_bad_pair_source_evidence_count_and_live_version_are_rejected (test_metadata_version_evaluation.MetadataVersionTests.test_bad_pair_source_evidence_count_and_live_version_are_rejected) ... ok
+test_evaluator_counts_all_deterministic_routes (test_metadata_version_evaluation.MetadataVersionTests.test_evaluator_counts_all_deterministic_routes) ... ok
+test_exact_44_exclusions_and_untouched_original_evaluation (test_metadata_version_evaluation.MetadataVersionTests.test_exact_44_exclusions_and_untouched_original_evaluation) ... ok
+test_actual_async_timeout_cancels_request (test_mistral.MistralTests.test_actual_async_timeout_cancels_request) ... ok
+test_api_key_formats_and_validation (test_mistral.MistralTests.test_api_key_formats_and_validation) ... ok
+test_cli_outputs_standard_fields_and_preserves_existing_output_on_api_failure (test_mistral.MistralTests.test_cli_outputs_standard_fields_and_preserves_existing_output_on_api_failure) ... ok
+test_cli_validation (test_mistral.MistralTests.test_cli_validation) ... ok
+test_client_factory_uses_optional_sdk_and_never_logs_key (test_mistral.MistralTests.test_client_factory_uses_optional_sdk_and_never_logs_key) ... ok
+test_concurrency_is_bounded_and_completion_order_does_not_reorder_rows (test_mistral.MistralTests.test_concurrency_is_bounded_and_completion_order_does_not_reorder_rows) ... ok
+test_empty_and_all_taxonomy_need_no_sdk_key_or_client (test_mistral.MistralTests.test_empty_and_all_taxonomy_need_no_sdk_key_or_client) ... ok
+test_explicit_unknown_score_column_and_invalid_evidence (test_mistral.MistralTests.test_explicit_unknown_score_column_and_invalid_evidence) ... ok
+test_failure_cancels_other_workers_and_closes_client (test_mistral.MistralTests.test_failure_cancels_other_workers_and_closes_client) ... ok
+test_no_choices_becomes_evidenced_unknown_without_retry (test_mistral.MistralTests.test_no_choices_becomes_evidenced_unknown_without_retry) ... ok
+test_prompt_and_schema_add_unknown_without_mutating_vocabulary (test_mistral.MistralTests.test_prompt_and_schema_add_unknown_without_mutating_vocabulary) ... ok
+test_quota_exhaustion_and_permanent_errors_fail_without_unknown_calls (test_mistral.MistralTests.test_quota_exhaustion_and_permanent_errors_fail_without_unknown_calls) ... ok
+test_sparse_order_schema_and_sdk_request_options (test_mistral.MistralTests.test_sparse_order_schema_and_sdk_request_options) ... ok
+test_sync_api_in_event_loop_gives_actionable_error (test_mistral.MistralTests.test_sync_api_in_event_loop_gives_actionable_error) ... ok
+test_taxonomy_precedes_api_and_local_models_never_load (test_mistral.MistralTests.test_taxonomy_precedes_api_and_local_models_never_load) ... ok
+test_transient_http_and_timeout_retries_are_bounded (test_mistral.MistralTests.test_transient_http_and_timeout_retries_are_bounded) ... ok
+test_valid_unknown_and_malformed_response_parsing (test_mistral.MistralTests.test_valid_unknown_and_malformed_response_parsing) ... ok
+test_batch_rejects_misaligned_records (test_modules.ModuleTests.test_batch_rejects_misaligned_records) ... ok
+test_cli_can_disable_field_stages (test_modules.ModuleTests.test_cli_can_disable_field_stages) ... ok
+test_combination_aligns_by_key_and_preserves_duplicate_external_ids (test_modules.ModuleTests.test_combination_aligns_by_key_and_preserves_duplicate_external_ids) ... ok
+test_combiner_rejects_source_gaps_overlaps_and_foreign_keys (test_modules.ModuleTests.test_combiner_rejects_source_gaps_overlaps_and_foreign_keys) ... ok
+test_country_does_not_fuzzy_match_unrelated_text (test_modules.ModuleTests.test_country_does_not_fuzzy_match_unrelated_text) ... ok
+test_date_boundaries_and_fallback (test_modules.ModuleTests.test_date_boundaries_and_fallback) ... ok
+test_every_stage_accepts_empty_batches_without_models (test_modules.ModuleTests.test_every_stage_accepts_empty_batches_without_models) ... Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 0
+  Records continuing to model classification: 0
+ok
+test_explicit_unknown_is_completed_not_unresolved (test_modules.ModuleTests.test_explicit_unknown_is_completed_not_unresolved) ... ok
+test_field_contract_rejects_gaps_duplicates_and_column_collisions (test_modules.ModuleTests.test_field_contract_rejects_gaps_duplicates_and_column_collisions) ... ok
+test_field_stages_in_isolation_and_missing_values (test_modules.ModuleTests.test_field_stages_in_isolation_and_missing_values) ... ok
+test_imports_do_not_load_model_libraries (test_modules.ModuleTests.test_imports_do_not_load_model_libraries) ... ok
+test_input_ignores_invalid_utf8_bytes (test_modules.ModuleTests.test_input_ignores_invalid_utf8_bytes) ... ok
+test_input_vocabulary_and_id_validation (test_modules.ModuleTests.test_input_vocabulary_and_id_validation) ... ok
+test_model_record_excludes_identifiers_and_normalizes_values_only (test_modules.ModuleTests.test_model_record_excludes_identifiers_and_normalizes_values_only) ... ok
+test_nli_preserves_sparse_keys_and_rejects_wrong_response_count (test_modules.ModuleTests.test_nli_preserves_sparse_keys_and_rejects_wrong_response_count) ... Batch 1: source classification done
+ok
+test_source_contract_rejects_bad_schema_values_and_scores (test_modules.ModuleTests.test_source_contract_rejects_bad_schema_values_and_scores) ... ok
+test_request_and_token_counts_without_changing_parameters (test_noisy_comparison.APIUsageTests.test_request_and_token_counts_without_changing_parameters) ... ok
+test_discordance_and_unknown_transitions (test_noisy_comparison.PairedComparisonTests.test_discordance_and_unknown_transitions) ... ok
+test_all_defined_exclusions_and_normalization (test_noisy_fields.NoisyFieldTests.test_all_defined_exclusions_and_normalization) ... ok
+test_before_truncation_and_metadata_unchanged (test_noisy_fields.NoisyFieldTests.test_before_truncation_and_metadata_unchanged) ... ok
+test_biosample_and_tsv_use_identical_field_rules (test_noisy_fields.NoisyFieldTests.test_biosample_and_tsv_use_identical_field_rules) ... ok
+test_cli_provenance_audits_and_normal_schema (test_noisy_fields.NoisyFieldTests.test_cli_provenance_audits_and_normal_schema) ... /home/zomer007/PycharmProjects/metalyzer/modules/deterministic_source.py:332: UserWarning: No --taxonomy-dir supplied; using NLI-only source classification.
+  warnings.warn(f"No --taxonomy-dir supplied; using {fallback_method.upper()}-only source classification.")
+/home/zomer007/PycharmProjects/metalyzer/modules/deterministic_source.py:332: UserWarning: No --taxonomy-dir supplied; using NLI-only source classification.
+  warnings.warn(f"No --taxonomy-dir supplied; using {fallback_method.upper()}-only source classification.")
+ok
+test_disabled_matches_frozen_legacy_bytes (test_noisy_fields.NoisyFieldTests.test_disabled_matches_frozen_legacy_bytes) ... ok
+test_equivalent_originals_and_unique_or_conflicting_values (test_noisy_fields.NoisyFieldTests.test_equivalent_originals_and_unique_or_conflicting_values) ... ok
+test_protected_fields_unknown_fields_collection_locations (test_noisy_fields.NoisyFieldTests.test_protected_fields_unknown_fields_collection_locations) ... ok
+test_taxonomy_both_modes_and_verification_same_record (test_noisy_fields.NoisyFieldTests.test_taxonomy_both_modes_and_verification_same_record) ... ok
+test_analysis_creates_log_with_provenance_warning_and_totals (test_runlog.RunLoggingTests.test_analysis_creates_log_with_provenance_warning_and_totals) ... /home/zomer007/PycharmProjects/metalyzer/modules/deterministic_source.py:332: UserWarning: No --taxonomy-dir supplied; using NLI-only source classification.
+  warnings.warn(f"No --taxonomy-dir supplied; using {fallback_method.upper()}-only source classification.")
+ok
+test_input_failure_keeps_nonzero_exit_and_full_traceback_in_log (test_runlog.RunLoggingTests.test_input_failure_keeps_nonzero_exit_and_full_traceback_in_log) ... ok
+test_selected_model_provenance_and_progress_reach_log (test_runlog.RunLoggingTests.test_selected_model_provenance_and_progress_reach_log) ... /home/zomer007/PycharmProjects/metalyzer/modules/deterministic_source.py:332: UserWarning: No --taxonomy-dir supplied; using NLI-only source classification.
+  warnings.warn(f"No --taxonomy-dir supplied; using {fallback_method.upper()}-only source classification.")
+/home/zomer007/PycharmProjects/metalyzer/modules/deterministic_source.py:332: UserWarning: No --taxonomy-dir supplied; using LLM-only source classification.
+  warnings.warn(f"No --taxonomy-dir supplied; using {fallback_method.upper()}-only source classification.")
+/home/zomer007/PycharmProjects/metalyzer/modules/deterministic_source.py:332: UserWarning: No --taxonomy-dir supplied; using MISTRAL-only source classification.
+  warnings.warn(f"No --taxonomy-dir supplied; using {fallback_method.upper()}-only source classification.")
+ok
+test_version_exits_without_analysis_arguments (test_runlog.RunLoggingTests.test_version_exits_without_analysis_arguments) ... ok
+test_all_methods_skip_fallback_and_verification_still_runs (test_taxonomy.HostNameTaxonomyTests.test_all_methods_skip_fallback_and_verification_still_runs) ... Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 2
+    Scientific names: 2
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 2
+  Records continuing to model classification: 0
+Record rendering statistics (all records): {"administrative_technical": 0, "after_length_mean": 22.0, "after_length_median": 22.0, "after_truncated": 0, "before_length_mean": 22.0, "before_length_median": 22.0, "before_truncated": 0, "fields_considered": 4, "nonempty_eligible_fields": 2, "records": 2, "records_with_omissions": 0, "redundant_original": 0}
+Record rendering statistics (source model records): {"administrative_technical": 0, "after_length_mean": 0.0, "after_length_median": 0.0, "after_truncated": 0, "before_length_mean": 0.0, "before_length_median": 0.0, "before_truncated": 0, "fields_considered": 0, "nonempty_eligible_fields": 0, "records": 0, "records_with_omissions": 0, "redundant_original": 0}
+Source model stage seconds (including weight loading): 0.000
+Source classification:
+  taxonomy host_tax_id: 0
+  taxonomy host_name: 2
+  configured host_alias: 0
+  taxonomy host_other_animal: 0
+  taxonomy total: 2
+  NLI:                  0
+  NLI -> unknown:        0
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 2
+    Scientific names: 2
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 2
+  Records continuing to model classification: 0
+Record rendering statistics (all records): {"administrative_technical": 0, "after_length_mean": 22.0, "after_length_median": 22.0, "after_truncated": 0, "before_length_mean": 22.0, "before_length_median": 22.0, "before_truncated": 0, "fields_considered": 4, "nonempty_eligible_fields": 2, "records": 2, "records_with_omissions": 0, "redundant_original": 0}
+Record rendering statistics (source model records): {"administrative_technical": 0, "after_length_mean": 0.0, "after_length_median": 0.0, "after_truncated": 0, "before_length_mean": 0.0, "before_length_median": 0.0, "before_truncated": 0, "fields_considered": 0, "nonempty_eligible_fields": 0, "records": 0, "records_with_omissions": 0, "redundant_original": 0}
+LLM model: mistralai/Ministral-3-8B-Instruct-2512
+LLM minimum generation score: 0.75
+--min-score applies only to NLI classification; --llm-min-score filters local LLM calls using source_llm_score, which is not a calibrated probability of correctness.
+Source model stage seconds (including weight loading): 0.000
+Source classification:
+  taxonomy host_tax_id: 0
+  taxonomy host_name: 2
+  configured host_alias: 0
+  taxonomy host_other_animal: 0
+  taxonomy total: 2
+  LLM:                  0
+  LLM -> unknown:        0
+  invalid LLM outputs:  0
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 2
+    Scientific names: 2
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 2
+  Records continuing to model classification: 0
+Record rendering statistics (all records): {"administrative_technical": 0, "after_length_mean": 22.0, "after_length_median": 22.0, "after_truncated": 0, "before_length_mean": 22.0, "before_length_median": 22.0, "before_truncated": 0, "fields_considered": 4, "nonempty_eligible_fields": 2, "records": 2, "records_with_omissions": 0, "redundant_original": 0}
+Record rendering statistics (source model records): {"administrative_technical": 0, "after_length_mean": 0.0, "after_length_median": 0.0, "after_truncated": 0, "before_length_mean": 0.0, "before_length_median": 0.0, "before_truncated": 0, "fields_considered": 0, "nonempty_eligible_fields": 0, "records": 0, "records_with_omissions": 0, "redundant_original": 0}
+Mistral model: mistral-small-latest
+--min-score is not applicable to Mistral mode: the API does not produce calibrated candidate scores.
+Source model stage seconds (including weight loading): 0.000
+Source classification:
+  taxonomy host_tax_id: 0
+  taxonomy host_name: 2
+  configured host_alias: 0
+  taxonomy host_other_animal: 0
+  taxonomy total: 2
+  MISTRAL:                  0
+  MISTRAL -> unknown:        0
+  invalid Mistral outputs:  0
+ok
+test_ambiguous_missing_invalid_and_nonexact_names (test_taxonomy.HostNameTaxonomyTests.test_ambiguous_missing_invalid_and_nonexact_names) ... Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 2
+  No deterministic assignment: 3
+  Total deterministic assignments: 0
+  Records continuing to model classification: 3
+ok
+test_cli_log_reports_both_routes_with_regular_output (test_taxonomy.HostNameTaxonomyTests.test_cli_log_reports_both_routes_with_regular_output) ... ok
+test_exact_names_and_case_whitespace_normalization (test_taxonomy.HostNameTaxonomyTests.test_exact_names_and_case_whitespace_normalization) ... Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 7
+    Scientific names: 7
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 7
+  Records continuing to model classification: 0
+ok
+test_incompatible_hosts_are_not_hidden_by_a_broad_anchor (test_taxonomy.HostNameTaxonomyTests.test_incompatible_hosts_are_not_hidden_by_a_broad_anchor) ... Host taxonomy conflict  row 0: incompatible host taxa: 9031/9606
+Host taxonomy conflict  row 1: incompatible host taxa: 9685/9606
+Taxonomy resolution:
+  Explicit host taxonomy ID: 1
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 2
+  No deterministic assignment: 2
+  Total deterministic assignments: 1
+  Records continuing to model classification: 2
+Host taxonomy conflict  row 0: incompatible host taxa: 8839/9031
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 1
+  No deterministic assignment: 1
+  Total deterministic assignments: 0
+  Records continuing to model classification: 1
+ok
+test_numeric_aliases_agreement_missing_invalid_and_conflicts (test_taxonomy.HostNameTaxonomyTests.test_numeric_aliases_agreement_missing_invalid_and_conflicts) ... ok
+test_one_names_pass_per_batch_and_cached_results (test_taxonomy.HostNameTaxonomyTests.test_one_names_pass_per_batch_and_cached_results) ... ok
+test_original_host_scientific_alias_and_conflict (test_taxonomy.HostNameTaxonomyTests.test_original_host_scientific_alias_and_conflict) ... Host taxonomy conflict  row 1: different configured source classes: chicken, human
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 2
+    Scientific names: 2
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 1
+  No deterministic assignment: 1
+  Total deterministic assignments: 2
+  Records continuing to model classification: 1
+ok
+test_pathogen_free_text_and_unconfigured_wildlife_never_assign (test_taxonomy.HostNameTaxonomyTests.test_pathogen_free_text_and_unconfigured_wildlife_never_assign) ... Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 4
+  Total deterministic assignments: 0
+  Records continuing to model classification: 4
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 1
+    Scientific names: 1
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 1
+  Records continuing to model classification: 0
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1
+  Total deterministic assignments: 0
+  Records continuing to model classification: 1
+ok
+test_unique_aliases_scientific_precedence_and_merged_alias (test_taxonomy.HostNameTaxonomyTests.test_unique_aliases_scientific_precedence_and_merged_alias) ... ok
+test_all_taxonomy_never_loads_model_and_no_match_falls_back (test_taxonomy.TaxonomyTests.test_all_taxonomy_never_loads_model_and_no_match_falls_back) ... Taxonomy resolution:
+  Explicit host taxonomy ID: 3
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 3
+  Records continuing to model classification: 0
+Source model stage seconds (including weight loading): 0.000
+Source classification:
+  taxonomy host_tax_id: 3
+  taxonomy host_name: 0
+  configured host_alias: 0
+  taxonomy host_other_animal: 0
+  taxonomy total: 3
+  NLI:                  0
+  NLI -> unknown:        0
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1
+  Total deterministic assignments: 0
+  Records continuing to model classification: 1
+Batch 1: source classification done
+Source model stage seconds (including weight loading): 0.009
+Source classification:
+  taxonomy host_tax_id: 0
+  taxonomy host_name: 0
+  configured host_alias: 0
+  taxonomy host_other_animal: 0
+  taxonomy total: 0
+  NLI:                  1
+  NLI -> unknown:        0
+ok
+test_blank_missing_anchors_and_invalid_taxids (test_taxonomy.TaxonomyTests.test_blank_missing_anchors_and_invalid_taxids) ... ok
+test_build_record_uses_natural_field_and_value_boundaries (test_taxonomy.TaxonomyTests.test_build_record_uses_natural_field_and_value_boundaries) ... ok
+test_cli_rejects_conflicting_anchors_before_model_loading (test_taxonomy.TaxonomyTests.test_cli_rejects_conflicting_anchors_before_model_loading) ... ok
+test_duplicate_anchor_fails_before_classification (test_taxonomy.TaxonomyTests.test_duplicate_anchor_fails_before_classification) ... ok
+test_environment_and_artificial_descendants_not_ordinary_organisms (test_taxonomy.TaxonomyTests.test_environment_and_artificial_descendants_not_ordinary_organisms) ... ok
+test_exact_descendant_and_merged_ids (test_taxonomy.TaxonomyTests.test_exact_descendant_and_merged_ids) ... ok
+test_explicit_download_and_safe_members (test_taxonomy.TaxonomyTests.test_explicit_download_and_safe_members) ... ok
+test_invalid_and_merged_anchor_configuration_is_reported (test_taxonomy.TaxonomyTests.test_invalid_and_merged_anchor_configuration_is_reported) ... ok
+test_load_failures_and_empty_input (test_taxonomy.TaxonomyTests.test_load_failures_and_empty_input) ... Downloaded taxonomy to taxonomy
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 0
+  Total deterministic assignments: 0
+  Records continuing to model classification: 0
+Source model stage seconds (including weight loading): 0.000
+Source classification:
+  taxonomy host_tax_id: 0
+  taxonomy host_name: 0
+  configured host_alias: 0
+  taxonomy host_other_animal: 0
+  taxonomy total: 0
+  NLI:                  0
+  NLI -> unknown:        0
+ok
+test_mixed_integration_fallback_order_and_generic_taxid_ignored (test_taxonomy.TaxonomyTests.test_mixed_integration_fallback_order_and_generic_taxid_ignored) ... ok
+test_nli_score_logic_unchanged (test_taxonomy.TaxonomyTests.test_nli_score_logic_unchanged) ... ok
+test_repository_vocabulary_has_requested_anchors (test_taxonomy.TaxonomyTests.test_repository_vocabulary_has_requested_anchors) ... ok
+test_sources_tsv_parsing_keeps_text_models_free_of_anchor_ids (test_taxonomy.TaxonomyTests.test_sources_tsv_parsing_keeps_text_models_free_of_anchor_ids) ... Batch 1: source classification done
+ok
+test_specific_anchor_overrides_broad_rank_independent_ancestors (test_taxonomy.TaxonomyTests.test_specific_anchor_overrides_broad_rank_independent_ancestors) ... ok
+test_no_cpu_inference_when_cuda_unavailable (test_terminology_benchmark_runner.TSVBenchmarkRunnerTests.test_no_cpu_inference_when_cuda_unavailable) ... ok
+test_preexisting_output_is_preserved (test_terminology_benchmark_runner.TSVBenchmarkRunnerTests.test_preexisting_output_is_preserved) ... ok
+test_tsv_commands_settings_no_paid_api_and_safe_resume (test_terminology_benchmark_runner.TSVBenchmarkRunnerTests.test_tsv_commands_settings_no_paid_api_and_safe_resume) ... Starting tsv nli: GPU=CPU test mock GPU; 1,320 requests; verification enabled
+nli: complete; 0.0s
+Starting tsv llm: GPU=CPU test mock GPU; 1,320 requests; verification enabled
+llm: complete; 0.0s
+Reusing completed nli
+Reusing completed llm
+ok
+test_all_unknown_never_loads_verifier (test_verification.SourceVerificationTests.test_all_unknown_never_loads_verifier) ... ok
+test_cli_disable_flag_and_reserved_name (test_verification.SourceVerificationTests.test_cli_disable_flag_and_reserved_name) ... ok
+test_cli_verifies_after_final_nli_decision_with_one_model (test_verification.SourceVerificationTests.test_cli_verifies_after_final_nli_decision_with_one_model) ... Metalyzer 0.2 started
+Run provenance:
+  Metalyzer version: 0.2
+  Git commit: 1e97dfaff29d72e75c8f8de2f129f732745d3aac
+  Command line: /home/zomer007/miniforge3/envs/metalyzer/bin/python /home/zomer007/PycharmProjects/metalyzer/metalyzer.py --metadata /tmp/tmpeyki7xzm/input.tsv --sources /tmp/tmpeyki7xzm/sources.tsv --out /tmp/tmpeyki7xzm/out.tsv --id-col id --device -1
+  Python version: 3.14.3
+  Platform: Linux-5.4.0-172-generic-x86_64-with-glibc2.31
+  Source method: nli
+  NLI model: MoritzLaurer/deberta-v3-large-zeroshot-v2.0
+  Device: -1
+  NLI batch size: 64
+  Min score (NLI only): 0.2
+  Max value chars: 300
+  Max record chars: 2000
+  Noisy-field exclusion: enabled
+  Filtering profile: variant_c_v1
+  Metadata path: /tmp/tmpeyki7xzm/input.tsv
+  Sources path: /tmp/tmpeyki7xzm/sources.tsv
+  Sources SHA256: 5a0cb01798376cbee6e4c855696da18028f8c3c9e00158a22abad045d0067a2c
+  Taxonomy directory: none
+  Configured host aliases enabled: True
+  Specific other-animal taxonomy enabled: False
+  Metadata rows: 1
+  Metadata columns: 2
+Taxonomy resolution:
+  Explicit host taxonomy ID: 0
+  Exact host-name resolution: 0
+    Scientific names: 0
+    Common names/synonyms: 0
+  Configured host aliases: 0
+  Specific unlisted animals: 0
+  Ambiguous/conflicting hosts: 0
+  No deterministic assignment: 1
+  Total deterministic assignments: 0
+  Records continuing to model classification: 1
+Record rendering statistics (all records): {"administrative_technical": 0, "after_length_mean": 16.0, "after_length_median": 16.0, "after_truncated": 0, "before_length_mean": 16.0, "before_length_median": 16.0, "before_truncated": 0, "fields_considered": 2, "nonempty_eligible_fields": 1, "records": 1, "records_with_omissions": 0, "redundant_original": 0}
+Record rendering statistics (source model records): {"administrative_technical": 0, "after_length_mean": 16.0, "after_length_median": 16.0, "after_truncated": 0, "before_length_mean": 16.0, "before_length_median": 16.0, "before_truncated": 0, "fields_considered": 2, "nonempty_eligible_fields": 1, "records": 1, "records_with_omissions": 0, "redundant_original": 0}
+Batch 1: source classification done
+Source model stage seconds (including weight loading): 0.008
+Source classification:
+  taxonomy host_tax_id: 0
+  taxonomy host_name: 0
+  configured host_alias: 0
+  taxonomy host_other_animal: 0
+  taxonomy total: 0
+  NLI:                  1
+  NLI -> unknown:        0
+NLI verification stage seconds (including any weight loading): 0.005
+NLI token-limit exposure: {"nli_token_exposure_all": {"available": false}, "nli_token_exposure_source_model": {"available": false}}
+Filtering audit: /tmp/tmpeyki7xzm/out.tsv.filtering.json; excluded fields: /tmp/tmpeyki7xzm/out.tsv.excluded_fields.tsv
+Run totals:
+  total rows: 1
+  deterministic taxonomy assignments: 0
+  explicit host taxonomy ID assignments: 0
+  exact host-name assignments: 0
+  configured host-alias assignments: 0
+  specific other-animal assignments: 0
+  NLI assignments: 1
+  unknown calls: 0
+  invalid model outputs: 0
+  NLI verification scores: 1
+  output path: /tmp/tmpeyki7xzm/out.tsv
+  log path: /tmp/tmpeyki7xzm/out.tsv.log
+Wrote /tmp/tmpeyki7xzm/out.tsv (n=1)
+ok
+test_disabled_keeps_na_and_does_not_load_model (test_verification.SourceVerificationTests.test_disabled_keeps_na_and_does_not_load_model) ... ok
+test_nli_classification_reuses_same_model_and_default_definition (test_verification.SourceVerificationTests.test_nli_classification_reuses_same_model_and_default_definition) ... Batch 1: source classification done
+ok
+test_selected_full_label_and_unknown_rows (test_verification.SourceVerificationTests.test_selected_full_label_and_unknown_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 145 tests in 7.448s
+
+OK
