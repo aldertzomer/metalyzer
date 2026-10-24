@@ -1,0 +1,8 @@
+run_accession	biosample_accession	previous_reference_country	revised_reference_country	atb_country	biosample_geo_loc_name	reason
+SRR6314321	SAMN08055004	BR	unknown	Brazil	USA	Independent metadata sources disagree; country cannot be treated as ground truth without further evidence
+SRR6314323	SAMN08055003	BR	unknown	Brazil	USA	Independent metadata sources disagree; country cannot be treated as ground truth without further evidence
+SRR6314857	SAMN08053153	BR	unknown	Brazil	USA	Independent metadata sources disagree; country cannot be treated as ground truth without further evidence
+SRR6315299	SAMN08054605	BR	unknown	Brazil	USA	Independent metadata sources disagree; country cannot be treated as ground truth without further evidence
+SRR6314874	SAMN08053348	BR	unknown	Brazil	USA	Independent metadata sources disagree; country cannot be treated as ground truth without further evidence
+SRR23525304	SAMN33356324	US	unknown	USA:NY	Canada	Independent metadata sources disagree; country cannot be treated as ground truth without further evidence
+SRR6314326	SAMN08055029	BR	unknown	Brazil	USA	Independent metadata sources disagree; country cannot be treated as ground truth without further evidence
