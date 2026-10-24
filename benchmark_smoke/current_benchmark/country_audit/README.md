@@ -41,3 +41,5 @@ After the eight-case review above, the benchmark policy was changed: **conflicti
 `ERR946747` remains `GB`, based on the BioSample UK geographic field and the Northern Ireland-associated study. The final references contain **87 `unknown` country values** out of 1,275 records (58 original, plus 23 unsupported, minus one corrected to `GB`, plus 7 conflicting).
 
 **Benchmark scoring rule:** `final_country=unknown` means *unlabelled geography*, **not a true negative or proof the sample comes from nowhere**. Exclude these records from country-accuracy denominator; do not count an `unknown` prediction as correct or a non-`unknown` prediction as incorrect for these 87 records. The unchanged historical audit tables were generated against older reference labels and must not be interpreted as current confusion counts. This revision affects country reference labels only; source classifications and years are not edited.
+
+The [current country-only rebenchmark](rebenchmark_2026-10-24/README.md) reruns extraction against these final references, retaining all 1,275 rows and scoring the 1,188 with known reference countries.

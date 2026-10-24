@@ -215,6 +215,8 @@ assignments, metadata, year/country values and output schema between filtering
 conditions. Manifests record input, source, taxonomy and code hashes, model
 settings, GPU details, timings and API usage where available.
 
+The [current country-only benchmark](benchmark_smoke/current_benchmark/country_audit/rebenchmark_2026-10-24/README.md) reruns extraction for ATB and cached BioSample metadata without source-model inference. It excludes `unknown` reference countries from country accuracy.
+
 ### Building the local BioSample database
 
 BioSample lookup requires the large NCBI BioSample XML archive converted to

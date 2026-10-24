@@ -1,0 +1,30 @@
+{
+  "input_sha256": {
+    "input_cache/biosample.pkl": "c4d97b27d9ba45ddf0235e410fb7dd0346a58c1e199a57b775877fbe5089cfad",
+    "inputs/benchmark_atb_1275.tsv": "def594eb97b6fa6b1e0cede25dc68bc811e3cb5663e219d4600eb20467e21786",
+    "inputs/benchmark_true_labels_1275.tsv": "da79afda2859c8ffe2c5f4987613fa507801a64d07e5727d0536ad65c14804b3",
+    "inputs/run_to_biosample.tsv": "8710bafbe991d370a6e454b556407db2f4ddfe202ab3d1dd29ec362f8e1418dd"
+  },
+  "known_reference_runs": 1188,
+  "reference_runs": 1275,
+  "results": {
+    "atb": {
+      "accuracy": 0.984006734006734,
+      "correct": 1169,
+      "denominator": 1188,
+      "mismatches": 19,
+      "predicted_unknown_all": 99,
+      "predicted_unknown_scored": 19
+    },
+    "biosample": {
+      "accuracy": 1.0,
+      "correct": 1188,
+      "denominator": 1188,
+      "mismatches": 0,
+      "predicted_unknown_all": 80,
+      "predicted_unknown_scored": 0
+    }
+  },
+  "runner_sha256": "88c1c65d19267f3fcf3af431339fc15ffa521ae07e414c57a0313bc87f09dfdb",
+  "unscored_unknown_reference_runs": 87
+}
