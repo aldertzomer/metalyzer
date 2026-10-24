@@ -1,0 +1,32 @@
+run_accession	accession	reference_country	predicted_country	correct	raw_geo_loc_name	raw_original_attributes.geo_loc_name	raw_original_attributes.geo loc name
+ERR946747	SAMEA3487068	unknown	GB	False	United Kingdom		
+SRR6314321	SAMN08055004	BR	US	False	USA	USA	
+SRR6314323	SAMN08055003	BR	US	False	USA	USA	
+SRR6314857	SAMN08053153	BR	US	False	USA	USA	
+SRR6315299	SAMN08054605	BR	US	False	USA	USA	
+SRR6314874	SAMN08053348	BR	US	False	USA	USA	
+SRR3094499	SAMN04381860	US	unknown	False	not collected	not collected	
+SRR3094501	SAMN04381862	US	unknown	False	not collected	not collected	
+SRR3094502	SAMN04381863	US	unknown	False	not collected	not collected	
+SRR3094503	SAMN04381864	US	unknown	False	not collected	not collected	
+SRR3094508	SAMN04381869	US	unknown	False	not collected	not collected	
+SRR3094510	SAMN04381871	US	unknown	False	not collected	not collected	
+SRR23525304	SAMN33356324	US	CA	False	Canada	Canada	
+ERR11003616	SAMEA112765475	LU	unknown	False			
+ERR10372741	SAMEA111483144	PT	unknown	False			
+ERR1658511	SAMEA4443306	GB	unknown	False			
+ERR1658689	SAMEA4443233	GB	unknown	False			
+ERR1906113	SAMEA103954494	GB	unknown	False			
+ERR3446633	SAMEA5803185	GB	unknown	False			
+ERR439920	SAMEA2274619	GB	unknown	False			
+ERR450239	SAMEA2274688	GB	unknown	False			
+ERR470518	SAMEA2361299	GB	unknown	False			
+ERR470695	SAMEA2361479	GB	unknown	False			
+ERR473837	SAMEA2361639	GB	unknown	False			
+ERR670848	SAMEA2613238	GB	unknown	False			
+ERR694574	SAMEA3168641	GB	unknown	False			
+ERR976125	SAMEA3391383	GB	unknown	False			
+ERR976146	SAMEA3391403	GB	unknown	False			
+SRR27559027	SAMN39456870	US	unknown	False	missing	missing	
+SRR29294247	SAMN41692949	US	unknown	False	missing	missing	
+SRR6314326	SAMN08055029	BR	US	False	USA	USA	
