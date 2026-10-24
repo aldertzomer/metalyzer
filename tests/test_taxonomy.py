@@ -185,7 +185,7 @@ class TaxonomyTests(unittest.TestCase):
         self.assertEqual(record,
                          "host scientific name: Ovis aries; isolation source: stool; geo loc name: USA: WY")
         self.assertNotIn('="', record)
-        self.assertEqual(country.extract_country_from_row(row, record), "United States")
+        self.assertEqual(country.extract_country_from_row(row, record), "US")
         self.assertEqual(records.build_record(pd.Series(dtype=object)), "metadata: (empty)")
 
     def fake_pipeline(self, *args, **kwargs):
@@ -224,7 +224,7 @@ class TaxonomyTests(unittest.TestCase):
         self.assertTrue((out.loc[[0, 2, 4], list(self.sources.names)] == "NA").all().all())
         self.assertEqual(out.loc[0, "source_evidence"], "host_tax_id=9940; Ovis aries")
         self.assertTrue((out.year == 2019).all())
-        self.assertTrue((out.country == "United States").all())
+        self.assertTrue((out.country == "US").all())
         self.assertEqual(self.batches, [2, 1])
         self.assertIn("taxonomy host_tax_id: 3", log.getvalue())
 

@@ -1,0 +1,9 @@
+test_country_names_and_aliases (test_country_regressions.CountryNormalizationTests.test_country_names_and_aliases) ... ok
+test_priority_and_original_attributes (test_country_regressions.CountryNormalizationTests.test_priority_and_original_attributes) ... ok
+test_record_fallback_and_multiple_candidates (test_country_regressions.CountryNormalizationTests.test_record_fallback_and_multiple_candidates) ... ok
+test_reference_countries_use_iso2 (test_country_regressions.CountryNormalizationTests.test_reference_countries_use_iso2) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.027s
+
+OK

@@ -316,7 +316,7 @@ class MistralTests(unittest.TestCase):
             self.assertEqual(output.source_llm_score.tolist(), ["NA"])
             self.assertNotIn("source_verification_score", output.columns)
             self.assertEqual(output.year.tolist(), ["2019"])
-            self.assertEqual(output.country.tolist(), ["United States"])
+            self.assertEqual(output.country.tolist(), ["US"])
             self.assertTrue((output[list(self.sources.names)] == "NA").all().all())
             before = (root / "out.tsv").read_bytes()
             client.chat.complete_async.side_effect = APIError(429)

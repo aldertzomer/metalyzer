@@ -444,7 +444,7 @@ class LocalLLMTests(unittest.TestCase):
         self.assertEqual(out.id.tolist(), ['a'])
         self.assertTrue((out[NAMES] == 'NA').all().all())
         self.assertEqual(out.year.tolist(), ['2019'])
-        self.assertEqual(out.country.tolist(), ['United States'])
+        self.assertEqual(out.country.tolist(), ['US'])
         self.assertEqual(out.source_method.tolist(), ['llm'])
         self.assertEqual(out.source_llm_score.tolist(), ['0.8'])
         self.assertEqual(out.nli_verification_score.tolist(), ['NA'])

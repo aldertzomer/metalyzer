@@ -49,7 +49,8 @@ class CurrentDatasetTests(unittest.TestCase):
                                      "host": ["cat"] * 4})
             requests = pd.DataFrame({"run_accession": ["r1", "r2", "r3", "r4"]})
             truth = pd.DataFrame({"run_accession": ["r1", "r2", "r3"],
-                                  "final_species": ["unknown", "cat", "dog"]})
+                                  "final_species": ["unknown", "cat", "dog"],
+                                  "final_country": ["unknown", "US", "CA"]})
             for name, frame in [("metadata", metadata), ("requests", requests), ("truth", truth)]:
                 frame.to_csv(root / f"{name}.tsv", sep="\t", index=False)
             arguments = dict(metadata_path=root / "metadata.tsv", accessions_path=root / "requests.tsv",
@@ -75,7 +76,8 @@ class CurrentDatasetTests(unittest.TestCase):
             root = Path(temp)
             metadata = pd.DataFrame({"run_accession": ["r1", "r1"], "sample_accession": ["s1", "s2"]})
             requests = pd.DataFrame({"run_accession": ["r1", "r2"]})
-            truth = pd.DataFrame({"run_accession": ["r1"], "final_species": ["cat"]})
+            truth = pd.DataFrame({"run_accession": ["r1"], "final_species": ["cat"],
+                                  "final_country": ["US"]})
             for name, frame in [("metadata", metadata), ("requests", requests), ("truth", truth)]:
                 frame.to_csv(root / f"{name}.tsv", sep="\t", index=False)
             arguments = dict(metadata_path=root / "metadata.tsv", accessions_path=root / "requests.tsv",

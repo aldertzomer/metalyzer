@@ -40,7 +40,7 @@ class ModuleTests(unittest.TestCase):
         years.validate(batch)
         countries.validate(batch)
         self.assertEqual(years.values.tolist(), ["", "2019", "2018"])
-        self.assertEqual(countries.values.tolist(), ["unknown", "United States", "Canada"])
+        self.assertEqual(countries.values.tolist(), ["unknown", "US", "CA"])
         self.assertEqual(years.values.index.tolist(), [2, 0, 1])
         pd.testing.assert_frame_equal(self.batch.metadata, input.prepare_batch(self.batch.metadata).metadata)
 
@@ -76,7 +76,7 @@ class ModuleTests(unittest.TestCase):
     def test_country_does_not_fuzzy_match_unrelated_text(self):
         batch = input.prepare_batch(pd.DataFrame({"host": ["turkey"], "title": ["USA"]}))
         self.assertEqual(country.run(batch).values.tolist(), ["unknown"])
-        for raw, expected in [("U.S.A;USA", "United States"), ("United Kingdom: Oxford", "United Kingdom")]:
+        for raw, expected in [("U.S.A;USA", "US"), ("United Kingdom: Oxford", "GB")]:
             self.assertEqual(country.normalize_country(raw), expected)
 
     def test_combination_aligns_by_key_and_preserves_duplicate_external_ids(self):
